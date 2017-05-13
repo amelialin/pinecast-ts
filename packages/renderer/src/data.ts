@@ -2,14 +2,17 @@ import * as http from 'http';
 
 import * as Koa from 'koa';
 
+import {NotFoundError} from './errors';
+
 
 function fetch(ctx: Koa.Context, url: string) {
+    const framedURL = url + (url.includes('?') ? '&' : '?') + 'format=json';
     return new Promise((resolve, reject) => {
         http.get(
             {
                 hostname: 'pinecast.co',
                 method: 'GET',
-                path: url,
+                path: framedURL,
                 headers: {
                     ...ctx.request.header,
                     'X-Pinecast-Forward': ctx.request.header['x-pinecast-forward'] || 'abts.pinecast.co',
@@ -17,6 +20,10 @@ function fetch(ctx: Koa.Context, url: string) {
                 },
             },
             resp => {
+                if (resp.statusCode === 404) {
+                    reject(new NotFoundError());
+                    return;
+                }
                 let data = '';
                 resp.on('data', blob => data += blob.toString());
                 resp.on('end', () => resolve(data));
@@ -26,7 +33,13 @@ function fetch(ctx: Koa.Context, url: string) {
     });
 }
 async function parse(response: string) {
-    return JSON.parse(response);
+    try {
+        return JSON.parse(response);
+    } catch (e) {
+        console.log(e);
+        console.warn(response);
+        throw e;
+    }
 }
 
 
@@ -44,4 +57,13 @@ export async function getPosts(ctx: Koa.Context, page: number) {
 };
 export async function getPost(ctx: Koa.Context, slug: string) {
     return fetch(ctx, `/blog/${encodeURIComponent(slug)}`).then(parse);
+};
+
+
+export async function awaitAll(promises: {[key: string]: Promise<any>}): Promise<{[key: string]: any}> {
+    const keys = Object.keys(promises);
+    return (await Promise.all(keys.map(key => promises[key]))).reduce((acc, cur, i) => {
+        acc[keys[i]] = cur;
+        return acc;
+    }, {});
 };

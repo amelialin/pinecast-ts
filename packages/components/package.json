@@ -1,31 +1,23 @@
 {
-  "name": "@pinecast/sb-renderer",
+  "name": "@pinecast/sb-components",
   "version": "1.0.0",
   "description": "",
   "main": "build/index.js",
   "jsnext:main": "dist/index.js",
+  "ts:main": "src/index.ts",
   "scripts": {
-    "dev": "webpack --config=webpack.config.js --progress --watch --colors",
-    "start": "nodemon build/index.js"
+    "dev": "webpack --config=webpack.config.js --progress --watch --colors"
   },
   "author": "Matt Basta <me@mattbasta.com>",
   "license": "MIT",
   "dependencies": {
-    "@pinecast/sb-components": "^1.0.0",
-    "@types/body-parser": "^1.16.3",
-    "@types/koa": "^2.0.39",
-    "@types/koa-router": "^7.0.22",
     "@types/prop-types": "^15.5.1",
     "@types/react": "^15.0.24",
     "@types/react-dom": "^15.5.0",
-    "body-parser": "^1.17.1",
-    "koa": "^2.2.0",
-    "koa-router": "^7.1.1",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "styletron-react": "^2.5.8",
-    "styletron-server": "^2.5.7"
+    "styletron-react": "^2.5.8"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.1.3",

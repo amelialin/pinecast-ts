@@ -4,42 +4,74 @@ import * as Koa from 'koa';
 import * as Router from 'koa-router';
 
 import * as data from './data';
+import frame from './framing';
+import {NotFoundError} from './errors';
+import * as rendering from './rendering';
 
 
 const app = new Koa();
 const router = new Router();
 
-router.get('/', async ctx => {
-    const [siteResources, episodeResources] = await Promise.all([
-        data.getSite(ctx),
-        data.getEpisodes(ctx, ctx.query.page ? Number(ctx.query.page) : 0),
-    ]);
-    //
+router.get('home', '/', async ctx => {
+    const resources = await data.awaitAll({
+        ...ctx.state.resources,
+        episodes: data.getEpisodes(ctx, ctx.query.page ? Number(ctx.query.page) : 1),
+    });
+
+    ctx.body = await frame(
+        rendering.renderHome(resources),
+        ctx
+    );
 });
-router.get('blog', async ctx => {
-    const [siteResources, postResources] = await Promise.all([
-        data.getSite(ctx),
-        data.getPosts(ctx, ctx.query.page ? Number(ctx.query.page) : 0),
-    ]);
-    //
+router.get('blog', '/blog', async ctx => {
+    const resources = await data.awaitAll({
+        ...ctx.state.resources,
+        posts: data.getPosts(ctx, ctx.query.page ? Number(ctx.query.page) : 1),
+    });
+
+    ctx.body = await frame(
+        rendering.renderBlog(resources),
+        ctx
+    );
 });
-router.get('blog/:slug', async ctx => {
-    const [siteResources, postResources] = await Promise.all([
-        data.getSite(ctx),
-        data.getPost(ctx, ctx.params.slug),
-    ]);
-    //
+router.get('post', '/blog/:slug', async ctx => {
+    const resources = await data.awaitAll({
+        ...ctx.state.resources,
+        post: data.getPost(ctx, ctx.params.slug),
+    });
+
+    ctx.body = await frame(
+        rendering.renderBlogPost(resources),
+        ctx,
+        resources.post.title
+    );
 });
-router.get('episode/:id', async ctx => {
-    const [siteResources, episodeResources] = await Promise.all([
-        data.getSite(ctx),
-        data.getEpisode(ctx, ctx.params.id),
-    ]);
-    //
+router.get('episode', '/episode/:id', async ctx => {
+    const resources = await data.awaitAll({
+        ...ctx.state.resources,
+        episode: data.getEpisode(ctx, ctx.params.id),
+    });
+
+    ctx.body = await frame(
+        rendering.renderEpisode(resources),
+        ctx,
+        resources.episode.title
+    );
 });
-router.get(':slug', async ctx => {
-    const resources = await data.getSite(ctx);
-    //
+router.get('page', '/:slug', async (ctx, next) => {
+    const slug = ctx.params.slug;
+    const resources = await data.awaitAll(ctx.state.resources);
+
+    if (!resources.site.pages[slug]) {
+        ctx.status = 404;
+        return next();
+    }
+
+    ctx.body = await frame(
+        rendering.renderPage(resources, slug),
+        ctx,
+        resources.site.pages[slug].title
+    );
 });
 
 async function proxy(ctx: Koa.Context) {
@@ -68,8 +100,27 @@ router.get('/robots.txt', proxy);
 router.get('/sitemap.xml', proxy);
 router.get('/favicon.ico', proxy);
 
-app
-    .use(router.routes())
+
+app.use(async (ctx, next) => {
+    ctx.state.resources = {
+        site: data.getSite(ctx),
+    };
+    ctx.state.router = router;
+    try {
+        await next();
+    } catch (e) {
+        if (e instanceof NotFoundError) {
+            ctx.status = 404;
+            ctx.body = 'Not Found';
+            return;
+        }
+        console.log(e);
+        ctx.status = 500;
+        ctx.body = '500 Server Error';
+    }
+});
+
+app.use(router.routes())
     .use(router.allowedMethods());
 
 const port = process.env.PORT || 3000;

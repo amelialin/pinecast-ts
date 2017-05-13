@@ -1,6 +1,7 @@
 {
   "devDependencies": {
-    "lerna": "^2.0.0-rc.4"
+    "lerna": "^2.0.0-rc.4",
+    "nodemon": "^1.11.0"
   },
   "dependencies": {
     "typescript": "^2.3.2"
