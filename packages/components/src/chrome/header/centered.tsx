@@ -4,6 +4,7 @@ import {styled} from 'styletron-react';
 import {backgroundImage} from '../../styleMixins';
 import {BackgroundImage, Image, Text} from '../../primitives';
 import {ComponentContext, getsContext} from '../../componentContext';
+import {formatColor} from '../../helpers';
 import ImageRenderer from '../../common/image';
 import TextRenderer from '../../common/text';
 
@@ -43,7 +44,7 @@ export default getsContext(
         {ctx}: {ctx: ComponentContext}
     ) =>
         <Wrapper
-            bgColor={ctx.colors[layout.bgColor]}
+            bgColor={formatColor(layout.bgColor, ctx)}
             bgImage={backgroundImage(layout.bgImage, ctx)}
         >
             <Link

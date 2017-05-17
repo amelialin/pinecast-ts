@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import {ComponentContext, getsContext} from '../componentContext';
+import {formatColor} from '../helpers';
 import {Text} from '../primitives';
 
 
@@ -20,9 +21,10 @@ export default getsContext(
     (props: Text & {style?: Object}, {ctx}: {ctx: ComponentContext}) =>
         <span
             style={{
-                color: props.color && ctx.colors[props.color],
-                fontFamily: props.font && ctx.fonts[props.font],
+                color: formatColor(props.color, ctx),
+                fontFamily: props.font && ctx.fonts[props.font] || ctx.fonts.body,
                 fontSize: props.size,
+                fontWeight: props.weight || 400,
                 textTransform: props.transform,
 
                 ...props.style,

@@ -12,7 +12,8 @@
         ],
         "module": "es6",
         "moduleResolution": "Node",
-        "noImplicitAny": true,
+        "noImplicitAny": false,
+        "strictNullChecks": true,
         "target": "es2017",
         "jsx": "react"
     },

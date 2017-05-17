@@ -11,9 +11,13 @@ export interface ComponentContext {
     resources: {[key: string]: string},
     data: {
         site: {
-            disqus_url: string,
-            analytics_id: string,
-            itunes_banner: string,
+            disqus_url: string | null,
+            analytics_id: string | null,
+            itunes_banner: string | null,
+
+            itunes_url: string | null,
+            google_play_url: string | null,
+            stitcher_url: string | null,
         },
         podcast: {
             slug: string,
@@ -22,13 +26,13 @@ export interface ComponentContext {
             copyright: string,
         },
         features: {[feature: string]: boolean},
-        links: {title: string, url: string}[],
+        links: Array<{title: string, url: string}>,
         pages: {title: string, slug: string, page_type: string, created: string, body: string}[],
-        posts: {title: string, slug: string, publish: string}[],
+        posts: Array<{title: string, slug: string, publish: string}>,
     },
 
     // For generating URLs
-    url: (name: string, ...args: any[]) => string,
+    url: (name: string, params?: {[param: string]: string}) => string,
 };
 
 export function getsContext(toAnnotate: any) {

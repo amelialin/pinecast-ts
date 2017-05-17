@@ -2,6 +2,7 @@ import * as React from 'react';
 import {styled} from 'styletron-react';
 
 import {ComponentContext, getsContext} from '../../componentContext';
+import {formatColor} from '../../helpers';
 import {Image, Text} from '../../primitives';
 import ImageRenderer from '../../common/image';
 import TextRenderer from '../../common/text';
@@ -11,7 +12,7 @@ const Wrapper = styled('header', () => ({
     height: 100,
     lineHeight: '100px',
     margin: '0 auto',
-    width: 960,
+    maxWidth: 960,
 }));
 
 const Link = styled('a', ({text}: {text: Text}) => ({
@@ -41,12 +42,12 @@ export default getsContext(
             },
         {ctx}: {ctx: ComponentContext}
     ) =>
-        <div style={{backgroundColor: ctx.colors[layout.bgColor]}}>
+        <div style={{backgroundColor: formatColor(layout.bgColor, ctx)}}>
             <Wrapper>
                 <Link
                     href={ctx.url('home')}
                     style={{
-                        color: layout.text ? ctx.colors[layout.text.color] : ctx.colors.accent,
+                        color: layout.text ? formatColor(layout.text.color, ctx) : ctx.colors.accent,
                     }}
                     text={layout.text}
                 >

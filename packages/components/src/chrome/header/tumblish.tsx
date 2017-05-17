@@ -4,6 +4,7 @@ import {styled} from 'styletron-react';
 import {backgroundImage} from '../../styleMixins';
 import {BackgroundImage, Image, Text} from '../../primitives';
 import {ComponentContext, getsContext} from '../../componentContext';
+import {formatColor} from '../../helpers';
 import ImageRenderer from '../../common/image';
 import TextRenderer from '../../common/text';
 
@@ -15,7 +16,7 @@ const Wrapper = styled('header', (props: {bgColor, bgImage}) => ({
     margin: '0 auto',
     padding: '100px 30px',
     textAlign: 'center',
-    width: 960,
+    maxWidth: 960,
 }));
 
 
@@ -35,7 +36,7 @@ export default getsContext(
         {ctx}: {ctx: ComponentContext}
     ) =>
         <Wrapper
-            bgColor={ctx.colors[layout.bgColor]}
+            bgColor={formatColor(layout.bgColor, ctx)}
             bgImage={backgroundImage(layout.bgImage, ctx)}
         >
             {layout.logo && <ImageRenderer {...layout.logo} />}

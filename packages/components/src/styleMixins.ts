@@ -10,5 +10,6 @@ export function backgroundImage(bgImage: BackgroundImage, ctx: ComponentContext)
     return {
         backgroundImage: bgImage.resourceId,
         backgroundSize: bgImage.sizing,
+        backgroundRepeat: bgImage.repeat,
     };
 };
