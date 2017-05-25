@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import {ComponentContext, getsContext} from '../componentContext';
 import {formatColor} from '../helpers';
+import styled from '../styles';
 import {Text} from '../primitives';
 
 
@@ -11,15 +12,19 @@ function getContent(token: string, ctx: ComponentContext): string {
             return ctx.data.podcast.name;
         case 'podcast.subtitle':
             return ctx.data.podcast.subtitle;
+        case 'podcast.description':
+            return ctx.data.podcast.description;
         case 'podcast.copyright':
             return ctx.data.podcast.copyright;
     }
     return token;
 }
 
+const Span = styled('span', {});
+
 export default getsContext(
     (props: Text & {style?: Object}, {ctx}: {ctx: ComponentContext}) =>
-        <span
+        <Span
             style={{
                 color: formatColor(props.color, ctx),
                 fontFamily: props.font && ctx.fonts[props.font] || ctx.fonts.body,
@@ -35,5 +40,5 @@ export default getsContext(
                     getContent(props.content, ctx) :
                     props.content
             }
-        </span>
+        </Span>
 );

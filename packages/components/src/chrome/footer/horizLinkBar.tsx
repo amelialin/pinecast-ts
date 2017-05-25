@@ -71,7 +71,7 @@ export default getsContext(
         {ctx}: {ctx: ComponentContext}
     ) =>
         <OuterWrapper bgColor={formatColor(layout.bgColor, ctx)}>
-        <Wrapper bgColor={formatColor(layout.fgColor, ctx)} padding={layout.padding} justification={layout.justification}>
+            <Wrapper bgColor={formatColor(layout.fgColor, ctx)} padding={layout.padding} justification={layout.justification}>
                 {(layout.includes as Array<includeableTypes>).map((type: includeableTypes): Array<JSX.Element> => {
                     let linkEls: Array<JSX.Element>;
                     if (type === 'links') {

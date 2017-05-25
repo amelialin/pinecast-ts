@@ -23,6 +23,7 @@ export interface ComponentContext {
             slug: string,
             name: string,
             subtitle: string,
+            description: string,
             copyright: string,
         },
         features: {[feature: string]: boolean},
@@ -31,13 +32,36 @@ export interface ComponentContext {
         posts: Array<{title: string, slug: string, publish: string}>,
     },
 
+    layout: {
+        header: any[],
+        body: {
+            home: {
+                firstPagePrefix: any[],
+                segments: any[],
+            },
+            blog: {
+                firstPagePrefix: any[],
+                segments: any[],
+            },
+            episode: any[],
+            post: any[],
+            page: {[type: string]: any[]},
+        },
+        footer: any[],
+        page: {
+            backgroundColor: string,
+            padding: string | number,
+        },
+    },
+
     // For generating URLs
     url: (name: string, params?: {[param: string]: string}) => string,
 };
 
 export function getsContext(toAnnotate: any) {
     toAnnotate.contextTypes = {
-        ctx: PropTypes.object,
+        ...toAnnotate.contextTypes,
+        ctx: PropTypes.object.isRequired,
     };
     return toAnnotate;
 };

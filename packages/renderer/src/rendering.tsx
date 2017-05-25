@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {Body, ComponentContext} from '@pinecast/sb-components/dist';
+import {Body, ComponentContext, ItemSourceContext} from '@pinecast/sb-components/dist';
 
 import ContextProvider from './ContextProvider';
 import frame from './framing';
@@ -116,13 +116,34 @@ const sample = {
 }
 
 
-function render(data: any): JSX.Element {
-    return <ContextProvider ctx={data as ComponentContext}>
+type URLResolver = (route: string, params?: {[param: string]: string}) => string;
+
+
+function render(data: any, itemSource: ItemSourceContext<any> | null = null): JSX.Element {
+    return <ContextProvider
+        ctx={data as ComponentContext}
+        itemSource={itemSource}
+    >
         <Body page={data.layout} />
     </ContextProvider>;
 }
 
-export async function renderHome(data: any, url: (x: string, y?: Object) => string): Promise<string> {
+function getItemSource(items: any[]): ItemSourceContext<any> {
+    let yielded = 0;
+    function* yielder() {
+        for (; yielded < items.length; yielded += 1) {
+            yield items[yielded];
+        }
+    }
+    const inst = yielder();
+    return {
+        getItem: inst.next.bind(inst),
+        hasNextItem: () => yielded + 1 < items.length,
+        [Symbol.iterator]: inst[Symbol.iterator].bind(inst),
+    };
+}
+
+export async function renderHome(data: any, url: URLResolver): Promise<string> {
     return frame(
         render({
             ...sample,
@@ -133,7 +154,7 @@ export async function renderHome(data: any, url: (x: string, y?: Object) => stri
             },
 
             url,
-        }),
+        }, getItemSource(data.episodes.items)),
         data.site,
         {
             fonts: sample.fonts,
@@ -141,7 +162,7 @@ export async function renderHome(data: any, url: (x: string, y?: Object) => stri
         url,
     );
 };
-export async function renderEpisode(data: any, url: (x: string, y?: Object) => string): Promise<string> {
+export async function renderEpisode(data: any, url: URLResolver): Promise<string> {
     return frame(
         render({
             ...sample,
@@ -161,7 +182,7 @@ export async function renderEpisode(data: any, url: (x: string, y?: Object) => s
         url,
     );
 };
-export async function renderBlog(data: any, url: (x: string, y?: Object) => string): Promise<string> {
+export async function renderBlog(data: any, url: URLResolver): Promise<string> {
     return frame(
         render({
             ...sample,
@@ -172,7 +193,7 @@ export async function renderBlog(data: any, url: (x: string, y?: Object) => stri
             },
 
             url,
-        }),
+        }, getItemSource(data.posts.items)),
         data.site,
         {
             fonts: sample.fonts,
@@ -180,7 +201,7 @@ export async function renderBlog(data: any, url: (x: string, y?: Object) => stri
         url,
     );
 };
-export async function renderBlogPost(data: any, url: (x: string, y?: Object) => string): Promise<string> {
+export async function renderBlogPost(data: any, url: URLResolver): Promise<string> {
     return frame(
         render({
             ...sample,
@@ -200,7 +221,7 @@ export async function renderBlogPost(data: any, url: (x: string, y?: Object) => 
         url,
     );
 };
-export async function renderPage(data: any, slug: string, url: (x: string, y?: Object) => string): Promise<string> {
+export async function renderPage(data: any, slug: string, url: URLResolver): Promise<string> {
     return frame(
         render({
             ...sample,

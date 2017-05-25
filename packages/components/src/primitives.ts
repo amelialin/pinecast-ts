@@ -46,3 +46,8 @@ export interface ButtonStyle {
     textColor: string,
     textSize?: number,
 };
+
+
+export interface LayoutConfig {
+    consumeCount: number,
+};
