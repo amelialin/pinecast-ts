@@ -31,6 +31,8 @@ export default getsContext(
                     style={{
                         ...alignment(config.alignment),
                         backgroundColor: formatColor(config.fgColor, ctx),
+                        display: 'flex',
+                        flexWrap: 'wrap',
                         maxWidth: config.width === 'full' ? '100%' : config.width || 'auto',
                         padding: config.padding,
                     }}

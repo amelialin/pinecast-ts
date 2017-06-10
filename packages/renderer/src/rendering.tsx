@@ -1,6 +1,13 @@
 import * as React from 'react';
 
-import {Body, ComponentContext, ItemSourceContext} from '@pinecast/sb-components/dist';
+import {
+    Body,
+    ComponentContext,
+    ItemSourceContext,
+    primitives,
+    renderEpisode as renderEpisodeComponent,
+    renderLayout,
+} from '@pinecast/sb-components/dist';
 
 import ContextProvider from './ContextProvider';
 import frame from './framing';
@@ -112,6 +119,28 @@ const sample = {
             backgroundColor: 'background',
             padding: '0',
         },
+        body: {
+            home: {
+                firstPagePrefix: [],
+                segments: [
+                    {
+                        type: 'grid',
+                        consumeCount: -1,
+
+                        alignment: 'center' as primitives.Alignment,
+                        itemStyle: {
+                            type: 'tile',
+                        } as primitives.EpisodeStyle,
+                        padding: '0 0 40px',
+                        width: 960,
+                    },
+                ],
+            },
+            blog: {},
+            episode: [],
+            post: [],
+            page: {},
+        },
     },
 }
 
@@ -119,12 +148,14 @@ const sample = {
 type URLResolver = (route: string, params?: {[param: string]: string}) => string;
 
 
-function render(data: any, itemSource: ItemSourceContext<any> | null = null): JSX.Element {
+function render(data: any, itemSource: ItemSourceContext<any> | null = null, children?: any | null): JSX.Element {
     return <ContextProvider
         ctx={data as ComponentContext}
         itemSource={itemSource}
     >
-        <Body page={data.layout} />
+        <Body page={data.layout}>
+            {children}
+        </Body>
     </ContextProvider>;
 }
 
@@ -143,18 +174,33 @@ function getItemSource(items: any[]): ItemSourceContext<any> {
     };
 }
 
+function concatOnFirstPage<T>(page: number, firstPage: Array<T>, allPages: Array<T>): Array<T> {
+    return page === 1 ? firstPage.concat(allPages) : allPages;
+}
+
 export async function renderHome(data: any, url: URLResolver): Promise<string> {
     return frame(
-        render({
-            ...sample,
-            data: data.site,
-            resources: {
-                cover_art: data.site.site.cover_image_url,
-                logo: data.site.site.logo_url,
-            },
+        render(
+            {
+                ...sample,
+                data: data.site,
+                resources: {
+                    cover_art: data.site.site.cover_image_url,
+                    logo: data.site.site.logo_url,
+                },
 
-            url,
-        }, getItemSource(data.episodes.items)),
+                url,
+            },
+            getItemSource(data.episodes.items),
+            renderLayout(
+                concatOnFirstPage<primitives.LayoutConfig>(
+                    data.episodes.page,
+                    sample.layout.body.home.firstPagePrefix,
+                    sample.layout.body.home.segments,
+                ),
+                renderEpisodeComponent,
+            ),
+        ),
         data.site,
         {
             fonts: sample.fonts,
@@ -164,16 +210,18 @@ export async function renderHome(data: any, url: URLResolver): Promise<string> {
 };
 export async function renderEpisode(data: any, url: URLResolver): Promise<string> {
     return frame(
-        render({
-            ...sample,
-            data: data.site,
-            resources: {
-                cover_art: data.site.site.cover_image_url,
-                logo: data.site.site.logo_url,
-            },
+        render(
+            {
+                ...sample,
+                data: data.site,
+                resources: {
+                    cover_art: data.site.site.cover_image_url,
+                    logo: data.site.site.logo_url,
+                },
 
-            url,
-        }),
+                url,
+            },
+        ),
         data.site,
         {
             fonts: sample.fonts,

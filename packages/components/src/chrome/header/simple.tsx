@@ -1,19 +1,20 @@
 import * as React from 'react';
-import {styled} from 'styletron-react';
 
 import {ComponentContext, getsContext} from '../../componentContext';
 import {formatColor} from '../../helpers';
 import {Image, Text} from '../../primitives';
 import ImageRenderer from '../../common/image';
+import styled from '../../styles';
 import TextRenderer from '../../common/text';
 
 
-const Wrapper = styled('header', () => ({
+const Wrapper = styled('header', null);
+const InnerWrapper = styled('div', {
     height: 100,
     lineHeight: '100px',
     margin: '0 auto',
     maxWidth: 960,
-}));
+});
 
 const Link = styled('a', ({text}: {text: Text}) => ({
     display: 'inline-block',
@@ -42,8 +43,8 @@ export default getsContext(
             },
         {ctx}: {ctx: ComponentContext}
     ) =>
-        <div style={{backgroundColor: formatColor(layout.bgColor, ctx)}}>
-            <Wrapper>
+        <Wrapper style={{backgroundColor: formatColor(layout.bgColor, ctx)}}>
+            <InnerWrapper>
                 <Link
                     href={ctx.url('home')}
                     style={{
@@ -55,6 +56,6 @@ export default getsContext(
                         <TextRenderer {...layout.text} /> :
                         <ImageRenderer {...layout.image} />}
                 </Link>
-            </Wrapper>
-        </div>
+            </InnerWrapper>
+        </Wrapper>
 );

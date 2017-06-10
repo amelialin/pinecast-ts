@@ -1,23 +1,21 @@
 import * as React from 'react';
-import {styled} from 'styletron-react';
 
 import {backgroundImage} from '../../styleMixins';
 import {BackgroundImage, Image, Text} from '../../primitives';
 import {ComponentContext, getsContext} from '../../componentContext';
 import {formatColor} from '../../helpers';
 import ImageRenderer from '../../common/image';
+import styled from '../../styles';
 import TextRenderer from '../../common/text';
 
 
-const Wrapper = styled('header', (props: {bgColor, bgImage}) => ({
-    ...props.bgImage,
-    backgroundColor: props.bgColor,
+const Wrapper = styled('header', {
     color: '#fff',
     margin: '0 auto',
     padding: '100px 30px',
     textAlign: 'center',
     maxWidth: 960,
-}));
+});
 
 
 export default getsContext(
@@ -35,10 +33,7 @@ export default getsContext(
             },
         {ctx}: {ctx: ComponentContext}
     ) =>
-        <Wrapper
-            bgColor={formatColor(layout.bgColor, ctx)}
-            bgImage={backgroundImage(layout.bgImage, ctx)}
-        >
+        <Wrapper style={{...backgroundImage(layout.bgImage, ctx), backgroundColor: formatColor(layout.bgColor, ctx)}}>
             {layout.logo && <ImageRenderer {...layout.logo} />}
             <h1>
                 <a href={ctx.url('home')} style={{fontSize: 40}}>

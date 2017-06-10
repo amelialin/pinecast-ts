@@ -45,7 +45,7 @@ export default async function frame(
         </StyletronProvider>
     );
 
-    const markup = ReactDOM.renderToString(root);
+    const markup = ReactDOM.renderToStaticMarkup(root);
     const rawCustomCSS = siteData.site.custom_css;
     const customCSS = rawCustomCSS ? `<link href="data:text/css;base64,${new Buffer(rawCustomCSS).toString('base64')}" rel="stylesheet">` : '';
 

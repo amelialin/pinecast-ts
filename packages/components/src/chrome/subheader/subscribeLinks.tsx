@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {styled} from 'styletron-react';
 
 import {backgroundImage} from '../../styleMixins';
 import {ButtonStyle, Text} from '../../primitives';
@@ -7,19 +6,19 @@ import ButtonRenderer from '../../common/button';
 import {ComponentContext, getsContext} from '../../componentContext';
 import {formatColor} from '../../helpers';
 import ImageRenderer from '../../common/image';
+import styled from '../../styles';
 import TextRenderer from '../../common/text';
 
 
-const Wrapper = styled('nav', ({bgColor}: {bgColor: string}) => ({
+const Wrapper = styled('nav', {
     alignItems: 'center',
-    backgroundColor: bgColor,
     color: '#fff',
     display: 'flex',
     justifyContent: 'space-around',
     margin: '0 auto',
     padding: '40px 0',
     maxWidth: 960,
-}));
+});
 
 
 export default getsContext(
@@ -34,7 +33,7 @@ export default getsContext(
             },
         {ctx}: {ctx: ComponentContext}
     ) =>
-        <Wrapper bgColor={formatColor(layout.bgColor, ctx)}>
+        <Wrapper style={{backgroundColor: formatColor(layout.bgColor, ctx)}}>
             {layout.text &&
                 <TextRenderer {...layout.text} style={{flex: '1 1'}} />}
 

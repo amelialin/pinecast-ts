@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {styled} from 'styletron-react';
 
 import {backgroundImage} from '../../styleMixins';
 import {TextStyle} from '../../primitives';
@@ -7,38 +6,28 @@ import ButtonRenderer from '../../common/button';
 import {ComponentContext, getsContext} from '../../componentContext';
 import {formatColor} from '../../helpers';
 import ImageRenderer from '../../common/image';
+import styled from '../../styles';
 import TextRenderer from '../../common/text';
 
 
-const OuterWrapper = styled('nav', ({bgColor}: {bgColor: string}) => ({
-    backgroundColor: bgColor,
-}));
+const OuterWrapper = styled('nav', null);
 const Wrapper = styled(
     'div',
-    (
-        {bgColor, justification, padding}:
-        {
-            bgColor: string,
-            justification: 'center' | 'left' | 'right',
-            padding: number | null
-        }
-    ) =>
+    ({padding}: {padding: number | null}) =>
         ({
-            backgroundColor: bgColor,
             color: '#fff',
             margin: '0 auto',
             maxWidth: 960,
             padding: padding !== null ? `${padding}px 0` : '40px 0',
-            textAlign: justification,
         })
 );
 
-const Divider = styled('span', () => ({
+const Divider = styled('span', {
     display: 'inline-block',
     marginRight: 15,
-}));
+});
 
-const Link = styled('a', () => ({
+const Link = styled('a', {
     fontSize: 14,
     marginRight: 15,
     textDecoration: 'none',
@@ -46,7 +35,7 @@ const Link = styled('a', () => ({
     ':hover': {
         textDecoration: 'underline',
     },
-}));
+});
 
 type includeableTypes = 'links' | 'pages';
 type includedTypes = ['links'] | ['pages'] | ['links', 'pages'] | ['pages', 'links'];
@@ -70,8 +59,8 @@ export default getsContext(
             },
         {ctx}: {ctx: ComponentContext}
     ) =>
-        <OuterWrapper bgColor={formatColor(layout.bgColor, ctx)}>
-            <Wrapper bgColor={formatColor(layout.fgColor, ctx)} padding={layout.padding} justification={layout.justification}>
+        <OuterWrapper style={{backgroundColor: formatColor(layout.bgColor, ctx)}}>
+            <Wrapper style={{backgroundColor: formatColor(layout.fgColor, ctx), textAlign: layout.justification}} padding={layout.padding}>
                 {(layout.includes as Array<includeableTypes>).map((type: includeableTypes): Array<JSX.Element> => {
                     let linkEls: Array<JSX.Element>;
                     if (type === 'links') {
