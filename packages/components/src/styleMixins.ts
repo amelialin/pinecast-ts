@@ -8,7 +8,7 @@ export function backgroundImage(bgImage: BackgroundImage, ctx: ComponentContext)
     }
 
     return {
-        backgroundImage: bgImage.resourceId,
+        backgroundImage: ctx.resources[bgImage.resourceId],
         backgroundSize: bgImage.sizing,
         backgroundRepeat: bgImage.repeat,
     };

@@ -16,9 +16,23 @@ const Wrapper = styled('nav', {
     display: 'flex',
     justifyContent: 'space-around',
     margin: '0 auto',
-    padding: '40px 0',
+    padding: '40px 15px',
     maxWidth: 960,
+
+    '@media (max-width: 700px)': {
+        flexDirection: 'column',
+    },
 });
+
+
+const marginStyles = {
+    marginLeft: '0.5em',
+
+    '@media (max-width: 700px)': {
+        marginLeft: 0,
+        marginTop: '0.5em',
+    },
+};
 
 
 export default getsContext(
@@ -38,18 +52,34 @@ export default getsContext(
                 <TextRenderer {...layout.text} style={{flex: '1 1'}} />}
 
             {ctx.data.site.itunes_url &&
-                <ButtonRenderer {...layout.buttonStyle} href={ctx.data.site.itunes_url} style={{marginLeft: '0.5em'}}>
+                <ButtonRenderer
+                    {...layout.buttonStyle}
+                    href={ctx.data.site.itunes_url}
+                    style={marginStyles}
+                >
                     Apple Podcasts
                 </ButtonRenderer>}
             {ctx.data.site.google_play_url &&
-                <ButtonRenderer {...layout.buttonStyle} href={ctx.data.site.google_play_url} style={{marginLeft: '0.5em'}}>
+                <ButtonRenderer
+                    {...layout.buttonStyle}
+                    href={ctx.data.site.google_play_url}
+                    style={marginStyles}
+                >
                     Google Play
                 </ButtonRenderer>}
             {ctx.data.site.stitcher_url &&
-                <ButtonRenderer {...layout.buttonStyle} href={ctx.data.site.stitcher_url} style={{marginLeft: '0.5em'}}>
+                <ButtonRenderer
+                    {...layout.buttonStyle}
+                    href={ctx.data.site.stitcher_url}
+                    style={marginStyles}
+                >
                     Stitcher
                 </ButtonRenderer>}
-            <ButtonRenderer {...layout.buttonStyle} href={`https://pinecast.com/feed/${encodeURIComponent(ctx.data.podcast.slug)}`} style={{marginLeft: '0.5em'}}>
+            <ButtonRenderer
+                {...layout.buttonStyle}
+                href={`https://pinecast.com/feed/${encodeURIComponent(ctx.data.podcast.slug)}`}
+                style={marginStyles}
+            >
                 RSS
             </ButtonRenderer>
         </Wrapper>

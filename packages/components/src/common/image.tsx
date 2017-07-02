@@ -12,7 +12,7 @@ export default getsContext(
     (props: Image & {style?: Object}, {ctx}: {ctx: ComponentContext}) =>
         <Img
             alt={props.alt || ''}
-            src={ctx.resources[props.resourceId]}
+            src={props.resourceId ? ctx.resources[props.resourceId] : props.src}
             style={{
                 ...(
                     !props.dimensions ? null : {width: props.dimensions[0], height: props.dimensions[1]}

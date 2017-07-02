@@ -50,10 +50,14 @@ module.exports = {
                 case 'any-promise':
                     return callback(null, 'Promise');
                 default:
-                    if (request[0] === '.' || request.includes('@pinecast') && request.search(/@pinecast\/.*\/node_modules\//) === -1) {
+                    if (
+                        request[0] === '.' ||
+                        request.includes('@pinecast') && request.search(/@pinecast\/.*\/node_modules\//) === -1 ||
+                        context.includes('packages/components/') && request !== 'react'
+                    ) {
                         return callback();
                     }
-                    // return callback();
+                    // console.log(context, request);
                     return callback(null, request);
             }
         }

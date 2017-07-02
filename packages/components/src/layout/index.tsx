@@ -1,12 +1,14 @@
 import * as React from 'react';
 
+import renderElementLayout from '../elements';
+
 import Grid from './grid';
 import Stacked from './stacked';
 
 import {LayoutConfig} from '../primitives';
 
 
-export default function<T>(layouts: Array<LayoutConfig>, renderer: (item: T, style: Object) => JSX.Element) {
+export default function<T>(layouts: Array<LayoutConfig>) {
     return layouts.map((layout, i) => {
         let Component;
         switch (layout.type) {
@@ -21,7 +23,7 @@ export default function<T>(layouts: Array<LayoutConfig>, renderer: (item: T, sty
         }
 
         return <Component key={i} config={layout}>
-            {renderer}
+            {(i, item, style) => renderElementLayout(i, item, layout.elementLayout, style)}
         </Component>;
     });
 };

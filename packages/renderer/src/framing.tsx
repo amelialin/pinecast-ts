@@ -39,10 +39,12 @@ export default async function frame(
 ): Promise<string> {
 
     const styletron = new Styletron();
+    // HACK: https://github.com/rtsao/styletron/issues/153
+    const StyletronProviderCast: any = StyletronProvider;
     const root = (
-        <StyletronProvider styletron={styletron}>
+        <StyletronProviderCast styletron={styletron}>
             {elem}
-        </StyletronProvider>
+        </StyletronProviderCast>
     );
 
     const markup = ReactDOM.renderToStaticMarkup(root);
@@ -74,23 +76,26 @@ export default async function frame(
     return `
     <!DOCTYPE html>
     <html>
-        <head>
-            <title>${escapeHTML(title || siteData.podcast.name)}</title>
-            ${fontInclude}
-            <style>
-              *, *:before, *:after {box-sizing: border-box;}
-              html, body {font-family: ${escapeHTML(fonts.body)}; font-size: 12px; height: 100%; margin: 0; padding: 0}
-            </style>
-            ${styletron.getStylesheetsHtml()}
-            ${customCSS}
-            <link type="image/png" rel="icon" href="${escapeHTML(siteData.features.favicon && siteData.site.favicon_url || DEFAULT_FAVICON)}">
-            ${siteData.site.itunes_banner ? `<meta name="apple-itunes-app" content="app-id=${escapeHTML(siteData.site.itunes_banner)}">` : ''}
-            <link rel="alternate" type="application/rss+xml" title="Podcast Feed" href="https://pinecast.com/feed/${escapeHTML(encodeURIComponent(siteData.podcast.slug))}">
-            ${siteData.posts.length ? `<link rel="alternate" type="application/rss+xml" title="Blog Feed" href="${escapeHTML(url('blogRSS'))}">` : ''}
-        </head>
-        ${markup}
-        ${disqusInclude}
-        ${gaInclude}
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>${escapeHTML(title || siteData.podcast.name)}</title>
+        ${fontInclude}
+        <style>
+          *, *:before, *:after {box-sizing: border-box;}
+          html, body {font-family: ${escapeHTML(fonts.body)}; height: 100%; margin: 0; padding: 0}
+        </style>
+        ${styletron.getStylesheetsHtml()}
+        ${customCSS}
+        <link type="image/png" rel="icon" href="${escapeHTML(siteData.features.favicon && siteData.site.favicon_url || DEFAULT_FAVICON)}">
+        ${siteData.site.itunes_banner ? `<meta name="apple-itunes-app" content="app-id=${escapeHTML(siteData.site.itunes_banner)}">` : ''}
+        <link rel="alternate" type="application/rss+xml" title="Podcast Feed" href="https://pinecast.com/feed/${escapeHTML(encodeURIComponent(siteData.podcast.slug))}">
+        ${siteData.posts.length ? `<link rel="alternate" type="application/rss+xml" title="Blog Feed" href="${escapeHTML(url('blogRSS'))}">` : ''}
+      </head>
+      ${markup}
+      ${disqusInclude}
+      ${gaInclude}
     </html>
     `;
 };

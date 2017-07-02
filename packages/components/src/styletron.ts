@@ -1,5 +1,15 @@
 import BaseStyletron from 'styletron-server';
+import * as hyphenateStyleName from 'fbjs/lib/hyphenateStyleName';
 import {isUnitlessNumber} from 'react-dom/lib/CSSProperty';
+
+
+const unitlessCSSProperties = new Set<string>();
+Object.keys(isUnitlessNumber).forEach(key => unitlessCSSProperties.add(hyphenateStyleName(key)))
+
+// NOTE: This is a special exception, because there's almost literally no
+// reason to use a unitless value with line-height, and it's a source of many
+// errors.
+unitlessCSSProperties.delete('line-height');
 
 
 declare class StyletronServerExtended extends BaseStyletron {
@@ -11,7 +21,7 @@ class Styletron extends BaseStyletron {
         {prop, val, media, pseudo}:
         {prop: string, val: string, media?: string, pseudo?: string}
     ): string | void {
-        if (!/^\d+(\.\d+)?$/.exec(val)) {
+        if (!/^\-?\d+(\.\d+)?$/.exec(val) || unitlessCSSProperties.has(prop)) {
             return super.injectDeclaration({prop, val, media, pseudo});
         }
         return super.injectDeclaration({prop, val: `${val}px`, media, pseudo});

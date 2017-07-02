@@ -8,5 +8,5 @@ export function formatColor(color: string | null | undefined, ctx: ComponentCont
     if (color[0] === '#') {
         return color;
     }
-    return ctx.colors[color];
+    return ctx.colors[color] || color;
 };

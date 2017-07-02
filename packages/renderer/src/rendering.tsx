@@ -5,7 +5,7 @@ import {
     ComponentContext,
     ItemSourceContext,
     primitives,
-    renderEpisode as renderEpisodeComponent,
+    renderElement,
     renderLayout,
 } from '@pinecast/sb-components/dist';
 
@@ -13,48 +13,163 @@ import ContextProvider from './ContextProvider';
 import frame from './framing';
 
 
+const simpleEpisodeTileLayout: primitives.ElementLayout = {
+    elements: [
+        {
+            type: 'block.link',
+            children: [
+                {
+                    type: 'image',
+                    elementOptions: {alignX: 'center', square: 'element'},
+                    props: {
+                        alt: '',
+                    },
+                    propPaths: {
+                        src: ['image_url'],
+                    },
+                    styles: {
+                        height: 300,
+                        width: 300,
+                    },
+                },
+                {
+                    type: 'block.text',
+                    tagName: 'strong',
+
+                    textContent: ['title'],
+
+                    elementOptions: {
+                        maxLines: 2,
+                        maxLinesOnHover: 4,
+                        maxLineFade: {color: 'background', height: 10},
+                    },
+                    styles: {
+                        fontSize: 16,
+                        fontWeight: 'normal',
+                        lineHeight: 22,
+                        marginBottom: 16,
+                        marginTop: 16,
+                        paddingLeft: 15,
+                        paddingRight: 15,
+                    },
+                },
+            ],
+            props: {
+                href: {name: 'episode', params: {id: ['id']}},
+            },
+        },
+    ],
+    tagName: 'article',
+    styles: {
+        display: 'block',
+        textAlign: 'center',
+    },
+};
+
+const cardEpisodeItemLayout: primitives.ElementLayout = {
+    elements: [
+        {
+            type: 'image',
+            elementOptions: {
+                alignX: 'center',
+                square: 'element',
+            },
+            propPaths: {src: ['image_url']},
+            styles: {
+                marginBottom: 15,
+                maxWidth: 300,
+            },
+        },
+        {
+            type: 'block.player',
+            propPaths: {src: ['player_url']},
+        },
+        {
+            type: 'layout.column',
+            tagName: 'hgroup',
+            children: [
+                {
+                    type: 'block.text',
+                    tagName: 'h1',
+                    styles: {
+                        fontFamily: 'headings',
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                        margin: 0,
+                        textTransform: 'uppercase',
+                    },
+                    textContent: ['title'],
+                },
+                {
+                    type: 'block.text',
+                    tagName: 'h2',
+                    styles: {
+                        color: 'buttons',
+                        fontFamily: 'headings',
+                        fontSize: 18,
+                        margin: 0,
+                    },
+                    textContent: ['title'],
+                },
+            ],
+            styles: {
+                padding: 10,
+                textAlign: 'center',
+            },
+        },
+        {
+            type: 'layout.column',
+            tagName: 'div',
+            children: [
+                {
+                    type: 'block.text',
+                    textContent: ['description'],
+                    textContentFilter: 'raw',
+                },
+            ],
+        },
+    ],
+    tagName: 'article',
+    styles: {
+        backgroundColor: 'foreground',
+        boxShadow: '0 5px 5px rgba(0, 0, 0, 0.2)',
+        maxWidth: 800,
+        marginBottom: 50,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        padding: 30,
+    },
+};
+
+
 const sample = {
     colors: {
-        base: 'papayawhip',
-        accent: 'coral',
-        accent2: '#2196F3',
         background: '#f0f0f0',
-        white: '#fff',
+        accent: '#2196F3',
+        text: '#000',
         buttons: '#009688',
+        buttonsText: '#fff',
+
+        foreground: '#fff',
         links: '#212121',
 
-        footerLinks: '#CDDDE4',
-        footer: '#607D8B',
+        secondaryAccent: '#96CFFF',
     },
     fonts: {
         logo: 'Righteous',
-        headings: 'Verdana',
-        body: 'Verdana',
+        headings: 'Lato',
+        body: 'Lato',
     },
 
     layout: {
         header: [
-            // {
-            //     type: 'header.simple',
-            //     layout: {
-            //         bgColor: 'base',
-            //         type: 'text',
-            //         text: {
-            //             color: 'accent',
-            //             content: '$podcast.name',
-            //             font: 'logo',
-            //             size: 60,
-            //             transform: 'none',
-            //         },
-            //     },
-            // },
             {
                 type: 'header.centered',
                 layout: {
-                    bgColor: 'accent2',
+                    bgColor: 'accent',
                     type: 'text',
                     text: {
-                        color: 'white',
+                        color: 'foreground',
                         content: '$podcast.name',
                         font: 'logo',
                         size: 80,
@@ -67,28 +182,27 @@ const sample = {
                 layout: {
                     // bgColor: 'base',
                     text: {
-                        color: '#000',
+                        color: 'text',
                         content: 'Subscribe with',
                         size: 20,
                         weight: 500,
-                    },
-                    buttonStyle: {
-                        bgColor: 'buttons',
-                        paddingX: 1,
-                        paddingY: 0.5,
-                        roundedCorners: true,
-                        textColor: 'white',
-                        textSize: 20,
                     },
                 },
             },
         ],
         footer: [
             {
+                type: 'pagination.forwardBack',
+                layout: {
+                    nextText: 'Go Back in Time',
+                    previousText: 'Onward to the Future',
+                },
+            },
+            {
                 type: 'footer.horizLinkBar',
                 layout: {
-                    bgColor: 'footerLinks',
-                    fgColor: 'footerLinks',
+                    bgColor: 'secondaryAccent',
+                    fgColor: 'secondaryAccent',
                     divider: 'none',
                     justification: 'left',
                     padding: null,
@@ -102,12 +216,12 @@ const sample = {
             {
                 type: 'footer.footerText',
                 layout: {
-                    bgColor: 'footer',
-                    fgColor: 'footer',
+                    bgColor: 'accent',
+                    fgColor: 'accent',
                     justification: 'left',
                     padding: null,
                     text: {
-                        color: '#fff',
+                        color: 'foreground',
                         content: '$podcast.copyright',
                         size: 16,
                     },
@@ -117,29 +231,189 @@ const sample = {
         ],
         page: {
             backgroundColor: 'background',
+            fontSize: 14,
             padding: '0',
         },
         body: {
             home: {
-                firstPagePrefix: [],
+                firstPagePrefix: [
+                ],
                 segments: [
                     {
                         type: 'grid',
                         consumeCount: -1,
 
                         alignment: 'center' as primitives.Alignment,
-                        itemStyle: {
-                            type: 'tile',
-                        } as primitives.EpisodeStyle,
-                        padding: '0 0 40px',
-                        width: 960,
+                        itemSpacing: 30,
+                        maxItemsAcross: 3,
+                        padding: 0,
+                        width: 990,
+
+                        elementLayout: simpleEpisodeTileLayout,
                     },
                 ],
             },
             blog: {},
-            episode: [],
+            episode: cardEpisodeItemLayout,
             post: [],
-            page: {},
+            page: {
+                markdown: {
+                    elements: [
+                        {
+                            type: 'block.text',
+                            tag_name: 'h1',
+                            textContent: ['title'],
+                            styles: {
+                                fontSize: 26,
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                            },
+                        },
+                        {
+                            type: 'block.text',
+                            textContent: ['body'],
+                            textContentFilter: 'markdown',
+                        },
+                    ],
+                    tag_name: 'article',
+                    styles: {
+                        backgroundColor: 'foreground',
+                        boxShadow: '0 5px 5px rgba(0, 0, 0, 0.2)',
+                        maxWidth: 800,
+                        marginBottom: 50,
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        padding: 30,
+                    },
+                } as primitives.ElementLayout,
+                contact: {
+                    elements: [
+                        {
+                            type: 'block.text',
+                            tag_name: 'h1',
+                            textContent: ['title'],
+                            styles: {
+                                fontSize: 26,
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                            },
+                        },
+                        {
+                            type: 'func.narrowScope',
+                            elementOptions: {path: ['body']},
+                            children: [
+                                {
+                                    type: 'helper.page.contact',
+                                    elementOptions: {
+                                        alignX: 'center',
+                                        cellStyles: {
+                                            padding: 5,
+                                        },
+                                    },
+                                    styles: {
+                                        marginBottom: 20,
+                                        marginTop: 20,
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                    tag_name: 'article',
+                    styles: {
+                        backgroundColor: 'foreground',
+                        boxShadow: '0 5px 5px rgba(0, 0, 0, 0.2)',
+                        maxWidth: 800,
+                        marginBottom: 50,
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        padding: 30,
+                    },
+                } as primitives.ElementLayout,
+                hosts: {
+                    elements: [
+                        {
+                            type: 'block.text',
+                            tag_name: 'h1',
+                            textContent: ['title'],
+                            styles: {
+                                fontSize: 26,
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                            },
+                        },
+                        {
+                            type: 'helper.page.hosts',
+                            elementOptions: {style: 'flow'},
+                            children: [
+                                {
+                                    type: 'layout.column',
+                                    elementOptions: {innerAlignX: 'center'},
+                                    children: [
+                                        {
+                                            type: 'image',
+                                            elementOptions: {
+                                                gravatar: ['email'],
+                                                round: 200,
+                                                square: 'element',
+                                            },
+                                            styles: {
+                                                width: 200,
+                                            },
+                                        },
+                                        {
+                                            type: 'block.text',
+                                            textContent: ['name'],
+                                            styles: {
+                                                fontSize: 20,
+                                                fontWeight: 'bold',
+                                                lineHeight: 32,
+                                            },
+                                        },
+                                        {
+                                            type: 'helper.page.contact',
+                                            elementOptions: {
+                                                alignX: 'center',
+                                                cellStyles: {
+                                                    padding: 5,
+                                                },
+                                            },
+                                            styles: {
+                                                marginBottom: 20,
+                                                marginTop: 20,
+                                            },
+                                        },
+                                    ],
+                                    styles: {
+                                        padding: 15,
+                                        textAlign: 'center',
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                    tag_name: 'article',
+                    styles: {
+                        backgroundColor: 'foreground',
+                        boxShadow: '0 5px 5px rgba(0, 0, 0, 0.2)',
+                        maxWidth: 800,
+                        marginBottom: 50,
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        padding: 30,
+                    },
+                } as primitives.ElementLayout,
+            },
+        },
+    },
+
+    styling: {
+        buttons: {
+            bgColor: 'buttons',
+            paddingX: 1,
+            paddingY: 0.5,
+            roundedCorners: true,
+            textColor: 'buttonsText',
+            textSize: 20,
         },
     },
 }
@@ -190,6 +464,7 @@ export async function renderHome(data: any, url: URLResolver): Promise<string> {
                 },
 
                 url,
+                pagination: data.episodes,
             },
             getItemSource(data.episodes.items),
             renderLayout(
@@ -198,7 +473,6 @@ export async function renderHome(data: any, url: URLResolver): Promise<string> {
                     sample.layout.body.home.firstPagePrefix,
                     sample.layout.body.home.segments,
                 ),
-                renderEpisodeComponent,
             ),
         ),
         data.site,
@@ -221,6 +495,12 @@ export async function renderEpisode(data: any, url: URLResolver): Promise<string
 
                 url,
             },
+            null,
+            renderElement(
+                'episode',
+                data.episode,
+                sample.layout.body.episode
+            )
         ),
         data.site,
         {
@@ -270,17 +550,51 @@ export async function renderBlogPost(data: any, url: URLResolver): Promise<strin
     );
 };
 export async function renderPage(data: any, slug: string, url: URLResolver): Promise<string> {
+    function renderBody(): JSX.Element {
+        const page: primitives.Page = data.site.pages[slug];
+        if (!page) {
+            throw new Error(`Unknown page slug '${slug}'`);
+        }
+        switch (page.page_type) {
+            case 'markdown':
+                return renderElement(
+                    'page.markdown',
+                    page,
+                    sample.layout.body.page.markdown
+                );
+            case 'hosts':
+                const hostData = JSON.parse(page.body);
+                return renderElement(
+                    'page.hosts',
+                    {...page, body: hostData},
+                    sample.layout.body.page.hosts
+                );
+            case 'contact':
+                const contactData = JSON.parse(page.body);
+                return renderElement(
+                    'page.contact',
+                    {...page, body: contactData},
+                    sample.layout.body.page.contact
+                );
+            default:
+                throw new Error(`Unknown page type '${page.page_type}'`);
+        }
+    }
     return frame(
-        render({
-            ...sample,
-            data: data.site,
-            resources: {
-                cover_art: data.site.site.cover_image_url,
-                logo: data.site.site.logo_url,
-            },
+        render(
+            {
+                ...sample,
+                data: data.site,
+                resources: {
+                    cover_art: data.site.site.cover_image_url,
+                    logo: data.site.site.logo_url,
+                },
 
-            url,
-        }),
+                url,
+            },
+            null,
+            renderBody()
+        ),
         data.site,
         {
             fonts: sample.fonts,

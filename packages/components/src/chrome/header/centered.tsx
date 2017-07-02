@@ -11,6 +11,10 @@ import TextRenderer from '../../common/text';
 
 const Wrapper = styled('header', {
     padding: '200px 25%',
+
+    '@media (max-width: 700px)': {
+        padding: '100px 5%',
+    },
 });
 
 const Link = styled('a', ({text}: {text: Text}) => ({
@@ -22,6 +26,9 @@ const Link = styled('a', ({text}: {text: Text}) => ({
 
     ':hover': {
         textDecoration: 'underline',
+    },
+    '@media (max-width: 700px)': {
+        fontSize: text && text.size * 0.75 || 60,
     },
 }));
 

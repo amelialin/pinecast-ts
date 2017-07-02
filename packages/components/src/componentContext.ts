@@ -1,5 +1,7 @@
 import * as PropTypes from 'prop-types';
 
+import {ButtonStyle, ElementLayout, Page, Paginatable} from './primitives';
+
 
 export interface ComponentContext {
     colors: {[key: string]: string},
@@ -28,7 +30,7 @@ export interface ComponentContext {
         },
         features: {[feature: string]: boolean},
         links: Array<{title: string, url: string}>,
-        pages: {title: string, slug: string, page_type: string, created: string, body: string}[],
+        pages: {[slug: string]: Page},
         posts: Array<{title: string, slug: string, publish: string}>,
     },
 
@@ -43,9 +45,9 @@ export interface ComponentContext {
                 firstPagePrefix: any[],
                 segments: any[],
             },
-            episode: any[],
-            post: any[],
-            page: {[type: string]: any[]},
+            episode: ElementLayout,
+            post: ElementLayout,
+            page: {[type: string]: ElementLayout},
         },
         footer: any[],
         page: {
@@ -54,11 +56,16 @@ export interface ComponentContext {
         },
     },
 
+    styling: {
+        buttons: ButtonStyle,
+    },
+
     // For generating URLs
     url: (name: string, params?: {[param: string]: string}) => string,
+    pagination?: Paginatable,
 };
 
-export function getsContext(toAnnotate: any) {
+export function getsContext<T>(toAnnotate: T & {contextTypes?: Object}): T {
     toAnnotate.contextTypes = {
         ...toAnnotate.contextTypes,
         ctx: PropTypes.object.isRequired,

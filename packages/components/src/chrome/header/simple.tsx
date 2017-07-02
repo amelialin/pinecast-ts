@@ -11,7 +11,7 @@ import TextRenderer from '../../common/text';
 const Wrapper = styled('header', null);
 const InnerWrapper = styled('div', {
     height: 100,
-    lineHeight: '100px',
+    lineHeight: 100,
     margin: '0 auto',
     maxWidth: 960,
 });

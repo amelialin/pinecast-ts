@@ -1,7 +1,7 @@
 import {ItemSourceContext} from '../itemSourceContext';
 
 
-export default function renderN<T>(consume: number, itemSource: ItemSourceContext<T>, renderer: (item: T) => JSX.Element) {
+export default function renderN<T>(consume: number, itemSource: ItemSourceContext<T>, renderer: (item: T, i: number) => JSX.Element) {
     const output = [];
     if (consume === -1) {
         consume = Infinity;
@@ -14,7 +14,7 @@ export default function renderN<T>(consume: number, itemSource: ItemSourceContex
         if (done) {
             break;
         }
-        output.push(renderer(item));
+        output.push(renderer(item, i));
     }
     return output;
 };

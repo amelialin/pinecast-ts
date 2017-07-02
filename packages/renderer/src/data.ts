@@ -15,7 +15,7 @@ function fetch(ctx: Koa.Context, url: string) {
                 path: framedURL,
                 headers: {
                     ...ctx.request.header,
-                    'X-Pinecast-Forward': ctx.request.header['x-pinecast-forward'] || 'abts.pinecast.co',
+                    'X-Pinecast-Forward': ctx.request.header['x-pinecast-forward'] || 'serverboy.net',
                     'Host': 'pinecast.co',
                 },
             },

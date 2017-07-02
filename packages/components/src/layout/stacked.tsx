@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import {alignment} from '../styleMixins';
 import {ComponentContext, getsContext} from '../componentContext';
-import {Episode, EpisodeStyle, LayoutConfig, PostStyle} from '../primitives';
+import {Episode, LayoutConfig} from '../primitives';
 import {formatColor} from '../helpers';
 import {getsItemSource, ItemSourceContext} from '../itemSourceContext';
 import renderN from './util';
@@ -16,8 +16,8 @@ const WrapperInner = styled('div');
 export default getsContext(
     getsItemSource(
         function<T>(
-            {children, config}: {
-                children: (item: T, style: Object) => JSX.Element,
+            {children: childRenderer, config}: {
+                children: (index: number, item: T, style: Object) => JSX.Element,
                 config: LayoutConfig,
             },
             {ctx, itemSource}: {ctx: ComponentContext, itemSource: ItemSourceContext<T>}
@@ -35,7 +35,7 @@ export default getsContext(
                         padding: config.padding,
                     }}
                 >
-                    {renderN(config.consumeCount, itemSource, (item: T) => children(item, config.itemStyle))}
+                    {renderN(config.consumeCount, itemSource, (item: T, i: number) => childRenderer(i, item, null))}
                 </WrapperInner>
             </Wrapper>
         }
