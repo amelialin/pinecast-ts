@@ -1,52 +1,50 @@
 import * as React from 'react';
 
 import {backgroundImage} from '../../styleMixins';
-import {BackgroundImage, ButtonStyle} from '../../primitives';
+import {ButtonStyle, ElementLayout} from '../../primitives';
 import Button from '../../common/button';
 import {ComponentContext, getsContext} from '../../componentContext';
 import {formatColor} from '../../helpers';
-import styled from '../../styles';
-
-
-const Wrapper = styled('nav', {
-    margin: '0 auto',
-    padding: '50px 0',
-    textAlign: 'center',
-    maxWidth: 960,
-});
+import {MountProvider} from '../mounts';
+import renderElements from '../../elements';
 
 
 export default getsContext(
     (
-        {layout}:
+        {layout, template}:
             {
                 layout: {
-                    bgColor?: string,
-                    bgImage?: BackgroundImage,
-
                     nextText: string,
                     previousText: string,
                 },
+                template: ElementLayout,
             },
         {ctx}: {ctx: ComponentContext}
     ) =>
         ctx.pagination ?
-            <Wrapper style={{...backgroundImage(layout.bgImage, ctx), backgroundColor: formatColor(layout.bgColor, ctx)}}>
-                {ctx.pagination.has_previous &&
-                    <Button
-                        {...ctx.styling.buttons}
-                        href={ctx.url('home') + (ctx.pagination.previous_page_number !== 1 ? `?page=${ctx.pagination.previous_page_number}` : '')}
-                    >
-                        {layout.previousText}
-                    </Button>}
-                {ctx.pagination.has_next &&
-                    <Button
-                        {...ctx.styling.buttons}
-                        href={ctx.url('home') + `?page=${ctx.pagination.next_page_number}`}
-                        style={{marginLeft: '0.5em'}}
-                    >
-                        {layout.nextText}
-                    </Button>}
-            </Wrapper> :
+            <MountProvider
+                children={renderElements('mount', ctx.data, template)}
+                mounts={{
+                    previousLink:
+                        ctx.pagination.has_previous &&
+                        <Button
+                            {...ctx.styling.buttons}
+                            href={ctx.url('home') + (ctx.pagination.previous_page_number !== 1 ? `?page=${ctx.pagination.previous_page_number}` : '')}
+                        >
+                            {layout.previousText}
+                        </Button> ||
+                        null,
+                    nextLink:
+                        ctx.pagination.has_next &&
+                        <Button
+                            {...ctx.styling.buttons}
+                            href={ctx.url('home') + `?page=${ctx.pagination.next_page_number}`}
+                            style={{marginLeft: ctx.pagination.has_previous ? '0.5em' : null}}
+                        >
+                            {layout.nextText}
+                        </Button> ||
+                        null,
+                }}
+            /> :
             null
 );

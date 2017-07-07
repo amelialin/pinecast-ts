@@ -7,9 +7,11 @@ import styled from '../styles';
 import BlockLink from './BlockLink';
 import BlockText from './BlockText';
 import EmbedPlayer from './EmbedPlayer';
+import FixedWrapper from './FixedWrapper';
 import HostRepeater from './pageHelpers/HostRepeater';
 import Image from './Image';
 import LayoutColumn from './LayoutColumn';
+import LayoutRow from './LayoutRow';
 import Mount from './Mount';
 import NarrowScope from './functional/NarrowScope';
 
@@ -43,6 +45,12 @@ export function layoutElements(item: Object, elements: Array<Element | InlineEle
                 break;
             case 'layout.column':
                 Element = LayoutColumn;
+                break;
+            case 'layout.row':
+                Element = LayoutRow;
+                break;
+            case 'layout.fixedWrapper':
+                Element = FixedWrapper;
                 break;
             case 'mount':
                 Element = Mount;

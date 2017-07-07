@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 
-export class MountProvider extends React.Component<{children?: any, mounts: {[key: string]: JSX.Element}}, null> {
+export class MountProvider extends React.Component<{children?: any, mounts: {[key: string]: JSX.Element | Array<JSX.Element> | null}}, null> {
     static childContextTypes = {
         mounts: PropTypes.object.isRequired,
     };
@@ -22,7 +22,7 @@ export class MountProvider extends React.Component<{children?: any, mounts: {[ke
 export function getsMount<T>(toAnnotate: T & {contextTypes?: Object}): T {
     toAnnotate.contextTypes = {
         ...toAnnotate.contextTypes,
-        mount: PropTypes.object.isRequired,
+        mounts: PropTypes.object.isRequired,
     };
     return toAnnotate;
 };

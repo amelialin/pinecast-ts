@@ -51,15 +51,6 @@ export default async function frame(
     const rawCustomCSS = siteData.site.custom_css;
     const customCSS = rawCustomCSS ? `<link href="data:text/css;base64,${new Buffer(rawCustomCSS).toString('base64')}" rel="stylesheet">` : '';
 
-    const disqusInclude = siteData.site.disqus_url ? `
-    <script>
-      (function() {
-      var d = document, s = d.createElement('script');
-      s.src = '//${escapeHTML(siteData.site.disqus_url)}.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', +new Date());
-      (d.head || d.body).appendChild(s);
-      })();
-    </script>`.trim() : '';
     const gaInclude = siteData.site.analytics_id ? `
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -93,7 +84,6 @@ export default async function frame(
         <link rel="alternate" type="application/rss+xml" title="Podcast Feed" href="https://pinecast.com/feed/${escapeHTML(encodeURIComponent(siteData.podcast.slug))}">
       </head>
       ${markup}
-      ${disqusInclude}
       ${gaInclude}
     </html>
     `;

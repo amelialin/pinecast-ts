@@ -13,7 +13,6 @@ export interface ComponentContext {
     resources: {[key: string]: string},
     data: {
         site: {
-            disqus_url: string | null,
             analytics_id: string | null,
             itunes_banner: string | null,
 

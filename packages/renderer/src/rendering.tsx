@@ -164,30 +164,77 @@ const sample = {
     layout: {
         header: [
             {
-                type: 'header.centered',
-                layout: {
-                    bgColor: 'accent',
-                    type: 'text',
-                    text: {
-                        color: 'foreground',
-                        content: '$podcast.name',
-                        font: 'logo',
-                        size: 80,
-                        transform: 'uppercase',
-                    },
+                type: 'abstract',
+                template: {
+                    elements: [
+                        {
+                            type: 'layout.column',
+                            children: [
+                                {
+                                    type: 'block.link',
+                                    elementOptions: {underlineOnHover: true},
+                                    props: {
+                                        href: {name: 'home'},
+                                    },
+                                    styles: {
+                                        color: 'foreground',
+                                        fontFamily: 'logo',
+                                        fontSize: 60,
+                                        textAlign: 'center',
+                                        textTransform: 'uppercase',
+
+                                    },
+                                    textContent: ['podcast', 'name'],
+                                },
+                            ],
+                            styles: {
+                                backgroundColor: 'accent',
+
+                                padding: '200px 25%',
+                                '@media (max-width: 700px)': {
+                                    padding: '100px 5%',
+                                },
+                            },
+                        },
+                    ],
+                } as primitives.ElementLayout,
+
+                tag: 'header.centered',
+                tagMetadata: {
+                    content: 'text',
                 },
             },
             {
                 type: 'subheader.subscribeLinks',
-                layout: {
-                    // bgColor: 'base',
-                    text: {
-                        color: 'text',
-                        content: 'Subscribe with',
-                        size: 20,
-                        weight: 500,
-                    },
-                },
+                layout: {},
+                template: {
+                    tagName: 'nav',
+                    elements: [
+                        {
+                            type: 'layout.fixedWrapper',
+                            children: [
+                                {
+                                    type: 'block.text',
+                                    styles: {
+                                        flex: '1 1',
+                                        fontSize: 20,
+                                        fontWeight: 500,
+                                    },
+                                    textContent: 'Subscribe with',
+                                },
+                                {
+                                    type: 'mount',
+                                    props: {mount: 'links'},
+                                },
+                            ],
+                            elementOptions: {
+                                innerPadding: '40px 0',
+                                maxWidth: 960,
+                            },
+                            styles: {alignItems: 'center', display: 'flex'},
+                        }
+                    ],
+                } as primitives.ElementLayout,
             },
         ],
         footer: [
@@ -197,36 +244,78 @@ const sample = {
                     nextText: 'Go Back in Time',
                     previousText: 'Onward to the Future',
                 },
+                template: {
+                    tagName: 'nav',
+                    elements: [
+                        {
+                            type: 'mount',
+                            props: {mount: 'previousLink'},
+                        },
+                        {
+                            type: 'mount',
+                            props: {mount: 'nextLink'},
+                        },
+                    ],
+                    styles: {
+                        display: 'flex',
+                        justifyContent: 'center',
+                        padding: '40px 0',
+                    },
+                },
             },
             {
-                type: 'footer.horizLinkBar',
+                type: 'links.linkBar',
                 layout: {
-                    bgColor: 'secondaryAccent',
-                    fgColor: 'secondaryAccent',
-                    divider: 'none',
-                    justification: 'left',
-                    padding: null,
+                    includes: ['pages', 'links'],
                     textStyle: {
-                        color: 'links',
-                        size: 14,
+                        color: 'text',
                     },
-                    includes: ['pages', 'links'],
                 },
+                template: {
+                    tagName: 'nav',
+                    elements: [
+                        {
+                            type: 'layout.fixedWrapper',
+                            children: [
+                                {
+                                    type: 'mount',
+                                    props: {mount: 'links'},
+                                },
+                            ],
+                            elementOptions: {
+                                bgColor: 'secondaryAccent',
+                                fgColor: 'secondaryAccent',
+                                innerPadding: '40px 0',
+                                maxWidth: 960,
+                            },
+                            styles: {textAlign: 'left'},
+                        }
+                    ],
+                } as primitives.ElementLayout,
             },
             {
-                type: 'footer.footerText',
-                layout: {
-                    bgColor: 'accent',
-                    fgColor: 'accent',
-                    justification: 'left',
-                    padding: null,
-                    text: {
-                        color: 'foreground',
-                        content: '$podcast.copyright',
-                        size: 16,
-                    },
-                    includes: ['pages', 'links'],
-                },
+                type: 'abstract',
+                template: {
+                    elements: [
+                        {
+                            type: 'layout.fixedWrapper',
+                            children: [
+                                {
+                                    type: 'block.text',
+                                    styles: {color: 'foreground'},
+                                    textContent: ['podcast', 'copyright'],
+                                },
+                            ],
+                            elementOptions: {
+                                bgColor: 'accent',
+                                fgColor: 'accent',
+                                innerPadding: '20px 0',
+                                maxWidth: 960,
+                            },
+                            styles: {textAlign: 'left'},
+                        }
+                    ],
+                } as primitives.ElementLayout,
             },
         ],
         page: {

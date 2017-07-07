@@ -49,6 +49,11 @@ export default function(acc: CSSProperties, elementOptions: {[option: string]: s
                         break;
                 }
                 break;
+            case 'underlineOnHover':
+                acc[':hover'] = {
+                    ...acc[':hover'],
+                    textDecoration: 'underline',
+                };
         }
         return acc;
     }, acc);

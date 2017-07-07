@@ -4,10 +4,8 @@ import {styled} from 'styletron-react';
 
 // This is a hack to disable Styletron's built-in autoprefixing.
 declare function require(name:string);
-const su = require('styletron-utils');
-su.injectStylePrefixed = (styletron, styles, media, pseudo) => {
-    return su.injectStyle(styletron, styles, media, pseudo);
-};
+const su = require('styletron-react/node_modules/styletron-utils');
+su.injectStylePrefixed = (styletron, styles, media, pseudo) => su.injectStyle(styletron, styles, media, pseudo);
 
 
 export default function(

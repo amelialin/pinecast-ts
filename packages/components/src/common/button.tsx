@@ -16,18 +16,20 @@ const Button = styled('a', {
 
 
 export default getsContext(
-    (props: ButtonStyle & {href: string, children?: any, style?: Object}, {ctx}: {ctx: ComponentContext}) =>
-        <Button
+    (props: {href: string, children?: any, style?: Object}, {ctx}: {ctx: ComponentContext}) => {
+        const buttonStyle = ctx.styling.buttons || ({} as ButtonStyle);
+        return <Button
             href={props.href}
             style={{
                 ...props.style,
-                backgroundColor: formatColor(props.bgColor, ctx) || 'transparent',
-                borderRadius: props.roundedCorners ? 3 : 0,
-                color: formatColor(props.textColor, ctx),
-                fontSize: props.textSize || 'inherit',
-                padding: `${props.paddingY}em ${props.paddingX}em`,
+                backgroundColor: formatColor(buttonStyle.bgColor, ctx) || 'transparent',
+                borderRadius: buttonStyle.roundedCorners ? 3 : 0,
+                color: formatColor(buttonStyle.textColor, ctx),
+                fontSize: buttonStyle.textSize || 'inherit',
+                padding: `${buttonStyle.paddingY}em ${buttonStyle.paddingX}em`,
             }}
         >
             {props.children}
-        </Button>
+        </Button>;
+    }
 );

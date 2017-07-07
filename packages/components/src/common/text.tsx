@@ -36,7 +36,13 @@ export default getsContext(
     (props: Text & {style?: Object}, {ctx}: {ctx: ComponentContext}) =>
         <Span
             style={{
-                ...computeTextStyle(props, ctx),
+                ...computeTextStyle(
+                    {
+                        color: 'text',
+                        ...props,
+                    },
+                    ctx
+                ),
                 ...props.style,
             }}
         >

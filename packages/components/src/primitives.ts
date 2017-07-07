@@ -57,7 +57,7 @@ export interface ButtonStyle {
 
 
 export type DataPath = Array<string>;
-export type AbstractURL = {name: string, params: {[param: string]: Array<string>}};
+export type AbstractURL = {name: string, params?: {[param: string]: Array<string>}};
 export type StyledCSSProperties = CSSProperties & {
     ':active'?: CSSProperties,
     ':focus'?: CSSProperties,
@@ -90,6 +90,7 @@ export interface Element extends StyleableElement {
         'image' |
         'layout.inline' |
         'layout.column' |
+        'layout.fixedWrapper' |
         'layout.row' |
         'mount' |
         'helper.page.contact' |
@@ -109,6 +110,10 @@ export interface ElementLayout {
     tagName?: string,
     elements: Array<Element>,
     styles?: StyledCSSProperties,
+
+    // For use by the editor to store extra information about trees of elements
+    tag?: string,
+    tagMetadata?: any,
 };
 export interface LayoutConfig {
     type: string,

@@ -11,7 +11,7 @@ module.exports = {
     resolve: {
         mainFields: [
             'jsnext:main',
-            'module',
+            // 'module',
             'main',
         ],
         modules: [

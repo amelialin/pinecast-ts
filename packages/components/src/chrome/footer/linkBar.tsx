@@ -1,26 +1,14 @@
 import * as React from 'react';
 
 import {backgroundImage} from '../../styleMixins';
-import {TextStyle} from '../../primitives';
-import ButtonRenderer from '../../common/button';
+import {ElementLayout, TextStyle} from '../../primitives';
 import {ComponentContext, getsContext} from '../../componentContext';
 import {formatColor} from '../../helpers';
-import ImageRenderer from '../../common/image';
+import {MountProvider} from '../mounts';
+import renderElements from '../../elements';
 import styled from '../../styles';
 import TextRenderer from '../../common/text';
 
-
-const OuterWrapper = styled('nav', null);
-const Wrapper = styled(
-    'div',
-    ({padding}: {padding: number | null}) =>
-        ({
-            color: '#fff',
-            margin: '0 auto',
-            maxWidth: 960,
-            padding: padding !== null ? `${padding}px 0` : '40px 0',
-        })
-);
 
 const Divider = styled('span', {
     display: 'inline-block',
@@ -37,31 +25,29 @@ const Link = styled('a', {
     },
 });
 
-type includeableTypes = 'links' | 'pages';
+type includeableType = 'links' | 'pages';
 type includedTypes = ['links'] | ['pages'] | ['links', 'pages'] | ['pages', 'links'];
 
 type dividerStyle = 'none' | 'bullet' | 'dash';
 
 export default getsContext(
     (
-        {layout}:
+        {layout, template}:
             {
                 layout: {
-                    bgColor: string,
-                    fgColor: string,
-                    divider: dividerStyle,
-                    justification: 'center' | 'left' | 'right',
-                    padding: number | null,
+                    divider?: dividerStyle,
                     textStyle: TextStyle,
 
                     includes: includedTypes,
                 },
+                template: ElementLayout,
             },
         {ctx}: {ctx: ComponentContext}
     ) =>
-        <OuterWrapper style={{backgroundColor: formatColor(layout.bgColor, ctx)}}>
-            <Wrapper style={{backgroundColor: formatColor(layout.fgColor, ctx), textAlign: layout.justification}} padding={layout.padding}>
-                {(layout.includes as Array<includeableTypes>).map((type: includeableTypes): Array<JSX.Element> => {
+        <MountProvider
+            children={renderElements('mount', ctx.data, template)}
+            mounts={{
+                links: (layout.includes as Array<includeableType>).map((type: includeableType): Array<JSX.Element> => {
                     let linkEls: Array<JSX.Element>;
                     if (type === 'links') {
                         linkEls = ctx.data.links.map((link: {title: string, url: string}, i: number): JSX.Element =>
@@ -84,7 +70,7 @@ export default getsContext(
                             </Link>
                         );
                     }
-                    if (layout.divider === 'none') {
+                    if (!layout.divider || layout.divider === 'none') {
                         return linkEls;
                     }
                     let divChar: string;
@@ -101,10 +87,10 @@ export default getsContext(
                             })(layout.divider);
                     }
                     const divider = key => <Divider key={`div${key}`}>{divChar}</Divider>;
-                    return linkEls.map((le, i) => i ? [divider(i), le] : [le]).reduce((acc, cur) => acc.concat(cur));
+                    return linkEls.map((le, i) => i ? [divider(i), le] : [le]).reduce((acc, cur) => acc.concat(cur), []);
                 }).reduce(
                     (acc: Array<JSX.Element>, cur: Array<JSX.Element>): Array<JSX.Element> => acc.concat(cur)
-                )}
-            </Wrapper>
-        </OuterWrapper>
+                ),
+            }}
+        />
 );

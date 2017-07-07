@@ -14,7 +14,7 @@ export function prepareProps(item: any, props: Object, ctx: ComponentContext): O
                 const href: AbstractURL = props[cur];
                 acc[cur] = ctx.url(
                     href.name,
-                    Object.keys(href.params).reduce((resolvedParams, param) => {
+                    Object.keys(href.params || {}).reduce((resolvedParams, param) => {
                         resolvedParams[param] = extractPath(item, href.params[param]);
                         return resolvedParams;
                     }, {})
