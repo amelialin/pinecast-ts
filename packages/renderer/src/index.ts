@@ -19,22 +19,6 @@ router.get('home', '/', async ctx => {
 
     ctx.body = await rendering.renderHome(resources, router.url.bind(router));
 });
-router.get('blog', '/blog', async ctx => {
-    const resources = await data.awaitAll({
-        ...ctx.state.resources,
-        posts: data.getPosts(ctx, ctx.query.page ? Number(ctx.query.page) : 1),
-    });
-
-    ctx.body = await rendering.renderBlog(resources, router.url.bind(router));
-});
-router.get('post', '/blog/:slug', async ctx => {
-    const resources = await data.awaitAll({
-        ...ctx.state.resources,
-        post: data.getPost(ctx, ctx.params.slug),
-    });
-
-    ctx.body = await rendering.renderBlogPost(resources, router.url.bind(router));
-});
 router.get('episode', '/episode/:id', async ctx => {
     const resources = await data.awaitAll({
         ...ctx.state.resources,
@@ -76,7 +60,6 @@ async function proxy(ctx: Koa.Context) {
     });
 }
 
-router.get('blogRSS', '/rss/blog', proxy);
 router.get('/robots.txt', proxy);
 router.get('/sitemap.xml', proxy);
 router.get('/favicon.ico', proxy);

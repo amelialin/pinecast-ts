@@ -12,7 +12,7 @@ interface Props {
     itemSource: ItemSourceContext<any> | null,
 }
 
-export default class ContextProvider extends React.PureComponent<Props, any> {
+export default class ContextProvider extends React.PureComponent<Props> {
     static childContextTypes = {
         ctx: PropTypes.object.isRequired,
         itemSource: PropTypes.object,

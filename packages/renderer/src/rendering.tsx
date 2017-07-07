@@ -253,9 +253,7 @@ const sample = {
                     },
                 ],
             },
-            blog: {},
             episode: cardEpisodeItemLayout,
-            post: [],
             page: {
                 markdown: {
                     elements: [
@@ -506,45 +504,6 @@ export async function renderEpisode(data: any, url: URLResolver): Promise<string
         {
             fonts: sample.fonts,
             title: data.episode.title,
-        },
-        url,
-    );
-};
-export async function renderBlog(data: any, url: URLResolver): Promise<string> {
-    return frame(
-        render({
-            ...sample,
-            data: data.site,
-            resources: {
-                cover_art: data.site.site.cover_image_url,
-                logo: data.site.site.logo_url,
-            },
-
-            url,
-        }, getItemSource(data.posts.items)),
-        data.site,
-        {
-            fonts: sample.fonts,
-        },
-        url,
-    );
-};
-export async function renderBlogPost(data: any, url: URLResolver): Promise<string> {
-    return frame(
-        render({
-            ...sample,
-            data: data.site,
-            resources: {
-                cover_art: data.site.site.cover_image_url,
-                logo: data.site.site.logo_url,
-            },
-
-            url,
-        }),
-        data.site,
-        {
-            fonts: sample.fonts,
-            title: data.post.title,
         },
         url,
     );

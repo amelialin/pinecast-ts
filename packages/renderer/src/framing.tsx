@@ -91,7 +91,6 @@ export default async function frame(
         <link type="image/png" rel="icon" href="${escapeHTML(siteData.features.favicon && siteData.site.favicon_url || DEFAULT_FAVICON)}">
         ${siteData.site.itunes_banner ? `<meta name="apple-itunes-app" content="app-id=${escapeHTML(siteData.site.itunes_banner)}">` : ''}
         <link rel="alternate" type="application/rss+xml" title="Podcast Feed" href="https://pinecast.com/feed/${escapeHTML(encodeURIComponent(siteData.podcast.slug))}">
-        ${siteData.posts.length ? `<link rel="alternate" type="application/rss+xml" title="Blog Feed" href="${escapeHTML(url('blogRSS'))}">` : ''}
       </head>
       ${markup}
       ${disqusInclude}

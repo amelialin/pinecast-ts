@@ -52,12 +52,6 @@ export async function getEpisodes(ctx: Koa.Context, page: number) {
 export async function getEpisode(ctx: Koa.Context, id: string) {
     return fetch(ctx, `/episode/${encodeURIComponent(id)}`).then(parse);
 };
-export async function getPosts(ctx: Koa.Context, page: number) {
-    return fetch(ctx, `/blog?page=${page}`).then(parse);
-};
-export async function getPost(ctx: Koa.Context, slug: string) {
-    return fetch(ctx, `/blog/${encodeURIComponent(slug)}`).then(parse);
-};
 
 
 export async function awaitAll(promises: {[key: string]: Promise<any>}): Promise<{[key: string]: any}> {

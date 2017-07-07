@@ -31,7 +31,6 @@ export interface ComponentContext {
         features: {[feature: string]: boolean},
         links: Array<{title: string, url: string}>,
         pages: {[slug: string]: Page},
-        posts: Array<{title: string, slug: string, publish: string}>,
     },
 
     layout: {
@@ -41,12 +40,7 @@ export interface ComponentContext {
                 firstPagePrefix: any[],
                 segments: any[],
             },
-            blog: {
-                firstPagePrefix: any[],
-                segments: any[],
-            },
             episode: ElementLayout,
-            post: ElementLayout,
             page: {[type: string]: ElementLayout},
         },
         footer: any[],
