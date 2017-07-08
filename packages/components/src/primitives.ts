@@ -14,6 +14,18 @@ export interface PageLayout {
     footer: Array<ComponentLayout>,
 
     page: Page,
+    body: {
+        home: {
+            firstPagePrefix: Array<LayoutConfig>,
+            segments: Array<LayoutConfig>,
+        },
+        episode: ElementLayout,
+        page: {
+            markdown: ElementLayout,
+            contact: ElementLayout,
+            hosts: ElementLayout,
+        },
+    },
 };
 
 export interface Page {

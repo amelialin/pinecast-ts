@@ -40,7 +40,7 @@ export default getsContext(
                     {
                         color: 'text',
                         ...props,
-                    },
+                    } as TextStyle,
                     ctx
                 ),
                 ...props.style,

@@ -1,4 +1,4 @@
-import * as http from 'http';
+import * as https from 'https';
 
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
@@ -41,7 +41,7 @@ router.get('page', '/:slug', async (ctx, next) => {
 
 async function proxy(ctx: Koa.Context) {
     ctx.body = await new Promise((resolve, reject) => {
-        http.get(
+        https.get(
             {
                 hostname: 'pinecast.co',
                 method: 'GET',

@@ -1,9 +1,10 @@
 import * as React from 'react';
 
+import {AbstractURL} from '../primitives';
 import {ComponentContext, getsContext} from '../componentContext';
 import {extractPath} from './extractor';
 import {formatColor} from '../helpers';
-import {AbstractURL} from '../primitives';
+import {MOBILE_MEDIA_QUERY} from '../media';
 import styled from '../styles';
 
 
@@ -36,7 +37,12 @@ export function prepareStyle(style: Object, ctx: ComponentContext): Object {
     }
     return Object.keys(style).reduce((acc, cur) => {
         if (cur[0] === ':' || cur[0] === '@') {
-            acc[cur] = prepareStyle(style[cur], ctx);
+            const restyled = prepareStyle(style[cur], ctx);
+            if (cur === '@mobile') {
+                acc[MOBILE_MEDIA_QUERY] = restyled;
+            } else {
+                acc[cur] = restyled;
+            }
             return acc;
         }
         switch (cur) {

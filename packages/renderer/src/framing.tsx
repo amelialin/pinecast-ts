@@ -48,9 +48,6 @@ export default async function frame(
     );
 
     const markup = ReactDOM.renderToStaticMarkup(root);
-    const rawCustomCSS = siteData.site.custom_css;
-    const customCSS = rawCustomCSS ? `<link href="data:text/css;base64,${new Buffer(rawCustomCSS).toString('base64')}" rel="stylesheet">` : '';
-
     const gaInclude = siteData.site.analytics_id ? `
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -78,7 +75,6 @@ export default async function frame(
           html, body {font-family: ${escapeHTML(fonts.body)}; height: 100%; margin: 0; padding: 0}
         </style>
         ${styletron.getStylesheetsHtml()}
-        ${customCSS}
         <link type="image/png" rel="icon" href="${escapeHTML(siteData.features.favicon && siteData.site.favicon_url || DEFAULT_FAVICON)}">
         ${siteData.site.itunes_banner ? `<meta name="apple-itunes-app" content="app-id=${escapeHTML(siteData.site.itunes_banner)}">` : ''}
         <link rel="alternate" type="application/rss+xml" title="Podcast Feed" href="https://pinecast.com/feed/${escapeHTML(encodeURIComponent(siteData.podcast.slug))}">
@@ -86,5 +82,5 @@ export default async function frame(
       ${markup}
       ${gaInclude}
     </html>
-    `;
+    `.trim().replace(/\s*\n\s*/g, '\n');
 };

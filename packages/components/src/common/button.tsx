@@ -3,6 +3,7 @@ import * as React from 'react';
 import {ComponentContext, getsContext} from '../componentContext';
 import {ButtonStyle} from '../primitives';
 import {formatColor} from '../helpers';
+import {prepareStyle} from '../elements/atom';
 import styled from '../styles';
 
 
@@ -21,7 +22,7 @@ export default getsContext(
         return <Button
             href={props.href}
             style={{
-                ...props.style,
+                ...prepareStyle(props.style, ctx),
                 backgroundColor: formatColor(buttonStyle.bgColor, ctx) || 'transparent',
                 borderRadius: buttonStyle.roundedCorners ? 3 : 0,
                 color: formatColor(buttonStyle.textColor, ctx),

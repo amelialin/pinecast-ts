@@ -10,7 +10,7 @@ import renderElements from '../../elements';
 const marginStyles = {
     marginLeft: '0.5em',
 
-    '@media (max-width: 700px)': {
+    '@mobile': {
         marginLeft: 0,
         marginTop: '0.5em',
     },
@@ -29,6 +29,7 @@ export default getsContext(
                     ctx.data.site.itunes_url &&
                         <ButtonRenderer
                             href={ctx.data.site.itunes_url}
+                            key='apple'
                             style={marginStyles}
                         >
                             Apple Podcasts
@@ -36,6 +37,7 @@ export default getsContext(
                     ctx.data.site.google_play_url &&
                         <ButtonRenderer
                             href={ctx.data.site.google_play_url}
+                            key='google'
                             style={marginStyles}
                         >
                             Google Play
@@ -43,12 +45,14 @@ export default getsContext(
                     ctx.data.site.stitcher_url &&
                         <ButtonRenderer
                             href={ctx.data.site.stitcher_url}
+                            key='stitcher'
                             style={marginStyles}
                         >
                             Stitcher
                         </ButtonRenderer>,
                     <ButtonRenderer
                         href={`https://pinecast.com/feed/${encodeURIComponent(ctx.data.podcast.slug)}`}
+                        key='rss'
                         style={marginStyles}
                     >
                         RSS
