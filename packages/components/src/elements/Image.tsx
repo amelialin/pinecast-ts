@@ -2,11 +2,9 @@ import * as md5 from 'md5';
 import * as React from 'react';
 
 import atom from './atom';
-import {blockChildren} from './children';
 import {Element} from '../primitives';
 import {extractPath, extractProps} from './extractor';
 import expandElementStyles from './globalElementOptions';
-import styled from '../styles';
 
 
 const Image = atom('img');
@@ -33,6 +31,11 @@ export default (
         const email = element.elementOptions.gravatar;
         const hash = md5(typeof email === 'string' ? email : extractPath(item, email));
         props.src = `https://www.gravatar.com/avatar/${hash}?s=${parseFloat(styles.width) || parseFloat(styles.height) || 256}`;
+    } else  {
+        const [, key] = /^https:\/\/pinecast\-storage\.s3\.amazonaws\.com\/(.*)$/.exec(props.src) || [null, null];
+        if (key && styles.height && styles.width) {
+            props.src = `https://thumb.service.pinecast.com/resize?h=${encodeURIComponent(styles.height)}&w=${encodeURIComponent(styles.width)}&key=${encodeURIComponent(key)}&format=jpeg`;
+        }
     }
     if (element.elementOptions && element.elementOptions.round) {
         styles.borderRadius = element.elementOptions.round;
@@ -40,7 +43,9 @@ export default (
     }
     if (element.elementOptions.square === 'element') {
         const SquareDiv = atom('div');
-        return <SquareDiv style={{...styles, ...squareStyle}}>
+        styles.position = styles.position || squareStyle.position as any;
+        styles[':after'] = squareStyle[':after'];
+        return <SquareDiv style={styles}>
             <Image
                 {...props}
                 style={{

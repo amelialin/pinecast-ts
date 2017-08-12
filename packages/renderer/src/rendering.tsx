@@ -5,6 +5,7 @@ import {
     ComponentContext,
     ItemSourceContext,
     primitives,
+    renderBlock,
     renderElement,
     renderLayout,
 } from '@pinecast/sb-components/dist';
@@ -19,9 +20,7 @@ type URLResolver = (route: string, params?: {[param: string]: string}) => string
 
 function render(data: ComponentContext, itemSource: ItemSourceContext<any> | null = null, children?: any | null): JSX.Element {
     return <ContextProvider ctx={data} itemSource={itemSource}>
-        <Body page={data.layout}>
-            {children}
-        </Body>
+        <Body children={children} />
     </ContextProvider>;
 }
 
@@ -40,16 +39,12 @@ function getItemSource<T>(items: Array<T>): ItemSourceContext<T> {
     };
 }
 
-function concatOnFirstPage<T>(page: number, firstPage: Array<T>, allPages: Array<T>): Array<T> {
-    return page === 1 ? firstPage.concat(allPages) : allPages;
-}
-
 function getContextFromResources(
     func: (context: ComponentContext, resources: any, ...args: Array<any>) => Promise<string>
 ): (data: any, ...args: Array<any>) => Promise<string> {
     return async (data: any, ...args: Array<any>): Promise<string> => {
         const context: ComponentContext = {
-            ...presets.themes.zen,
+            ...presets.themes.podcasty,
             data: data.site,
             resources: {
                 cover_art: data.site.site.cover_image_url,
@@ -70,16 +65,18 @@ export const renderHome = getContextFromResources(
             render(
                 context,
                 getItemSource(resources.episodes.items),
-                renderLayout(
-                    concatOnFirstPage<primitives.LayoutConfig>(
-                        resources.episodes.page,
-                        context.layout.body.home.firstPagePrefix,
-                        context.layout.body.home.segments,
-                    ),
-                ),
+                [
+                    resources.episodes.page === 1 ?
+                        renderLayout(context.layout.body.home.firstPagePrefix) :
+                        [],
+                    resources.episodes.page === 1 ?
+                        renderBlock(context.layout.body.home.firstPageAfterPrefix || []) :
+                        [],
+                    renderLayout(context.layout.body.home.segments),
+                ].filter(x => x),
             ),
             context.data,
-            {fonts: context.fonts},
+            {context},
             url,
         );
     }
@@ -98,7 +95,7 @@ export const renderEpisode = getContextFromResources(
             ),
             context.data,
             {
-                fonts: context.fonts,
+                context,
                 title: resources.episode.title,
             },
             url,
@@ -141,7 +138,7 @@ export const renderPage = getContextFromResources(
             render(context, null, renderBody()),
             context.data,
             {
-                fonts: context.fonts,
+                context,
                 title: context.data.pages[slug].title,
             },
             url,

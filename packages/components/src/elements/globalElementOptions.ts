@@ -1,11 +1,19 @@
 import {CSSProperties} from 'react';
 
-export default function(acc: CSSProperties, elementOptions: {[option: string]: string | number}): CSSProperties {
+
+export type PositionObject = {
+    bottom?: number,
+    left?: number,
+    location: 'absolute' | 'relative' | 'fixed',
+    right?: number,
+    top?: number,
+};
+
+export default function(acc: CSSProperties, elementOptions: {[option: string]: string | number | PositionObject}): CSSProperties {
     if (!elementOptions) {
         return acc;
     }
-    return Object.keys(elementOptions).reduce((acc, cur) => {
-        const value = elementOptions[cur];
+    return Object.entries(elementOptions).reduce((acc, [cur, value]) => {
         switch (cur) {
             case 'alignX':
                 switch (value) {
@@ -47,6 +55,25 @@ export default function(acc: CSSProperties, elementOptions: {[option: string]: s
                         }
                         acc.textAlign = 'right';
                         break;
+                }
+                break;
+            case 'position':
+                const {location, ...positioning} = value as PositionObject;
+                acc.position = location;
+                acc.bottom = 'bottom' in positioning ? positioning.bottom : acc.bottom;
+                acc.left = 'left' in positioning ? positioning.left : acc.left;
+                acc.right = 'right' in positioning ? positioning.right : acc.right;
+                acc.top = 'top' in positioning ? positioning.top : acc.top;
+                if (positioning['@mobile']) {
+                    const posMob = positioning['@mobile'];
+                    const accMob = acc['@mobile'] || {};
+                    acc['@mobile'] = {
+                        ...accMob,
+                        bottom: 'bottom' in posMob ? posMob.bottom : accMob.bottom,
+                        left: 'left' in posMob ? posMob.left : accMob.left,
+                        right: 'right' in posMob ? posMob.right : accMob.right,
+                        top: 'top' in posMob ? posMob.top : accMob.top,
+                    };
                 }
                 break;
             case 'underlineOnHover':

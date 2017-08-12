@@ -28,7 +28,7 @@ export interface ComponentContext {
             copyright: string,
         },
         features: {[feature: string]: boolean},
-        links: Array<{title: string, url: string}>,
+        links: Array<primitives.Link>,
         pages: {[slug: string]: primitives.Page},
     },
 
@@ -36,6 +36,7 @@ export interface ComponentContext {
 
     styling: {
         buttons: primitives.ButtonStyle,
+        page: primitives.PageStyle,
     },
 
     // For generating URLs

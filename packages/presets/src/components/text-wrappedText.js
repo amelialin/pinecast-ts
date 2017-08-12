@@ -1,4 +1,4 @@
-export default ({text}) => ({
+export default ({text, elementOptions = null, style = null}) => ({
     type: 'abstract',
     template: {
         elements: [
@@ -7,17 +7,22 @@ export default ({text}) => ({
                 children: [
                     {
                         type: 'block.text',
-                        styles: {color: 'foreground'},
                         textContent: text,
                     },
                 ],
-                elementOptions: {
+                elementOptions: Object.assign({
                     bgColor: 'accent',
                     fgColor: 'accent',
                     innerPadding: '20px 0',
                     maxWidth: 960,
-                },
-                styles: {textAlign: 'left'},
+                }, elementOptions),
+                styles: Object.assign(
+                    {
+                        color: 'foreground',
+                        textAlign: 'left',
+                    },
+                    style
+                ),
             }
         ],
     },
@@ -25,5 +30,6 @@ export default ({text}) => ({
     tag: 'text.wrappedText',
     tagMetadata: {
         text,
+        style,
     },
 });

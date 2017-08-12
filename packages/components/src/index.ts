@@ -1,3 +1,4 @@
+import renderBlock from './chrome/block';
 import Body from './chrome/body';
 import {ComponentContext} from './componentContext';
 import {ItemSourceContext} from './itemSourceContext';
@@ -11,6 +12,7 @@ export {
     ComponentContext,
     ItemSourceContext,
     primitives,
+    renderBlock,
     renderElement,
     renderLayout,
     Styletron,

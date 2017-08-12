@@ -3,6 +3,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/server';
 import {StyletronProvider} from 'styletron-react';
 
+import {ComponentContext} from '@pinecast/sb-components/dist';
 import {Styletron} from '@pinecast/sb-components/dist';
 
 import {Context} from 'koa';
@@ -12,7 +13,7 @@ const DEFAULT_FAVICON = 'https://pinecast.com/static/img/256x256.png';
 
 
 interface Options {
-    fonts: {[fontKey: string]: string},
+    context: ComponentContext,
     title?: string,
 }
 
@@ -25,20 +26,20 @@ function fontMapper(fontFamily): string | null {
             return null;
     }
 
-    return `<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=${escapeHTML(encodeURIComponent(fontFamily))}">`;
+    return `<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=${escapeHTML(encodeURIComponent(fontFamily))}:400,500,600">`;
 }
 
 export default async function frame(
     elem: JSX.Element,
     siteData: any,
     {
-        fonts,
+        context,
         title = null,
     }: Options,
     url: (x: string, y?: Object) => string
 ): Promise<string> {
 
-    const styletron = new Styletron();
+    const styletron = new (Styletron as any)();
     // HACK: https://github.com/rtsao/styletron/issues/153
     const StyletronProviderCast: any = StyletronProvider;
     const root = (
@@ -59,7 +60,7 @@ export default async function frame(
       ga('send', 'pageview');
     </script>`.trim() : '';
 
-    const fontInclude = Array.from(new Set(Object.values(fonts)).values()).map(fontMapper).filter(x => Boolean(x)).join('\n');
+    const fontInclude = Array.from(new Set(Object.values(context.fonts))).map(fontMapper).filter(x => Boolean(x)).join('\n');
 
     return `
     <!DOCTYPE html>
@@ -72,7 +73,8 @@ export default async function frame(
         ${fontInclude}
         <style>
           *, *:before, *:after {box-sizing: border-box;}
-          html, body {font-family: ${escapeHTML(fonts.body)}; height: 100%; margin: 0; padding: 0}
+          html, body {color: ${escapeHTML(context.colors.text)}; font-family: ${escapeHTML(context.fonts.body)}; height: 100%; margin: 0; padding: 0}
+          a {color: ${escapeHTML(context.colors.links)}}
         </style>
         ${styletron.getStylesheetsHtml()}
         <link type="image/png" rel="icon" href="${escapeHTML(siteData.features.favicon && siteData.site.favicon_url || DEFAULT_FAVICON)}">

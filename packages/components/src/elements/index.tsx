@@ -4,6 +4,7 @@ import atom from './atom';
 import {Element, ElementLayout, InlineElement} from '../primitives';
 import styled from '../styles';
 
+import BackgroundImage from './BackgroundImage';
 import BlockLink from './BlockLink';
 import BlockText from './BlockText';
 import EmbedPlayer from './EmbedPlayer';
@@ -43,6 +44,9 @@ export function layoutElements(item: Object, elements: Array<Element | InlineEle
             case 'image':
                 Element = Image;
                 break;
+            case 'image.background':
+                Element = BackgroundImage;
+                break;
             case 'layout.column':
                 Element = LayoutColumn;
                 break;
@@ -68,6 +72,10 @@ export default function(key: any, item: Object, elementLayout: ElementLayout, st
     return <Wrapper
         children={layoutElements(item, elementLayout.elements)}
         key={key}
-        style={{...style, ...elementLayout.styles}}
+        style={{
+            position: 'relative',
+            ...style,
+            ...elementLayout.styles,
+        }}
     />;
 };

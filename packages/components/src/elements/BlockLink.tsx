@@ -19,7 +19,7 @@ export default (
         item={item}
         style={{
             display: 'block',
-            color: 'inherit',
+            color: 'links',
             textDecoration: 'none',
             ...expandElementStyles({...style, ...element.styles}, element.elementOptions),
         }}

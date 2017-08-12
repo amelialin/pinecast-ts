@@ -41,7 +41,7 @@ export default {
                         fontSize: 18,
                         margin: 0,
                     },
-                    textContent: ['title'],
+                    textContent: ['subtitle'],
                 },
             ],
             styles: {
@@ -63,7 +63,7 @@ export default {
     ],
     tagName: 'article',
     styles: {
-        backgroundColor: 'foreground',
+        backgroundColor: 'secondaryBackground',
         boxShadow: '0 5px 5px rgba(0, 0, 0, 0.2)',
         maxWidth: 800,
         marginBottom: 50,

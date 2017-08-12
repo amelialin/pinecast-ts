@@ -1,11 +1,11 @@
-export default ({includes}) => ({
+export default ({includes, layout = null, elementOptions = null, style = null}) => ({
     type: 'links.linkBar',
-    layout: {
+    layout: Object.assign({
         includes,
         textStyle: {
             color: 'text',
         },
-    },
+    }, layout),
     template: {
         tagName: 'nav',
         elements: [
@@ -17,16 +17,14 @@ export default ({includes}) => ({
                         props: {mount: 'links'},
                     },
                 ],
-                elementOptions: {
+                elementOptions: Object.assign({
                     bgColor: 'secondaryAccent',
                     fgColor: 'secondaryAccent',
                     innerPadding: '40px 0',
                     maxWidth: 960,
-                },
-                styles: {
-                    textAlign: 'left',
-                },
-            }
+                }, elementOptions),
+                styles: Object.assign({textAlign: 'left'}, style),
+            },
         ],
     },
 

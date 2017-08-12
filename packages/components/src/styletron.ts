@@ -1,5 +1,5 @@
-import BaseStyletron from 'styletron-server';
-import * as hyphenateStyleName from 'fbjs/lib/hyphenateStyleName';
+import BaseStyletron from 'styletron-react/node_modules/styletron-server';
+import * as hyphenateStyleName from 'react-dom/node_modules/fbjs/lib/hyphenateStyleName';
 import {isUnitlessNumber} from 'react-dom/lib/CSSProperty';
 
 
@@ -41,4 +41,4 @@ Styletron.prototype.incrementVirtualCount = function() {
     return output;
 };
 
-export default Styletron;
+export default ((Styletron as any) as BaseStyletron);

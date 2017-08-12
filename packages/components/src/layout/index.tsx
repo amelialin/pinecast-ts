@@ -8,7 +8,7 @@ import Stacked from './stacked';
 import {LayoutConfig} from '../primitives';
 
 
-export default function<T>(layouts: Array<LayoutConfig>) {
+export default function<T>(layouts: Array<LayoutConfig>): Array<JSX.Element> {
     return layouts.map((layout, i) => {
         let Component;
         switch (layout.type) {

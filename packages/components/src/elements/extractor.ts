@@ -6,7 +6,7 @@ export function extractProps(item: Object, props?: {[key: string]: Array<string>
         acc[cur] = extractPath(item, props[cur]);
         return acc;
     }, {});
-}
+};
 
 export function extractPath(item: any, path: Array<string>): string | number | null {
     let x = item;

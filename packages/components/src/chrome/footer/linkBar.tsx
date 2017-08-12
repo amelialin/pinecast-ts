@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {backgroundImage} from '../../styleMixins';
-import {ElementLayout, TextStyle} from '../../primitives';
+import {ElementLayout, Link, Page, TextStyle} from '../../primitives';
 import {ComponentContext, getsContext} from '../../componentContext';
 import {formatColor} from '../../helpers';
 import {MountProvider} from '../mounts';
@@ -50,7 +50,7 @@ export default getsContext(
                 links: (layout.includes as Array<includeableType>).map((type: includeableType): Array<JSX.Element> => {
                     let linkEls: Array<JSX.Element>;
                     if (type === 'links') {
-                        linkEls = ctx.data.links.map((link: {title: string, url: string}, i: number): JSX.Element =>
+                        linkEls = ctx.data.links.map((link: Link, i: number): JSX.Element =>
                             <Link
                                 href={link.url}
                                 key={`link:${i}`}
@@ -60,7 +60,7 @@ export default getsContext(
                             </Link>
                         );
                     } else {
-                        linkEls = Object.values(ctx.data.pages).map((page: {title: string, slug: string}): JSX.Element =>
+                        linkEls = Object.values(ctx.data.pages).map((page: Page): JSX.Element =>
                             <Link
                                 href={ctx.url('page', {slug: page.slug})}
                                 key={`page:${page.slug}`}

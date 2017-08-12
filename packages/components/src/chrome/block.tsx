@@ -8,7 +8,7 @@ import LinkBar from './footer/linkBar';
 import SubscribeLinks from './subheader/subscribeLinks';
 
 
-export default function(components: Array<ComponentLayout>) {
+export default function(components: Array<ComponentLayout>): Array<JSX.Element> {
     return components.map((component, i) => {
         let Component;
         switch (component.type) {

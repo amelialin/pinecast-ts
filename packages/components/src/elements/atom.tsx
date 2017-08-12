@@ -56,7 +56,7 @@ export function prepareStyle(style: Object, ctx: ComponentContext): Object {
                 break;
             case 'backgroundImage':
                 if (style[cur] in ctx.resources) {
-                    acc[cur] = ctx.resources[style[cur]];
+                    acc[cur] = `url(${ctx.resources[style[cur]]})`;
                 } else {
                     acc[cur] = style[cur];
                 }

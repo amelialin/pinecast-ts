@@ -1,4 +1,4 @@
-export default () => ({
+export default ({style} = {}) => ({
     type: 'subheader.subscribeLinks',
     layout: {},
     template: {
@@ -44,6 +44,7 @@ export default () => ({
                 },
             }
         ],
+        styles: style,
     },
 
     tag: 'subheader.subscribeLinks',

@@ -1,31 +1,32 @@
-import cardBody from '../wrappers/cardBody';
-import cardEpisodeItemLayout from '../episodePageLayouts/cardEpisodeItemLayout';
-import headerCentered from '../components/header-centered';
+import mosaicBody from '../wrappers/mosaicBody';
+import mosaicEpisodeItemLayout from '../episodePageLayouts/mosaicEpisodeItemLayout';
+import fullWidthEpisodePostLayout from '../itemLayouts/fullWidthEpisodePostLayout';
+import heroEpisodePostLayout from '../itemLayouts/heroEpisodePostLayout';
+import headerLeftAlign from '../components/header-leftAlign';
 import linksLinkBar from '../components/links-linkBar';
 import paginationForwardBack from '../components/pagination-forwardBack';
-import simpleEpisodeTileLayout from '../itemLayouts/simpleEpisodeTileLayout';
 import subheaderSubscribeLinks from '../components/subheader-subscribeLinks';
 import textWrappedText from '../components/text-wrappedText';
 
 
 export default {
     colors: {
-        background: '#f0f0f0',
+        background: '#ddd',
         secondaryBackground: '#fff',
-        accent: '#2196F3',
-        text: '#000',
-        buttons: '#009688',
+        accent: '#222',
+        text: '#444',
+        buttons: '#c0392b',
         buttonsText: '#fff',
 
-        foreground: '#fff',
-        links: '#212121',
+        foreground: '#ddd',
+        links: '#c0392b',
 
-        secondaryAccent: '#96CFFF',
+        secondaryAccent: '#bbb',
     },
     fonts: {
-        logo: 'Righteous',
-        headings: 'Lato',
-        body: 'Lato',
+        logo: 'Pacifico',
+        headings: 'Roboto',
+        body: 'Roboto',
     },
     styling: {
         buttons: {
@@ -38,53 +39,87 @@ export default {
         },
         page: {
             backgroundColor: 'background',
-            fontSize: 14,
+            fontSize: 12,
             padding: '0',
         },
     },
 
     layout: {
-
         header: [
-            headerCentered({content: 'text'}),
-            subheaderSubscribeLinks(),
+            headerLeftAlign({content: 'text'}),
         ],
         footer: [
             paginationForwardBack({nextText: 'Back in time', previousText: 'Onward to the Future'}),
-            linksLinkBar({includes: ['pages', 'links']}),
-            textWrappedText({text: ['podcast', 'copyright']}),
+            textWrappedText({
+                text: ['podcast', 'copyright'],
+                elementOptions: {
+                    bgColor: 'secondaryAccent',
+                    fgColor: 'secondaryAccent',
+                    innerPadding: '100px 0',
+                },
+                style: {
+                    color: 'text',
+                    fontSize: 18,
+                },
+            }),
+            linksLinkBar({
+                includes: ['pages', 'links'],
+                elementOptions: {
+                    bgColor: 'accent',
+                    fgColor: 'accent',
+                },
+                layout: {
+                    textStyle: {
+                        color: 'foreground',
+                        size: 18,
+                    },
+                },
+                style: {
+                    textAlign: 'center',
+                },
+            }),
         ],
 
         body: {
             home: {
-                firstPagePrefix: [],
+                firstPagePrefix: [
+                    {
+                        type: 'stacked',
+                        consumeCount: 1,
+
+                        width: 'full',
+
+                        elementLayout: heroEpisodePostLayout(),
+                    },
+                ],
+                firstPageAfterPrefix: [
+                    subheaderSubscribeLinks({style: {margin: '-50px 0 -30px'}}),
+                ],
                 segments: [
                     {
-                        type: 'grid',
+                        type: 'stacked',
                         consumeCount: -1,
 
                         alignment: 'center',
-                        itemSpacing: 30,
-                        maxItemsAcross: 3,
-                        padding: 0,
-                        width: 990,
+                        padding: '30px 0 0',
+                        width: 960,
 
-                        elementLayout: simpleEpisodeTileLayout,
+                        elementLayout: fullWidthEpisodePostLayout,
                     },
                 ],
             },
-            episode: cardEpisodeItemLayout,
+            episode: mosaicEpisodeItemLayout,
             page: {
-                markdown: cardBody({
+                markdown: mosaicBody({
                     contents: [
                         {
                             type: 'block.text',
                             tag_name: 'h1',
                             textContent: ['title'],
                             styles: {
-                                fontSize: 26,
+                                fontSize: 36,
                                 fontWeight: 'bold',
-                                textAlign: 'center',
+                                marginBottom: 30,
                             },
                         },
                         {
@@ -94,16 +129,16 @@ export default {
                         },
                     ],
                 }),
-                contact: cardBody({
+                contact: mosaicBody({
                     contents: [
                         {
                             type: 'block.text',
                             tag_name: 'h1',
                             textContent: ['title'],
                             styles: {
-                                fontSize: 26,
+                                fontSize: 36,
                                 fontWeight: 'bold',
-                                textAlign: 'center',
+                                marginBottom: 30,
                             },
                         },
                         {
@@ -127,16 +162,16 @@ export default {
                         },
                     ],
                 }),
-                hosts: cardBody({
+                hosts: mosaicBody({
                     contents: [
                         {
                             type: 'block.text',
                             tag_name: 'h1',
                             textContent: ['title'],
                             styles: {
-                                fontSize: 26,
+                                fontSize: 36,
                                 fontWeight: 'bold',
-                                textAlign: 'center',
+                                marginBottom: 30,
                             },
                         },
                         {

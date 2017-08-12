@@ -13,10 +13,10 @@ export interface PageLayout {
     header: Array<ComponentLayout>,
     footer: Array<ComponentLayout>,
 
-    page: Page,
     body: {
         home: {
             firstPagePrefix: Array<LayoutConfig>,
+            firstPageAfterPrefix?: Array<ComponentLayout>,
             segments: Array<LayoutConfig>,
         },
         episode: ElementLayout,
@@ -28,7 +28,7 @@ export interface PageLayout {
     },
 };
 
-export interface Page {
+export interface PageStyle {
     backgroundColor: string,
     padding: string,
 };
@@ -36,6 +36,7 @@ export interface Page {
 
 export interface TextStyle {
     color: string,
+    decoration?: 'underline' | 'none',
     font?: string,
     size?: number, // in px
     transform?: 'none' | 'uppercase' | 'lowercase',
@@ -100,6 +101,7 @@ export interface Element extends StyleableElement {
         'block.player' |
         'block.text' |
         'image' |
+        'image.background' |
         'layout.inline' |
         'layout.column' |
         'layout.fixedWrapper' |
@@ -157,6 +159,10 @@ export interface Page {
     page_type: 'markdown' | 'hosts' | 'contact',
     created: string,
     body: string,
+};
+export interface Link {
+    title: string,
+    url: string,
 };
 
 export interface Paginatable {

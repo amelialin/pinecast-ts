@@ -54,26 +54,23 @@ function styleOptions(baseStyles: React.CSSProperties, element: Element, ctx: Co
         }
         switch (cur) {
             case 'maxLines':
-                acc.lineHeight = acc.lineHeight;
-                acc.maxHeight = parseFloat(String(acc.lineHeight)) * Number(options.maxLines) + getLineFadeHeight(options);
+                acc.maxHeight = parseFloat(String(acc.lineHeight)) * Number(options.maxLines);
                 acc.overflow = 'hidden';
                 break;
             case 'maxLinesOnHover':
                 if (!options.maxLines) {
                     return acc;
                 }
-                acc.lineHeight = acc.lineHeight;
                 acc.transition = acc.transition ? acc.transition + ', ' : '';
                 acc.transition += 'max-height 0.2s';
                 extendPseudo(acc, ':hover', {
-                    maxHeight: parseFloat(String(acc.lineHeight)) * Number(options.maxLinesOnHover) + getLineFadeHeight(options),
+                    maxHeight: parseFloat(String(acc.lineHeight)) * Number(options.maxLinesOnHover),
                 });
                 break;
             case 'singleLineTruncation':
                 if (!options.singleLineTruncation) {
                     return acc;
                 }
-                acc.lineHeight = acc.lineHeight;
                 acc.overflow = 'hidden';
                 acc.textOverflow = options.singleLineTruncation;
                 acc.whiteSpace = 'nowrap';
@@ -97,9 +94,11 @@ function styleOptions(baseStyles: React.CSSProperties, element: Element, ctx: Co
                     top: acc.maxHeight - maxLineFade.height,
                     transition: 'top 0.2s',
                 });
-                extendPseudo(acc, ':hover' + mlfPseudo, {
-                    top: acc[':hover'].maxHeight - maxLineFade.height,
-                });
+                if (options.maxLinesOnHover) {
+                    extendPseudo(acc, ':hover' + mlfPseudo, {
+                        top: acc[':hover'].maxHeight - maxLineFade.height,
+                    });
+                }
                 break;
         }
         return acc;

@@ -1,8 +1,8 @@
 import * as React from 'react';
 
+import atom from './atom';
 import {Element} from '../primitives';
 import {getsMount} from '../chrome/mounts';
-import atom from './atom';
 
 
 export default getsMount(
