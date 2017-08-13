@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 import * as React from 'react';
 
 import atom from './atom';
@@ -105,6 +106,16 @@ function styleOptions(baseStyles: React.CSSProperties, element: Element, ctx: Co
     }, expandElementOptions(baseStyles, options));
 }
 
+function processContent<T>(content: T, element: Element): T | string {
+    if (typeof content === 'string' && element.elementOptions && element.elementOptions.transform) {
+        switch (element.elementOptions.transform) {
+            case 'date.fromNow':
+                return ((moment as any).default as (Date) => moment.Moment)(Date.parse(content)).fromNow();
+        }
+    }
+    return content;
+}
+
 
 export default getsContext(
     (
@@ -115,7 +126,7 @@ export default getsContext(
         return <Wrapper
             {...element.props}
             {...extractProps(item, element.propPaths)}
-            children={blockChildren(item, element)}
+            children={processContent(blockChildren(item, element), element)}
             style={{
                 display: 'block',
                 fontSize: '1em',

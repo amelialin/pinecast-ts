@@ -20,7 +20,7 @@ import ContactTable from './pageHelpers/ContactTable';
 
 
 export function layoutElements(item: Object, elements: Array<Element | InlineElement>, style?: Object, keyOffset: number = 0) {
-    return elements.map((element, i) => {
+    return elements.filter(x => x).map((element, i) => {
         let Element;
         switch (element.type) {
             case 'block.link':

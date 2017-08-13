@@ -44,7 +44,7 @@ function getContextFromResources(
 ): (data: any, ...args: Array<any>) => Promise<string> {
     return async (data: any, ...args: Array<any>): Promise<string> => {
         const context: ComponentContext = {
-            ...presets.themes.podcasty,
+            ...presets.themes.panther,
             data: data.site,
             resources: {
                 cover_art: data.site.site.cover_image_url,

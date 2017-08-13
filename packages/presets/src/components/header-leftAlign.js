@@ -49,6 +49,7 @@ export default ({content}) => ({
                 },
             },
         ],
+        tagName: 'header',
     },
 
     tag: 'header.leftAlign',

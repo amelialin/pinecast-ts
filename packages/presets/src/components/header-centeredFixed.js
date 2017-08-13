@@ -1,9 +1,12 @@
-export default ({content}) => ({
+export default ({content, showSubtitle = false}) => ({
     type: 'abstract',
     template: {
         elements: [
             {
-                type: 'layout.column',
+                type: 'layout.fixedWrapper',
+                elementOptions: {
+                    maxWidth: 960,
+                },
                 children: [
                     Object.assign(
                         {
@@ -15,9 +18,7 @@ export default ({content}) => ({
                             styles: {
                                 color: 'foreground',
                                 fontFamily: 'logo',
-                                fontSize: 60,
-                                textAlign: 'center',
-                                textTransform: 'uppercase',
+                                fontSize: 40,
 
                             },
                         },
@@ -38,21 +39,29 @@ export default ({content}) => ({
                                 ],
                             },
                     ),
+                    showSubtitle &&
+                        {
+                            type: 'block.text',
+                            textContent: ['podcast', 'subtitle'],
+                            styles: {
+                                color: 'foreground',
+                                fontFamily: 'headings',
+                                fontSize: 20,
+                                marginTop: 25,
+                            },
+                        },
                 ],
                 styles: {
                     backgroundColor: 'accent',
-
-                    padding: '200px 25%',
-                    '@mobile': {
-                        padding: '100px 5%',
-                    },
+                    padding: '100px 0',
+                    textAlign: 'center',
                 },
             },
         ],
         tagName: 'header',
     },
 
-    tag: 'header.centered',
+    tag: 'header.centeredFixed',
     tagMetadata: {
         content,
     },

@@ -64,7 +64,7 @@ export default (
             role='img'
             style={{
                 ...styles,
-                backgroundImage: props.src,
+                backgroundImage: `url(${props.src})`,
                 backgroundSize: 'cover',
             }}
         />;
