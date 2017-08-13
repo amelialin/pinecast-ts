@@ -37,7 +37,7 @@ export default ({content, showSubtitle = false}) => ({
                                         },
                                     }
                                 ],
-                            },
+                            }
                     ),
                     showSubtitle &&
                         {
