@@ -1,25 +1,26 @@
 export default {
     elements: [
         {
+            type: 'block.text',
+            elementOptions: {
+                transform: 'date.fromNow',
+            },
+            textContent: ['publish'],
+
+            styles: {
+                color: 'text',
+                fontFamily: 'Lobster',
+                fontSize: 16,
+                fontWeight: 600,
+                margin: 0,
+                opacity: 0.4,
+                padding: '20px 0',
+                textAlign: 'center',
+            },
+        },
+        {
             type: 'block.link',
             children: [
-                {
-                    type: 'block.text',
-                    elementOptions: {
-                        transform: 'date.fromNow',
-                    },
-                    textContent: ['publish'],
-
-                    styles: {
-                        color: 'text',
-                        fontFamily: 'Lobster',
-                        fontSize: 30,
-                        fontWeight: 600,
-                        margin: 0,
-                        textAlign: 'center',
-                        textTransform: 'uppercase',
-                    },
-                },
                 {
                     type: 'block.text',
                     tagName: 'h1',

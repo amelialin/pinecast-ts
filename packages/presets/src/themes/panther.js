@@ -47,22 +47,37 @@ export default {
         ],
         footer: [
             paginationForwardBack({nextText: 'Back in time', previousText: 'Onward to the Future'}),
-            linksLinkBar({
-                includes: ['pages', 'links'],
-                elementOptions: {
-                    bgColor: 'accent',
-                    fgColor: 'accent',
-                },
-                layout: {
-                    textStyle: {
-                        color: 'foreground',
-                        size: 18,
+            {
+                type: 'abstract',
+                template: {
+                    elements: [
+                        {
+                            type: 'layout.column',
+                            children: [
+                                {
+                                    type: 'block.text',
+                                    textContent: 'Menu',
+                                }
+                            ],
+                        },
+                        {
+                            type: 'layout.column',
+                            children: [
+                                {
+                                    type: 'block.text',
+                                    textContent: 'Subscribe',
+                                }
+                            ],
+                        },
+                    ],
+                    tagName: 'footer',
+                    styles: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                        display: 'flex',
                     },
                 },
-                style: {
-                    textAlign: 'center',
-                },
-            }),
+                tag: 'footer.twoCol',
+            },
         ],
 
         body: {
