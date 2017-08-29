@@ -1,3 +1,6 @@
+import {buttons, styles} from './paginationHelpers/previousNext';
+
+
 export default ({nextText, previousText}) => ({
     type: 'pagination.forwardBack',
     layout: {
@@ -7,21 +10,9 @@ export default ({nextText, previousText}) => ({
     template: {
         tagName: 'nav',
         elements: [
-            {
-                type: 'mount',
-                props: {mount: 'previousLink'},
-            },
-            {
-                type: 'mount',
-                props: {mount: 'nextLink'},
-            },
+            ...buttons,
         ],
-        styles: {
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            padding: '40px 0',
-        },
+        styles: Object.assign({padding: '40px 0'}, styles),
     },
 
     tag: 'pagination.forwardBack',

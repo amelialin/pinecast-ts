@@ -71,6 +71,7 @@ export default {
             propPaths: {src: ['image_url']},
             props: {alt: ''},
             styles: {
+                backgroundPosition: 'center',
                 height: 250,
                 marginTop: 30,
                 width: '100%',

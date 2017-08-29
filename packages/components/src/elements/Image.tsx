@@ -33,8 +33,20 @@ export default (
         props.src = `https://www.gravatar.com/avatar/${hash}?s=${parseFloat(styles.width) || parseFloat(styles.height) || 256}`;
     } else  {
         const [, key] = /^https:\/\/pinecast\-storage\.s3\.amazonaws\.com\/(.*)$/.exec(props.src) || [null, null];
-        if (key && styles.height && styles.width) {
-            props.src = `https://thumb.service.pinecast.com/resize?h=${encodeURIComponent(styles.height)}&w=${encodeURIComponent(styles.width)}&key=${encodeURIComponent(key)}&format=jpeg`;
+        if (key && (styles.height || styles.width)) {
+            let height = styles.height || styles.width;
+            let width = styles.width || styles.height;
+            if (typeof height === 'string') {
+                height = width;
+            } else if (typeof width === 'string') {
+                width = height;
+            }
+            if (element.elementOptions.square) {
+                height = width = Math.min(height, width);
+            }
+            height *= 2;
+            width *= 2;
+            props.src = `https://thumb.service.pinecast.com/resize?h=${encodeURIComponent(height)}&w=${encodeURIComponent(width)}&key=${encodeURIComponent(key)}&format=jpeg`;
         }
     }
     if (element.elementOptions && element.elementOptions.round) {

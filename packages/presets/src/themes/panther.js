@@ -3,7 +3,7 @@ import mosaicEpisodeItemLayout from '../episodePageLayouts/mosaicEpisodeItemLayo
 import slabEpisodePostLayout from '../itemLayouts/slabEpisodePostLayout';
 import headerCenteredFixed from '../components/header-centeredFixed';
 import linksLinkBar from '../components/links-linkBar';
-import paginationForwardBack from '../components/pagination-forwardBack';
+import paginationForwardBackFixed from '../components/pagination-forwardBack-fixed';
 
 
 export default {
@@ -46,35 +46,64 @@ export default {
             headerCenteredFixed({content: 'text', showSubtitle: true}),
         ],
         footer: [
-            paginationForwardBack({nextText: 'Back in time', previousText: 'Onward to the Future'}),
+            paginationForwardBackFixed({
+                fgColor: 'secondaryBackground',
+                nextText: 'Back in time',
+                previousText: 'Onward to the Future',
+            }),
             {
                 type: 'abstract',
                 template: {
                     elements: [
                         {
-                            type: 'layout.column',
+                            type: 'layout.fixedWrapper',
+                            elementOptions: {
+                                maxWidth: 960,
+                            },
                             children: [
                                 {
-                                    type: 'block.text',
-                                    textContent: 'Menu',
-                                }
-                            ],
-                        },
-                        {
-                            type: 'layout.column',
-                            children: [
+                                    type: 'layout.column',
+                                    children: [
+                                        {
+                                            type: 'block.text',
+                                            textContent: 'Menu',
+                                            styles: {
+                                                fontFamily: 'logo',
+                                                fontSize: 28,
+                                            },
+                                        }
+                                    ],
+                                    styles: {
+                                        flex: '1 1',
+                                    },
+                                },
                                 {
-                                    type: 'block.text',
-                                    textContent: 'Subscribe',
-                                }
+                                    type: 'layout.column',
+                                    children: [
+                                        {
+                                            type: 'block.text',
+                                            textContent: 'Subscribe',
+                                            styles: {
+                                                fontFamily: 'logo',
+                                                fontSize: 28,
+                                            },
+                                        }
+                                    ],
+                                    styles: {
+                                        flex: '1 1',
+                                    },
+                                },
                             ],
-                        },
+                            styles: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                                color: 'foreground',
+                                display: 'flex',
+                                padding: '20px 0',
+                                textAlign: 'center',
+                            },
+                        }
                     ],
                     tagName: 'footer',
-                    styles: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                        display: 'flex',
-                    },
                 },
                 tag: 'footer.twoCol',
             },
