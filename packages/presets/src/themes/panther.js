@@ -52,7 +52,20 @@ export default {
                 previousText: 'Onward to the Future',
             }),
             {
-                type: 'abstract',
+                type: 'links.linkMount',
+                layout: {
+                    linkStyle: {
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+                        color: 'foreground',
+                        display: 'block',
+                        lineHeight: '2.5em',
+                        textDecoration: 'underline',
+
+                        ':last-child': {
+                            borderBottom: '0',
+                        },
+                    },
+                },
                 template: {
                     elements: [
                         {
@@ -70,11 +83,21 @@ export default {
                                             styles: {
                                                 fontFamily: 'logo',
                                                 fontSize: 28,
+                                                marginBottom: 20,
                                             },
-                                        }
+                                        },
+                                        {
+                                            type: 'mount',
+                                            props: {mount: 'pageLinks'},
+                                        },
+                                        {
+                                            type: 'mount',
+                                            props: {mount: 'siteLinks'},
+                                        },
                                     ],
                                     styles: {
                                         flex: '1 1',
+                                        padding: '0 40px',
                                     },
                                 },
                                 {
@@ -86,11 +109,17 @@ export default {
                                             styles: {
                                                 fontFamily: 'logo',
                                                 fontSize: 28,
+                                                marginBottom: 20,
                                             },
-                                        }
+                                        },
+                                        {
+                                            type: 'mount',
+                                            props: {mount: 'subLinks'},
+                                        },
                                     ],
                                     styles: {
                                         flex: '1 1',
+                                        padding: '0 40px',
                                     },
                                 },
                             ],
@@ -98,14 +127,24 @@ export default {
                                 backgroundColor: 'rgba(0, 0, 0, 0.6)',
                                 color: 'foreground',
                                 display: 'flex',
-                                padding: '20px 0',
+                                fontSize: 14,
+                                padding: '20px 0 50px',
                                 textAlign: 'center',
                             },
                         }
                     ],
                     tagName: 'footer',
+                    styles: {
+                        marginBottom: 40,
+                    },
                 },
-                tag: 'footer.twoCol',
+                tag: 'footer.columnsFixed',
+                tagMetadata: {
+                    cols: [
+                        'page,site',
+                        'sub',
+                    ],
+                },
             },
         ],
 

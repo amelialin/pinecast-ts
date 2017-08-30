@@ -12,6 +12,10 @@ export function prepareProps(item: any, props: Object, ctx: ComponentContext): O
     return Object.keys(props).reduce((acc, cur) => {
         switch (cur) {
             case 'href':
+                if (/^https?:\/\//.exec(props[cur])) {
+                    acc[cur] = props[cur];
+                    break;
+                }
                 const href: AbstractURL = props[cur];
                 acc[cur] = ctx.url(
                     href.name,

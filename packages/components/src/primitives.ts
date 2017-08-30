@@ -77,6 +77,9 @@ export type StyledCSSProperties = CSSProperties & {
     ':hover'?: CSSProperties,
     ':visited'?: CSSProperties,
 
+    ':first-child'?: CSSProperties,
+    ':last-child'?: CSSProperties,
+
     ':after'?: CSSProperties & {content: string},
     ':before'?: CSSProperties & {content: string},
     ':active:before'?: CSSProperties & {content: string},

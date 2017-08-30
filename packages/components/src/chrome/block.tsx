@@ -5,6 +5,7 @@ import {ComponentLayout} from '../primitives';
 import AbstractElements from './abstractElements';
 import ForwardBackPagination from './pagination/forwardBack';
 import LinkBar from './footer/linkBar';
+import SiteAndPageAndSubLinkMount from './footer/siteAndPageAndSubLinkMount';
 import SubscribeLinks from './subheader/subscribeLinks';
 
 
@@ -20,6 +21,9 @@ export default function(components: Array<ComponentLayout>): Array<JSX.Element> 
                 break;
             case 'links.linkBar':
                 Component = LinkBar;
+                break;
+            case 'links.linkMount':
+                Component = SiteAndPageAndSubLinkMount;
                 break;
             case 'pagination.forwardBack':
                 Component = ForwardBackPagination;

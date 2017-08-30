@@ -16,7 +16,7 @@
     "@types/koa": "^2.0.39",
     "@types/koa-router": "^7.0.22",
     "@types/prop-types": "^15.5.1",
-    "@types/react": "^15.0.35",
+    "@types/react": "^15.6.2",
     "@types/react-dom": "^15.5.1",
     "koa": "^2.2.0",
     "koa-router": "^7.1.1",
