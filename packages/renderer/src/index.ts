@@ -6,37 +6,43 @@ import * as Router from 'koa-router';
 import * as data from './data';
 import {NotFoundError} from './errors';
 import * as rendering from './rendering';
+import {routes} from './routes';
 
 
 const app = new Koa();
 const router = new Router();
 
-router.get('home', '/', async ctx => {
+
+function mountRoute(name: string, handler: (ctx: Koa.Context, next: () => Promise<any>) => Promise<void>) {
+    router.get(name, routes[name].path, handler)
+}
+
+mountRoute('home', async ctx => {
     const resources = await data.awaitAll({
-        ...ctx.state.resources,
+        site: data.getSite(ctx),
         episodes: data.getEpisodes(ctx, ctx.query.page ? Number(ctx.query.page) : 1),
     });
 
-    ctx.body = await rendering.renderHome(resources, router.url.bind(router));
+    ctx.body = await rendering.renderHome(resources);
 });
-router.get('episode', '/episode/:id', async ctx => {
+mountRoute('episode', async ctx => {
     const resources = await data.awaitAll({
-        ...ctx.state.resources,
+        site: data.getSite(ctx),
         episode: data.getEpisode(ctx, ctx.params.id),
     });
 
-    ctx.body = await rendering.renderEpisode(resources, router.url.bind(router));
+    ctx.body = await rendering.renderEpisode(resources);
 });
-router.get('page', '/:slug', async (ctx, next) => {
+mountRoute('page', async (ctx, next) => {
     const slug = ctx.params.slug;
-    const resources = await data.awaitAll(ctx.state.resources);
+    const resources = {site: await data.getSite(ctx)};
 
     if (!resources.site.pages[slug]) {
         ctx.status = 404;
         return next();
     }
 
-    ctx.body = await rendering.renderPage(resources, slug, router.url.bind(router));
+    ctx.body = await rendering.renderPage(resources, slug);
 });
 
 async function proxy(ctx: Koa.Context) {
@@ -68,10 +74,6 @@ router.get('/favicon.ico', proxy);
 
 
 app.use(async (ctx, next) => {
-    ctx.state.resources = {
-        site: data.getSite(ctx),
-    };
-    ctx.state.router = router;
     try {
         await next();
     } catch (e) {
@@ -86,8 +88,7 @@ app.use(async (ctx, next) => {
     }
 });
 
-app.use(router.routes())
-    .use(router.allowedMethods());
+app.use(router.routes()).use(router.allowedMethods());
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

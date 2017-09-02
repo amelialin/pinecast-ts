@@ -35,8 +35,7 @@ export default async function frame(
     {
         context,
         title = null,
-    }: Options,
-    url: (x: string, y?: Object) => string
+    }: Options
 ): Promise<string> {
 
     const styletron = new (Styletron as any)();

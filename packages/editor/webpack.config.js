@@ -10,6 +10,7 @@ module.exports = {
     },
     resolve: {
         mainFields: [
+            'ts:module',
             'jsnext:main',
             // 'module',
             'main',

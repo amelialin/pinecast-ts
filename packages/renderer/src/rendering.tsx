@@ -13,6 +13,7 @@ import * as presets from '@pinecast/sb-presets';
 
 import ContextProvider from './ContextProvider';
 import frame from './framing';
+import {route} from './routes';
 
 
 type URLResolver = (route: string, params?: {[param: string]: string}) => string;
@@ -40,8 +41,8 @@ function getItemSource<T>(items: Array<T>): ItemSourceContext<T> {
 }
 
 function getContextFromResources(
-    func: (context: ComponentContext, resources: any, ...args: Array<any>) => Promise<string>
-): (data: any, ...args: Array<any>) => Promise<string> {
+    func: (context: ComponentContext, resources: any, ...args: Array<string>) => Promise<string>
+): (data: any, ...args: Array<string>) => Promise<string> {
     return async (data: any, ...args: Array<any>): Promise<string> => {
         const context: ComponentContext = {
             ...presets.themes.panther,
@@ -51,7 +52,7 @@ function getContextFromResources(
                 logo: data.site.site.logo_url,
             },
 
-            url: args[args.length - 1],
+            url: route,
             pagination: data.episodes,
         };
         return func(context, data, ...args);
@@ -59,7 +60,7 @@ function getContextFromResources(
 }
 
 export const renderHome = getContextFromResources(
-    async function renderHome(context: ComponentContext, resources: any, url: URLResolver): Promise<string> {
+    async function renderHome(context: ComponentContext, resources: any): Promise<string> {
         context.pagination = resources.episodes;
         return frame(
             render(
@@ -77,12 +78,11 @@ export const renderHome = getContextFromResources(
             ),
             context.data,
             {context},
-            url,
         );
     }
 );
 export const renderEpisode = getContextFromResources(
-    async function renderEpisode(context: ComponentContext, resources: any, url: URLResolver): Promise<string> {
+    async function renderEpisode(context: ComponentContext, resources: any): Promise<string> {
         return frame(
             render(
                 context,
@@ -98,12 +98,11 @@ export const renderEpisode = getContextFromResources(
                 context,
                 title: resources.episode.title,
             },
-            url,
         );
     }
 );
 export const renderPage = getContextFromResources(
-    async function renderPage(context: ComponentContext, resources: any, slug: string, url: URLResolver): Promise<string> {
+    async function renderPage(context: ComponentContext, resources: any, slug: string): Promise<string> {
         function renderBody(): JSX.Element {
             const page: primitives.Page = context.data.pages[slug];
             if (!page) {
@@ -141,7 +140,6 @@ export const renderPage = getContextFromResources(
                 context,
                 title: context.data.pages[slug].title,
             },
-            url,
         );
     }
 );

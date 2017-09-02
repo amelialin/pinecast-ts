@@ -4,6 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "jsnext:main": "dist/index.js",
+  "ts:module": "src/jsAPI.ts",
   "scripts": {
     "dev": "webpack --config=webpack.config.js --progress --watch --colors",
     "start": "nodemon build/index.js"

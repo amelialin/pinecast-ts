@@ -5,6 +5,7 @@ import {compose, withContext, withState} from 'recompose';
 import {Context} from './types';
 import {contextPropTypes} from './getsContext';
 import OptionsPanel from './OptionsPanel';
+import PreviewPanel from './PreviewPanel';
 import Toolbar from './Toolbar';
 
 
@@ -22,10 +23,11 @@ export default compose(
         })
     )
 )(() =>
-    <div>
+    <div style={{height: '100%'}}>
         <Toolbar />
         <div style={{display: 'flex', height: 'calc(100% - 50px)'}}>
             <OptionsPanel />
+            <PreviewPanel />
         </div>
     </div>
 );
