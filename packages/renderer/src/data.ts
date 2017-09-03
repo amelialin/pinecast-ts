@@ -16,8 +16,8 @@ function fetch(ctx: Koa.Context, url: string) {
                 headers: {
                     ...ctx.request.header,
                     'Host': 'pinecast.co',
-                    // 'X-Pinecast-Forward': ctx.request.header['x-pinecast-forward'] || 'serverboy.net',
-                    'X-Pinecast-Forward': ctx.request.header['x-pinecast-forward'] || 'abtd.pinecast.co',
+                    'X-Pinecast-Forward': ctx.request.header['x-pinecast-forward'] || 'serverboy.net',
+                    // 'X-Pinecast-Forward': ctx.request.header['x-pinecast-forward'] || 'abtd.pinecast.co',
                 },
             },
             resp => {
@@ -37,6 +37,9 @@ async function parse(response: string) {
     try {
         return JSON.parse(response);
     } catch (e) {
+        try {
+            console.log(response.substr(0, 100))
+        } catch (e) {}
         console.log(e);
         console.warn(response);
         throw e;

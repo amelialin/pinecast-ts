@@ -12,7 +12,7 @@ export function prepareProps(item: any, props: Object, ctx: ComponentContext): O
     return Object.keys(props).reduce((acc, cur) => {
         switch (cur) {
             case 'href':
-                if (/^https?:\/\//.exec(props[cur])) {
+                if (/^https?:\/\//.exec(props[cur]) || props[cur][0] === '/') {
                     acc[cur] = props[cur];
                     break;
                 }

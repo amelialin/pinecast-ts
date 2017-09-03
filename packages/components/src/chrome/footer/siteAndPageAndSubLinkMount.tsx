@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import atom from '../../elements/atom';
-import {ElementLayout, Link, Page, StyledCSSProperties, TextStyle} from '../../primitives';
+import {ElementLayout, Link as LinkType, Page, StyledCSSProperties, TextStyle} from '../../primitives';
 import {ComponentContext, getsContext} from '../../componentContext';
 import {MountProvider} from '../mounts';
 import renderElements from '../../elements';
@@ -30,7 +30,7 @@ export default getsContext(
         return <MountProvider
             children={renderElements('mount', ctx.data, template)}
             mounts={{
-                siteLinks: ctx.data.links.map((link: Link, i: number): JSX.Element =>
+                siteLinks: ctx.data.links.map((link: LinkType, i: number): JSX.Element =>
                     <Link
                         href={link.url}
                         key={`link:${i}`}

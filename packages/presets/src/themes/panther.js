@@ -1,5 +1,5 @@
-import mosaicBody from '../wrappers/mosaicBody';
-import mosaicEpisodeItemLayout from '../episodePageLayouts/mosaicEpisodeItemLayout';
+import slabBody from '../wrappers/slabBody';
+import slabEpisodeItemLayout from '../episodePageLayouts/slabEpisodeItemLayout';
 import slabEpisodePostLayout from '../itemLayouts/slabEpisodePostLayout';
 import headerCenteredFixed from '../components/header-centeredFixed';
 import linksLinkBar from '../components/links-linkBar';
@@ -163,9 +163,9 @@ export default {
                     },
                 ],
             },
-            episode: mosaicEpisodeItemLayout,
+            episode: slabEpisodeItemLayout,
             page: {
-                markdown: mosaicBody({
+                markdown: slabBody({
                     contents: [
                         {
                             type: 'block.text',
@@ -184,7 +184,7 @@ export default {
                         },
                     ],
                 }),
-                contact: mosaicBody({
+                contact: slabBody({
                     contents: [
                         {
                             type: 'block.text',
@@ -217,7 +217,7 @@ export default {
                         },
                     ],
                 }),
-                hosts: mosaicBody({
+                hosts: slabBody({
                     contents: [
                         {
                             type: 'block.text',
