@@ -4,8 +4,8 @@ import * as Koa from 'koa';
 import * as Router from 'koa-router';
 
 import * as data from './data';
+import {DataAPI} from './jsAPI';
 import {NotFoundError} from './errors';
-import * as rendering from './rendering';
 import {routes} from './routes';
 
 
@@ -13,37 +13,20 @@ const app = new Koa();
 const router = new Router();
 
 
-function mountRoute(name: string, handler: (ctx: Koa.Context, next: () => Promise<any>) => Promise<void>) {
-    router.get(name, routes[name].path, handler)
+function mountRoute(name: string) {
+    router.get(
+        name,
+        routes[name].path,
+        async ctx => {
+            ctx.body = await routes[name].build(
+                data as DataAPI,
+                ctx.request.header['x-pinecast-forward'],
+                ctx.query,
+                ctx.params,
+            );
+        },
+    );
 }
-
-mountRoute('home', async ctx => {
-    const resources = await data.awaitAll({
-        site: data.getSite(ctx),
-        episodes: data.getEpisodes(ctx, ctx.query.page ? Number(ctx.query.page) : 1),
-    });
-
-    ctx.body = await rendering.renderHome(resources);
-});
-mountRoute('episode', async ctx => {
-    const resources = await data.awaitAll({
-        site: data.getSite(ctx),
-        episode: data.getEpisode(ctx, ctx.params.id),
-    });
-
-    ctx.body = await rendering.renderEpisode(resources);
-});
-mountRoute('page', async (ctx, next) => {
-    const slug = ctx.params.slug;
-    const resources = {site: await data.getSite(ctx)};
-
-    if (!resources.site.pages[slug]) {
-        ctx.status = 404;
-        return next();
-    }
-
-    ctx.body = await rendering.renderPage(resources, slug);
-});
 
 async function proxy(ctx: Koa.Context) {
     ctx.body = await new Promise((resolve, reject) => {
@@ -59,34 +42,52 @@ async function proxy(ctx: Koa.Context) {
                 },
             },
             resp => {
-                if (resp.headers['content-type']) {
-                    ctx.response.set('Content-Type', resp.headers['content-type'] as string);
-                }
+                const set = (name: string) => {
+                    if (resp.headers[name.toLowerCase()]) {
+                        ctx.response.set(name, resp.headers[name] as string);
+                    }
+                };
+                set('Content-Type');
+                set('Content-Length');
+                set('Content-Encoding');
                 resolve(resp);
             }
-        ).on('error', reject);
+        ).on('error', err => {
+            console.error(`Error proxying ${ctx.request.originalUrl}`);
+            reject(err);
+        });
     });
 }
-
-router.get('/robots.txt', proxy);
-router.get('/sitemap.xml', proxy);
-router.get('/favicon.ico', proxy);
 
 
 app.use(async (ctx, next) => {
     try {
         await next();
+        if (!ctx.body) {
+            console.error(`No matching routes for ${ctx.originalUrl}`);
+            ctx.status = 404;
+            ctx.body = '404 Not Found';
+        }
     } catch (e) {
         if (e instanceof NotFoundError) {
+            console.error(`Got 404 for ${ctx.request.originalUrl}`);
             ctx.status = 404;
             ctx.body = 'Not Found';
             return;
         }
-        console.log(e);
+        console.error(e);
         ctx.status = 500;
         ctx.body = '500 Server Error';
     }
 });
+
+router.get('/robots.txt', proxy);
+router.get('/sitemap.xml', proxy);
+router.get('/favicon.ico', proxy);
+
+mountRoute('home');
+mountRoute('episode');
+mountRoute('page');
 
 app.use(router.routes()).use(router.allowedMethods());
 

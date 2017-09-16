@@ -2,10 +2,11 @@ import * as http from 'http';
 
 import * as Koa from 'koa';
 
+import {JSONObject} from './jsonType';
 import {NotFoundError} from './errors';
 
 
-function fetch(ctx: Koa.Context, url: string) {
+function fetch(siteHostname: string, url: string) {
     const framedURL = url + (url.includes('?') ? '&' : '?') + 'format=json';
     return new Promise((resolve, reject) => {
         http.get(
@@ -14,14 +15,14 @@ function fetch(ctx: Koa.Context, url: string) {
                 method: 'GET',
                 path: framedURL,
                 headers: {
-                    ...ctx.request.header,
                     'Host': 'pinecast.co',
-                    'X-Pinecast-Forward': ctx.request.header['x-pinecast-forward'] || 'serverboy.net',
-                    // 'X-Pinecast-Forward': ctx.request.header['x-pinecast-forward'] || 'abtd.pinecast.co',
+                    'X-Pinecast-Forward': siteHostname || 'serverboy.net',
+                    // 'X-Pinecast-Forward': siteHostname || 'abtd.pinecast.co',
                 },
             },
             resp => {
                 if (resp.statusCode === 404) {
+                    console.error(`Could not get ${siteHostname}/${framedURL}`)
                     reject(new NotFoundError());
                     return;
                 }
@@ -33,9 +34,9 @@ function fetch(ctx: Koa.Context, url: string) {
         ).on('error', reject);
     });
 }
-async function parse(response: string) {
+async function parse(response: string): Promise<JSONObject> {
     try {
-        return JSON.parse(response);
+        return JSON.parse(response) as JSONObject;
     } catch (e) {
         try {
             console.log(response.substr(0, 100))
@@ -47,14 +48,14 @@ async function parse(response: string) {
 }
 
 
-export async function getSite(ctx: Koa.Context) {
-    return fetch(ctx, '/').then(parse);
+export async function getSite(siteHostname: string): Promise<JSONObject> {
+    return fetch(siteHostname, '/').then(parse) as Promise<JSONObject>;
 };
-export async function getEpisodes(ctx: Koa.Context, page: number) {
-    return fetch(ctx, `/episode?page=${page}`).then(parse);
+export async function getEpisodes(siteHostname: string, page: number): Promise<JSONObject> {
+    return fetch(siteHostname, `/episode?page=${page}`).then(parse) as Promise<JSONObject>;
 };
-export async function getEpisode(ctx: Koa.Context, id: string) {
-    return fetch(ctx, `/episode/${encodeURIComponent(id)}`).then(parse);
+export async function getEpisode(siteHostname: string, id: string): Promise<JSONObject> {
+    return fetch(siteHostname, `/episode/${encodeURIComponent(id)}`).then(parse) as Promise<JSONObject>;
 };
 
 
