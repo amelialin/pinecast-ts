@@ -42,11 +42,11 @@ async function proxy(ctx: Koa.Context) {
                 },
             },
             resp => {
-                const set = (name: string) => {
+                function set(name: string) {
                     if (resp.headers[name.toLowerCase()]) {
                         ctx.response.set(name, resp.headers[name] as string);
                     }
-                };
+                }
                 set('Content-Type');
                 set('Content-Length');
                 set('Content-Encoding');

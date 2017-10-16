@@ -1,8 +1,10 @@
+import {connect} from 'react-redux';
 import React from 'react';
 
-import {getsContext} from './getsContext';
+// import {ReducerType} from './reducer';
 
-export default getsContext(({setState, state}) =>
+
+const OptionsPanel = () => (
     <div style={{
         flex: '1 1',
         height: '100%',
@@ -10,3 +12,9 @@ export default getsContext(({setState, state}) =>
         //
     </div>
 );
+
+export default connect(
+    state => ({
+        //
+    })
+)(OptionsPanel);
