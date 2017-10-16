@@ -39,102 +39,102 @@ const PAGE_404 = `
 `;
 
 function getQuery(url: string): {[key: string]: string} {
-    if (!url.includes('?')) {
-        return {};
-    }
-    const [, qs] = url.split('?', 2);
-    return qs.split('&')
-        .map(s => s.split('=', 2))
-        .reduce((acc, [k, v]) => {
-            acc[decodeURIComponent(k)] = decodeURIComponent(v);
-            return acc;
-        }, {});
+  if (!url.includes('?')) {
+    return {};
+  }
+  const [, qs] = url.split('?', 2);
+  return qs
+    .split('&')
+    .map(s => s.split('=', 2))
+    .reduce((acc, [k, v]) => {
+      acc[decodeURIComponent(k)] = decodeURIComponent(v);
+      return acc;
+    }, {});
 }
 
 class PreviewRenderer extends React.Component {
-    iframe: HTMLIFrameElement | null;
-    reqId: number;
-    props: {
-        path: string,
-    };
+  iframe: HTMLIFrameElement | null;
+  reqId: number;
+  props: {
+    path: string;
+  };
 
-    constructor(props) {
-        super(props);
-        this.reqId = 0;
+  constructor(props) {
+    super(props);
+    this.reqId = 0;
+  }
+
+  ref = (e: HTMLIFrameElement | null) => {
+    this.iframe = e;
+    if (e) {
+      this.doInnerRender();
     }
+  };
 
-    ref = (e: HTMLIFrameElement | null) => {
-        this.iframe = e;
-        if (e) {
-            this.doInnerRender();
+  componentWillReceiveProps(nextProps) {
+    if (this.iframe && this.props.path !== nextProps.path) {
+      this.doInnerRender();
+    }
+  }
+
+  shouldComponentUpdate() {
+    return false;
+  }
+
+  doInnerRender() {
+    this.reqId += 1;
+    const reqId = this.reqId;
+
+    const routeTuple = matchRoute(this.props.path);
+    if (!routeTuple) {
+      this.displayContent(PAGE_404);
+      return;
+    }
+    const [route, params] = routeTuple;
+    route.build(fetcher, 'testcast', getQuery(this.props.path), params).then(
+      content => {
+        if (this.reqId !== reqId) {
+          return;
         }
-    };
+        this.displayContent(content);
+      },
+      () => this.displayContent(PAGE_404),
+    );
+    this.displayContent(PAGE_LOADING);
+  }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.iframe && this.props.path !== nextProps.path) {
-            this.doInnerRender();
-        }
+  displayContent(content: string) {
+    if (!this.iframe) {
+      return;
     }
+    this.iframe.src = `data:text/html,${content}`;
+  }
 
-    shouldComponentUpdate() {
-        return false;
-    }
-
-    doInnerRender() {
-        this.reqId += 1;
-        const reqId = this.reqId;
-
-        const routeTuple = matchRoute(this.props.path);
-        if (!routeTuple) {
-            this.displayContent(PAGE_404);
-            return;
-        }
-        const [route, params] = routeTuple;
-        route.build(
-            fetcher,
-            'testcast',
-            getQuery(this.props.path),
-            params,
-        ).then(content => {
-            if (this.reqId !== reqId) {
-                return;
-            }
-            this.displayContent(content);
-        }, () => this.displayContent(PAGE_404));
-        this.displayContent(PAGE_LOADING);
-    }
-
-    displayContent(content: string) {
-        if (!this.iframe) {
-            return;
-        }
-        this.iframe.src = `data:text/html,${content}`;
-    }
-
-    render() {
-        return (
-            <div style={{height: '100%'}}>
-                <div style={{
-                    background: '#fafafa',
-                    borderBottom: '1px solid #eee',
-                    height: 40,
-                }}>
-                    //
-                </div>
-                <iframe
-                    ref={this.ref}
-                    style={{
-                        border: 0,
-                        height: 'calc(100% - 40px)',
-                        width: '100%',
-                    }}
-                />
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div style={{height: '100%'}}>
+        <div
+          style={{
+            background: '#fafafa',
+            borderBottom: '1px solid #eee',
+            height: 40,
+          }}
+        >
+          //
+        </div>
+        <iframe
+          ref={this.ref}
+          style={{
+            border: 0,
+            height: 'calc(100% - 40px)',
+            width: '100%',
+          }}
+        />
+      </div>
+    );
+  }
 }
 
-
 export default connect((state: ReducerType) => ({
-    path: state.preview.path,
+  path: state.preview.path,
 }))(PreviewRenderer);

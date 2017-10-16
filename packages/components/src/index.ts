@@ -8,12 +8,12 @@ import renderLayout from './layout';
 import Styletron from './styletron';
 
 export {
-    Body,
-    ComponentContext,
-    ItemSourceContext,
-    primitives,
-    renderBlock,
-    renderElement,
-    renderLayout,
-    Styletron,
+  Body,
+  ComponentContext,
+  ItemSourceContext,
+  primitives,
+  renderBlock,
+  renderElement,
+  renderLayout,
+  Styletron,
 };

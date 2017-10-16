@@ -1,31 +1,33 @@
 import {BackgroundImage} from './primitives';
 import {ComponentContext} from './componentContext';
 
+export function backgroundImage(
+  bgImage: BackgroundImage,
+  ctx: ComponentContext,
+): Object {
+  if (!bgImage) {
+    return null;
+  }
 
-export function backgroundImage(bgImage: BackgroundImage, ctx: ComponentContext): Object {
-    if (!bgImage) {
-        return null;
-    }
-
-    return {
-        backgroundImage: ctx.resources[bgImage.resourceId],
-        backgroundSize: bgImage.sizing,
-        backgroundRepeat: bgImage.repeat,
-    };
-};
+  return {
+    backgroundImage: ctx.resources[bgImage.resourceId],
+    backgroundSize: bgImage.sizing,
+    backgroundRepeat: bgImage.repeat,
+  };
+}
 
 export function alignment(alignment: 'left' | 'center' | 'right'): Object {
-    if (!alignment) {
-        return null;
-    }
+  if (!alignment) {
+    return null;
+  }
 
-    if (alignment === 'left') {
-        return {marginRight: 'auto'};
-    }
-    if (alignment === 'right') {
-        return {marginLeft: 'auto'};
-    }
-    if (alignment === 'center') {
-        return {marginLeft: 'auto', marginRight: 'auto'};
-    }
-};
+  if (alignment === 'left') {
+    return {marginRight: 'auto'};
+  }
+  if (alignment === 'right') {
+    return {marginLeft: 'auto'};
+  }
+  if (alignment === 'center') {
+    return {marginLeft: 'auto', marginRight: 'auto'};
+  }
+}

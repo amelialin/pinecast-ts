@@ -9,10 +9,10 @@ export const matchRoute = match;
 
 export type JSONObject = JSONObject;
 export interface DataAPI {
-    getSite(hostname: string): Promise<JSONObject>,
-    getEpisodes(hostname: string, page: number): Promise<JSONObject>,
-    getEpisode(hostname: string, id: string): Promise<JSONObject>,
-};
+  getSite(hostname: string): Promise<JSONObject>;
+  getEpisodes(hostname: string, page: number): Promise<JSONObject>;
+  getEpisode(hostname: string, id: string): Promise<JSONObject>;
+}
 
 // export interface DataReadinessAPI {
 //     getSite(): boolean,

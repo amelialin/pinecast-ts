@@ -8,50 +8,60 @@ import {formatColor} from '../../helpers';
 import {MountProvider} from '../mounts';
 import renderElements from '../../elements';
 
-
 export default getsContext(
-    (
-        {layout, template}:
-            {
-                layout: {
-                    nextText: string,
-                    previousText: string,
-                },
-                template: ElementLayout,
-            },
-        {ctx}: {ctx: ComponentContext}
-    ) =>
-        ctx.pagination ?
-            <MountProvider
-                children={renderElements('mount', ctx.data, template)}
-                mounts={{
-                    previousLink:
-                        ctx.pagination.has_previous &&
-                        <Button
-                            {...ctx.styling.buttons}
-                            href={ctx.url('home') + (ctx.pagination.previous_page_number !== 1 ? `?page=${ctx.pagination.previous_page_number}` : '')}
-                            style={{
-                                marginBottom: '0.5em',
-                            }}
-                        >
-                            {layout.previousText}
-                        </Button> ||
-                        null,
-                    nextLink:
-                        ctx.pagination.has_next &&
-                        <Button
-                            {...ctx.styling.buttons}
-                            href={ctx.url('home') + `?page=${ctx.pagination.next_page_number}`}
-                            style={{
-                                marginBottom: '0.5em',
-                                marginLeft: ctx.pagination.has_previous ? '0.5em' : null,
-                                marginRight: ctx.pagination.has_previous ? '0.5em' : null,
-                            }}
-                        >
-                            {layout.nextText}
-                        </Button> ||
-                        null,
+  (
+    {
+      layout,
+      template,
+    }: {
+      layout: {
+        nextText: string;
+        previousText: string;
+      };
+      template: ElementLayout;
+    },
+    {ctx}: {ctx: ComponentContext},
+  ) =>
+    ctx.pagination ? (
+      <MountProvider
+        children={renderElements('mount', ctx.data, template)}
+        mounts={{
+          previousLink:
+            (ctx.pagination.has_previous && (
+              <Button
+                {...ctx.styling.buttons}
+                href={
+                  ctx.url('home') +
+                  (ctx.pagination.previous_page_number !== 1
+                    ? `?page=${ctx.pagination.previous_page_number}`
+                    : '')
+                }
+                style={{
+                  marginBottom: '0.5em',
                 }}
-            /> :
-            null
+              >
+                {layout.previousText}
+              </Button>
+            )) ||
+            null,
+          nextLink:
+            (ctx.pagination.has_next && (
+              <Button
+                {...ctx.styling.buttons}
+                href={
+                  ctx.url('home') + `?page=${ctx.pagination.next_page_number}`
+                }
+                style={{
+                  marginBottom: '0.5em',
+                  marginLeft: ctx.pagination.has_previous ? '0.5em' : null,
+                  marginRight: ctx.pagination.has_previous ? '0.5em' : null,
+                }}
+              >
+                {layout.nextText}
+              </Button>
+            )) ||
+            null,
+        }}
+      />
+    ) : null,
 );
