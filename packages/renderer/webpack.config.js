@@ -11,7 +11,6 @@ module.exports = {
     resolve: {
         mainFields: [
             'jsnext:main',
-            // 'module',
             'main',
         ],
         modules: [
@@ -53,7 +52,8 @@ module.exports = {
                     if (
                         request[0] === '.' ||
                         request.includes('@pinecast') && request.search(/@pinecast\/.*\/node_modules\//) === -1 ||
-                        context.includes('packages/components/') && request !== 'react'
+                        context.includes('packages/components/') && request !== 'react' ||
+                        context.includes('packages/styles/') && request !== 'react'
                     ) {
                         return callback();
                     }

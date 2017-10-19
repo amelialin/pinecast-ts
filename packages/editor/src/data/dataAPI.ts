@@ -10,11 +10,19 @@ async function parse(data: string): JSONObject {
   return JSON.parse(data) as JSONObject;
 }
 
-export const fetcher: DataAPI = {
+export const fetcher: ((theme: Object) => DataAPI) = (theme: Object) => ({
   getSite(hostname: string): Promise<JSONObject> {
     return request(
       `https://pinecast.com/sites/site_builder/${encodeURIComponent(hostname)}`,
-    ).then(parse);
+    )
+      .then(parse)
+      .then(siteData => ({
+        ...siteData,
+        site: {
+          ...siteData.site,
+          theme,
+        },
+      }));
   },
   getEpisodes(hostname: string, page: number) {
     return request(
@@ -30,7 +38,7 @@ export const fetcher: DataAPI = {
       )}/episode/${encodeURIComponent(id)}`,
     ).then(parse);
   },
-};
+});
 
 // export const hasData = (state: ReducerType): DataReadinessAPI => ({
 //     getSite: (): boolean => Boolean(state.preview.data.site),

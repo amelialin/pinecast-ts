@@ -1,11 +1,12 @@
 import * as React from 'react';
 
+import styled from '@pinecast/sb-styles';
+
 import {AbstractURL} from '../primitives';
 import {ComponentContext, getsContext} from '../componentContext';
 import {extractPath} from './extractor';
 import {formatColor} from '../helpers';
 import {MOBILE_MEDIA_QUERY} from '../media';
-import styled from '../styles';
 
 export function prepareProps(
   item: any,

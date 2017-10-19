@@ -1,8 +1,9 @@
 import * as React from 'react';
 
+import styled from '@pinecast/sb-styles';
+
 import {ComponentContext, getsContext} from '../componentContext';
 import {formatColor} from '../helpers';
-import styled from '../styles';
 import {Text, TextStyle} from '../primitives';
 
 function getContent(token: string, ctx: ComponentContext): string {

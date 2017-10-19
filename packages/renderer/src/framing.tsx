@@ -1,10 +1,9 @@
 import * as escapeHTML from 'react-dom/lib/escapeTextContentForBrowser';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/server';
-import {StyletronProvider} from 'styletron-react';
 
-import {ComponentContext} from '@pinecast/sb-components/dist';
-import {Styletron} from '@pinecast/sb-components/dist';
+import {ComponentContext} from '@pinecast/sb-components';
+import {ServerStyletron, StyletronProvider} from '@pinecast/sb-styles';
 
 import {Context} from 'koa';
 
@@ -34,7 +33,7 @@ export default async function frame(
   siteData: any,
   {context, title = null}: Options,
 ): Promise<string> {
-  const styletron = new (Styletron as any)();
+  const styletron = new (ServerStyletron as any)();
   // HACK: https://github.com/rtsao/styletron/issues/153
   const StyletronProviderCast: any = StyletronProvider;
   const root = (

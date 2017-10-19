@@ -1,10 +1,11 @@
 import * as React from 'react';
 
+import styled from '@pinecast/sb-styles';
+
 import {ComponentContext, getsContext} from '../componentContext';
 import {ButtonStyle} from '../primitives';
 import {formatColor} from '../helpers';
 import {prepareStyle} from '../elements/atom';
-import styled from '../styles';
 
 const Button = styled('a', {
   border: 0,

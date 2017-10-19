@@ -1,8 +1,9 @@
 import * as React from 'react';
 
+import styled from '@pinecast/sb-styles';
+
 import {ComponentContext, getsContext} from '../componentContext';
 import {Image} from '../primitives';
-import styled from '../styles';
 
 const Img = styled('img');
 

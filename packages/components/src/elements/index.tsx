@@ -1,8 +1,9 @@
 import * as React from 'react';
 
+import styled from '@pinecast/sb-styles';
+
 import atom from './atom';
 import {Element, ElementLayout, InlineElement} from '../primitives';
-import styled from '../styles';
 
 import BackgroundImage from './BackgroundImage';
 import BlockLink from './BlockLink';

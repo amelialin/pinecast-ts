@@ -5,7 +5,6 @@ import {ItemSourceContext} from './itemSourceContext';
 import * as primitives from './primitives';
 import renderElement from './elements';
 import renderLayout from './layout';
-import Styletron from './styletron';
 
 export {
   Body,
@@ -15,5 +14,4 @@ export {
   renderBlock,
   renderElement,
   renderLayout,
-  Styletron,
 };

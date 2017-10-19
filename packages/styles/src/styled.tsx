@@ -3,7 +3,7 @@ import {styled} from 'styletron-react';
 
 // This is a hack to disable Styletron's built-in autoprefixing.
 declare function require(name: string);
-const su = require('styletron-react/node_modules/styletron-utils');
+const su = require('styletron-utils');
 su.injectStylePrefixed = (styletron, styles, media, pseudo) =>
   su.injectStyle(styletron, styles, media, pseudo);
 
@@ -26,14 +26,21 @@ export default function(
       ..._style,
     }));
   }
-  return wrapStyledComponent(StyledComponent, defaultProps);
+  StyledComponent.displayName = `styled(${elemType})`;
+  if (defaultProps) {
+    return wrapStyledComponent(StyledComponent, defaultProps);
+  } else {
+    return StyledComponent;
+  }
 }
 
 function wrapStyledComponent(
   StyledComponent,
   defaultProps,
 ): React.StatelessComponent<any> {
-  return ({style, ...innerProps}) => (
-    <StyledComponent _style={style} {...innerProps} {...defaultProps} />
-  );
+  const out: React.StatelessComponent<any> = ({style, ...innerProps}, ctx) =>
+    StyledComponent({_style: style, ...innerProps, ...defaultProps}, ctx);
+  out.contextTypes = StyledComponent.contextTypes;
+  out.displayName = `styledDefaultProps(${StyledComponent.displayName})`;
+  return out;
 }

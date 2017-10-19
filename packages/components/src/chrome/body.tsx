@@ -1,9 +1,10 @@
 import * as React from 'react';
 
+import styled from '@pinecast/sb-styles';
+
 import block from './block';
 import {ComponentContext, getsContext} from '../componentContext';
 import {prepareStyle} from '../elements/atom'; // TODO: Move this to someplace generic
-import styled from '../styles';
 
 const Body = styled('body');
 

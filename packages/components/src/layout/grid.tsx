@@ -1,12 +1,13 @@
 import * as React from 'react';
 
+import styled from '@pinecast/sb-styles';
+
 import {alignment} from '../styleMixins';
 import {ComponentContext, getsContext} from '../componentContext';
 import {Episode, LayoutConfig} from '../primitives';
 import {formatColor} from '../helpers';
 import {getsItemSource, ItemSourceContext} from '../itemSourceContext';
 import renderN from './util';
-import styled from '../styles';
 
 const Wrapper = styled('section');
 const WrapperInner = styled('div');

@@ -10,13 +10,23 @@ export function reduceReducers<T>(...reducers: Array<Reducer<T>>): Reducer<T> {
 export function actionHandler<T>(handlers: {
   [key: string]: Reducer<any>;
 }): Reducer<T> {
-  return (state: T, action: Action<any>): T =>
-    Object.entries(handlers)
+  return (state: T, action: Action<any>): T => {
+    let updated = false;
+    return Object.entries(handlers)
       .map(([key, val]): Reducer<T> => {
         return (state: T, action: Action<T>): T => {
-          state[key] = val(state[key], action);
+          const recomputed = val(state[key], action);
+          if (recomputed === state[key]) {
+            return state;
+          }
+          if (!updated) {
+            state = Object.assign({}, state);
+          }
+          state[key] = recomputed;
+          updated = true;
           return state;
         };
       })
-      .reduce((acc, cur) => cur(acc, action), {...(state as any)});
+      .reduce((acc, cur) => cur(acc, action), state);
+  };
 }

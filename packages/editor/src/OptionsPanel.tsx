@@ -1,19 +1,20 @@
 import {connect} from 'react-redux';
-import React from 'react';
+import * as React from 'react';
 
-// import {ReducerType} from './reducer';
+import styled from '@pinecast/sb-styles';
 
-const OptionsPanel = () => (
-  <div
-    style={{
-      flex: '1 1',
-      height: '100%',
-    }}
-  >
-    //
-  </div>
+import {ReducerType} from './reducer';
+import * as Panels from './panels';
+
+const Wrapper = styled('div', {flex: '1 1', height: '100%'});
+
+const OptionsPanel = ({page}: {page: ReducerType['page']}) => (
+  <Wrapper>
+    {page === 'presets' && <Panels.PresetsPanel />}
+    {page === 'colors' && <Panels.ColorsPanel />}
+  </Wrapper>
 );
 
-export default connect(state => ({
-  //
+export default connect((state: ReducerType) => ({
+  page: state.page,
 }))(OptionsPanel);

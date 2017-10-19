@@ -1,0 +1,23 @@
+{
+  "name": "@pinecast/sb-styles",
+  "version": "1.0.0",
+  "description": "Style provider for Pinecast site builder",
+  "main": "dist/index.js",
+  "jsnext:main": "dist/index.js",
+  "ts:main": "src/index.ts",
+  "author": "Matt Basta <me@mattbasta.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch"
+  },
+  "dependencies": {
+    "styletron-client": "^2.5.7",
+    "styletron-react": "^2.5.10",
+    "styletron-server": "^2.5.7"
+  },
+  "devDependencies": {
+    "source-map-loader": "^0.2.1",
+    "typescript": "^2.5.3"
+  }
+}

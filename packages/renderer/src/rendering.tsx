@@ -47,6 +47,13 @@ function getItemSource<T>(items: Array<T>): ItemSourceContext<T> {
   };
 }
 
+function buildTheme(themeObj: {$type?: string}) {
+  if (!themeObj.$type || !presets.themes.hasOwnProperty(themeObj.$type)) {
+    return themeObj;
+  }
+  return Object.assign({}, presets.themes[themeObj.$type], themeObj);
+}
+
 function getContextFromResources(
   func: (
     context: ComponentContext,
@@ -56,7 +63,15 @@ function getContextFromResources(
 ): (data: any, ...args: Array<string>) => Promise<string> {
   return async (data: any, ...args: Array<any>): Promise<string> => {
     const context: ComponentContext = {
-      ...presets.themes.panther,
+      ...buildTheme({
+        ...data.site.site.theme,
+        $type:
+          (data.site.site &&
+            data.site.site.theme &&
+            data.site.site.theme.$type) ||
+          data.site.site.legacy_theme ||
+          'panther',
+      }),
       data: data.site,
       resources: {
         cover_art: data.site.site.cover_image_url,

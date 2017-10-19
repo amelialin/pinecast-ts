@@ -1,19 +1,22 @@
 {
   "devDependencies": {
-    "lerna": "^2.0.0",
+    "lerna": "^2.4.0",
     "nodemon": "^1.11.0"
   },
   "dependencies": {
     "husky": "^0.14.3",
     "lint-staged": "^4.2.3",
-    "prettier": "^1.7.4",
-    "typescript": "^2.4.1"
+    "prettier": "^1.7.4"
   },
   "scripts": {
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": [
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.tsx": [
       "prettier --write",
       "git add"
     ]

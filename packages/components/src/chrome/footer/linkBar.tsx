@@ -1,12 +1,13 @@
 import * as React from 'react';
 
+import styled from '@pinecast/sb-styles';
+
 import {backgroundImage} from '../../styleMixins';
 import {ElementLayout, Link, Page, TextStyle} from '../../primitives';
 import {ComponentContext, getsContext} from '../../componentContext';
 import {formatColor} from '../../helpers';
 import {MountProvider} from '../mounts';
 import renderElements from '../../elements';
-import styled from '../../styles';
 import TextRenderer from '../../common/text';
 
 const Divider = styled('span', {

@@ -1,14 +1,205 @@
-import React from 'react';
+import {connect} from 'react-redux';
+import * as React from 'react';
 
-import PreviewRenderer from './preview/renderer';
+import {matchRoute, routes} from '@pinecast/sb-renderer';
+import styled from '@pinecast/sb-styles';
 
-export default () => (
-  <div
-    style={{
-      flex: '1 1',
-      height: '100%',
-    }}
-  >
-    <PreviewRenderer />
-  </div>
-);
+import {fetcher} from './data/dataAPI';
+import {ReducerType} from './reducer';
+import Select from './common/Select';
+
+const UTIL_PAGE_HEAD = `
+<head>
+  <style>
+    body, html {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      font-family: sans-serif;
+      height: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+  </style>
+</head>
+`;
+const PAGE_LOADING = `
+<html>
+  ${UTIL_PAGE_HEAD}
+  <body>
+    <p>Loading...</p>
+  </body>
+</html>
+`;
+const PAGE_404 = `
+<html>
+  ${UTIL_PAGE_HEAD}
+  <body>
+    <p>That page was not found.</p>
+  </body>
+</html>
+`;
+
+const Wrapper = styled('div', {flex: '1 1', height: '100%'});
+const Toolbar = styled('div', {
+  alignItems: 'center',
+  background: '#333',
+  borderBottom: '1px solid #eee',
+  display: 'flex',
+  height: 40,
+  padding: '0 15px',
+});
+
+function getQuery(url: string): {[key: string]: string} {
+  if (!url.includes('?')) {
+    return {};
+  }
+  const [, qs] = url.split('?', 2);
+  return qs
+    .split('&')
+    .map(s => s.split('=', 2))
+    .reduce((acc, [k, v]) => {
+      acc[decodeURIComponent(k)] = decodeURIComponent(v);
+      return acc;
+    }, {});
+}
+
+class PreviewRenderer extends React.Component {
+  iframe: HTMLIFrameElement | null;
+  reqId: number;
+  props: {
+    path: string;
+    theme: Object;
+  };
+  state: {
+    frame: null | 'mobile' | 'tablet';
+    orientation: null | 'portrait' | 'landscape';
+  };
+
+  constructor(props) {
+    super(props);
+    this.reqId = 0;
+
+    this.state = {
+      frame: null,
+      orientation: null,
+    };
+  }
+
+  ref = (e: HTMLIFrameElement | null) => {
+    this.iframe = e;
+    if (e) {
+      this.doInnerRender();
+    }
+  };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      this.props.path !== nextProps.path ||
+      this.props.theme !== nextProps.theme ||
+      this.state.frame !== nextState.frame ||
+      this.state.orientation !== nextState.orientation
+    );
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.iframe &&
+      (this.props.path !== prevProps.path ||
+        this.props.theme !== prevProps.theme)
+    ) {
+      this.doInnerRender();
+    }
+  }
+
+  doInnerRender() {
+    this.reqId += 1;
+    const reqId = this.reqId;
+    console.log(`Rendering as request ${reqId}`);
+
+    const routeTuple = matchRoute(this.props.path);
+    if (!routeTuple) {
+      this.displayContent(PAGE_404);
+      return;
+    }
+    const [route, params] = routeTuple;
+    route
+      .build(
+        fetcher(this.props.theme),
+        'testcast',
+        getQuery(this.props.path),
+        params,
+      )
+      .then(
+        content => {
+          if (this.reqId !== reqId) {
+            return;
+          }
+          this.displayContent(content, true);
+        },
+        err => {
+          if (err) {
+            console.error(err);
+          }
+          if (this.reqId !== reqId) {
+            return;
+          }
+          this.displayContent(PAGE_404);
+        },
+      );
+    this.displayContent(PAGE_LOADING);
+  }
+
+  displayContent(content: string, isRendered?: boolean) {
+    if (!this.iframe) {
+      return;
+    }
+    if (isRendered) {
+      console.log(`Displaying content for request ${this.reqId}`);
+    }
+    if ('srcdoc' in this.iframe) {
+      (this.iframe as any).srcdoc = content;
+    } else {
+      this.iframe.src = `data:text/html,${content}`;
+    }
+  }
+
+  handleFrameChange = (frame: string) => {
+    if (frame === 'desktop') {
+      this.setState({frame: null, orientation: null});
+      return;
+    }
+    this.setState({frame});
+  };
+
+  render() {
+    return (
+      <Wrapper>
+        <Toolbar>
+          <Select
+            onChange={this.handleFrameChange}
+            options={{
+              desktop: 'Desktop',
+              phone: 'Phone',
+              tablet: 'Tablet',
+            }}
+            value={this.state.frame || 'desktop'}
+          />
+        </Toolbar>
+        <iframe
+          ref={this.ref}
+          style={{
+            border: 0,
+            height: 'calc(100% - 40px)',
+            width: '100%',
+          }}
+        />
+      </Wrapper>
+    );
+  }
+}
+
+export default connect((state: ReducerType) => ({
+  path: state.preview.path,
+  theme: state.theme,
+}))(PreviewRenderer);

@@ -1,8 +1,9 @@
 import * as React from 'react';
 
+import styled from '@pinecast/sb-styles';
+
 import {ComponentContext, getsContext} from '../componentContext';
 import {computeTextStyle} from './text';
-import styled from '../styles';
 import {TextStyle} from '../primitives';
 
 const Link = styled('a');
