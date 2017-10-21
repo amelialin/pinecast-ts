@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as presets from '@pinecast/sb-presets';
 
 import {changeColor} from '../../actions/theme';
+import ColorPicker from '../ColorPicker';
 import HelpText from '../../common/HelpText';
 import {PanelDescription, PanelHeader, PanelWrapper} from '../common';
 import {ReducerType} from '../../reducer';
@@ -30,7 +31,7 @@ const ColorsPanel = ({
   colors,
   changeColor,
 }: {
-  colors: ReducerType['theme']['colors'];
+  colors: {[key: string]: string};
   changeColor: (colorPair: {[colorName: string]: string}) => void;
 }) => (
   <PanelWrapper>
@@ -47,7 +48,19 @@ const ColorsPanel = ({
           renderSwatch(slug, swatch, changeColor),
         )}
       </Tab>
-      <Tab name="Custom" />
+      <Tab name="Custom">
+        <HelpText>
+          Adjust the colors below to tweak your site's color scheme.
+        </HelpText>
+        {Object.entries(colors).map(([colorKey, colorValue]) => (
+          <ColorPicker
+            colorKey={colorKey}
+            colorValue={colorValue}
+            key={colorKey}
+            onChange={color => changeColor({...colors, [colorKey]: color})}
+          />
+        ))}
+      </Tab>
     </Tabs>
   </PanelWrapper>
 );
@@ -55,7 +68,8 @@ const ColorsPanel = ({
 export default connect(
   (state: ReducerType) => ({
     colors:
-      state.theme.colors || presets.themes[state.theme.$type].colors || {},
+      state.theme.colors ||
+      (presets.themes[state.theme.$type].colors as {[key: string]: string}),
   }),
   {changeColor},
 )(ColorsPanel);

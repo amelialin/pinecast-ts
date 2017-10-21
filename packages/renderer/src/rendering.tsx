@@ -62,15 +62,13 @@ function getContextFromResources(
   ) => Promise<string>,
 ): (data: any, ...args: Array<string>) => Promise<string> {
   return async (data: any, ...args: Array<any>): Promise<string> => {
+    const theme = (data.site.site && data.site.site.theme) || {};
+    const themeName =
+      (theme && theme.$type) || data.site.site.legacy_theme || 'panther';
     const context: ComponentContext = {
       ...buildTheme({
-        ...data.site.site.theme,
-        $type:
-          (data.site.site &&
-            data.site.site.theme &&
-            data.site.site.theme.$type) ||
-          data.site.site.legacy_theme ||
-          'panther',
+        ...theme,
+        $type: themeName,
       }),
       data: data.site,
       resources: {

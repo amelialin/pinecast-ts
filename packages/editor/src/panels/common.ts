@@ -16,5 +16,5 @@ export const PanelDescription = styled('p', {
   fontFamily: 'Fira Mono',
   fontSize: 16,
   marginBottom: 30,
-  marginTop: -15,
+  marginTop: -10,
 });

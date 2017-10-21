@@ -8,8 +8,8 @@
   "author": "Matt Basta <me@mattbasta.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "dev": "tsc -p tsconfig.json --watch"
+    "build": "../../node_modules/.bin/tsc -p tsconfig.json",
+    "dev": "../../node_modules/.bin/tsc -p tsconfig.json --watch"
   },
   "dependencies": {
     "styletron-client": "^2.5.7",

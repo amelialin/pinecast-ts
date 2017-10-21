@@ -4,6 +4,8 @@ import Tooltip from 'rc-tooltip';
 
 import styled from '@pinecast/sb-styles';
 
+import {colorKeyNames} from '../constants';
+
 import './rc-tooltip.css';
 
 const Chiclet = styled('div', ({color}) => ({
@@ -11,18 +13,6 @@ const Chiclet = styled('div', ({color}) => ({
   flex: '1 1 100px',
   height: 50,
 }));
-
-const colorKeyNames = {
-  background: 'Background',
-  secondaryBackground: 'Secondary Background',
-  foreground: 'Foreground',
-  accent: 'Accent',
-  secondaryAccent: 'Secondary Accent',
-  buttons: 'Button Background',
-  buttonsText: 'Button Text',
-  links: 'Links',
-  text: 'Text',
-};
 
 const SwatchChiclet = ({
   color,

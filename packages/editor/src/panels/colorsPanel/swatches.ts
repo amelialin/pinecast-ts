@@ -47,20 +47,36 @@ export default {
       secondaryAccent: '#eeaa7b',
     },
   },
+  overcast: {
+    name: 'Overcast',
+    swatch: {
+      background: '#d5d5d5',
+      secondaryBackground: '#e6e6e6',
+      accent: '#9099a2',
+      text: '#111',
+      buttons: '#6d7993',
+      buttonsText: '#fff',
+
+      foreground: '#B2DDF7',
+      links: '#3E5C6B',
+
+      secondaryAccent: '#96858f',
+    },
+  },
   argon: {
     name: 'Argon',
     swatch: {
       background: '#0e0b16',
-      secondaryBackground: '#0e0b16',
-      accent: '#0e0b16',
+      secondaryBackground: '#535353',
+      accent: '#5700C9',
       text: '#fff',
       buttons: '#4717f6',
       buttonsText: '#fff',
 
-      foreground: '#a239ca',
+      foreground: '#DEA2F9',
       links: '#fff',
 
-      secondaryAccent: '#4717f6',
+      secondaryAccent: '#00E7FF',
     },
   },
 };

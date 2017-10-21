@@ -6,7 +6,7 @@
   "jsnext:main": "dist/index.js",
   "ts:main": "src/jsAPI.ts",
   "scripts": {
-    "dev": "webpack --config=webpack.config.js --progress --watch --colors",
+    "dev": "../../node_modules/.bin/webpack --config=webpack.config.js --progress --watch --colors",
     "start": "nodemon build/index.js"
   },
   "author": "Matt Basta <me@mattbasta.com>",
