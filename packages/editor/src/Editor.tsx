@@ -1,4 +1,5 @@
 import {Provider} from 'react-redux';
+import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 import {ClientStyletron, StyletronProvider, styled} from '@pinecast/sb-styles';
@@ -16,18 +17,20 @@ const BelowToolbar = styled('div', {
   height: 'calc(100% - 50px)',
 });
 
-const App = () => (
-  <StyletronProvider styletron={styletron}>
-    <Provider store={store}>
-      <HeightWrapper>
-        <Toolbar />
-        <BelowToolbar>
-          <OptionsPanel />
-          <PreviewPanel />
-        </BelowToolbar>
-      </HeightWrapper>
-    </Provider>
-  </StyletronProvider>
-);
-
-export default App;
+export default class App extends React.PureComponent {
+  render() {
+    return (
+      <StyletronProvider styletron={styletron}>
+        <Provider store={store}>
+          <HeightWrapper>
+            <Toolbar />
+            <BelowToolbar>
+              <OptionsPanel />
+              <PreviewPanel />
+            </BelowToolbar>
+          </HeightWrapper>
+        </Provider>
+      </StyletronProvider>
+    );
+  }
+}

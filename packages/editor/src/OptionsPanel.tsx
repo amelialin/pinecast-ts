@@ -12,6 +12,7 @@ const OptionsPanel = ({page}: {page: ReducerType['page']}) => (
   <Wrapper>
     {page === 'presets' && <Panels.PresetsPanel />}
     {page === 'colors' && <Panels.ColorsPanel />}
+    {page === 'typography' && <Panels.TypographyPanel />}
   </Wrapper>
 );
 

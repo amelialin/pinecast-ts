@@ -4,7 +4,7 @@ import Tooltip from 'rc-tooltip';
 
 import styled from '@pinecast/sb-styles';
 
-import {colorKeyNames} from '../constants';
+import {colorKeyNames} from '../../constants';
 
 import './rc-tooltip.css';
 

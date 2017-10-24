@@ -12,7 +12,7 @@ import themeReducer, {
 } from './reducers/theme';
 
 export interface ReducerType {
-  readonly page: 'presets' | 'colors' | 'typography';
+  readonly page: 'presets' | 'colors' | 'typography' | 'components';
   readonly preview: PreviewReducerType;
   readonly theme: ThemeReducerType;
 }

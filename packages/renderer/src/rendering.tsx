@@ -47,11 +47,31 @@ function getItemSource<T>(items: Array<T>): ItemSourceContext<T> {
   };
 }
 
-function buildTheme(themeObj: {$type?: string}) {
-  if (!themeObj.$type || !presets.themes.hasOwnProperty(themeObj.$type)) {
+function buildTheme(
+  themeObj: {
+    $type?: string;
+    colors?: {[color: string]: string};
+    fonts?: {[font: string]: string};
+  },
+  themeName: string,
+) {
+  if (!presets.themes.hasOwnProperty(themeObj.$type || themeName)) {
     return themeObj;
   }
-  return Object.assign({}, presets.themes[themeObj.$type], themeObj);
+  const preset = presets.themes[themeObj.$type || themeName];
+  return {
+    $type: themeName,
+    ...preset,
+    ...themeObj,
+    colors: {
+      ...preset.colors,
+      ...themeObj.colors,
+    },
+    fonts: {
+      ...preset.fonts,
+      ...themeObj.fonts,
+    },
+  };
 }
 
 function getContextFromResources(
@@ -66,10 +86,7 @@ function getContextFromResources(
     const themeName =
       (theme && theme.$type) || data.site.site.legacy_theme || 'panther';
     const context: ComponentContext = {
-      ...buildTheme({
-        ...theme,
-        $type: themeName,
-      }),
+      ...buildTheme(theme, themeName),
       data: data.site,
       resources: {
         cover_art: data.site.site.cover_image_url,

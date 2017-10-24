@@ -1,0 +1,20 @@
+{
+    "name": "@pinecast/sb-resources",
+    "version": "1.0.0",
+    "description": "Style provider for Pinecast site builder",
+    "main": "dist/index.js",
+    "jsnext:main": "dist/index.js",
+    "ts:main": "src/index.ts",
+    "author": "Matt Basta <me@mattbasta.com>",
+    "license": "MIT",
+    "scripts": {
+        "build": "../../node_modules/.bin/tsc -p tsconfig.json",
+        "buildCLI": "../../node_modules/.bin/tsc -p tsconfig.json -m UMD",
+        "exec": "npm run buildCLI && node dist/bin/compile.js"
+    },
+    "devDependencies": {
+        "inquirer": "^3.3.0",
+        "isomorphic-fetch": "^2.2.1",
+        "opentype.js": "^0.7.3"
+    }
+}

@@ -5,7 +5,7 @@ import {SketchPicker} from 'react-color';
 
 import styled from '@pinecast/sb-styles';
 
-import {colorKeyNames} from './constants';
+import {colorKeyNames} from '../constants';
 
 const Wrapper = styled('div', {
   display: 'flex',
@@ -58,6 +58,7 @@ export default class ColorPicker extends React.Component {
     this.state = {showingPicker: false};
   }
 
+  // TODO: dedupe this from FontSelect/index.tsx
   escapeListener = (e: KeyboardEvent) => {
     if (!this.state.showingPicker) {
       return;
@@ -75,10 +76,13 @@ export default class ColorPicker extends React.Component {
     if (!this.popoverWrapper) {
       return;
     }
-    let target = e.target;
+    let target = e.target as Node;
     do {
       if (target === this.popoverWrapper) {
         return;
+      }
+      if (!target.parentNode) {
+        break;
       }
       target = target.parentNode;
     } while (target.parentNode !== document.body);

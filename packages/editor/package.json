@@ -11,9 +11,12 @@
   "dependencies": {
     "@pinecast/sb-presets": "^1.0.0",
     "@pinecast/sb-renderer": "^1.0.0",
+    "@pinecast/sb-resources": "^1.0.0",
     "@pinecast/sb-styles": "^1.0.0",
+    "json-loader": "^0.5.7",
     "rc-tooltip": "^3.5.0",
     "react-color": "^2.13.8",
+    "react-list": "^0.8.8",
     "react-redux": "^5.0.6",
     "recompose": "^0.24.0",
     "redux": "^3.7.2",

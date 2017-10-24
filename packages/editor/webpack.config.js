@@ -5,7 +5,7 @@ const webpack = require('webpack');
 module.exports = {
   devtool: 'source-maps',
   entry: {
-    app: ['./src/index.ts'],
+    index: './src/index.ts',
   },
   resolve: {
     mainFields: ['ts:main', 'jsnext:main', 'main'],
@@ -16,6 +16,7 @@ module.exports = {
     path: path.resolve(__dirname, 'build'),
     publicPath: '/',
     filename: 'index.js',
+    chunkFilename: '[name].chunk.js',
   },
   plugins: [new webpack.LoaderOptionsPlugin({minimize: true})],
   module: {
@@ -34,11 +35,22 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.json$/,
+        use: 'json-loader',
+      },
     ],
   },
   externals: [
     function(context, request, callback) {
       switch (request) {
+        // For Node compatibility
+        case 'fs':
+        case 'net':
+          return callback(null, 'null');
+        case 'tty':
+          return callback(null, '{isatty:function() {}}');
+
         case 'bluebird':
         case 'any-promise':
           return callback(null, 'Promise');

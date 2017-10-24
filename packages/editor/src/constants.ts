@@ -9,3 +9,9 @@ export const colorKeyNames = {
   links: 'Links',
   text: 'Text',
 };
+
+export const fontKeyNames = {
+  logo: 'Logo Typeface',
+  headings: 'Heading Typeface',
+  body: 'Text Typeface',
+};

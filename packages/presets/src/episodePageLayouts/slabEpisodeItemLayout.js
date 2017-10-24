@@ -16,7 +16,7 @@ export default {
 
                     styles: {
                         color: 'text',
-                        fontFamily: 'Lobster',
+                        fontFamily: 'logo',
                         fontSize: 16,
                         fontWeight: 600,
                         margin: 0,

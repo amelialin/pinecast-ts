@@ -6,16 +6,9 @@ import styled from '@pinecast/sb-styles';
 import {changeChromePage} from './actions/chrome';
 import {ReducerType} from './reducer';
 
-interface ToolbarButtonProps {
-  children: any;
-  id: ReducerType['page'];
-  page: ReducerType['page'];
-  switchPage: (page: ReducerType['page']) => void;
-}
-
 const Toolbar_ = styled('nav', {
   alignItems: 'center',
-  backgroundColor: '#8d52d1',
+  backgroundColor: '#eee',
   // borderBottom: '1px solid #ddd',
   display: 'flex',
   fontFamily: 'Fira Mono',
@@ -25,14 +18,12 @@ const Toolbar_ = styled('nav', {
 const Button = styled(
   'button',
   ({isSelected}) => ({
-    background: isSelected ? '#fff' : '#f5f5f5',
+    background: '#fff',
     border: 0,
     borderRadius: 3,
-    boxShadow: `0 7px 14px rgba(50, 50, 100, ${isSelected
-      ? '0.3'
-      : '0.15'}), 0 3px 6px rgba(0, 0, 0, 0.15)${isSelected
-      ? ''
-      : ', inset 0 -2px 2px rgba(0, 0, 0, 0.2)'}`,
+    boxShadow: isSelected
+      ? '0 2px 5px rgba(0, 0, 0, 0.2), 0 7px 14px rgba(50, 50, 100, 0.1)'
+      : null,
     display: 'inline-block',
     fontSize: 14,
     lineHeight: '18px',
@@ -48,7 +39,12 @@ const ToolbarButton = ({
   id,
   page: currentPage,
   switchPage,
-}: ToolbarButtonProps) => (
+}: {
+  children: any;
+  id: ReducerType['page'];
+  page: ReducerType['page'];
+  switchPage: (page: ReducerType['page']) => void;
+}) => (
   <Button
     isSelected={id === currentPage}
     onClick={e => {
@@ -70,6 +66,7 @@ const Toolbar = () => (
     <ConnectedToolbarButton id="presets">Presets</ConnectedToolbarButton>
     <ConnectedToolbarButton id="colors">Colors</ConnectedToolbarButton>
     <ConnectedToolbarButton id="typography">Typography</ConnectedToolbarButton>
+    <ConnectedToolbarButton id="components">Components</ConnectedToolbarButton>
   </Toolbar_>
 );
 
