@@ -1,3 +1,5 @@
+import {primitives} from '@pinecast/sb-components';
+
 import {actionFactory} from '../actions';
 import {ReducerType} from '../reducers/theme';
 
@@ -9,4 +11,7 @@ export const changeFont = actionFactory<ReducerType['fonts']>(
 );
 export const changeColor = actionFactory<ReducerType['colors']>(
   'theme.changeColor',
+);
+export const changeButtonStyle = actionFactory<primitives.ButtonType>(
+  'theme.changeButtons',
 );

@@ -1,3 +1,5 @@
+import {primitives} from '@pinecast/sb-components';
+
 import {Action, actionReducer} from '../actions';
 import {actionHandler, reduceReducers} from './util';
 
@@ -9,10 +11,14 @@ export interface PartialFontHashType {
   readonly headings?: string;
   readonly body?: string;
 }
+export interface PartialStylingType {
+  readonly buttons?: primitives.ButtonStyle;
+}
 export interface ReducerType {
   readonly $type: string;
   readonly colors?: {[key: string]: string};
   readonly fonts?: PartialFontHashType;
+  readonly styling?: PartialStylingType;
 }
 
 export const initialState: ReducerType = {
@@ -41,6 +47,18 @@ export default reduceReducers(
         ...payload,
       }),
     ),
+    styling: reduceReducers(
+      actionReducer<ReducerType['styling']>(
+        'theme.changeButtons',
+        (
+          state = undefined,
+          {payload}: Action<PartialStylingType['buttons']>,
+        ) => ({
+          ...state,
+          buttons: payload,
+        }),
+      ),
+    ),
   }),
   (state: ReducerType) => {
     Object.keys(state).forEach(key => {
@@ -48,6 +66,7 @@ export default reduceReducers(
         delete state[key];
       }
     });
+
     return state;
   },
 );

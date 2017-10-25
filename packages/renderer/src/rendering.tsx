@@ -52,6 +52,9 @@ function buildTheme(
     $type?: string;
     colors?: {[color: string]: string};
     fonts?: {[font: string]: string};
+    styling: {
+      buttons?: React.CSSProperties;
+    };
   },
   themeName: string,
 ) {
@@ -70,6 +73,10 @@ function buildTheme(
     fonts: {
       ...preset.fonts,
       ...themeObj.fonts,
+    },
+    styling: {
+      ...preset.styling,
+      ...themeObj.styling,
     },
   };
 }

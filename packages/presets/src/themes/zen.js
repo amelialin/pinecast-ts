@@ -29,12 +29,10 @@ export default {
     },
     styling: {
         buttons: {
-            bgColor: 'buttons',
-            paddingX: 1,
-            paddingY: 0.5,
-            roundedCorners: true,
-            textColor: 'buttonsText',
-            textSize: 20,
+            borderRadius: 3,
+            boxShadow: '0 2px 0.5px rgba(0, 0, 0, 0.15)',
+            padding: '0.5em 1em',
+            fontSize: 20,
         },
         page: {
             backgroundColor: 'background',

@@ -4,13 +4,12 @@ import styled from '@pinecast/sb-styles';
 
 import {ComponentContext, getsContext} from '../componentContext';
 import {ButtonStyle} from '../primitives';
-import {formatColor} from '../helpers';
 import {prepareStyle} from '../elements/atom';
 
 const Button = styled('a', {
   border: 0,
-  boxShadow: '0 2px 0.5px rgba(0, 0, 0, 0.15)',
-  display: 'inline-block',
+  borderRadius: 0,
+  display: 'inline-flex',
   lineHeight: '1em',
   textDecoration: 'none',
 });
@@ -25,13 +24,10 @@ export default getsContext(
       <Button
         href={props.href}
         style={{
+          backgroundColor: ctx.colors.buttons || 'transparent',
+          color: ctx.colors.buttonsText || '#000',
+          ...buttonStyle,
           ...prepareStyle(props.style, ctx),
-          backgroundColor:
-            formatColor(buttonStyle.bgColor, ctx) || 'transparent',
-          borderRadius: buttonStyle.roundedCorners ? 3 : 0,
-          color: formatColor(buttonStyle.textColor, ctx),
-          fontSize: buttonStyle.textSize || 'inherit',
-          padding: `${buttonStyle.paddingY}em ${buttonStyle.paddingX}em`,
         }}
       >
         {props.children}

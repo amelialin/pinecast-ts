@@ -18,3 +18,10 @@ export const PanelDescription = styled('p', {
   marginBottom: 30,
   marginTop: -10,
 });
+
+export const PanelSection = styled('h2', {
+  fontFamily: 'Fira Mono',
+  fontSize: 24,
+  marginBottom: 30,
+  marginTop: 40,
+});
