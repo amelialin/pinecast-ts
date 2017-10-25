@@ -31,8 +31,9 @@ const presets: Array<Preset> = [
     style: {
       background: 'rgba(255, 255, 255, 0.5)',
       border: '2px solid #000',
+      color: '#000',
       fontSize: 16,
-      padding: '0.5em 1em',
+      padding: '0.75em 1.5em',
       transition: 'box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1)',
 
       ':hover': {
