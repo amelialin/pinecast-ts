@@ -25,14 +25,12 @@ const PreviewTile = ({isActive, onSelect, type}: Props & StateProps) => {
           ? '0 0 7px 3px #8d52d1'
           : '0 3px 5px rgba(0, 0, 0, 0.2)',
         display: 'block',
-        flex: '1 0 300px',
         marginBottom: 30,
-        marginRight: 30,
-        maxWidth: 350,
-        minHeight: 250,
+        minHeight: 200,
         padding: 10,
         textAlign: 'left',
         transition: 'box-shadow 0.3s',
+        width: '100%',
       }}
       type="button"
     >

@@ -7,6 +7,12 @@ interface Pairing {
 
 const pairings: Array<Pairing> = [
   {
+    name: 'Metal',
+    logo: 'New Rocker',
+    headings: 'Inkut Antiqua',
+    body: 'Stoke',
+  },
+  {
     name: 'Desert Night',
     logo: 'Croissant One',
     headings: 'Sumana',

@@ -6,7 +6,11 @@ import styled from '@pinecast/sb-styles';
 import {ReducerType} from './reducer';
 import * as Panels from './panels';
 
-const Wrapper = styled('div', {flex: '1 1', height: '100%'});
+const Wrapper = styled('div', {
+  flex: '0 1 600px',
+  height: '100%',
+  overflowY: 'auto',
+});
 
 const OptionsPanel = ({page}: {page: ReducerType['page']}) => (
   <Wrapper>

@@ -45,9 +45,8 @@ const InnerWrapper = styled('div', ({isOpen}: {isOpen: boolean}) => ({
   boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2), 0 5px 12px rgba(0, 0, 0, 0.1)',
   borderRadius: 3,
   left: 0,
-  maxHeight: 300,
+  height: 300,
   opacity: isOpen ? 1 : 0,
-  overflowY: 'auto',
   pointerEvents: isOpen ? null : 'none',
   position: 'absolute',
   top: '100%',
@@ -56,6 +55,40 @@ const InnerWrapper = styled('div', ({isOpen}: {isOpen: boolean}) => ({
   width: 270,
   zIndex: 2,
 }));
+const InnerWrapperToolbar = styled('div', {
+  alignItems: 'center',
+  display: 'flex',
+  fontSize: 16,
+  height: 40,
+  justifyContent: 'space-between',
+  padding: '0 10px',
+  position: 'relative',
+
+  ':after': {
+    backgroundImage: 'linear-gradient(to top, transparent, rgba(0, 0, 0, 0.1))',
+    content: '""',
+    height: 3,
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: '100%',
+    zIndex: 4,
+  },
+});
+const InnerWrapperList = styled('div', {
+  height: 260,
+  overflowY: 'auto',
+  width: 270,
+});
+const FilterItem = styled(
+  'a',
+  ({isSelected}) => ({
+    color: isSelected ? '#8d52d1' : '#aaa',
+    textDecoration: 'none',
+    transition: 'color 0.2s',
+  }),
+  {href: '#'},
+);
 const Item = styled(
   'div',
   {
@@ -64,6 +97,7 @@ const Item = styled(
     display: 'flex',
     height: 35,
     padding: '0 10px',
+    zIndex: 3,
 
     ':hover': {
       backgroundColor: '#fafafa',
@@ -72,20 +106,29 @@ const Item = styled(
   {role: 'option'},
 );
 
+type State = {
+  filter:
+    | null
+    | 'sans-serif'
+    | 'serif'
+    | 'handwriting'
+    | 'display'
+    | 'monospace';
+  fontPreviews: {
+    categories: {[category: string]: Array<string>};
+    getFontComponent(family: string): React.StatelessComponent;
+    list: Array<string>;
+  } | null;
+  showingPicker: boolean;
+};
+
 export default class FontSelect extends React.Component {
   props: {
     onChange: (string) => void;
     value: string;
   };
-
-  state: {
-    fontPreviews: {
-      categories: {[category: string]: Array<string>};
-      getFontComponent(family: string): React.StatelessComponent;
-      list: Array<string>;
-    } | null;
-    showingPicker: boolean;
-  } = {
+  state: State = {
+    filter: null,
     fontPreviews: null,
     showingPicker: false,
   };
@@ -142,12 +185,13 @@ export default class FontSelect extends React.Component {
   };
 
   itemRenderer = (index: number, key: string) => {
-    const {fontPreviews} = this.state;
+    const {filter, fontPreviews} = this.state;
     if (!fontPreviews) {
       return null;
     }
-    const family = fontPreviews.list[index];
-    const FontPreview = fontPreviews.getFontComponent(fontPreviews.list[index]);
+    const source = filter ? fontPreviews.categories[filter] : fontPreviews.list;
+    const family = source[index];
+    const FontPreview = fontPreviews.getFontComponent(source[index]);
     return (
       <Item
         aria-label={family}
@@ -180,12 +224,19 @@ export default class FontSelect extends React.Component {
     this.props.onChange(randomValue);
   }
 
+  handleFilter(value: State['filter']) {
+    return (e: MouseEvent) => {
+      e.preventDefault();
+      this.setState({filter: this.state.filter === value ? null : value});
+    };
+  }
+
   renderLoading() {
     return <SelectBox>Loading...</SelectBox>;
   }
 
   render() {
-    const {fontPreviews, showingPicker} = this.state;
+    const {filter, fontPreviews, showingPicker} = this.state;
     if (!fontPreviews) {
       return this.renderLoading();
     }
@@ -205,11 +256,54 @@ export default class FontSelect extends React.Component {
           isOpen={showingPicker}
           role="listbox"
         >
-          <ReactList
-            itemRenderer={this.itemRenderer}
-            length={fontPreviews.list.length}
-            type="uniform"
-          />
+          <InnerWrapperToolbar>
+            <FilterItem
+              isSelected={filter === 'serif'}
+              onClick={this.handleFilter('serif')}
+              style={{fontFamily: 'serif'}}
+            >
+              Serif
+            </FilterItem>
+            <FilterItem
+              isSelected={filter === 'sans-serif'}
+              onClick={this.handleFilter('sans-serif')}
+              style={{fontFamily: 'sans-serif'}}
+            >
+              Sans
+            </FilterItem>
+            <FilterItem
+              isSelected={filter === 'monospace'}
+              onClick={this.handleFilter('monospace')}
+              style={{fontFamily: 'Courier, Courier New, monospace'}}
+            >
+              Mono
+            </FilterItem>
+            <FilterItem
+              isSelected={filter === 'display'}
+              onClick={this.handleFilter('display')}
+              style={{fontFamily: 'Impact, Arial Black'}}
+            >
+              Disp
+            </FilterItem>
+            <FilterItem
+              isSelected={filter === 'handwriting'}
+              onClick={this.handleFilter('handwriting')}
+              style={{fontFamily: 'Comic, Comic Sans, cursive'}}
+            >
+              HW
+            </FilterItem>
+          </InnerWrapperToolbar>
+          <InnerWrapperList>
+            <ReactList
+              itemRenderer={this.itemRenderer}
+              length={
+                filter
+                  ? fontPreviews.categories[filter].length
+                  : fontPreviews.list.length
+              }
+              type="uniform"
+            />
+          </InnerWrapperList>
         </InnerWrapper>
       </div>
     );
