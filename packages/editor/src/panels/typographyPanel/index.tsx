@@ -8,8 +8,11 @@ import Button from '../../common/Button';
 import {changeFont} from '../../actions/theme';
 import {FontHashType, PartialFontHashType} from '../../reducers/theme';
 import {fontKeyNames} from '../../constants';
+import FontPreset from './FontPreset';
 import FontSelect from './FontSelect';
+import HelpText from '../../common/HelpText';
 import Label from '../../common/Label';
+import pairings from './pairings';
 import {PanelDescription, PanelHeader, PanelWrapper} from '../common';
 import {ReducerType} from '../../reducer';
 import Tabs, {Tab} from '../../common/Tabs';
@@ -42,7 +45,18 @@ class TypographyPanel extends React.Component {
           Choose the typefaces that you wish to use on your site.
         </PanelDescription>
         <Tabs>
-          <Tab name="Pairings" />
+          <Tab name="Pairings">
+            <HelpText>
+              Choose a combination of pre-made fonts to style your website.
+            </HelpText>
+            {pairings.map(pairing => (
+              <FontPreset
+                preset={pairing}
+                key={pairing.name}
+                onClick={pairing => changeFont(pairing)}
+              />
+            ))}
+          </Tab>
           <Tab name="Custom">
             <Label text={fontKeyNames.logo} style={{marginBottom: 30}}>
               <FontSelect

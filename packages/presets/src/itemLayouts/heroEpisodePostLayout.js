@@ -1,4 +1,6 @@
-export default ({position, source} = {position: 'center top', source: 'coverart'}) => ({
+export default (
+    {position, source} = {position: 'center top', source: 'coverart'},
+) => ({
     elements: [
         {
             type: 'image.background',
@@ -21,6 +23,7 @@ export default ({position, source} = {position: 'center top', source: 'coverart'
                             styles: {
                                 color: 'buttons',
                                 fontSize: 18,
+                                fontFamily: 'headings',
                                 fontWeight: 'bold',
                                 textTransform: 'uppercase',
                             },
@@ -35,6 +38,7 @@ export default ({position, source} = {position: 'center top', source: 'coverart'
                                     textContent: ['title'],
 
                                     styles: {
+                                        fontFamily: 'headings',
                                         fontSize: 36,
                                         fontWeight: 600,
                                         lineHeight: 30,

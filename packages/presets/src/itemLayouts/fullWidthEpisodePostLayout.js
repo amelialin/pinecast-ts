@@ -29,6 +29,7 @@ export default {
                             },
                             styles: {
                                 color: 'inherit',
+                                fontFamily: 'headings',
                                 fontSize: 30,
                                 fontWeight: 600,
                                 lineHeight: 30,

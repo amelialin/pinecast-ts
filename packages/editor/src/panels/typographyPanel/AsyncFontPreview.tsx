@@ -1,0 +1,42 @@
+import * as React from 'react';
+
+import styled from '@pinecast/sb-styles';
+
+import Label from '../../common/Label';
+
+const Wrapper = styled('div');
+
+export default class AsyncFontPreview extends React.PureComponent {
+  props: {
+    family: string;
+  };
+  state: {
+    fontPreviews: {
+      getFontComponent(family: string): React.StatelessComponent;
+    } | null;
+  } = {
+    fontPreviews: null,
+  };
+
+  componentDidMount() {
+    import(/* webpackChunkName: "resources" */ '@pinecast/sb-resources').then(
+      ({fontPreviews}) => {
+        this.setState({fontPreviews});
+      },
+    );
+  }
+
+  render() {
+    const {props: {family}, state: {fontPreviews}} = this;
+    if (!fontPreviews) {
+      return <Wrapper>Loading...</Wrapper>;
+    }
+
+    const Preview = fontPreviews.getFontComponent(family);
+    return (
+      <Wrapper>
+        <Preview />
+      </Wrapper>
+    );
+  }
+}

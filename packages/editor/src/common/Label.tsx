@@ -8,20 +8,21 @@ const Text = styled('span', {
   fontFamily: 'Fira Mono',
   fontSize: 13,
   fontWeight: 500,
-  margin: 0,
 });
 
 const Label = ({
   children,
+  labelStyle,
   style,
   text,
 }: {
   children: JSX.Element | string | Array<JSX.Element | Array<JSX.Element>>;
+  labelStyle?: React.CSSProperties;
   style?: React.CSSProperties;
   text: JSX.Element | string;
 }) => (
   <NativeLabel _style={style}>
-    <Text>{text}</Text>
+    <Text _style={labelStyle}>{text}</Text>
     {children}
   </NativeLabel>
 );
