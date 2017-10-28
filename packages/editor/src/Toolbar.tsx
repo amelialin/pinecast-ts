@@ -18,21 +18,43 @@ const Toolbar_ = styled('nav', {
 const Button = styled(
   'button',
   ({isSelected}) => ({
-    background: '#fff',
+    background: 'transparent',
     border: 0,
-    borderRadius: 3,
-    boxShadow: isSelected
-      ? '0 2px 5px rgba(0, 0, 0, 0.2), 0 7px 14px rgba(50, 50, 100, 0.1)'
-      : null,
+    color: isSelected ? '#8d52d1' : '#444',
     display: 'inline-block',
-    fontSize: 14,
-    lineHeight: '18px',
-    marginRight: 10,
-    padding: '5px 10px',
-    transition: 'box-shadow 0.2s',
+    fontSize: 16,
+    fontWeight: 500,
+    lineHeight: '20px',
+    marginRight: 20,
+    padding: 0,
+    transition: 'color 0.2s',
+
+    ':focus': {
+      outline: isSelected ? '0' : null,
+      textShadow: isSelected ? '0 1px 2px rgba(0, 0, 0, 0.15)' : null,
+    },
   }),
   {type: 'button'},
 );
+
+// const Button = styled(
+//   'button',
+//   ({isSelected}) => ({
+//     background: '#fff',
+//     border: 0,
+//     borderRadius: 3,
+//     boxShadow: isSelected
+//       ? '0 2px 5px rgba(0, 0, 0, 0.2), 0 7px 14px rgba(50, 50, 100, 0.1)'
+//       : null,
+//     display: 'inline-block',
+//     fontSize: 14,
+//     lineHeight: '18px',
+//     marginRight: 10,
+//     padding: '5px 10px',
+//     transition: 'box-shadow 0.2s',
+//   }),
+//   {type: 'button'},
+// );
 
 const ToolbarButton = ({
   children,
