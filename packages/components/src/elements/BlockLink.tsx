@@ -17,11 +17,11 @@ export default ({
   item: Object;
   style: Object;
 }) => {
+  const props = {...element.props, ...extractProps(item, element.propPaths)};
   return (
     <Link
-      {...element.props}
-      {...extractProps(item, element.propPaths)}
-      children={blockChildren(item, element)}
+      {...props}
+      data-link="true"
       item={item}
       style={{
         display: 'block',
@@ -32,6 +32,8 @@ export default ({
           element.elementOptions,
         ),
       }}
-    />
+    >
+      {blockChildren(item, element)}
+    </Link>
   );
 };

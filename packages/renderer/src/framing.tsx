@@ -6,6 +6,7 @@ import {ComponentContext} from '@pinecast/sb-components';
 import {ServerStyletron, StyletronProvider} from '@pinecast/sb-styles';
 
 import {Context} from 'koa';
+import editorIntegration from './editorIntegration';
 
 const DEFAULT_FAVICON = 'https://pinecast.com/static/img/256x256.png';
 
@@ -93,6 +94,7 @@ export default async function frame(
       </head>
       ${markup}
       ${gaInclude}
+      ${editorIntegration}
     </html>
     `
     .trim()

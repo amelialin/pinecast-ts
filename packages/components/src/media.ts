@@ -1,1 +1,1 @@
-export const MOBILE_MEDIA_QUERY = '@media (maxWidth: 700px)';
+export const MOBILE_MEDIA_QUERY = '@media (max-width: 700px)';

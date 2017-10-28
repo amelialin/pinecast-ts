@@ -13,12 +13,6 @@ export interface ReducerType {
 
 export const initialState: ReducerType = {
   path: '/',
-
-  // data: {
-  //     site: null,
-  //     episode: {},
-  //     episodes: {},
-  // },
 };
 
 export default actionHandler<ReducerType>({
@@ -26,10 +20,4 @@ export default actionHandler<ReducerType>({
     'preview.changePath',
     (state, action) => action.payload,
   ),
-
-  // data: actionHandler<ReducerType['data']>({
-  //     site: actionReducer<ReducerType['data']['site']>('preview.data.setSite', (state, action) => action.payload),
-  //     episode: actionReducer<ReducerType['data']['episode']>('preview.data.setEpisode', (state, {payload: {id, value}}) => ({...state, [id]: value})),
-  //     episodes: actionReducer<ReducerType['data']['episodes']>('preview.data.setEpisodes', (state, {payload: {page, value}}) => ({...state, [page]: value})),
-  // }),
 });

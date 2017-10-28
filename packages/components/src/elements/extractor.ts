@@ -5,8 +5,8 @@ export function extractProps(
   if (!props) {
     return null;
   }
-  return Object.keys(props).reduce((acc, cur) => {
-    acc[cur] = extractPath(item, props[cur]);
+  return Object.entries(props).reduce((acc, [key, val]) => {
+    acc[key] = extractPath(item, val);
     return acc;
   }, {});
 }

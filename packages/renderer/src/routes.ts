@@ -53,10 +53,10 @@ function matcher(
     }
     return params.reduce(
       (acc: RequestURLParams | null, cur: string, i: number) => {
-        if (!acc || !output[i]) {
+        if (!acc || !output[i + 1]) {
           return null;
         }
-        acc[cur] = output[i];
+        acc[cur] = output[i + 1];
         return acc;
       },
       {} as RequestURLParams,

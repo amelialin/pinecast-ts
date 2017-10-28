@@ -4,6 +4,7 @@ import * as React from 'react';
 import {matchRoute, routes} from '@pinecast/sb-renderer';
 import styled from '@pinecast/sb-styles';
 
+import {changePath} from './actions/preview';
 import {fetcher} from './data/dataAPI';
 import {ReducerType} from './reducer';
 import Select from './common/Select';
@@ -89,6 +90,7 @@ class PreviewRenderer extends React.Component {
   iframe: HTMLIFrameElement | null;
   reqId: number;
   props: {
+    changePath: (path: string) => void;
     path: string;
     theme: Object;
   };
@@ -111,6 +113,7 @@ class PreviewRenderer extends React.Component {
     this.iframe = e;
     if (e) {
       this.doInnerRender();
+      (e as any).__handler = this.props.changePath;
     }
   };
 
@@ -238,7 +241,10 @@ class PreviewRenderer extends React.Component {
   }
 }
 
-export default connect((state: ReducerType) => ({
-  path: state.preview.path,
-  theme: state.theme,
-}))(PreviewRenderer);
+export default connect(
+  (state: ReducerType) => ({
+    path: state.preview.path,
+    theme: state.theme,
+  }),
+  {changePath},
+)(PreviewRenderer);
