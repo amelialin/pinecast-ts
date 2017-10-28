@@ -6,28 +6,33 @@ import * as presets from '@pinecast/sb-presets';
 import styled from '@pinecast/sb-styles';
 
 import ButtonPresetList from './ButtonPresetList';
-import {changeButtonStyle, changeColor} from '../../actions/theme';
+import {changeColor, changeEmbedWidget} from '../../actions/theme';
 import ColorPicker from '../ColorPicker';
+import Label from '../../common/Label';
 import {
   PanelDescription,
   PanelHeader,
   PanelSection,
   PanelWrapper,
 } from '../common';
+import RadioList from '../../common/RadioList';
 import {ReducerType} from '../../reducer';
 
 const ComponentsPanel = ({
-  changeButtonStyle,
-  changeColor,
   colorButtons,
   colorButtonsText,
+  changeColor,
+  changeEmbedWidget,
   styling,
 }: {
   colorButtons: string;
   colorButtonsText: string;
-  changeButtonStyle: ((payload: primitives.ButtonStyle) => void);
   changeColor: ((colors: {[color: string]: string}) => void);
-  styling: Object;
+  changeEmbedWidget: ((theme: string) => void);
+  styling: {
+    buttons: primitives.ButtonStyling;
+    embed?: {theme: string};
+  };
 }) => (
   <PanelWrapper>
     <PanelHeader>Components</PanelHeader>
@@ -46,6 +51,16 @@ const ComponentsPanel = ({
       onChange={color => changeColor({buttonsText: color})}
     />
     <ButtonPresetList />
+    <PanelSection>Embed Player</PanelSection>
+    <RadioList
+      options={{
+        minimal: () => <Label text="Minimal">Minimal</Label>,
+        thick: () => <Label text="Thick">thick</Label>,
+        slim: () => <Label text="Slim">slim</Label>,
+      }}
+      onChange={changeEmbedWidget}
+      value={(styling.embed && styling.embed.theme) || 'minimal'}
+    />
   </PanelWrapper>
 );
 
@@ -61,13 +76,13 @@ export default connect(
         (state.theme.colors && state.theme.colors.buttonsText) ||
         theme.colors.buttonsText,
       styling: {
-        ...(theme.styling as {buttons: primitives.ButtonStyle}),
+        ...(theme.styling as any),
         ...state.theme.styling,
       },
     };
   },
   {
-    changeButtonStyle,
     changeColor,
+    changeEmbedWidget,
   },
 )(ComponentsPanel);

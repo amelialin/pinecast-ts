@@ -1,7 +1,7 @@
 import {primitives} from '@pinecast/sb-components';
 
 import {actionFactory} from '../actions';
-import {ReducerType} from '../reducers/theme';
+import {EmbedWidgetThemes, ReducerType} from '../reducers/theme';
 
 export const changePreset = actionFactory<ReducerType['$type']>(
   'theme.changePreset',
@@ -14,4 +14,7 @@ export const changeColor = actionFactory<ReducerType['colors']>(
 );
 export const changeButtonStyle = actionFactory<primitives.ButtonType>(
   'theme.changeButtons',
+);
+export const changeEmbedWidget = actionFactory<EmbedWidgetThemes>(
+  'theme.changeEmbedWidget',
 );

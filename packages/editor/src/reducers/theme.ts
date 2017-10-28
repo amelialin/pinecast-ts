@@ -4,6 +4,7 @@ import {Action, actionReducer} from '../actions';
 import {actionHandler, reduceReducers} from './util';
 
 // TODO: move some of this to a types file?
+export type EmbedWidgetThemes = 'minimal' | 'thick' | 'slim';
 export type FontKeys = 'logo' | 'headings' | 'body';
 export type FontHashType = {[key in FontKeys]: string};
 export interface PartialFontHashType {
@@ -13,6 +14,7 @@ export interface PartialFontHashType {
 }
 export interface PartialStylingType {
   readonly buttons?: primitives.ButtonStyle;
+  readonly embed?: {theme: EmbedWidgetThemes};
 }
 export interface ReducerType {
   readonly $type: string;
@@ -57,6 +59,18 @@ export default reduceReducers(
           ...state,
           buttons: payload,
         }),
+      ),
+      actionReducer<ReducerType['styling']>(
+        'theme.changeEmbedWidget',
+        (state = undefined, {payload}: Action<EmbedWidgetThemes>) => {
+          if (payload === 'minimal') {
+            const out = {...state};
+            delete out['embed'];
+            return out;
+          } else {
+            return {...state, embed: {theme: payload}};
+          }
+        },
       ),
     ),
   }),
