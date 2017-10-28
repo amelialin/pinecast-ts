@@ -43,7 +43,8 @@ const PAGE_404 = `
 
 const Wrapper = styled('div', {
   alignItems: 'center',
-  backgroundColor: '#222',
+  backgroundColor: '#fafafa',
+  boxShadow: 'inset 0 35px 30px rgba(0, 20, 50, 0.15)',
   display: 'flex',
   flex: '1 1',
   flexDirection: 'column',
@@ -230,6 +231,8 @@ class PreviewRenderer extends React.Component {
           ref={this.ref}
           style={{
             border: 0,
+            boxShadow:
+              '0 2px 5px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.125)',
             height: orientation === 'landscape' ? width : height,
             transform,
             transition: 'width 0.2s, height 0.2s, transform 0.2s',
