@@ -35,7 +35,7 @@ const Button = ({
   style?: React.CSSProperties;
   [key: string]: any;
 }) => (
-  <NativeButton {...rest} _style={style}>
+  <NativeButton {...rest} style={style}>
     {children}
   </NativeButton>
 );

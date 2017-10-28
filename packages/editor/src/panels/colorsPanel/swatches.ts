@@ -26,7 +26,7 @@ export default {
       buttonsText: '#fff',
 
       foreground: '#f4f4f4',
-      links: '#c0b283',
+      links: '#8F751F',
 
       secondaryAccent: '#373737',
     },

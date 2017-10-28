@@ -7,6 +7,14 @@ const su = require('styletron-utils');
 su.injectStylePrefixed = (styletron, styles, media, pseudo) =>
   su.injectStyle(styletron, styles, media, pseudo);
 
+function wrapCtx(
+  comp: React.StatelessComponent<any>,
+  from: React.StatelessComponent,
+) {
+  comp.contextTypes = from.contextTypes;
+  comp.displayName = `styledWrapper(${from.displayName})`;
+}
+
 export default function(
   elemType: string,
   props?:
@@ -29,9 +37,24 @@ export default function(
   StyledComponent.displayName = `styled(${elemType})`;
   if (defaultProps) {
     return wrapStyledComponent(StyledComponent, defaultProps);
-  } else {
-    return StyledComponent;
   }
+  const out = (
+    {
+      style,
+      ...props,
+    }: {
+      style?: React.CSSProperties;
+      [prop: string]: any;
+    },
+    ctx: any,
+  ) => {
+    if (style) {
+      return <StyledComponent _style={style} {...props} />;
+    }
+    return StyledComponent(props, ctx);
+  };
+  wrapCtx(out, StyledComponent);
+  return out;
 }
 
 function wrapStyledComponent(
@@ -40,7 +63,6 @@ function wrapStyledComponent(
 ): React.StatelessComponent<any> {
   const out: React.StatelessComponent<any> = ({style, ...innerProps}, ctx) =>
     StyledComponent({_style: style, ...innerProps, ...defaultProps}, ctx);
-  out.contextTypes = StyledComponent.contextTypes;
-  out.displayName = `styledDefaultProps(${StyledComponent.displayName})`;
+  wrapCtx(out, StyledComponent);
   return out;
 }

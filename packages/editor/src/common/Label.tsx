@@ -21,8 +21,8 @@ const Label = ({
   style?: React.CSSProperties;
   text: JSX.Element | string;
 }) => (
-  <NativeLabel _style={style}>
-    <Text _style={labelStyle}>{text}</Text>
+  <NativeLabel style={style}>
+    <Text style={labelStyle}>{text}</Text>
     {children}
   </NativeLabel>
 );
