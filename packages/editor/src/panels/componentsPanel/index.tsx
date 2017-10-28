@@ -54,9 +54,19 @@ const ComponentsPanel = ({
     <PanelSection>Embed Player</PanelSection>
     <RadioList
       options={{
-        minimal: () => <Label text="Minimal">Minimal</Label>,
-        thick: () => <Label text="Thick">thick</Label>,
-        slim: () => <Label text="Slim">slim</Label>,
+        minimal: () => (
+          <Label text="Minimal">Simple, clean, and to the point</Label>
+        ),
+        thick: () => (
+          <Label text="Thick">
+            Big and colorful, full of metadata and a seek bar
+          </Label>
+        ),
+        slim: () => (
+          <Label text="Slim">
+            Compact and efficient, only the absolute necessities
+          </Label>
+        ),
       }}
       onChange={changeEmbedWidget}
       value={(styling.embed && styling.embed.theme) || 'minimal'}

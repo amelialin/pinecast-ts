@@ -40,14 +40,29 @@ const PAGE_404 = `
 </html>
 `;
 
-const Wrapper = styled('div', {flex: '1 1', height: '100%'});
+const Wrapper = styled('div', {
+  alignItems: 'center',
+  backgroundColor: '#222',
+  display: 'flex',
+  flex: '1 1',
+  flexDirection: 'column',
+  height: '100%',
+  justifyContent: 'center',
+  paddingTop: 40,
+  position: 'relative',
+});
 const Toolbar = styled('div', {
   alignItems: 'center',
   background: '#333',
   borderBottom: '1px solid #eee',
   display: 'flex',
+  flex: '0 0 40px',
   height: 40,
+  left: 0,
   padding: '0 15px',
+  position: 'absolute',
+  right: 0,
+  top: 0,
 });
 
 function getQuery(url: string): {[key: string]: string} {
@@ -63,6 +78,12 @@ function getQuery(url: string): {[key: string]: string} {
       return acc;
     }, {});
 }
+
+const frameStyles = {
+  desktop: {height: '100%', transform: 'scale(1)', width: '100%'},
+  phone: {height: 732, transform: 'scale(0.9)', width: 412},
+  tablet: {height: 1024, transform: 'scale(0.85)', width: 768},
+};
 
 class PreviewRenderer extends React.Component {
   iframe: HTMLIFrameElement | null;
@@ -171,8 +192,13 @@ class PreviewRenderer extends React.Component {
     }
     this.setState({frame});
   };
+  handleOrientationChange = (orientation: string) => {
+    this.setState({orientation});
+  };
 
   render() {
+    const {frame, orientation} = this.state;
+    const {height, transform, width} = frameStyles[frame || 'desktop'];
     return (
       <Wrapper>
         <Toolbar>
@@ -183,15 +209,28 @@ class PreviewRenderer extends React.Component {
               phone: 'Phone',
               tablet: 'Tablet',
             }}
-            value={this.state.frame || 'desktop'}
+            style={{marginRight: 10}}
+            value={frame || 'desktop'}
           />
+          {frame && (
+            <Select
+              onChange={this.handleOrientationChange}
+              options={{
+                portrait: 'Portrait',
+                landscape: 'Landscape',
+              }}
+              value={orientation || 'portrait'}
+            />
+          )}
         </Toolbar>
         <iframe
           ref={this.ref}
           style={{
             border: 0,
-            height: 'calc(100% - 40px)',
-            width: '100%',
+            height: orientation === 'landscape' ? width : height,
+            transform,
+            transition: 'width 0.2s, height 0.2s, transform 0.2s',
+            width: orientation === 'landscape' ? height : width,
           }}
         />
       </Wrapper>
