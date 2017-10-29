@@ -10,6 +10,7 @@ const Button = styled('a', {
   border: 0,
   borderRadius: 0,
   display: 'inline-flex',
+  fontSize: '0.8em',
   lineHeight: '1em',
   textDecoration: 'none',
 });

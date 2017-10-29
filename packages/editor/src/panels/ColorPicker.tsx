@@ -8,17 +8,18 @@ import styled from '@pinecast/sb-styles';
 import {colorKeyNames} from '../constants';
 
 const Wrapper = styled('div', {
+  alignItems: 'center',
   display: 'flex',
-  marginBottom: 30,
+  marginBottom: 20,
 });
 const Chiclet = styled('div', ({color}) => ({
   backgroundColor: color,
   borderRadius: 3,
   boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2), 0 5px 12px rgba(0, 0, 0, 0.1)',
   cursor: 'pointer',
-  height: 50,
+  height: 30,
   transition: 'box-shadow 0.2s',
-  width: 50,
+  width: 30,
 
   ':hover': {
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.25), 0 7px 16px rgba(0, 0, 0, 0.1)',
@@ -38,7 +39,7 @@ const NameWrapper = styled('div', {
   display: 'flex',
   fontFamily: 'Fira Mono',
   flex: '1 1',
-  padding: 10,
+  padding: '0 10px',
 });
 
 export default class ColorPicker extends React.Component {
@@ -118,10 +119,10 @@ export default class ColorPicker extends React.Component {
             this.popoverWrapper = el;
           }}
           style={{
-            flex: '0 0 50px',
-            height: 50,
+            flex: '0 0 30px',
+            height: 30,
             position: 'relative',
-            width: 50,
+            width: 30,
           }}
         >
           <Chiclet color={colorValue} onClick={this.handleClick} />

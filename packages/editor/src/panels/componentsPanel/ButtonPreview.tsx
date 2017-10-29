@@ -13,6 +13,7 @@ const Button = styled(
   {
     border: 0,
     display: 'inline-flex',
+    fontSize: '1em',
     lineHeight: '1em',
     marginRight: 30,
     marginBottom: 30,

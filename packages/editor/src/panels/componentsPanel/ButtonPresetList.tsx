@@ -3,11 +3,17 @@ import * as React from 'react';
 
 import * as presets from '@pinecast/sb-presets';
 import {primitives} from '@pinecast/sb-components';
+import styled from '@pinecast/sb-styles';
 
 import {ReducerType} from '../../reducer';
 import buttonPresets from './buttonPresets';
 import ButtonPreview from './ButtonPreview';
 import {changeButtonStyle} from '../../actions/theme';
+
+const Wrapper = styled('div', {
+  fontSize: 16,
+  padding: '20px 0 0',
+});
 
 const ButtonPresetList = ({
   theme,
@@ -16,7 +22,7 @@ const ButtonPresetList = ({
   theme: Object;
   changeButtonStyle: ((payload: primitives.ButtonStyle) => void);
 }) => (
-  <div>
+  <Wrapper>
     {buttonPresets.map((preset, i) => (
       <ButtonPreview
         key={i}
@@ -25,7 +31,7 @@ const ButtonPresetList = ({
         theme={theme}
       />
     ))}
-  </div>
+  </Wrapper>
 );
 export default connect(
   (state: ReducerType) => {

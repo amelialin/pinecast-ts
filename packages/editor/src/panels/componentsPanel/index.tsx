@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import {primitives} from '@pinecast/sb-components';
 import * as presets from '@pinecast/sb-presets';
-import styled from '@pinecast/sb-styles';
 
 import ButtonPresetList from './ButtonPresetList';
 import {changeColor, changeEmbedWidget} from '../../actions/theme';
