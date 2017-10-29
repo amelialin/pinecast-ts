@@ -26,8 +26,7 @@ export default getsContext(
         style={{
           backgroundColor: ctx.colors.buttons || 'transparent',
           color: ctx.colors.buttonsText || '#000',
-          ...buttonStyle,
-          ...prepareStyle(props.style, ctx),
+          ...prepareStyle({...buttonStyle, ...props.style}, ctx),
         }}
       >
         {props.children}

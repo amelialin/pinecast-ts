@@ -4,8 +4,8 @@ export default function renderN<T>(
   consume: number,
   itemSource: ItemSourceContext<T>,
   renderer: (item: T, i: number) => JSX.Element,
-) {
-  const output = [];
+): Array<JSX.Element> {
+  const output: Array<JSX.Element> = [];
   if (consume === -1) {
     consume = Infinity;
   }
@@ -16,6 +16,10 @@ export default function renderN<T>(
     const {value: item, done} = itemSource.getItem();
     if (done) {
       break;
+    }
+    if (!item) {
+      i -= 1;
+      continue;
     }
     output.push(renderer(item, i));
   }

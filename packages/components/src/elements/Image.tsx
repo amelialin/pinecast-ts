@@ -1,6 +1,8 @@
 import * as md5 from 'md5';
 import * as React from 'react';
 
+import {CSS} from '@pinecast/sb-styles';
+
 import atom from './atom';
 import {Element} from '../primitives';
 import {extractPath, extractProps} from './extractor';
@@ -24,18 +26,19 @@ export default ({
 }: {
   element: Element;
   item: Object;
-  style: Object;
+  style: CSS;
 }) => {
-  const props = {
+  const props: {src?: string; alt?: string; [prop: string]: any} = {
     ...element.props,
     ...extractProps(item, element.propPaths),
   };
   const styles = expandElementStyles(
     {...style, ...element.styles},
-    element.elementOptions,
+    element.elementOptions || {},
   );
-  if (element.elementOptions && element.elementOptions.gravatar) {
-    const email = element.elementOptions.gravatar;
+  const eo = element.elementOptions || {};
+  if (eo.gravatar) {
+    const email = eo.gravatar;
     const hash = md5(
       typeof email === 'string' ? email : extractPath(item, email),
     );
@@ -49,7 +52,7 @@ export default ({
       ,
       key,
     ] = /^https:\/\/pinecast\-storage\.s3\.amazonaws\.com\/(.*)$/.exec(
-      props.src,
+      props.src || '',
     ) || [null, null];
     if (key && (styles.height || styles.width)) {
       let height = styles.height || styles.width;
@@ -59,7 +62,7 @@ export default ({
       } else if (typeof width === 'string') {
         width = height;
       }
-      if (element.elementOptions.square) {
+      if (eo.square) {
         height = width = Math.min(height, width);
       }
       height *= 2;
@@ -71,11 +74,11 @@ export default ({
       )}&format=jpeg`;
     }
   }
-  if (element.elementOptions && element.elementOptions.round) {
-    styles.borderRadius = element.elementOptions.round;
+  if (eo && eo.round) {
+    styles.borderRadius = eo.round;
     styles.overflow = 'hidden';
   }
-  if (element.elementOptions.square === 'element') {
+  if (eo.square === 'element') {
     const SquareDiv = atom('div');
     styles.position = styles.position || (squareStyle.position as any);
     styles[':after'] = squareStyle[':after'];
@@ -93,15 +96,15 @@ export default ({
         />
       </SquareDiv>
     );
-  } else if (element.elementOptions.square === 'background') {
+  } else if (eo.square === 'background') {
     const SquareDiv = atom('div');
     return (
       <SquareDiv
-        aria-label={props.alt}
+        aria-label={props.alt || ''}
         role="img"
         style={{
           ...styles,
-          backgroundImage: `url(${props.src})`,
+          backgroundImage: `url(${props.src || ''})`,
           backgroundSize: 'cover',
         }}
       />

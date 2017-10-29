@@ -27,13 +27,19 @@ const presets: Array<Preset> = [
     },
   },
   {
-    name: 'Ghost',
+    name: 'Candy',
     style: {
-      background: 'rgba(255, 255, 255, 0.5)',
-      border: '2px solid #000',
-      color: '#000',
+      backgroundImage:
+        'linear-gradient(180deg, var(--color-buttons) 0, rgb(225,157,60) 100%), rgb(253, 218, 134)',
+      borderWidth: 0,
+      borderBottomWidth: 4,
+      borderColor: 'buttons',
+      borderRadius: '7px 7px 9px 9px',
+      boxShadow:
+        '0 -1px 1px 0 rgba(255,255,255,0.701961) inset, 0 1px 1px 0 var(--color-buttons)',
       fontSize: 16,
       padding: '0.75em 1.5em',
+      textShadow: '0 1px 1px rgba(0, 0, 0, 0.5)',
       transition: 'box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1)',
 
       ':hover': {

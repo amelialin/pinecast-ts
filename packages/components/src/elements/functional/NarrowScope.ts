@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import {Element} from '../../primitives';
 import {extractPath} from '../extractor';
 import {layoutElements} from '../index';
@@ -9,9 +11,12 @@ export default ({
 }: {
   element: Element;
   item: Object;
-  style: Object;
+  style: React.CSSProperties;
 }) => {
   const newScope = extractPath(item, (element.elementOptions || {}).path || []);
+  if (!newScope) {
+    throw new Error('Scope could not be narrowed');
+  }
   if (!element.children) {
     throw new Error('Expected child on NarrowScope element');
   }

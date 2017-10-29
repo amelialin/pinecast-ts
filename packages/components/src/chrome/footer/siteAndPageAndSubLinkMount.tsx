@@ -1,11 +1,12 @@
 import * as React from 'react';
 
+import {CSS} from '@pinecast/sb-styles';
+
 import atom from '../../elements/atom';
 import {
   ElementLayout,
   Link as LinkType,
   Page,
-  StyledCSSProperties,
   TextStyle,
 } from '../../primitives';
 import {ComponentContext, getsContext} from '../../componentContext';
@@ -20,8 +21,8 @@ export default getsContext(
       template,
     }: {
       layout: {
-        linkStyle: StyledCSSProperties;
-        linkHoverStyle: StyledCSSProperties;
+        linkStyle: CSS;
+        linkHoverStyle: CSS;
         textStyle?: TextStyle;
       };
       template: ElementLayout;

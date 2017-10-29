@@ -27,8 +27,14 @@ const Button = styled(
     lineHeight: '20px',
     marginRight: 20,
     padding: 0,
-    transition: 'color 0.2s',
+    position: 'relative',
+    top: 0,
+    transition: 'color 0.2s, top 0.1s',
 
+    ':active': {
+      outline: 0,
+      top: 1,
+    },
     ':focus': {
       outline: isSelected ? '0' : null,
       textShadow: isSelected ? '0 1px 2px rgba(0, 0, 0, 0.15)' : null,
@@ -36,25 +42,6 @@ const Button = styled(
   }),
   {type: 'button'},
 );
-
-// const Button = styled(
-//   'button',
-//   ({isSelected}) => ({
-//     background: '#fff',
-//     border: 0,
-//     borderRadius: 3,
-//     boxShadow: isSelected
-//       ? '0 2px 5px rgba(0, 0, 0, 0.2), 0 7px 14px rgba(50, 50, 100, 0.1)'
-//       : null,
-//     display: 'inline-block',
-//     fontSize: 14,
-//     lineHeight: '18px',
-//     marginRight: 10,
-//     padding: '5px 10px',
-//     transition: 'box-shadow 0.2s',
-//   }),
-//   {type: 'button'},
-// );
 
 const ToolbarButton = ({
   children,

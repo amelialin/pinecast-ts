@@ -18,7 +18,7 @@ export default getsContext(
       children: childRenderer,
       config,
     }: {
-      children: (index: number, item: T, style: Object) => JSX.Element;
+      children: (index: number, item: T, style: Object | null) => JSX.Element;
       config: LayoutConfig;
     },
     {

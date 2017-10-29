@@ -56,7 +56,7 @@ export default ({
       style={{
         ...expandElementStyles(
           {...style, ...element.styles},
-          element.elementOptions,
+          element.elementOptions || {},
         ),
         ...containerStyles,
       }}
@@ -65,9 +65,9 @@ export default ({
         .map((host, i) =>
           layoutElements(
             host,
-            element.children,
+            element.children || [],
             itemStyles,
-            i * element.children.length,
+            i * (element.children || []).length,
           ),
         )
         .reduce((a, b) => a.concat(b))}

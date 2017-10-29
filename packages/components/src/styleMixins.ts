@@ -4,7 +4,7 @@ import {ComponentContext} from './componentContext';
 export function backgroundImage(
   bgImage: BackgroundImage,
   ctx: ComponentContext,
-): Object {
+): React.CSSProperties | null {
   if (!bgImage) {
     return null;
   }
@@ -16,7 +16,9 @@ export function backgroundImage(
   };
 }
 
-export function alignment(alignment: 'left' | 'center' | 'right'): Object {
+export function alignment(
+  alignment: 'left' | 'center' | 'right',
+): React.CSSProperties | null {
   if (!alignment) {
     return null;
   }
@@ -30,4 +32,6 @@ export function alignment(alignment: 'left' | 'center' | 'right'): Object {
   if (alignment === 'center') {
     return {marginLeft: 'auto', marginRight: 'auto'};
   }
+
+  return null;
 }

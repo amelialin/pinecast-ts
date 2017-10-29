@@ -1,4 +1,4 @@
-import {CSSProperties} from 'react';
+import {CSS} from '@pinecast/sb-styles';
 
 export type PositionObject = {
   bottom?: number;
@@ -9,10 +9,13 @@ export type PositionObject = {
 };
 
 export default function(
-  acc: CSSProperties,
-  elementOptions: {[option: string]: string | number | PositionObject},
-): CSSProperties {
-  if (!elementOptions) {
+  acc: CSS | null,
+  elementOptions:
+    | {[option: string]: string | number | PositionObject}
+    | null
+    | undefined,
+): CSS | null {
+  if (!elementOptions || !acc) {
     return acc;
   }
   return Object.entries(elementOptions).reduce((acc, [cur, value]) => {

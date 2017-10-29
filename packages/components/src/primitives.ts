@@ -1,4 +1,4 @@
-import {CSSProperties} from 'react';
+import {CSS} from '@pinecast/sb-styles';
 
 export type Alignment = 'left' | 'center' | 'right';
 
@@ -77,24 +77,6 @@ export type AbstractURL = {
   name: string;
   params?: {[param: string]: Array<string>};
 };
-export type StyledCSSProperties = CSSProperties & {
-  ':active'?: CSSProperties;
-  ':focus'?: CSSProperties;
-  ':hover'?: CSSProperties;
-  ':visited'?: CSSProperties;
-
-  ':first-child'?: CSSProperties;
-  ':last-child'?: CSSProperties;
-
-  ':after'?: CSSProperties & {content: string};
-  ':before'?: CSSProperties & {content: string};
-  ':active:before'?: CSSProperties & {content: string};
-  ':focus:before'?: CSSProperties & {content: string};
-  ':hover:before'?: CSSProperties & {content: string};
-  ':active:after'?: CSSProperties & {content: string};
-  ':focus:after'?: CSSProperties & {content: string};
-  ':hover:after'?: CSSProperties & {content: string};
-};
 export interface StyleableElement {
   elementOptions?: {[option: string]: any};
   props?: {
@@ -102,7 +84,7 @@ export interface StyleableElement {
     [prop: string]: any;
   };
   propPaths?: {[prop: string]: DataPath};
-  styles?: StyledCSSProperties;
+  styles?: CSS;
 }
 export interface Element extends StyleableElement {
   type:
@@ -132,7 +114,7 @@ export interface InlineElement extends StyleableElement {
 export interface ElementLayout {
   tagName?: string;
   elements: Array<Element>;
-  styles?: StyledCSSProperties;
+  styles?: CSS;
 
   // For use by the editor to store extra information about trees of elements
   tag?: string;

@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import {CSS} from '@pinecast/sb-styles';
+
 import atom from './atom';
 import {blockChildren} from './children';
 import {Element} from '../primitives';
@@ -13,7 +15,7 @@ export default ({
 }: {
   element: Element;
   item: Object;
-  style: Object;
+  style: CSS;
 }) => {
   const Container = atom(element.tagName || 'div');
   return (
@@ -25,7 +27,7 @@ export default ({
       style={{
         ...expandElementStyles(
           {...style, ...element.styles},
-          element.elementOptions,
+          element.elementOptions || {},
         ),
         display: 'flex',
         flexDirection: 'row',

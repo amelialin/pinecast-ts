@@ -67,7 +67,7 @@ export default ({
       style={{
         ...expandElementStyles(
           {...style, ...element.styles},
-          element.elementOptions,
+          element.elementOptions || {},
         ),
         border: 0,
         borderCollapse: 'collapse',

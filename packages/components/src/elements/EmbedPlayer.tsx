@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import {CSS} from '@pinecast/sb-styles';
+
 import atom from './atom';
 import {ComponentContext, getsContext} from '../componentContext';
 import {Element} from '../primitives';
@@ -21,15 +23,18 @@ export default getsContext(
     }: {
       element: Element;
       item: Object;
-      style: Object;
+      style: CSS;
     },
     {ctx}: {ctx: ComponentContext},
   ) => {
     const Container = atom('iframe');
-    const props = {...element.props, ...extractProps(item, element.propPaths)};
+    const props: {src?: string; [prop: string]: any} = {
+      ...element.props,
+      ...extractProps(item, element.propPaths),
+    };
     const theme = (ctx.styling.embed && ctx.styling.embed.theme) || 'minimal';
     if (theme !== 'minimal') {
-      props.src = `${props.src}?theme=${ctx.styling.embed.theme}`;
+      props.src = `${props.src || ''}?theme=${theme}`;
     }
     return (
       <Container
@@ -42,7 +47,7 @@ export default getsContext(
           width: '100%',
           ...expandElementStyles(
             {...style, ...element.styles},
-            element.elementOptions,
+            element.elementOptions || {},
           ),
         }}
       />

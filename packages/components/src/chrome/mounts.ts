@@ -1,13 +1,12 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
-export class MountProvider extends React.Component<
-  {
-    children?: any;
-    mounts: {[key: string]: JSX.Element | Array<JSX.Element> | null};
-  },
-  null
-> {
+export class MountProvider extends React.Component<{
+  children?: any;
+  mounts: {
+    [key: string]: JSX.Element | null | Array<JSX.Element | null | string>;
+  };
+}> {
   static childContextTypes = {
     mounts: PropTypes.object.isRequired,
   };

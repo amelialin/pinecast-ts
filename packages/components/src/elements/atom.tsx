@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
+import styled, {CSS} from '@pinecast/sb-styles';
 
 import {AbstractURL} from '../primitives';
 import {ComponentContext, getsContext} from '../componentContext';
 import {extractPath} from './extractor';
-import {formatColor} from '../helpers';
+import {formatColor, formatInlineColor} from '../helpers';
 import {MOBILE_MEDIA_QUERY} from '../media';
 
 export function prepareProps(
@@ -24,7 +24,10 @@ export function prepareProps(
         acc[cur] = ctx.url(
           href.name,
           Object.keys(href.params || {}).reduce((resolvedParams, param) => {
-            resolvedParams[param] = extractPath(item, href.params[param]);
+            resolvedParams[param] = extractPath(
+              item,
+              (href.params || {})[param],
+            );
             return resolvedParams;
           }, {}),
         );
@@ -39,7 +42,10 @@ export function prepareProps(
   }, {});
 }
 
-export function prepareStyle(style: Object, ctx: ComponentContext): Object {
+export function prepareStyle(
+  style: CSS | null,
+  ctx: ComponentContext,
+): CSS | null {
   if (!style) {
     return null;
   }
@@ -54,7 +60,14 @@ export function prepareStyle(style: Object, ctx: ComponentContext): Object {
       return acc;
     }
     switch (cur) {
+      case 'boxShadow':
+      case 'background':
+      case 'backgroundImage':
+        console.log(style[cur]);
+        acc[cur] = formatInlineColor(style[cur], ctx);
+        break;
       case 'backgroundColor':
+      case 'borderColor':
       case 'borderBottomColor':
       case 'borderLeftColor':
       case 'borderRightColor':

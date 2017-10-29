@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
+import {prepareStyle} from '@pinecast/sb-components';
 import * as presets from '@pinecast/sb-presets';
 import styled from '@pinecast/sb-styles';
 
@@ -21,37 +22,28 @@ const Button = styled(
 );
 
 const ButtonPreview = ({
-  colorButtons,
-  colorButtonsText,
-  onClick = () => {},
+  onClick,
   preset,
+  theme,
 }: {
-  colorButtons: string;
-  colorButtonsText: string;
   onClick: () => void;
   preset: Preset;
+  theme: Object;
 }) => (
   <Button
     onClick={onClick}
-    style={{
-      backgroundColor: colorButtons,
-      borderRadius: 0,
-      color: colorButtonsText,
-      ...preset.style,
-    }}
+    style={prepareStyle(
+      {
+        backgroundColor: 'buttons',
+        borderRadius: 0,
+        color: 'buttonsText',
+        ...preset.style,
+      },
+      theme,
+    )}
   >
     {preset.name}
   </Button>
 );
 
-export default connect((state: ReducerType) => {
-  const theme = presets.themes[state.theme.$type];
-  return {
-    colorButtons:
-      (state.theme.colors && state.theme.colors.buttons) ||
-      theme.colors.buttons,
-    colorButtonsText:
-      (state.theme.colors && state.theme.colors.buttonsText) ||
-      theme.colors.buttonsText,
-  };
-})(ButtonPreview);
+export default ButtonPreview;

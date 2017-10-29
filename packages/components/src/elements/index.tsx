@@ -22,7 +22,7 @@ import ContactTable from './pageHelpers/ContactTable';
 export function layoutElements(
   item: Object,
   elements: Array<Element | InlineElement>,
-  style?: Object,
+  style?: React.CSSProperties,
   keyOffset: number = 0,
 ) {
   return elements.filter(x => x).map((element, i) => {

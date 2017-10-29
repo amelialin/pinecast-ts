@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import {CSS} from '@pinecast/sb-styles';
+
 import atom from './atom';
 import {blockChildren} from './children';
 import {Element} from '../primitives';
@@ -13,16 +15,20 @@ export default ({
 }: {
   element: Element;
   item: Object;
-  style: Object;
+  style: CSS;
 }) => {
   const ImageContainer = atom(element.tagName || 'div');
-  const props = {
+  const props: {
+    image?: string;
+    position?: React.CSSProperties['backgroundPosition'];
+    size?: React.CSSProperties['backgroundSize'];
+  } = {
     ...element.props,
     ...extractProps(item, element.propPaths),
-  };
+  } as any;
   const styles = expandElementStyles(
     {
-      backgroundImage: `url(${props.image})`,
+      backgroundImage: `url(${props.image || ''})`,
       backgroundPosition: props.position || 'center',
       backgroundSize: props.size || 'cover',
       ...style,
