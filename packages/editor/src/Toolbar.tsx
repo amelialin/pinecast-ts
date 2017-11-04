@@ -43,6 +43,13 @@ const Button = styled(
   {type: 'button'},
 );
 
+const RHS = styled('div', {
+  display: 'flex',
+  flex: '1 1',
+  justifyContent: 'flex-end',
+  textAlign: 'right',
+});
+
 const ToolbarButton = ({
   children,
   id,
@@ -71,12 +78,13 @@ const ConnectedToolbarButton = connect(
 )(ToolbarButton);
 
 const Toolbar = () => (
-  <Toolbar_>
+  <Toolbar>
     <ConnectedToolbarButton id="presets">Presets</ConnectedToolbarButton>
     <ConnectedToolbarButton id="colors">Colors</ConnectedToolbarButton>
     <ConnectedToolbarButton id="typography">Typography</ConnectedToolbarButton>
     <ConnectedToolbarButton id="components">Components</ConnectedToolbarButton>
-  </Toolbar_>
+    <RHS>asdf</RHS>
+  </Toolbar>
 );
 
 export default Toolbar;
