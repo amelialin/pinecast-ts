@@ -6,14 +6,17 @@ import {ComponentContext, getsContext} from '../componentContext';
 import {ButtonStyle} from '../primitives';
 import {prepareStyle} from '../elements/atom';
 
-const Button = styled('a', {
-  border: 0,
-  borderRadius: 0,
-  display: 'inline-flex',
-  fontSize: '0.8em',
-  lineHeight: '1em',
-  textDecoration: 'none',
-});
+const Button = styled(
+  'a',
+  {
+    border: 0,
+    borderRadius: 0,
+    display: 'inline-flex',
+    lineHeight: '1em',
+    textDecoration: 'none',
+  },
+  {'data-link': true},
+);
 
 export default getsContext(
   (

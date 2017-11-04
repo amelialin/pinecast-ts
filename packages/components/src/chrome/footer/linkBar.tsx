@@ -15,15 +15,19 @@ const Divider = styled('span', {
   marginRight: 15,
 });
 
-const Link = styled('a', {
-  fontSize: 14,
-  marginRight: 15,
-  textDecoration: 'none',
+const Link = styled(
+  'a',
+  {
+    fontSize: 14,
+    marginRight: 15,
+    textDecoration: 'none',
 
-  ':hover': {
-    textDecoration: 'underline',
+    ':hover': {
+      textDecoration: 'underline',
+    },
   },
-});
+  {'data-link': 'true'},
+);
 
 type includeableType = 'links' | 'pages';
 type includedTypes =

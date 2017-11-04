@@ -32,7 +32,7 @@ export default getsContext(
       ...element.props,
       ...extractProps(item, element.propPaths),
     };
-    const theme = (ctx.styling.embed && ctx.styling.embed.theme) || 'minimal';
+    const theme = (ctx.options && ctx.options.embedTheme) || 'minimal';
     if (theme !== 'minimal') {
       props.src = `${props.src || ''}?theme=${theme}`;
     }

@@ -1,28 +1,28 @@
 import slabBody from '../wrappers/slabBody';
 import slabEpisodeItemLayout from '../episodePageLayouts/slabEpisodeItemLayout';
 import slabEpisodePostLayout from '../itemLayouts/slabEpisodePostLayout';
-import headerCenteredFixed from '../components/header-centeredFixed';
+import header from '../components/header-minimal';
 import paginationForwardBackFixed from '../components/pagination-forwardBack-fixed';
 
 
 export default {
     colors: {
-        background: '#34495e',
-        secondaryBackground: '#fcfaff',
-        accent: '#27ae60',
-        text: '#000',
-        buttons: '#c0392b',
+        background: '#fff',
+        secondaryBackground: '#fff',
+        accent: '#0747A6',
+        text: '#8993A4',
+        buttons: '#0052CC',
         buttonsText: '#fff',
 
         foreground: '#fff',
-        links: '#d35400',
+        links: '#0065FF',
 
-        secondaryAccent: '#d35400',
+        secondaryAccent: '#FFAB00',
     },
     fonts: {
-        logo: 'Lobster',
-        headings: 'Lato',
-        body: 'Lato',
+        logo: 'Archivo',
+        headings: 'Archivo',
+        body: 'Archivo',
     },
     styling: {
         buttons: {
@@ -33,31 +33,38 @@ export default {
         },
         page: {
             backgroundColor: 'background',
+            backgroundImage: 'linear-gradient(90deg, var(--color-accent), var(--color-accent) 40px, transparent 40px)',
             fontSize: 12,
-            padding: '40px 0',
+            padding: '0 20%',
+
+            '@media (max-width: 700px)': {
+                backgroundImage: 'linear-gradient(90deg, var(--color-accent), var(--color-accent) 10px, transparent 10px)',
+                padding: '0 20px',
+            },
         },
+    },
+    options: {
+        rootFlexibleHeight: true,
     },
 
     layout: {
         header: [
-            headerCenteredFixed({content: 'text', showSubtitle: true}),
-        ],
-        footer: [
-            paginationForwardBackFixed({
-                fgColor: 'secondaryBackground',
-                nextText: 'Back in time',
-                previousText: 'Onward to the Future',
-            }),
             {
                 type: 'links.linkMount',
                 layout: {
                     linkStyle: {
                         borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-                        color: 'foreground',
-                        display: 'block',
-                        lineHeight: '2.5em',
-                        textDecoration: 'underline',
+                        color: 'text',
+                        display: 'inline-block',
+                        fontSize: 18,
+                        lineHeight: '3.5em',
+                        marginRight: 20,
+                        textDecoration: 'none',
+                        whiteSpace: 'nowrap',
 
+                        ':hover': {
+                            textDecoration: 'underline',
+                        },
                         ':last-child': {
                             borderBottom: '0',
                         },
@@ -66,83 +73,29 @@ export default {
                 template: {
                     elements: [
                         {
-                            type: 'layout.fixedWrapper',
-                            elementOptions: {
-                                maxWidth: 960,
-                            },
-                            children: [
-                                {
-                                    type: 'layout.column',
-                                    children: [
-                                        {
-                                            type: 'block.text',
-                                            textContent: 'Menu',
-                                            styles: {
-                                                fontFamily: 'logo',
-                                                fontSize: 28,
-                                                marginBottom: 20,
-                                            },
-                                        },
-                                        {
-                                            type: 'mount',
-                                            props: {mount: 'pageLinks'},
-                                        },
-                                        {
-                                            type: 'mount',
-                                            props: {mount: 'siteLinks'},
-                                        },
-                                    ],
-                                    styles: {
-                                        flex: '1 1',
-                                        padding: '0 40px',
-                                    },
-                                },
-                                {
-                                    type: 'layout.column',
-                                    children: [
-                                        {
-                                            type: 'block.text',
-                                            textContent: 'Subscribe',
-                                            styles: {
-                                                fontFamily: 'logo',
-                                                fontSize: 28,
-                                                marginBottom: 20,
-                                            },
-                                        },
-                                        {
-                                            type: 'mount',
-                                            props: {mount: 'subLinks'},
-                                        },
-                                    ],
-                                    styles: {
-                                        flex: '1 1',
-                                        padding: '0 40px',
-                                    },
-                                },
-                            ],
-                            styles: {
-                                backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                                color: 'foreground',
-                                display: 'flex',
-                                fontSize: 14,
-                                padding: '20px 0 50px',
-                                textAlign: 'center',
-                            },
-                        }
+                            type: 'mount',
+                            props: {mount: 'pageLinks'},
+                        },
                     ],
-                    tagName: 'footer',
+                    tagName: 'nav',
                     styles: {
-                        marginBottom: 40,
+                        margin: '30px 0',
+                        '@media (max-width: 700px)': {
+                            margin: '15px 0',
+                        },
                     },
                 },
-                tag: 'footer.columnsFixed',
-                tagMetadata: {
-                    cols: [
-                        'page,site',
-                        'sub',
-                    ],
-                },
+                tag: 'header.pageLinkList',
+                tagMetadata: {},
             },
+            header({content: 'text', showSubtitle: true}),
+        ],
+        footer: [
+            paginationForwardBackFixed({
+                fgColor: 'secondaryBackground',
+                nextText: 'Back in time',
+                previousText: 'Onward to the Future',
+            }),
         ],
 
         body: {

@@ -113,7 +113,7 @@ export const routes: {[route: string]: Route} = {
         resources.site.pages &&
         (resources.site.pages as {[key: string]: string})[slug]
       ) {
-        return rendering.renderPage(resources);
+        return rendering.renderPage(resources, slug);
       }
       console.error(`Couldn't resolve route ${slug}`);
       throw new NotFoundError();

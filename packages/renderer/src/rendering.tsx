@@ -55,6 +55,10 @@ function buildTheme(
     styling: {
       buttons?: React.CSSProperties;
     };
+    options: {
+      embedTheme?: string;
+      rootFlexibleHeight?: boolean;
+    };
   },
   themeName: string,
 ) {
@@ -78,6 +82,10 @@ function buildTheme(
       ...preset.styling,
       ...themeObj.styling,
     },
+    options: {
+      ...preset.options,
+      ...themeObj.options,
+    },
   };
 }
 
@@ -91,7 +99,10 @@ function getContextFromResources(
   return async (data: any, ...args: Array<any>): Promise<string> => {
     const theme = (data.site.site && data.site.site.theme) || {};
     const themeName =
-      (theme && theme.$type) || data.site.site.legacy_theme || 'panther';
+      'clarity' ||
+      (theme && theme.$type) ||
+      data.site.site.legacy_theme ||
+      'panther';
     const context: ComponentContext = {
       ...buildTheme(theme, themeName),
       data: data.site,

@@ -14,13 +14,17 @@ export interface PartialFontHashType {
 }
 export interface PartialStylingType {
   readonly buttons?: primitives.ButtonStyle;
-  readonly embed?: {theme: EmbedWidgetThemes};
+}
+export interface PartialOptionsType {
+  readonly embedtheme?: EmbedWidgetThemes;
+  readonly rootFlexibleHeight?: boolean;
 }
 export interface ReducerType {
   readonly $type: string;
   readonly colors?: {[key: string]: string};
   readonly fonts?: PartialFontHashType;
   readonly styling?: PartialStylingType;
+  readonly options?: PartialOptionsType;
 }
 
 export const initialState: ReducerType = {
@@ -60,15 +64,18 @@ export default reduceReducers(
           buttons: payload,
         }),
       ),
-      actionReducer<ReducerType['styling']>(
+      // TODO: Page style reducer goes here
+    ),
+    options: reduceReducers(
+      actionReducer<ReducerType['options']>(
         'theme.changeEmbedWidget',
         (state = undefined, {payload}: Action<EmbedWidgetThemes>) => {
           if (payload === 'minimal') {
             const out = {...state};
-            delete out['embed'];
+            delete out['embedTheme'];
             return out;
           } else {
-            return {...state, embed: {theme: payload}};
+            return {...state, embedTheme: payload};
           }
         },
       ),

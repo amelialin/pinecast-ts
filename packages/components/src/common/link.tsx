@@ -29,6 +29,7 @@ export default getsContext(
     {ctx}: {ctx: ComponentContext},
   ) => (
     <Link
+      data-link="true"
       {...rest}
       href={href || ctx.url(targetPage, params)}
       style={{

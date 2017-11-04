@@ -7,6 +7,7 @@ import * as presets from '@pinecast/sb-presets';
 import ButtonPresetList from './ButtonPresetList';
 import {changeColor, changeEmbedWidget} from '../../actions/theme';
 import ColorPicker from '../ColorPicker';
+import {EmbedWidgetThemes} from '../../reducers/theme';
 import Label from '../../common/Label';
 import {
   PanelDescription,
@@ -22,6 +23,7 @@ const ComponentsPanel = ({
   colorButtonsText,
   changeColor,
   changeEmbedWidget,
+  options,
   styling,
 }: {
   colorButtons: string;
@@ -30,7 +32,9 @@ const ComponentsPanel = ({
   changeEmbedWidget: ((theme: string) => void);
   styling: {
     buttons: primitives.ButtonStyling;
-    embed?: {theme: string};
+  };
+  options: {
+    embedTheme?: EmbedWidgetThemes;
   };
 }) => (
   <PanelWrapper>
@@ -68,7 +72,7 @@ const ComponentsPanel = ({
         ),
       }}
       onChange={changeEmbedWidget}
-      value={(styling.embed && styling.embed.theme) || 'minimal'}
+      value={options.embedTheme || 'minimal'}
     />
   </PanelWrapper>
 );
@@ -87,6 +91,10 @@ export default connect(
       styling: {
         ...(theme.styling as any),
         ...state.theme.styling,
+      },
+      options: {
+        ...(theme.options as any),
+        ...state.theme.options,
       },
     };
   },

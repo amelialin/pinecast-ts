@@ -16,8 +16,8 @@ function fetch(siteHostname: string, url: string) {
           path: framedURL,
           headers: {
             Host: 'pinecast.co',
-            'X-Pinecast-Forward': siteHostname || 'serverboy.net',
-            // 'X-Pinecast-Forward': siteHostname || 'abtd.pinecast.co',
+            // 'X-Pinecast-Forward': siteHostname || 'serverboy.net',
+            'X-Pinecast-Forward': siteHostname || 'abtd.pinecast.co',
           },
         },
         resp => {

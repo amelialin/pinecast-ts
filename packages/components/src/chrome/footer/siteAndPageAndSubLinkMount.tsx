@@ -42,6 +42,7 @@ export default getsContext(
           siteLinks: ctx.data.links.map(
             (link: LinkType, i: number): JSX.Element => (
               <Link
+                data-link="true"
                 href={link.url}
                 key={`link:${i}`}
                 linkHoverStyle={layout.linkHoverStyle}
@@ -60,6 +61,7 @@ export default getsContext(
             ctx.data.pages,
           ).map((page: Page): JSX.Element => (
             <Link
+              data-link="true"
               href={ctx.url('page', {slug: page.slug})}
               key={`page:${page.slug}`}
               linkHoverStyle={layout.linkHoverStyle}
@@ -82,10 +84,12 @@ export default getsContext(
             .filter(x => x[1])
             .map(([name, url]: [string, string]): JSX.Element => (
               <Link
+                data-link="true"
                 href={url}
                 key={`page:${url}`}
                 linkHoverStyle={layout.linkHoverStyle}
                 linkStyle={layout.linkStyle}
+                rel="noopener noreferrer"
                 style={linkStyles}
                 target="_blank"
               >

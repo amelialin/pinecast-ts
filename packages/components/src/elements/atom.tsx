@@ -63,7 +63,6 @@ export function prepareStyle(
       case 'boxShadow':
       case 'background':
       case 'backgroundImage':
-        console.log(style[cur]);
         acc[cur] = formatInlineColor(style[cur], ctx);
         break;
       case 'backgroundColor':

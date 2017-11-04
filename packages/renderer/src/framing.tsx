@@ -73,9 +73,10 @@ export default async function frame(
           *, *:before, *:after {box-sizing: border-box;}
           html, body {color: ${escapeHTML(
             context.colors.text,
-          )}; font-family: ${escapeHTML(
-    context.fonts.body,
-  )}; height: 100%; margin: 0; padding: 0}
+          )}; font-family: ${escapeHTML(context.fonts.body)}; ${context.options
+    .rootFlexibleHeight
+    ? ''
+    : 'height: 100%; '}margin: 0; padding: 0}
           a {color: ${escapeHTML(context.colors.links)}}
         </style>
         ${styletron.getStylesheetsHtml()}

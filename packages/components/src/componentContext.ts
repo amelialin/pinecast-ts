@@ -35,10 +35,11 @@ export interface ComponentContext {
 
   styling: {
     buttons: primitives.ButtonStyle;
-    embed?: {
-      theme?: 'minimal' | 'thick' | 'slim';
-    };
     page: primitives.PageStyle;
+  };
+  options: {
+    embedTheme?: 'minimal' | 'thick' | 'slim';
+    rootFlexibleHeight?: boolean;
   };
 
   // For generating URLs
