@@ -1,16 +1,9 @@
 const base85 = require('base85');
 const parseSVG = require('parse-svg-path');
 
-const Uint4Array = require('./Uint4Array');
+const {codes, lengths} = require('./_svg');
 
-const codes = ['m', 'l', 'h', 'v', 'c', 's', 'q', 't', 'a', 'z'];
-codes.forEach(code => codes.push(code.toUpperCase()));
-const lengths = {a: 7, c: 6, h: 1, l: 2, m: 2, q: 4, s: 4, t: 2, v: 1, z: 0};
-Object.keys(lengths).forEach(
-  code => (lengths[code.toUpperCase()] = lengths[code]),
-);
-
-exports.encode = function encode(path) {
+function encode(path) {
   const parsed = parseSVG(path);
   const codemap = new Uint8Array(parsed.length);
   const argDump = [];
@@ -33,8 +26,13 @@ exports.encode = function encode(path) {
   );
   const buff = new Buffer(merged.buffer);
   return base85.encode(buff, 'ascii85');
-};
+}
 
-exports.decode = function decode(encoded) {
-  return '';
+exports.encode = function(pathMap) {
+  return Object.entries(pathMap)
+    .map(([key, path]) => [key, encode(path)])
+    .reduce((acc, [k, v]) => {
+      acc[k] = v;
+      return acc;
+    }, {});
 };

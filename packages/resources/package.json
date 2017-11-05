@@ -18,9 +18,11 @@
     },
     "devDependencies": {
         "gzip-size": "^4.0.0",
+        "html-attribute-parser": "^1.0.0",
         "inquirer": "^3.3.0",
         "isomorphic-fetch": "^2.2.1",
         "jest": "^21.2.1",
+        "paper": "^0.11.5",
         "opentype.js": "^0.7.3"
     }
 }
