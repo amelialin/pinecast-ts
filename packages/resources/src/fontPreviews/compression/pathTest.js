@@ -70,3 +70,5 @@ function testModule(name) {
 // testModule('naive');
 // testModule('packedBody');
 testModule('packedBodyLossy');
+testModule('packedComposite');
+testModule('packedHuffman');

@@ -78,13 +78,13 @@ const ConnectedToolbarButton = connect(
 )(ToolbarButton);
 
 const Toolbar = () => (
-  <Toolbar>
+  <Toolbar_>
     <ConnectedToolbarButton id="presets">Presets</ConnectedToolbarButton>
     <ConnectedToolbarButton id="colors">Colors</ConnectedToolbarButton>
     <ConnectedToolbarButton id="typography">Typography</ConnectedToolbarButton>
     <ConnectedToolbarButton id="components">Components</ConnectedToolbarButton>
     <RHS>asdf</RHS>
-  </Toolbar>
+  </Toolbar_>
 );
 
 export default Toolbar;
