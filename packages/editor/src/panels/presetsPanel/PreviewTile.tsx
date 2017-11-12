@@ -40,7 +40,13 @@ const PreviewTile = ({isActive, onSelect, type}: Props & StateProps) => {
         </h2>
       </div>
       <div style={{background: theme.colors.secondaryBackground, padding: 15}}>
-        <p style={{fontSize: theme.styling.page.fontSize, margin: 0}}>
+        <p
+          style={{
+            color: theme.colors.text,
+            fontSize: theme.styling.page.fontSize,
+            margin: 0,
+          }}
+        >
           The quick brown fox jumps over the lazy dog
         </p>
       </div>
