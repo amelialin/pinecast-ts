@@ -56,15 +56,18 @@ const Wrapper = styled('div', {
 const Toolbar = styled('div', {
   alignItems: 'center',
   background: '#99a',
-  borderBottom: '1px solid #eee',
   display: 'flex',
   flex: '0 0 40px',
   height: 40,
   left: 0,
-  padding: '0 15px',
+  padding: '0 4px',
   position: 'absolute',
   right: 0,
   top: 0,
+
+  ':after': {
+    //
+  },
 });
 
 function getQuery(url: string): {[key: string]: string} {
@@ -213,7 +216,7 @@ class PreviewRenderer extends React.Component {
               phone: 'Phone',
               tablet: 'Tablet',
             }}
-            style={{marginRight: 10}}
+            style={{height: 32, marginRight: 4}}
             value={frame || 'desktop'}
           />
           {frame && (
@@ -223,6 +226,7 @@ class PreviewRenderer extends React.Component {
                 portrait: 'Portrait',
                 landscape: 'Landscape',
               }}
+              style={{height: 32}}
               value={orientation || 'portrait'}
             />
           )}

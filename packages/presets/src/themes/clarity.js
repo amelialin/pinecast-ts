@@ -58,7 +58,7 @@ export default {
             color: 'text',
             display: 'inline-block',
             fontSize: 18,
-            lineHeight: '3.5em',
+            lineHeight: '1.5em',
             marginRight: 20,
             textDecoration: 'none',
             whiteSpace: 'nowrap',
@@ -81,9 +81,9 @@ export default {
           tagName: 'nav',
           styles: {
             margin: '30px 0',
-            '@media (max-width: 700px)': {
-              margin: '15px 0',
-            },
+            // '@media (max-width: 700px)': {
+            //   margin: '30px 0',
+            // },
           },
         },
         tag: 'header.pageLinkList',
