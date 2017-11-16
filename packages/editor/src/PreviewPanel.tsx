@@ -55,7 +55,7 @@ const Wrapper = styled('div', {
 });
 const Toolbar = styled('div', {
   alignItems: 'center',
-  background: '#333',
+  background: '#99a',
   borderBottom: '1px solid #eee',
   display: 'flex',
   flex: '0 0 40px',

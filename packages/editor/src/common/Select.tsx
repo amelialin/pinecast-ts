@@ -6,9 +6,10 @@ const Wrapper = styled('div', {
   alignItems: 'center',
   background: '#fff',
   borderRadius: 3,
+  boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2), 0 3px 7px rgba(0, 0, 0, 0.1)',
   display: 'flex',
   fontSize: 14,
-  height: '1.5em',
+  height: '1.75em',
   position: 'relative',
 
   ':before': {
@@ -30,14 +31,21 @@ const Select_ = styled('select', {
   WebkitAppearance: 'none',
   background: 'transparent',
   border: 0,
+  borderRadius: 3,
   boxShadow: 'none',
   fontFamily: 'Fira Mono',
   fontSize: 14,
-  height: 'calc(1.5em - 2px)',
-  lineHeight: 'calc(1.5em - 2px)',
+  height: '100%',
+  lineHeight: '100%',
   margin: 0,
-  padding: '0 25px 0 15px',
+  padding: '0 25px 0 10px',
+  transition: 'box-shadow 0.2s',
   width: '100%',
+
+  ':focus': {
+    boxShadow: 'rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
+    outline: 'none',
+  },
 });
 
 const Select = ({
