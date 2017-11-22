@@ -1,9 +1,9 @@
-const base85 = require('base85');
 const parseSVG = require('parse-svg-path');
 
 const {buildTree, HuffmanArray, Tree: HuffmanTree} = require('./_huffman');
 const {lengths} = require('./_svg');
 const {getPackTree, pack, unpack} = require('./_packCodesHuffman');
+const {encode: encoderEncode, decode: encoderDecode} = require('./_encoder');
 
 function minifyArg(arg) {
   if (arg === 0) {
@@ -90,7 +90,7 @@ exports.encode = function encode(pathMap) {
       header.byteLength + codemapBuffer.byteLength,
     );
 
-    return base85.encode(new Buffer(merged.buffer), 'ascii85');
+    return encoderEncode(new Buffer(merged.buffer));
   }
 
   return parsedArr.reduce(
@@ -103,7 +103,7 @@ exports.encode = function encode(pathMap) {
 };
 
 exports.decode = function decode(encodedPath, {usedCodes, tree}) {
-  const rawBuff = base85.decode(encodedPath, 'ascii85');
+  const rawBuff = encoderDecode(encodedPath);
   const ab = new Uint8Array(rawBuff).buffer;
 
   const header = new Uint32Array(ab, 0, 3);

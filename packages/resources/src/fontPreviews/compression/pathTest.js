@@ -45,7 +45,10 @@ function testModule(name) {
   console.log(`Overall ratio: ${ratio[0] / ratio[1]}`);
 
   const framed = `{\n${entries
-    .map(({key, encoded}) => `  ${JSON.stringify(key)}:${JSON.stringify(encoded)},\n`)
+    .map(
+      ({key, encoded}) =>
+        `  ${JSON.stringify(key)}:${JSON.stringify(encoded)},\n`,
+    )
     .join('')}\n"_":${JSON.stringify(encodedEntries._)}\n}`;
 
   console.log(`Size: ${framed.length}    Gzip size: ${gzipSize.sync(framed)}`);
@@ -60,7 +63,7 @@ function testModule(name) {
     const decoded = mod.decode(jParsed.Acme, jParsed._);
     console.log('Decoding was successful');
     // console.log(familyPaths.Acme);
-    console.log(decoded);
+    // console.log(decoded);
   }
 }
 
@@ -70,5 +73,6 @@ function testModule(name) {
 // testModule('naive');
 // testModule('packedBody');
 testModule('packedBodyLossy');
-testModule('packedComposite');
+// testModule('packedComposite');
 testModule('packedHuffman');
+testModule('betterEncoding');
