@@ -3,7 +3,7 @@ export default {
     {
       type: 'layout.column',
       elementOptions: {
-        fgColor: 'secondaryBackground',
+        fgColor: 'background',
       },
       children: [
         {

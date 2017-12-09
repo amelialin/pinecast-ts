@@ -69,7 +69,7 @@ export default {
 
       elementOptions: {
         maxLineFade: {
-          color: 'secondaryBackground',
+          color: 'background',
           height: 40,
         },
         maxLines: 10,
@@ -88,7 +88,7 @@ export default {
           type: 'block.text',
           tagName: 'span',
 
-          textContent: 'Read more...',
+          textContent: 'Read more…',
 
           styles: {
             color: 'secondaryAccent',
@@ -111,11 +111,7 @@ export default {
   ],
   tagName: 'article',
   styles: {
-    backgroundColor: 'secondaryBackground',
-    padding: '30px 0',
-
-    ':nth-child(n+1)': {
-      borderTop: '1px solid #eee',
-    },
+    backgroundColor: 'background',
+    padding: '30px 0 50px',
   },
 };

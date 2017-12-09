@@ -6,7 +6,12 @@ import * as presets from '@pinecast/sb-presets';
 import {changeColor} from '../../actions/theme';
 import ColorPicker from '../ColorPicker';
 import HelpText from '../../common/HelpText';
-import {PanelDescription, PanelHeader, PanelWrapper} from '../common';
+import {
+  PanelDescription,
+  PanelDivider,
+  PanelHeader,
+  PanelWrapper,
+} from '../common';
 import {ReducerType} from '../../reducer';
 import Swatch from './Swatch';
 import swatches from './swatches';
@@ -30,9 +35,11 @@ function renderSwatch(
 const ColorsPanel = ({
   colors,
   changeColor,
+  presetSwatch,
 }: {
   colors: {[key: string]: string};
   changeColor: (colorPair: {[colorName: string]: string}) => void;
+  presetSwatch: {[key: string]: string};
 }) => (
   <PanelWrapper>
     <PanelHeader>Colors</PanelHeader>
@@ -44,6 +51,12 @@ const ColorsPanel = ({
         <HelpText>
           Below are pre-made color palettes that you can use for your site.
         </HelpText>
+        {renderSwatch(
+          '__preset__',
+          {name: 'Preset Default', swatch: presetSwatch},
+          changeColor,
+        )}
+        <PanelDivider style={{marginBottom: 20}} />
         {Object.entries(swatches).map(([slug, swatch]) =>
           renderSwatch(slug, swatch, changeColor),
         )}
@@ -67,6 +80,7 @@ const ColorsPanel = ({
 
 export default connect(
   (state: ReducerType) => ({
+    presetSwatch: presets.themes[state.theme.$type].colors,
     colors:
       state.theme.colors ||
       (presets.themes[state.theme.$type].colors as {[key: string]: string}),

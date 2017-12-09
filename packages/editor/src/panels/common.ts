@@ -25,3 +25,10 @@ export const PanelSection = styled('h2', {
   marginBottom: 30,
   marginTop: 40,
 });
+
+export const PanelDivider = styled('hr', {
+  background: '#8d52d1',
+  border: 0,
+  height: 1,
+  width: '100%',
+});
