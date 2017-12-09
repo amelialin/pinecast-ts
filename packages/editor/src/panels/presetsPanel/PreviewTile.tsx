@@ -22,8 +22,8 @@ const PreviewTile = ({isActive, onSelect, type}: Props & StateProps) => {
         border: !isActive ? '1px solid #aaa' : 'none',
         borderRadius: 3,
         boxShadow: isActive
-          ? '0 0 7px 3px #8d52d1'
-          : '0 3px 5px rgba(0, 0, 0, 0.2)',
+          ? '0 0 0 1.5px rgba(255, 255, 255, 0.8), 0 0 0 5px #8d52d1'
+          : '0 0 transparent, 0 3px 5px rgba(0, 0, 0, 0.2)',
         display: 'block',
         marginBottom: 30,
         minHeight: 200,
