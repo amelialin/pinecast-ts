@@ -1,4 +1,3 @@
-import * as escapeHTML from 'react-dom/lib/escapeTextContentForBrowser';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/server';
 
@@ -7,6 +6,7 @@ import {ServerStyletron, StyletronProvider} from '@pinecast/sb-styles';
 
 import {Context} from 'koa';
 import editorIntegration from './editorIntegration';
+import escapeHTML from './escapeHTML';
 
 const DEFAULT_FAVICON = 'https://pinecast.com/static/img/256x256.png';
 
