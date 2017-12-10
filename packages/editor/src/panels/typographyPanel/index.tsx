@@ -13,7 +13,12 @@ import FontSelect from './FontSelect';
 import HelpText from '../../common/HelpText';
 import Label from '../../common/Label';
 import pairings from './pairings';
-import {PanelDescription, PanelHeader, PanelWrapper} from '../common';
+import {
+  PanelDescription,
+  PanelDivider,
+  PanelHeader,
+  PanelWrapper,
+} from '../common';
 import {ReducerType} from '../../reducer';
 import Tabs, {Tab} from '../../common/Tabs';
 
@@ -34,10 +39,11 @@ class TypographyPanel extends React.Component {
   props: {
     changeFont: (pair: PartialFontHashType) => void;
     fonts: FontHashType;
+    defaultFonts: FontHashType;
   };
 
   render() {
-    const {changeFont, fonts} = this.props;
+    const {changeFont, defaultFonts, fonts} = this.props;
     return (
       <PanelWrapper>
         <PanelHeader>Typography</PanelHeader>
@@ -46,6 +52,11 @@ class TypographyPanel extends React.Component {
         </PanelDescription>
         <Tabs>
           <Tab name="Pairings">
+            <FontPreset
+              preset={{name: 'Default for preset', ...defaultFonts}}
+              onClick={pairing => changeFont(pairing)}
+            />
+            <PanelDivider />
             <HelpText>
               Choose a combination of pre-made fonts to style your website.
             </HelpText>
@@ -124,6 +135,7 @@ class TypographyPanel extends React.Component {
 
 export default connect(
   (state: ReducerType) => ({
+    defaultFonts: presets.themes[state.theme.$type].fonts as FontHashType,
     fonts: {
       ...(presets.themes[state.theme.$type].fonts as FontHashType),
       ...state.theme.fonts,
