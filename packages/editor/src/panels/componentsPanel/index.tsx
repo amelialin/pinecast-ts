@@ -58,15 +58,17 @@ const ComponentsPanel = ({
     <RadioList
       options={{
         minimal: () => (
-          <Label text="Minimal">Simple, clean, and to the point</Label>
+          <Label componentType="div" text="Minimal">
+            Simple, clean, and to the point
+          </Label>
         ),
         thick: () => (
-          <Label text="Thick">
+          <Label componentType="div" text="Thick">
             Big and colorful, full of metadata and a seek bar
           </Label>
         ),
         slim: () => (
-          <Label text="Slim">
+          <Label componentType="div" text="Slim">
             Compact and efficient, only the absolute necessities
           </Label>
         ),

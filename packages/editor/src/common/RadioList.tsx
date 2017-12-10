@@ -79,7 +79,7 @@ export default class RadioList extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         {Object.entries(
           this.props.options,
         ).map(([key, Value]: [string, React.StatelessComponent]) => (
@@ -94,7 +94,7 @@ export default class RadioList extends React.Component {
             <Value />
           </Option>
         ))}
-      </div>
+      </React.Fragment>
     );
   }
 }
