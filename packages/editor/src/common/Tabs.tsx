@@ -36,6 +36,7 @@ const TabButton = styled(
     height: 36,
     marginRight: 30,
     padding: 0,
+    whiteSpace: 'nowrap',
   }),
   {type: 'button'},
 );

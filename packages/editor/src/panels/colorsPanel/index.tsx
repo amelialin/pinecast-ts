@@ -53,7 +53,7 @@ const ColorsPanel = ({
         </HelpText>
         {renderSwatch(
           '__preset__',
-          {name: 'Preset Default', swatch: presetSwatch},
+          {name: 'Preset default', swatch: presetSwatch},
           changeColor,
         )}
         <PanelDivider style={{marginBottom: 20}} />

@@ -23,25 +23,30 @@ const Button = styled(
 );
 
 const ButtonPreview = ({
-  onClick,
+  onClick = () => {},
   preset,
+  style = null,
   theme,
 }: {
-  onClick: () => void;
+  onClick?: () => void;
   preset: Preset;
+  style?: React.CSSProperties;
   theme: Object;
 }) => (
   <Button
     onClick={onClick}
-    style={prepareStyle(
-      {
-        backgroundColor: 'buttons',
-        borderRadius: 0,
-        color: 'buttonsText',
-        ...preset.style,
-      },
-      theme,
-    )}
+    style={{
+      ...prepareStyle(
+        {
+          backgroundColor: 'buttons',
+          borderRadius: 0,
+          color: 'buttonsText',
+          ...preset.style,
+        },
+        theme,
+      ),
+      ...style,
+    }}
   >
     {preset.name}
   </Button>
