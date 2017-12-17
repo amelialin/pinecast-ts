@@ -182,7 +182,7 @@ class PreviewRenderer extends React.Component {
     if (isRendered) {
       console.log(`Displaying content for request ${this.reqId}`);
     }
-    await new Promise(r => setTimeout(r, 0));
+    await new Promise(r => setTimeout(r, 100));
 
     if ('srcdoc' in this.iframe) {
       (this.iframe as any).srcdoc = content;

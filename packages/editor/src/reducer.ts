@@ -18,6 +18,7 @@ import themeReducer, {
 export interface ReducerType {
   readonly csrf: string | null;
   readonly slug: string | null;
+  readonly wasLoaded: boolean;
   readonly needsSave: boolean;
 
   readonly page: 'presets' | 'colors' | 'typography' | 'components';
@@ -29,6 +30,7 @@ export interface ReducerType {
 const initialState: ReducerType = {
   csrf: null,
   slug: null,
+  wasLoaded: false,
   needsSave: false,
 
   page: 'presets',
@@ -37,14 +39,15 @@ const initialState: ReducerType = {
   theme: themeInitialState,
 };
 
-type InitAction = {type: 'init'; payload: {csrf: string; slug: string}};
-
 function reducer(state: ReducerType = initialState, action): ReducerType {
   if (!state) {
     return initialState;
   }
 
-  const themeState = themeReducer(state.theme, action);
+  const themeState = themeReducer(
+    action.type === 'init' ? action.payload.theme : state.theme,
+    action,
+  );
   const needsSave =
     action.type === 'clearSave'
       ? false
@@ -52,10 +55,9 @@ function reducer(state: ReducerType = initialState, action): ReducerType {
 
   return {
     ...state,
-    csrf:
-      action.type === 'init' ? (action as InitAction).payload.csrf : state.csrf,
-    slug:
-      action.type === 'init' ? (action as InitAction).payload.slug : state.slug,
+    csrf: action.type === 'init' ? action.payload.csrf : state.csrf,
+    slug: action.type === 'init' ? action.payload.slug : state.slug,
+    wasLoaded: action.type === 'init.loaded' ? true : state.wasLoaded,
     needsSave,
 
     page: actionReducer<ReducerType['page']>(

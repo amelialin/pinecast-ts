@@ -21,6 +21,7 @@ export default class Editor extends React.PureComponent {
   props: {
     csrf: string;
     slug: string;
+    theme: Object;
   };
 
   componentWillMount() {

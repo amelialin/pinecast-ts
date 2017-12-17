@@ -8,6 +8,7 @@ Array.from(document.querySelectorAll('.sb-editor-placeholder')).forEach(el =>
     <Editor
       csrf={el.getAttribute('data-csrf') || ''}
       slug={el.getAttribute('data-slug') || ''}
+      theme={JSON.parse(el.getAttribute('data-theme') || '{}')}
     />,
     el,
   ),
