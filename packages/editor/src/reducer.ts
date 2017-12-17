@@ -49,7 +49,7 @@ function reducer(state: ReducerType = initialState, action): ReducerType {
     action,
   );
   const needsSave =
-    action.type === 'clearSave'
+    action.type === 'clearSave' || action.type === 'init'
       ? false
       : state.needsSave || themeState !== state.theme;
 

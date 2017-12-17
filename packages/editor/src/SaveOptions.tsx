@@ -44,12 +44,21 @@ class SaveOptions extends React.Component {
 
     this.handleOpen();
   };
+  handleBeforeUnload = (e: BeforeUnloadEvent) => {
+    if (!this.props.needsSave) {
+      return null;
+    }
+    return (e.returnValue =
+      'You have unsaved changes. Are you sure you wish to leave?');
+  };
 
   componentDidMount() {
     document.body.addEventListener('keydown', this.handleKeyDown);
+    window.addEventListener('beforeunload', this.handleBeforeUnload);
   }
   componentWillUnmount() {
     document.body.removeEventListener('keydown', this.handleKeyDown);
+    window.removeEventListener('beforeunload', this.handleBeforeUnload);
   }
 
   handleOpen = async () => {
