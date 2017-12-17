@@ -8,7 +8,7 @@ import {Element} from '../primitives';
 import expandElementStyles from './globalElementOptions';
 import {extractProps} from './extractor';
 
-const PLAYER_HEIGHTS = {
+export const PLAYER_HEIGHTS = {
   minimal: 60,
   thick: 200,
   slim: 20,

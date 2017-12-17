@@ -9,9 +9,11 @@ import {
   renderElement,
   renderLayout,
 } from '@pinecast/sb-components/dist';
+import {PLAYER_HEIGHTS} from '@pinecast/sb-components/src/elements/EmbedPlayer';
 import * as presets from '@pinecast/sb-presets';
 
 import ContextProvider from './ContextProvider';
+import escapeHTML from './escapeHTML';
 import frame from './framing';
 import {route} from './routes';
 
@@ -138,7 +140,20 @@ export const renderHome = getContextFromResources(async function renderHome(
       ].filter(x => x),
     ),
     context.data,
-    {context},
+    {
+      context,
+      headExtra: `
+        <meta name="twitter:title" content="${escapeHTML(
+          resources.site.podcast.name,
+        )}">
+        <meta name="twitter:description" content="${escapeHTML(
+          resources.site.podcast.description,
+        )}">
+        <meta name="twitter:image" content="${escapeHTML(
+          resources.site.podcast.cover_image,
+        )}">
+        `,
+    },
   );
 });
 export const renderEpisode = getContextFromResources(
@@ -146,6 +161,8 @@ export const renderEpisode = getContextFromResources(
     context: ComponentContext,
     resources: any,
   ): Promise<string> {
+    const embedTheme = context.options.embedTheme || 'minimal';
+    const embedHeight = PLAYER_HEIGHTS[embedTheme];
     return frame(
       render(
         context,
@@ -159,6 +176,34 @@ export const renderEpisode = getContextFromResources(
       context.data,
       {
         context,
+        headExtra: `
+        <link rel="alternate" type="application/json+oembed"
+          href="https://pinecast.com/services/oembed.json?url=${encodeURIComponent(
+            `https://pinecast.com/listen/${resources.episode.id}`,
+          )}"
+          title="Pinecast oEmbed Profile">
+        <meta name="twitter:card" content="player">
+        <meta name="twitter:site" content="@getpinecast">
+        <meta name="twitter:title" content="${escapeHTML(
+          resources.episode.title,
+        )}">
+        <meta name="twitter:description" content="${escapeHTML(
+          resources.episode.subtitle || resources.episode.description_raw,
+        )}">
+        <meta name="twitter:image" content="${escapeHTML(
+          resources.episode.image_url,
+        )}">
+        <meta name="twitter:player" content="${escapeHTML(
+          resources.episode.player_url,
+        )}?theme=${embedTheme}&card=true">
+        <meta name="twitter:player:width" content="480">
+        <meta name="twitter:player:height" content="${embedHeight}">
+        <meta name="twitter:player:stream" content="https://pinecast.com/listen/${resources
+          .episode.id}">
+        <meta name="twitter:player:stream:content_type" content="${escapeHTML(
+          resources.episode.audio_type,
+        )}">
+        `,
         title: resources.episode.title,
       },
     );

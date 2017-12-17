@@ -1,7 +1,4 @@
-import {
-  DataAPI,
-  /*DataReadinessAPI, */ JSONObject,
-} from '@pinecast/sb-renderer';
+import {DataAPI, JSONObject} from '@pinecast/sb-renderer';
 
 import request from './requests';
 import {ReducerType} from '../reducer';
@@ -37,9 +34,3 @@ export const fetcher: ((theme: Object) => DataAPI) = (theme: Object) => ({
     ).then(parse);
   },
 });
-
-// export const hasData = (state: ReducerType): DataReadinessAPI => ({
-//     getSite: (): boolean => Boolean(state.preview.data.site),
-//     getEpisodes: (page: number): boolean => Boolean(state.preview.data.episodes[page]),
-//     getEpisode: (id: string): boolean => Boolean(state.preview.data.episode[id]),
-// });

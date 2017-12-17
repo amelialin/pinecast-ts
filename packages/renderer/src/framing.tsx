@@ -12,6 +12,7 @@ const DEFAULT_FAVICON = 'https://pinecast.com/static/img/256x256.png';
 
 interface Options {
   context: ComponentContext;
+  headExtra?: string;
   title?: string;
 }
 
@@ -32,7 +33,7 @@ function fontMapper(fontFamily): string | null {
 export default async function frame(
   elem: JSX.Element,
   siteData: any,
-  {context, title = null}: Options,
+  {context, headExtra = '', title = null}: Options,
 ): Promise<string> {
   const styletron = new (ServerStyletron as any)();
   // HACK: https://github.com/rtsao/styletron/issues/153
@@ -68,6 +69,7 @@ export default async function frame(
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>${escapeHTML(title || siteData.podcast.name)}</title>
+        ${headExtra}
         ${fontInclude}
         <style>
           *, *:before, *:after {box-sizing: border-box;}
