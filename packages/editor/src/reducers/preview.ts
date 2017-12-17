@@ -1,4 +1,4 @@
-import {Action, actionReducer} from '../actions';
+import {actionReducer} from '../actions';
 import {actionHandler} from './util';
 
 export interface ReducerType {

@@ -64,10 +64,6 @@ const Toolbar = styled('div', {
   position: 'absolute',
   right: 0,
   top: 0,
-
-  ':after': {
-    //
-  },
 });
 
 function getQuery(url: string): {[key: string]: string} {
@@ -96,6 +92,7 @@ class PreviewRenderer extends React.Component {
   props: {
     changePath: (path: string) => void;
     path: string;
+    slug: string;
     theme: Object;
   };
   state: {
@@ -154,7 +151,7 @@ class PreviewRenderer extends React.Component {
     route
       .build(
         fetcher(this.props.theme),
-        'testcast',
+        this.props.slug,
         getQuery(this.props.path),
         params,
       )
@@ -178,17 +175,22 @@ class PreviewRenderer extends React.Component {
     this.displayContent(PAGE_LOADING);
   }
 
-  displayContent(content: string, isRendered?: boolean) {
+  async displayContent(content: string, isRendered?: boolean) {
     if (!this.iframe) {
       return;
     }
     if (isRendered) {
       console.log(`Displaying content for request ${this.reqId}`);
     }
+    await new Promise(r => setTimeout(r, 0));
+
     if ('srcdoc' in this.iframe) {
       (this.iframe as any).srcdoc = content;
+      console.log(`\`srcdoc\` applied with ${content.length} bytes`);
     } else {
+      console.warn('`srcdoc` not detected; falling back on data URI');
       this.iframe.src = `data:text/html,${content}`;
+      console.log(`\`src\` applied with ${content.length + 15} bytes`);
     }
   }
 
@@ -251,6 +253,7 @@ class PreviewRenderer extends React.Component {
 export default connect(
   (state: ReducerType) => ({
     path: state.preview.path,
+    slug: state.slug,
     theme: state.theme,
   }),
   {changePath},

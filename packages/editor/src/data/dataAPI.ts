@@ -12,9 +12,7 @@ async function parse(data: string): JSONObject {
 
 export const fetcher: ((theme: Object) => DataAPI) = (theme: Object) => ({
   getSite(hostname: string): Promise<JSONObject> {
-    return request(
-      `https://pinecast.com/sites/site_builder/${encodeURIComponent(hostname)}`,
-    )
+    return request(`/sites/site_builder/data/${encodeURIComponent(hostname)}`)
       .then(parse)
       .then(siteData => ({
         ...siteData,
@@ -26,14 +24,14 @@ export const fetcher: ((theme: Object) => DataAPI) = (theme: Object) => ({
   },
   getEpisodes(hostname: string, page: number) {
     return request(
-      `https://pinecast.com/sites/site_builder/${encodeURIComponent(
+      `/sites/site_builder/data/${encodeURIComponent(
         hostname,
       )}/episode?page=${page}`,
     ).then(parse);
   },
   getEpisode(hostname: string, id: string) {
     return request(
-      `https://pinecast.com/sites/site_builder/${encodeURIComponent(
+      `/sites/site_builder/data/${encodeURIComponent(
         hostname,
       )}/episode/${encodeURIComponent(id)}`,
     ).then(parse);

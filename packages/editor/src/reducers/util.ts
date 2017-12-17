@@ -13,19 +13,17 @@ export function actionHandler<T>(handlers: {
   return (state: T, action: Action<any>): T => {
     let updated = false;
     return Object.entries(handlers)
-      .map(([key, val]): Reducer<T> => {
-        return (state: T, action: Action<T>): T => {
-          const recomputed = val(state[key], action);
-          if (recomputed === state[key]) {
-            return state;
-          }
-          if (!updated) {
-            state = Object.assign({}, state);
-          }
-          state[key] = recomputed;
-          updated = true;
+      .map(([key, val]): Reducer<T> => (state: T, action: Action<T>): T => {
+        const recomputed = val(state[key], action);
+        if (recomputed === state[key]) {
           return state;
-        };
+        }
+        if (!updated) {
+          state = Object.assign({}, state);
+        }
+        state[key] = recomputed;
+        updated = true;
+        return state;
       })
       .reduce((acc, cur) => cur(acc, action), state);
   };

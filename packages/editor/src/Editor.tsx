@@ -1,4 +1,4 @@
-import {Provider} from 'react-redux';
+import {Provider as ReduxProvider} from 'react-redux';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
@@ -17,11 +17,20 @@ const BelowToolbar = styled('div', {
   height: 'calc(100% - 50px)',
 });
 
-export default class App extends React.PureComponent {
+export default class Editor extends React.PureComponent {
+  props: {
+    csrf: string;
+    slug: string;
+  };
+
+  componentWillMount() {
+    store.dispatch({type: 'init', payload: {...this.props}});
+  }
+
   render() {
     return (
       <StyletronProvider styletron={styletron}>
-        <Provider store={store}>
+        <ReduxProvider store={store}>
           <HeightWrapper>
             <Toolbar />
             <BelowToolbar>
@@ -29,7 +38,7 @@ export default class App extends React.PureComponent {
               <PreviewPanel />
             </BelowToolbar>
           </HeightWrapper>
-        </Provider>
+        </ReduxProvider>
       </StyletronProvider>
     );
   }

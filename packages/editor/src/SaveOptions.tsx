@@ -1,0 +1,130 @@
+import {connect} from 'react-redux';
+import * as React from 'react';
+
+import styled from '@pinecast/sb-styles';
+
+import {Action} from './actions';
+import Button, {ButtonGroup} from './common/Button';
+import Dialog from './common/Dialog';
+import {doSave} from './actions/save';
+import ErrorState from './common/ErrorState';
+import LoadingState from './common/LoadingState';
+import ModalLayer from './common/ModalLayer';
+import {ReducerType} from './reducer';
+import {ReducerType as SaveReducerType} from './reducers/save';
+
+class SaveOptions extends React.Component {
+  props: {
+    doSave: () => Promise<void>;
+    needsSave: boolean;
+    save: SaveReducerType;
+  };
+  state: {
+    open: boolean;
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {open: false};
+  }
+
+  handleKeyDown = (e: KeyboardEvent) => {
+    if (e.keyCode !== 83) {
+      // S
+      return;
+    }
+    if (!e.metaKey) {
+      return;
+    }
+    if (this.state.open) {
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.handleOpen();
+  };
+
+  componentDidMount() {
+    document.body.addEventListener('keydown', this.handleKeyDown);
+  }
+  componentWillUnmount() {
+    document.body.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleOpen = async () => {
+    this.setState({open: true});
+    this.props.doSave();
+  };
+  handleClose = () => {
+    this.setState({open: false});
+  };
+
+  renderTitle() {
+    const {save: {saving, error}} = this.props;
+    if (error) {
+      return 'Problems while saving';
+    }
+    if (saving) {
+      return 'Saving…';
+    }
+    return 'Saved';
+  }
+  renderActions() {
+    const {save: {saving, error}} = this.props;
+    if (error) {
+      return (
+        <ButtonGroup>
+          <Button onClick={this.handleClose}>Cancel</Button>
+          <Button autoFocus isPrimary onClick={this.handleOpen}>
+            Retry
+          </Button>
+        </ButtonGroup>
+      );
+    }
+    if (!saving) {
+      return (
+        <Button autoFocus onClick={this.handleClose}>
+          Close
+        </Button>
+      );
+    }
+    return null;
+  }
+  renderInner() {
+    const {save: {saving, error}} = this.props;
+    if (error) {
+      return <ErrorState title={error} />;
+    }
+    if (!saving) {
+      return <p>Your changes were saved.</p>;
+    }
+    return <LoadingState title="Uploading your changes to Pinecast…" />;
+  }
+  render() {
+    const {props: {needsSave, save: {saving}}, state: {open}} = this;
+
+    return (
+      <React.Fragment>
+        <ModalLayer canEscape={!saving} open={open} onClose={this.handleClose}>
+          <Dialog actions={this.renderActions()} title={this.renderTitle()}>
+            {this.renderInner()}
+          </Dialog>
+        </ModalLayer>
+        <Button
+          disabled={!needsSave}
+          isPrimary
+          shortcut={{letter: 's', metaKey: true}}
+          onClick={this.handleOpen}
+        >
+          Save
+        </Button>
+      </React.Fragment>
+    );
+  }
+}
+
+export default connect(
+  ({save, needsSave}: ReducerType) => ({needsSave, save}),
+  {doSave},
+)(SaveOptions);

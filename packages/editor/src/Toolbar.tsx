@@ -5,6 +5,7 @@ import styled from '@pinecast/sb-styles';
 
 import {changeChromePage} from './actions/chrome';
 import {ReducerType} from './reducer';
+import SaveOptions from './SaveOptions';
 
 const Toolbar_ = styled('nav', {
   alignItems: 'center',
@@ -13,9 +14,9 @@ const Toolbar_ = styled('nav', {
   display: 'flex',
   fontFamily: 'Fira Mono',
   height: 50,
-  padding: '0 30px',
+  padding: '0 15px',
 });
-const Button = styled(
+const ToolbarOption = styled(
   'button',
   ({isSelected}) => ({
     background: 'transparent',
@@ -61,7 +62,7 @@ const ToolbarButton = ({
   page: ReducerType['page'];
   switchPage: (page: ReducerType['page']) => void;
 }) => (
-  <Button
+  <ToolbarOption
     isSelected={id === currentPage}
     onClick={e => {
       e.preventDefault();
@@ -69,7 +70,7 @@ const ToolbarButton = ({
     }}
   >
     {children}
-  </Button>
+  </ToolbarOption>
 );
 
 const ConnectedToolbarButton = connect(
@@ -83,7 +84,9 @@ const Toolbar = () => (
     <ConnectedToolbarButton id="colors">Colors</ConnectedToolbarButton>
     <ConnectedToolbarButton id="typography">Typography</ConnectedToolbarButton>
     <ConnectedToolbarButton id="components">Components</ConnectedToolbarButton>
-    <RHS>asdf</RHS>
+    <RHS>
+      <SaveOptions />
+    </RHS>
   </Toolbar_>
 );
 

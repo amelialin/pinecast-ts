@@ -9,6 +9,7 @@
   "author": "Matt Basta <me@mattbasta.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/redux-thunk": "^2.1.0",
     "@pinecast/sb-components": "^1.0.0",
     "@pinecast/sb-presets": "^1.0.0",
     "@pinecast/sb-renderer": "^1.0.0",

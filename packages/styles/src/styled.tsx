@@ -23,6 +23,11 @@ export default function(
     | null,
   defaultProps?: React.HTMLProps<any>,
 ): React.StatelessComponent<any> {
+  if (elemType.toLowerCase() !== elemType) {
+    throw new Error(
+      `You aren't using lowercase letters for your element name. ${elemType.toLowerCase()} != ${elemType}`,
+    );
+  }
   let StyledComponent;
   if (!props) {
     StyledComponent = styled(elemType, ({_style}) => _style);
