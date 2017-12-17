@@ -28,7 +28,7 @@ export function actionReducer<T>(
         const newKeys = Object.keys(result);
 
         if (
-          newKeys.length !== Object.keys(state).length ||
+          newKeys.length === Object.keys(state).length &&
           newKeys.every(key => state[key] === result[key])
         ) {
           return state;
