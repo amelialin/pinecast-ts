@@ -40,6 +40,7 @@ export interface ComponentContext {
   options: {
     embedTheme?: 'minimal' | 'thick' | 'slim';
     rootFlexibleHeight?: boolean;
+    defaultConsumeCount: number;
   };
 
   // For generating URLs

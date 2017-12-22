@@ -14,6 +14,7 @@ export interface PartialFontHashType {
 }
 export interface PartialStylingType {
   readonly buttons?: primitives.ButtonStyle;
+  readonly page?: primitives.PageStyle;
 }
 export interface PartialOptionsType {
   readonly embedtheme?: EmbedWidgetThemes;
@@ -64,7 +65,13 @@ export default reduceReducers(
           buttons: payload,
         }),
       ),
-      // TODO: Page style reducer goes here
+      actionReducer<ReducerType['styling']>(
+        'theme.changePageStyle',
+        (state = undefined, {payload}: Action<primitives.PageStyle>) => ({
+          ...state,
+          page: payload,
+        }),
+      ),
     ),
     options: reduceReducers(
       actionReducer<ReducerType['options']>(

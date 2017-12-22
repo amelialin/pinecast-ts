@@ -1,3 +1,5 @@
+import {primitives} from '@pinecast/sb-components/dist';
+
 import * as defaultData from './data';
 import {NotFoundError} from './errors';
 import * as rendering from './rendering';
@@ -5,12 +7,6 @@ import {DataAPI} from './jsAPI';
 
 export type RequestURLParams = {[param: string]: string};
 export type RequestQueryParams = {[param: string]: string};
-
-// export interface ReadinessTester {
-//     getSite(hostname: string): boolean,
-//     getEpisodes(hostname: string, page: number): boolean,
-//     getEpisode(hostname: string, id: string): boolean,
-// };
 
 export interface Route {
   path: string;
@@ -69,29 +65,36 @@ export const routes: {[route: string]: Route} = {
     path: '/',
     format: () => '/',
     match: matcher('/'),
-    // canBeBuilt: (hostname, tester, params, query) => (
-    //     tester.getSite(hostname) &&
-    //     tester.getEpisodes(hostname, query.page ? Number(query.page) : 1)
-    // ),
-    build: async (data, siteHostname, query, params): Promise<string> =>
-      rendering.renderHome(
-        await defaultData.awaitAll({
-          site: data.getSite(siteHostname),
-          episodes: data.getEpisodes(
-            siteHostname,
-            query.page ? Number(query.page) : 1,
-          ),
-        }),
-      ),
+    build: async (data, siteHostname, query, params): Promise<string> => {
+      const site = await data.getSite(siteHostname);
+      const page = query.page ? Number(query.page) : 1;
+
+      const theme = rendering.getThemeFromSite(site);
+      const defaultConsumeCount: number = theme.options.defaultConsumeCount;
+      const themeLayout: primitives.PageLayout = theme.layout;
+      const normalize = (x: number) => (x === -1 ? defaultConsumeCount : x);
+      const normalPageCount = themeLayout.body.home.segments.reduce(
+        (acc, cur) => acc + normalize(cur.consumeCount),
+        0,
+      );
+      const firstPageExtraCount = themeLayout.body.home.firstPagePrefix.reduce(
+        (acc, cur) => acc + normalize(cur.consumeCount),
+        0,
+      );
+
+      const episodes = await data.getEpisodes(
+        siteHostname,
+        // offset
+        page === 1 ? 0 : firstPageExtraCount + page * normalPageCount,
+        page === 1 ? firstPageExtraCount + normalPageCount : normalPageCount,
+      );
+      return rendering.renderHome({site, episodes});
+    },
   },
   episode: {
     path: '/episode/:id',
     format: ({id}) => `/episode/${encodeURIComponent(id)}`,
     match: matcher('/episode/:id'),
-    // canBeBuilt: (hostname, tester, params) => (
-    //     tester.getSite(hostname) &&
-    //     tester.getEpisode(hostname, params.id)
-    // ),
     build: async (data, siteHostname, query, params): Promise<string> =>
       rendering.renderEpisode(
         await defaultData.awaitAll({

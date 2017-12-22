@@ -53,11 +53,12 @@ export async function getSite(siteHostname: string): Promise<JSONObject> {
 }
 export async function getEpisodes(
   siteHostname: string,
-  page: number,
+  offset: number,
+  count: number,
 ): Promise<JSONObject> {
-  return fetch(siteHostname, `/episode?page=${page}`).then(parse) as Promise<
-    JSONObject
-  >;
+  return fetch(siteHostname, `/episode?offset=${offset}&count=${count}`).then(
+    parse,
+  ) as Promise<JSONObject>;
 }
 export async function getEpisode(
   siteHostname: string,

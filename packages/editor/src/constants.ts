@@ -8,6 +8,8 @@ export const colorKeyNames = {
   buttonsText: 'Button text',
   links: 'Links',
   text: 'Text',
+
+  pageBackground: 'Page background',
 };
 
 export const fontKeyNames = {

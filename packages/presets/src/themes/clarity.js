@@ -46,6 +46,7 @@ export default {
   },
   options: {
     rootFlexibleHeight: true,
+    defaultConsumeCount: 10,
   },
 
   layout: {

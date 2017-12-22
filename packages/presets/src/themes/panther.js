@@ -36,6 +36,9 @@ export default {
       padding: '40px 0',
     },
   },
+  options: {
+    defaultConsumeCount: 10,
+  },
 
   layout: {
     header: [headerCenteredFixed({content: 'text', showSubtitle: true})],

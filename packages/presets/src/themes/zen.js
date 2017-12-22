@@ -39,6 +39,9 @@ export default {
       padding: '0',
     },
   },
+  options: {
+    defaultConsumeCount: 10,
+  },
 
   layout: {
     header: [headerCentered({content: 'text'}), subheaderSubscribeLinks()],

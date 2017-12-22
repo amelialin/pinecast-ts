@@ -19,11 +19,11 @@ export const fetcher: ((theme: Object) => DataAPI) = (theme: Object) => ({
         },
       }));
   },
-  getEpisodes(hostname: string, page: number) {
+  getEpisodes(hostname: string, offset: number, count: number) {
     return request(
       `/sites/site_builder/data/${encodeURIComponent(
         hostname,
-      )}/episode?page=${page}`,
+      )}/episode?offset=${offset}&count=${count}`,
     ).then(parse);
   },
   getEpisode(hostname: string, id: string) {

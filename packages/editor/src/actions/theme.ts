@@ -18,3 +18,6 @@ export const changeButtonStyle = actionFactory<primitives.ButtonType>(
 export const changeEmbedWidget = actionFactory<EmbedWidgetThemes>(
   'theme.changeEmbedWidget',
 );
+export const changePageStyle = actionFactory<primitives.PageStyle>(
+  'theme.changePageStyle',
+);

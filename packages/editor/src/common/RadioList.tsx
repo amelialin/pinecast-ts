@@ -59,7 +59,7 @@ export default class RadioList extends React.Component {
   props: {
     onChange: (value: string) => void;
     options: {
-      [value: string]: React.StatelessComponent;
+      [value: string]: React.StatelessComponent | JSX.Element | string;
     };
     value: string;
   };
@@ -77,23 +77,38 @@ export default class RadioList extends React.Component {
     this.name = `radio${Math.random()}`;
   }
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.value !== this.state.selectedValue) {
+      this.setState({selectedValue: newProps.value});
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
         {Object.entries(
           this.props.options,
-        ).map(([key, Value]: [string, React.StatelessComponent]) => (
-          <Option key={key}>
-            <RadioInput
-              checked={this.props.value === key}
-              name={this.name}
-              onChange={() => this.props.onChange(key)}
-              value={key}
-            />
-            <Radio />
-            <Value />
-          </Option>
-        ))}
+        ).map(
+          (
+            [key, Value]: [
+              string,
+              React.StatelessComponent | JSX.Element | string
+            ],
+          ) => (
+            <Option key={key}>
+              <RadioInput
+                checked={this.props.value === key}
+                name={this.name}
+                onChange={() => this.props.onChange(key)}
+                value={key}
+              />
+              <Radio />
+              {typeof Value === 'string' || React.isValidElement(Value)
+                ? Value
+                : React.createElement(Value as any)}
+            </Option>
+          ),
+        )}
       </React.Fragment>
     );
   }

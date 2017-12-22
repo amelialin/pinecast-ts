@@ -49,46 +49,62 @@ function getItemSource<T>(items: Array<T>): ItemSourceContext<T> {
   };
 }
 
+function merge(base: Object, extension: Object): any {
+  if (base === extension) {
+    return base;
+  }
+  const result = {...base};
+  Object.entries(extension).forEach(([key, val]) => {
+    if (
+      !(key in result) ||
+      typeof val !== 'object' ||
+      typeof result[key] !== 'object' ||
+      Array.isArray(result[key]) ||
+      Array.isArray(val)
+    ) {
+      result[key] = val;
+      return;
+    }
+
+    result[key] = merge(result[key], val);
+  });
+  return result;
+}
+
+const themeCacheSym = Symbol('theme cache');
+
 function buildTheme(
   themeObj: {
     $type?: string;
-    colors?: {[color: string]: string};
-    fonts?: {[font: string]: string};
-    styling: {
-      buttons?: React.CSSProperties;
-    };
-    options: {
-      embedTheme?: string;
-      rootFlexibleHeight?: boolean;
-    };
   },
   themeName: string,
 ) {
+  if (themeObj[themeCacheSym]) {
+    return themeObj[themeCacheSym];
+  }
   if (!presets.themes.hasOwnProperty(themeObj.$type || themeName)) {
     return themeObj;
   }
   const preset = presets.themes[themeObj.$type || themeName];
-  return {
-    $type: themeName,
-    ...preset,
-    ...themeObj,
-    colors: {
-      ...preset.colors,
-      ...themeObj.colors,
+
+  const out = merge(
+    {
+      options: {},
+      styling: {},
+      ...preset,
+      $type: themeName,
     },
-    fonts: {
-      ...preset.fonts,
-      ...themeObj.fonts,
-    },
-    styling: {
-      ...preset.styling,
-      ...themeObj.styling,
-    },
-    options: {
-      ...preset.options,
-      ...themeObj.options,
-    },
-  };
+    themeObj,
+  );
+  themeObj[themeCacheSym] = out;
+  return out;
+}
+
+export function getThemeFromSite(site: any) {
+  const theme = (site.site && site.site.theme) || {};
+  const themeName =
+    (theme && theme.$type) || site.site.legacy_theme || 'panther';
+  return buildTheme(theme, themeName);
 }
 
 function getContextFromResources(
@@ -99,14 +115,8 @@ function getContextFromResources(
   ) => Promise<string>,
 ): (data: any, ...args: Array<string>) => Promise<string> {
   return async (data: any, ...args: Array<any>): Promise<string> => {
-    const theme = (data.site.site && data.site.site.theme) || {};
-    const themeName =
-      'clarity' ||
-      (theme && theme.$type) ||
-      data.site.site.legacy_theme ||
-      'panther';
     const context: ComponentContext = {
-      ...buildTheme(theme, themeName),
+      ...getThemeFromSite(data.site),
       data: data.site,
       resources: {
         cover_art: data.site.site.cover_image_url,
@@ -130,10 +140,10 @@ export const renderHome = getContextFromResources(async function renderHome(
       context,
       getItemSource(resources.episodes.items),
       [
-        resources.episodes.page === 1
+        resources.episodes.offset === 0
           ? renderLayout(context.layout.body.home.firstPagePrefix)
           : [],
-        resources.episodes.page === 1
+        resources.episodes.offset === 0
           ? renderBlock(context.layout.body.home.firstPageAfterPrefix || [])
           : [],
         renderLayout(context.layout.body.home.segments),
