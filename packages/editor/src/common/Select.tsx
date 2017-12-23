@@ -32,7 +32,7 @@ const Select_ = styled('select', {
   background: 'transparent',
   border: 0,
   borderRadius: 3,
-  boxShadow: 'none',
+  boxShadow: 'rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
   fontFamily: 'Fira Mono',
   fontSize: 14,
   height: '100%',

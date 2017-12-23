@@ -71,7 +71,7 @@ function merge(base: Object, extension: Object): any {
   return result;
 }
 
-const themeCacheSym = Symbol('theme cache');
+const themeCache = new WeakMap();
 
 function buildTheme(
   themeObj: {
@@ -79,8 +79,8 @@ function buildTheme(
   },
   themeName: string,
 ) {
-  if (themeObj[themeCacheSym]) {
-    return themeObj[themeCacheSym];
+  if (themeCache.has(themeObj)) {
+    return themeCache.get(themeObj);
   }
   if (!presets.themes.hasOwnProperty(themeObj.$type || themeName)) {
     return themeObj;
@@ -96,14 +96,14 @@ function buildTheme(
     },
     themeObj,
   );
-  themeObj[themeCacheSym] = out;
+  themeCache.set(themeObj, out);
   return out;
 }
 
 export function getThemeFromSite(site: any) {
   const theme = (site.site && site.site.theme) || {};
   const themeName =
-    (theme && theme.$type) || site.site.legacy_theme || 'panther';
+    (theme && theme.$type) || site.site.legacy_theme || 'clarity';
   return buildTheme(theme, themeName);
 }
 

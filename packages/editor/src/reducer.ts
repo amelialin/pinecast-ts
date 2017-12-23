@@ -45,7 +45,7 @@ function reducer(state: ReducerType = initialState, action): ReducerType {
   }
 
   const themeState = themeReducer(
-    action.type === 'init' ? action.payload.theme : state.theme,
+    action.type === 'init' ? action.payload.theme || state.theme : state.theme,
     action,
   );
   const needsSave =

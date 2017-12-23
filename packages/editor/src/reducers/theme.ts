@@ -29,7 +29,7 @@ export interface ReducerType {
 }
 
 export const initialState: ReducerType = {
-  $type: 'panther',
+  $type: 'clarity',
 };
 
 export default reduceReducers(
