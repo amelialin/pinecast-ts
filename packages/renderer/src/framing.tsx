@@ -13,7 +13,8 @@ const DEFAULT_FAVICON = 'https://pinecast.com/static/img/256x256.png';
 interface Options {
   context: ComponentContext;
   headExtra?: string;
-  title?: string;
+  title: string;
+  urlPath: string;
 }
 
 function fontMapper(fontFamily): string | null {
@@ -33,7 +34,7 @@ function fontMapper(fontFamily): string | null {
 export default async function frame(
   elem: JSX.Element,
   siteData: any,
-  {context, headExtra = '', title = null}: Options,
+  {context, headExtra = '', title, urlPath}: Options,
 ): Promise<string> {
   const styletron = new (ServerStyletron as any)();
   // HACK: https://github.com/rtsao/styletron/issues/153
@@ -42,6 +43,7 @@ export default async function frame(
     <StyletronProviderCast styletron={styletron}>{elem}</StyletronProviderCast>
   );
 
+  // This can't be inlined because we need to get the styletron styles out of it.
   const markup = ReactDOM.renderToStaticMarkup(root);
   const gaInclude = siteData.site.analytics_id
     ? `
@@ -58,18 +60,35 @@ export default async function frame(
 
   const fontInclude = Array.from(new Set(Object.values(context.fonts)))
     .map(fontMapper)
-    .filter(x => Boolean(x))
+    .filter(Boolean)
     .join('\n');
 
   return `
     <!DOCTYPE html>
-    <html>
+    <html prefix="og: http://ogp.me/ns#">
       <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>${escapeHTML(title || siteData.podcast.name)}</title>
-        ${headExtra}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+        <title>${escapeHTML(title)}</title>
+        <meta name="generator" content="Pinecast Site Builder/1.0">
+        <meta property="og:locale" content="${escapeHTML(
+          siteData.podcast.language,
+        )}">
+        <meta property="og:title" content="${escapeHTML(title)}">
+        <meta name="twitter:title" content="${escapeHTML(title)}">
+        <meta property="og:site_name" content="${escapeHTML(
+          siteData.podcast.name,
+        )}">
+        <meta property="og:url" content="${escapeHTML(
+          siteData.site.canonical_url + urlPath,
+        )}">
+        <link rel="canonical" href="${escapeHTML(
+          siteData.site.canonical_url + urlPath,
+        )}">
+        <meta name="twitter:site" content="@getpinecast">
+        ${headExtra.replace(/\s*\n\s*/g, '\n')}
         ${fontInclude}
         <style>
           *, *:before, *:after {box-sizing: border-box;}

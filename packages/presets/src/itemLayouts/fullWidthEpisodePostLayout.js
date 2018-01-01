@@ -88,7 +88,7 @@ export default {
       ],
       styles: {
         flex: '1 1',
-        maxWidth: '100%',
+        maxWidth: 'calc(100% - 300px)',
         padding: '30px 20px',
       },
     },

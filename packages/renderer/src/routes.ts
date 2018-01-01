@@ -88,7 +88,7 @@ export const routes: {[route: string]: Route} = {
         page === 1 ? 0 : firstPageExtraCount + page * normalPageCount,
         page === 1 ? firstPageExtraCount + normalPageCount : normalPageCount,
       );
-      return rendering.renderHome({site, episodes});
+      return rendering.renderHome({site, episodes}, page);
     },
   },
   episode: {

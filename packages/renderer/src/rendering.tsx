@@ -111,9 +111,9 @@ function getContextFromResources(
   func: (
     context: ComponentContext,
     resources: any,
-    ...args: Array<string>
+    ...args: Array<string | number>
   ) => Promise<string>,
-): (data: any, ...args: Array<string>) => Promise<string> {
+): (data: any, ...args: Array<string | number>) => Promise<string> {
   return async (data: any, ...args: Array<any>): Promise<string> => {
     const context: ComponentContext = {
       ...getThemeFromSite(data.site),
@@ -133,8 +133,9 @@ function getContextFromResources(
 export const renderHome = getContextFromResources(async function renderHome(
   context: ComponentContext,
   resources: any,
+  page: number,
 ): Promise<string> {
-  context.pagination = resources.episodes;
+  context.pagination = {page, ...resources.episodes};
   return frame(
     render(
       context,
@@ -151,10 +152,16 @@ export const renderHome = getContextFromResources(async function renderHome(
     ),
     context.data,
     {
+      urlPath: resources.episodes.page === 1 ? '/' : `/?page=${page}`,
       context,
+      title: resources.site.podcast.name,
       headExtra: `
-        <meta name="twitter:title" content="${escapeHTML(
-          resources.site.podcast.name,
+        <meta property="og:type" content="website">
+        <meta property="og:description" content="${escapeHTML(
+          resources.site.podcast.description,
+        )}">
+        <meta property="og:image" content="${escapeHTML(
+          resources.site.podcast.cover_image,
         )}">
         <meta name="twitter:description" content="${escapeHTML(
           resources.site.podcast.description,
@@ -185,18 +192,25 @@ export const renderEpisode = getContextFromResources(
       ),
       context.data,
       {
+        urlPath: `/episode/${resources.episode.id}`,
         context,
         headExtra: `
+        <meta property="og:type" content="article">
+        <meta property="og:description" content="${escapeHTML(
+          resources.episode.subtitle || resources.episode.description_raw,
+        )}">
+        <meta property="og:image" content="${escapeHTML(
+          resources.episode.image_url,
+        )}">
+        <meta property="article:published_time" content="${escapeHTML(
+          resources.episode.publish,
+        )}">
         <link rel="alternate" type="application/json+oembed"
           href="https://pinecast.com/services/oembed.json?url=${encodeURIComponent(
             `https://pinecast.com/listen/${resources.episode.id}`,
           )}"
           title="Pinecast oEmbed Profile">
         <meta name="twitter:card" content="player">
-        <meta name="twitter:site" content="@getpinecast">
-        <meta name="twitter:title" content="${escapeHTML(
-          resources.episode.title,
-        )}">
         <meta name="twitter:description" content="${escapeHTML(
           resources.episode.subtitle || resources.episode.description_raw,
         )}">
@@ -255,7 +269,11 @@ export const renderPage = getContextFromResources(async function renderPage(
     }
   }
   return frame(render(context, null, renderBody()), context.data, {
+    urlPath: `/${slug}`,
     context,
     title: context.data.pages[slug].title,
+    headExtra: `
+      <meta property="og:type" content="article">
+    `,
   });
 });
