@@ -21,7 +21,7 @@ export const doSave: ThunkAction<void, RootReducerType, void> = () => async (
       body: JSON.stringify(theme),
       headers: {'X-CSRFToken': csrf},
       method: 'POST',
-      url: `/sites/site_builder/editor/save/${encodeURIComponent(slug)}`,
+      url: `/sites/site_builder/editor/save/theme/${encodeURIComponent(slug)}`,
     });
   } catch (e) {
     return dispatch(

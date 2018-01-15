@@ -22,6 +22,7 @@ const ToolbarOption = styled(
     background: 'transparent',
     border: 0,
     color: isSelected ? '#8d52d1' : '#444',
+    cursor: isSelected ? null : 'pointer',
     display: 'inline-block',
     fontSize: 16,
     fontWeight: 500,

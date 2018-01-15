@@ -148,6 +148,7 @@ export default getsContext(
         {...element.props}
         {...extractProps(item, element.propPaths)}
         children={processContent(blockChildren(item, element), element)}
+        extends={element.extendsStyles}
         style={{
           display: 'block',
           fontSize: '1em',

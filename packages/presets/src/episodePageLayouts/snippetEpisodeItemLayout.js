@@ -92,7 +92,7 @@ export default {
           textContentFilter: 'raw',
 
           styles: {
-            fontSize: 16,
+            fontSize: 'var(--pageFontSize)',
           },
         },
       ],

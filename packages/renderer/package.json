@@ -17,6 +17,8 @@
     "@pinecast/sb-styles": "^1.0.0",
     "@types/koa": "^2.0.39",
     "@types/koa-router": "^7.0.22",
+    "babel-loader": "^7.1.2",
+    "babel-preset-stage-3": "^6.24.1",
     "koa": "^2.2.0",
     "koa-router": "^7.1.1"
   },

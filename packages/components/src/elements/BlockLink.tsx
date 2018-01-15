@@ -22,6 +22,7 @@ export default ({
     <Link
       {...props}
       data-link="true"
+      extends={element.extendsStyles}
       item={item}
       style={{
         display: 'block',

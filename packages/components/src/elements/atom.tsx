@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/sb-styles';
+import {merge} from '@pinecast/sb-presets';
 
 import {AbstractURL} from '../primitives';
 import {ComponentContext, getsContext} from '../componentContext';
@@ -40,6 +41,22 @@ export function prepareProps(
     }
     return acc;
   }, {});
+}
+
+function replaceVars(value: string, ctx: ComponentContext): string {
+  if (!value.includes('var(')) {
+    return value;
+  }
+
+  return replaceVars(
+    value.replace(/var\(\-\-(\w+)\)/, (_, match) => {
+      if (match === 'fixedWidthMax') {
+        return ctx.options.fixedWidthMax || '0';
+      }
+      return '0';
+    }),
+    ctx,
+  );
 }
 
 export function prepareStyle(
@@ -84,28 +101,56 @@ export function prepareStyle(
       case 'fontFamily':
         acc[cur] = ctx.fonts[style[cur]] || style[cur];
         break;
+      case 'fontSize':
+        if (style[cur] === 'var(--pageFontSize)') {
+          acc[cur] =
+            (ctx.styling && ctx.styling.page && ctx.styling.page.fontSize) ||
+            16;
+        } else {
+          acc[cur] = style[cur];
+        }
+        break;
       default:
+        if (typeof style[cur] === 'string') {
+          acc[cur] = replaceVars(style[cur], ctx);
+          break;
+        }
         acc[cur] = style[cur];
     }
     return acc;
   }, {});
 }
 
-export default elem =>
+export default (elem: string, baseStyle?: Object, baseProps?: Object) =>
   getsContext(
     (
       {
         children,
+        extends: extends_,
         item,
         style,
         ...rest,
-      }: {children?: any; item?: any; style: Object; [prop: string]: any},
+      }: {
+        children?: any;
+        extends?: Array<string>;
+        item?: any;
+        key?: string;
+        style?: CSS;
+        [prop: string]: any;
+      },
       {ctx}: {ctx: ComponentContext},
     ) => {
       const Component = styled(
         elem,
-        prepareStyle(style, ctx),
-        prepareProps(item, rest, ctx),
+        prepareStyle(
+          merge(
+            extends_ && extends_.reduce((acc, cur) => acc[cur], ctx),
+            baseStyle,
+            style,
+          ),
+          ctx,
+        ),
+        {...baseProps, ...prepareProps(item, rest, ctx), children},
       );
       return <Component>{children}</Component>;
     },

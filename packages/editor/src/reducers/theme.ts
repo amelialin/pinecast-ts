@@ -18,6 +18,7 @@ export interface PartialStylingType {
 }
 export interface PartialOptionsType {
   readonly embedtheme?: EmbedWidgetThemes;
+  readonly fixedWidthMax?: string | null;
   readonly rootFlexibleHeight?: boolean;
 }
 export interface ReducerType {
@@ -85,6 +86,13 @@ export default reduceReducers(
             return {...state, embedTheme: payload};
           }
         },
+      ),
+      actionReducer<ReducerType['options']>(
+        'theme.changePageOptions',
+        (state = undefined, {payload}: Action<any>) => ({
+          ...state,
+          ...payload,
+        }),
       ),
     ),
   }),

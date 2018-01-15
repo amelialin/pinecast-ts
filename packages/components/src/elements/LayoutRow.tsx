@@ -17,6 +17,9 @@ export default ({
   item: Object;
   style: CSS;
 }) => {
+  if (element.extendsStyles) {
+    throw new Error('Cannot extend styles on layout elements');
+  }
   const Container = atom(element.tagName || 'div');
   return (
     <Container

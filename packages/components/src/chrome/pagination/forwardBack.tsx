@@ -32,7 +32,7 @@ export default getsContext(
                 {...ctx.styling.buttons}
                 href={
                   ctx.url('home') +
-                  (ctx.pagination.page !== 2
+                  (ctx.pagination.page - 1 !== 1
                     ? `?page=${ctx.pagination.page - 1}`
                     : '')
                 }
@@ -52,7 +52,7 @@ export default getsContext(
                 style={{
                   marginBottom: '0.5em',
                   marginLeft: ctx.pagination.has_previous ? '0.5em' : null,
-                  marginRight: ctx.pagination.has_previous ? '0.5em' : null,
+                  // marginRight: ctx.pagination.has_previous ? '0.5em' : null,
                 }}
               >
                 {layout.nextText}

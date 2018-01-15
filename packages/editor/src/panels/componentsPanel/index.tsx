@@ -16,17 +16,10 @@ import {colorKeyNames} from '../../constants';
 import ColorPicker from '../ColorPicker';
 import {EmbedWidgetThemes} from '../../reducers/theme';
 import Label from '../../common/Label';
-import {
-  PanelDescription,
-  PanelDivider,
-  PanelHeader,
-  PanelSection,
-  PanelWrapper,
-} from '../common';
+import PageStyles from './PageStyles';
+import {PanelDescription, PanelHeader, PanelWrapper} from '../common';
 import RadioList from '../../common/RadioList';
-import Range from '../../common/Range';
 import {ReducerType} from '../../reducer';
-import TextInput from '../../common/TextInput';
 import Tabs, {Tab} from '../../common/Tabs';
 
 const ButtonStyleWrapper = styled('div', {
@@ -72,9 +65,7 @@ const ComponentsPanel = ({
   changeEmbedWidget,
   changePageStyle,
   currentForeground,
-  options,
   presetButtonStyle,
-  styling,
   theme,
 }: {
   colorButtons: string;
@@ -84,17 +75,11 @@ const ComponentsPanel = ({
   changePageStyle: ((style: primitives.PageStyle) => void);
   currentForeground: string;
   presetButtonStyle: React.CSSProperties;
-  styling: {
-    buttons: primitives.ButtonStyling;
-    page: primitives.PageStyle;
-  };
-  options: {
-    embedTheme?: EmbedWidgetThemes;
-    rootFlexibleHeight?: boolean;
-  };
-  theme: Object;
+  theme: any;
 }) => {
-  const paddingValue = String((styling.page && styling.page.padding) || '0 0');
+  const paddingValue = String(
+    (theme.styling.page && theme.styling.page.padding) || '0 0',
+  );
   const [verticalPadding, horizontalPadding] = paddingValue.split(' ', 2);
 
   const {amount: vertAmount, unit: vertUnit} = parsePadding(verticalPadding);
@@ -110,50 +95,13 @@ const ComponentsPanel = ({
       </PanelDescription>
       <Tabs>
         <Tab name="Page body">
-          <Label text={`Horizontal padding (${units[horizUnit]})`}>
-            <Range
-              min={0}
-              max={101}
-              onChange={value => {
-                changePageStyle({
-                  padding: formatPadding(
-                    value,
-                    horizUnit,
-                    vertAmount,
-                    vertUnit,
-                  ),
-                });
-              }}
-              value={horizAmount}
-            />
-          </Label>
-          <Label text={`Vertical padding (${units[vertUnit]})`}>
-            <Range
-              min={0}
-              max={101}
-              onChange={value => {
-                changePageStyle({
-                  padding: formatPadding(
-                    horizAmount,
-                    horizUnit,
-                    value,
-                    vertUnit,
-                  ),
-                });
-              }}
-              value={vertAmount}
-            />
-          </Label>
-          <PanelDivider />
-          <Label text={`Vertical padding (${units[vertUnit]})`}>
-            <TextInput onChange={console.log} value="" />
-          </Label>
+          <PageStyles />
         </Tab>
 
         <Tab name="Buttons">
           <ButtonStyleWrapper style={{backgroundColor: currentForeground}}>
             <ButtonPreview
-              preset={{name: 'Current style', style: styling.buttons}}
+              preset={{name: 'Current style', style: theme.styling.buttons}}
               style={{marginRight: 0, marginBottom: 0}}
               theme={theme}
             />
@@ -197,7 +145,7 @@ const ComponentsPanel = ({
               ),
             }}
             onChange={changeEmbedWidget}
-            value={options.embedTheme || 'minimal'}
+            value={theme.options.embedTheme || 'minimal'}
           />
         </Tab>
       </Tabs>
@@ -220,14 +168,6 @@ export default connect(
         (theme.colors && theme.colors.foreground) ||
         presetTheme.colors.foreground,
       presetButtonStyle: presetTheme.styling.buttons,
-      styling: {
-        ...(presetTheme.styling as any),
-        ...theme.styling,
-      },
-      options: {
-        ...(presetTheme.options as any),
-        ...theme.options,
-      },
       theme: {
         ...presetTheme,
         colors: {
@@ -237,6 +177,20 @@ export default connect(
         fonts: {
           ...presetTheme.fonts,
           ...theme.fonts,
+        },
+        options: {
+          ...presetTheme.options,
+          ...theme.options,
+        },
+        styling: {
+          buttons: {
+            ...(presetTheme.styling && presetTheme.styling.buttons),
+            ...(theme.styling && theme.styling.buttons),
+          },
+          page: {
+            ...(presetTheme.styling && presetTheme.styling.page),
+            ...(theme.styling && theme.styling.page),
+          },
         },
       },
     };

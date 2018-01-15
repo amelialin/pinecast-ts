@@ -1,33 +1,22 @@
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
-
+import atom from '../../elements/atom';
 import {backgroundImage} from '../../styleMixins';
-import {ElementLayout, Link, Page, TextStyle} from '../../primitives';
+import {ElementLayout, Link, Page} from '../../primitives';
 import {ComponentContext, getsContext} from '../../componentContext';
 import {formatColor} from '../../helpers';
 import {MountProvider} from '../mounts';
 import renderElements from '../../elements';
 import TextRenderer from '../../common/text';
 
-const Divider = styled('span', {
+const Divider = atom('span', {
   display: 'inline-block',
   marginRight: 15,
 });
 
-const Link = styled(
-  'a',
-  {
-    fontSize: 14,
-    marginRight: 15,
-    textDecoration: 'none',
-
-    ':hover': {
-      textDecoration: 'underline',
-    },
-  },
-  {'data-link': 'true'},
-);
+const linkStyle = {
+  marginRight: 15,
+};
 
 type includeableType = 'links' | 'pages';
 type includedTypes =
@@ -46,7 +35,6 @@ export default getsContext(
     }: {
       layout: {
         divider?: dividerStyle;
-        textStyle: TextStyle;
         includes: includedTypes;
       };
       template: ElementLayout;
@@ -62,26 +50,30 @@ export default getsContext(
             if (type === 'links') {
               linkEls = ctx.data.links.map(
                 (link: Link, i: number): JSX.Element => (
-                  <Link
+                  <TextRenderer
+                    content={link.title}
+                    data-link="true"
+                    element="a"
+                    extends={ctx.textStyles.navigationLinks}
                     href={link.url}
                     key={`link:${i}`}
-                    style={{color: formatColor(layout.textStyle.color, ctx)}}
-                  >
-                    <TextRenderer {...layout.textStyle} content={link.title} />
-                  </Link>
+                    style={linkStyle}
+                  />
                 ),
               );
             } else {
               linkEls = Object.values(
                 ctx.data.pages,
               ).map((page: Page): JSX.Element => (
-                <Link
+                <TextRenderer
+                  content={page.title}
+                  data-link="true"
+                  element="a"
+                  extends={ctx.textStyles.navigationLinks}
                   href={ctx.url('page', {slug: page.slug})}
                   key={`page:${page.slug}`}
-                  style={{color: formatColor(layout.textStyle.color, ctx)}}
-                >
-                  <TextRenderer {...layout.textStyle} content={page.title} />
-                </Link>
+                  style={linkStyle}
+                />
               ));
             }
             if (!layout.divider || layout.divider === 'none') {
@@ -90,7 +82,7 @@ export default getsContext(
             let divChar: string;
             switch (layout.divider) {
               case 'bullet':
-                divChar = '•';
+                divChar = '·';
                 break;
               case 'dash':
                 divChar = '—';

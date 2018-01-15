@@ -28,19 +28,8 @@ export interface PageLayout {
 
 export interface PageStyle {
   backgroundColor: string;
+  fontSize: number;
   padding: string;
-}
-
-export interface TextStyle {
-  color: string;
-  decoration?: 'underline' | 'none';
-  font?: string;
-  size?: number; // in px
-  transform?: 'none' | 'uppercase' | 'lowercase';
-  weight?: 100 | 200 | 300 | 400 | 500 | 600;
-}
-export interface Text extends TextStyle {
-  content: string;
 }
 
 export interface Image {
@@ -79,6 +68,7 @@ export type AbstractURL = {
 };
 export interface StyleableElement {
   elementOptions?: {[option: string]: any};
+  extendsStyles?: Array<string>;
   props?: {
     href?: AbstractURL;
     [prop: string]: any;
@@ -161,6 +151,4 @@ export interface Paginatable {
   has_previous: boolean;
   has_next: boolean;
   has_other_pages: boolean;
-  next_page_number: number;
-  previous_page_number: number;
 }

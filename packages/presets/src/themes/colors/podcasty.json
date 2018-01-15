@@ -1,0 +1,11 @@
+{
+  "background": "#ddd",
+  "secondaryBackground": "#fff",
+  "accent": "#222",
+  "text": "#444",
+  "buttons": "#c0392b",
+  "buttonsText": "#fff",
+  "foreground": "#ddd",
+  "links": "#c0392b",
+  "secondaryAccent": "#bbb"
+}

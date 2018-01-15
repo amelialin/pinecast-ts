@@ -11,6 +11,7 @@ import Select from './common/Select';
 
 const UTIL_PAGE_HEAD = `
 <head>
+  <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500" rel="stylesheet">
   <style>
     body, html {
       align-items: center;
@@ -20,6 +21,27 @@ const UTIL_PAGE_HEAD = `
       height: 100%;
       justify-content: center;
       text-align: center;
+    }
+    body {padding: 0; margin: 0; font-family: Fira Mono, Helvetica, Arial, sans-serif;}
+    .btn {
+      display: inline-block;
+      background: #fff;
+      border-radius: 3px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 5px 12px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(60, 60, 60, 0.15);
+      color: #000;
+      font-size: 13px;
+      font-weight: 500;
+      height: 30px;
+      line-height: 30px;
+      padding: 0px 15px;
+      text-decoration: none;
+      transition: box-shadow 0.2s;
+    }
+    .btn:hover {
+      box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2), 0 8px 17px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(60, 60, 60, 0.15);
+    }
+    .btn:active {
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 5px 17px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(60, 60, 60, 0.15);
     }
   </style>
 </head>
@@ -37,6 +59,9 @@ const PAGE_404 = `
   ${UTIL_PAGE_HEAD}
   <body>
     <p>That page was not found.</p>
+    <a class="btn" href="#" onclick="window.frameElement.__handler('/?_=' + Math.random()); return false;">
+      Return home…
+    </a>
   </body>
 </html>
 `;
@@ -50,6 +75,7 @@ const Wrapper = styled('div', {
   flexDirection: 'column',
   height: '100%',
   justifyContent: 'center',
+  overflow: 'hidden',
   paddingTop: 40,
   position: 'relative',
 });

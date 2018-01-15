@@ -1,12 +1,9 @@
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
-
+import atom from '../elements/atom';
 import {ComponentContext, getsContext} from '../componentContext';
-import {ButtonStyle} from '../primitives';
-import {prepareStyle} from '../elements/atom';
 
-const Button = styled(
+const Button = atom(
   'a',
   {
     border: 0,
@@ -23,14 +20,14 @@ export default getsContext(
     props: {href: string; children?: any; style?: Object},
     {ctx}: {ctx: ComponentContext},
   ) => {
-    const buttonStyle = ctx.styling.buttons || ({} as ButtonStyle);
     return (
       <Button
         href={props.href}
         style={{
-          backgroundColor: ctx.colors.buttons || 'transparent',
-          color: ctx.colors.buttonsText || '#000',
-          ...prepareStyle({...buttonStyle, ...props.style}, ctx),
+          backgroundColor: 'buttons',
+          color: 'buttonsText',
+          ...(ctx.styling && ctx.styling.buttons),
+          ...props.style,
         }}
       >
         {props.children}

@@ -19,6 +19,9 @@ export default ({
   item: Object;
   style: Object;
 }) => {
+  if (element.extendsStyles) {
+    throw new Error('Cannot extend styles on fixed wrappers');
+  }
   const OuterWrapper = atom(element.tagName || 'div');
   const InnerWrapper = atom(getEO(element, 'innerTagName', 'div'));
 
@@ -30,7 +33,7 @@ export default ({
       style={{
         ...style,
         backgroundColor: getEO(element, 'bgColor'),
-        padding: getEO(element, 'outerPadding') || '0 15px',
+        padding: getEO(element, 'outerPadding'),
       }}
     >
       <InnerWrapper

@@ -3,7 +3,7 @@ export default ({contents}) => ({
   tag_name: 'article',
   styles: {
     backgroundColor: 'secondaryBackground',
-    maxWidth: 960,
+    maxWidth: 'var(--fixedWidthMax)',
     marginBottom: 50,
     marginLeft: 'auto',
     marginRight: 'auto',

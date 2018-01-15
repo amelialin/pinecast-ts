@@ -27,6 +27,9 @@ export default getsContext(
     },
     {ctx}: {ctx: ComponentContext},
   ) => {
+    if (element.extendsStyles) {
+      throw new Error('Cannot extend styles on embed player');
+    }
     const Container = atom('iframe');
     const props: {src?: string; [prop: string]: any} = {
       ...element.props,

@@ -51,7 +51,7 @@ export default class Range extends React.Component {
     if (!this.range) {
       return;
     }
-    this.range.value = newProps.value;
+    this.range.value = String(newProps.value);
   }
 
   handleInteraction = () => {

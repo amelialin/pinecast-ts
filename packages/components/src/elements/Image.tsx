@@ -28,6 +28,9 @@ export default ({
   item: Object;
   style: CSS;
 }) => {
+  if (element.extendsStyles) {
+    throw new Error('Cannot extend styles on image');
+  }
   const props: {src?: string; alt?: string; [prop: string]: any} = {
     ...element.props,
     ...extractProps(item, element.propPaths),

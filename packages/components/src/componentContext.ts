@@ -1,5 +1,7 @@
 import * as PropTypes from 'prop-types';
 
+import {CSS} from '@pinecast/sb-styles';
+
 import * as primitives from './primitives';
 
 export interface ComponentContext {
@@ -8,6 +10,17 @@ export interface ComponentContext {
     logo: string;
     headings: string;
     body: string;
+  };
+  textStyles: {
+    logo: CSS;
+    subtitle: CSS;
+    pageHeading: CSS;
+    navigationLinks: CSS;
+    itemHeading: CSS;
+    itemSubtitle: CSS; // Prominent sub-title on an inline item
+    itemSecondary: CSS; // Less prominent metadata on an inline item
+    itemSummary: CSS;
+    footerText: CSS; // Copyright, etc.
   };
   resources: {[key: string]: string};
   data: {
@@ -39,6 +52,7 @@ export interface ComponentContext {
   };
   options: {
     embedTheme?: 'minimal' | 'thick' | 'slim';
+    fixedWidthMax?: string | null;
     rootFlexibleHeight?: boolean;
     defaultConsumeCount: number;
   };

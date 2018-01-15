@@ -3,16 +3,13 @@ import * as React from 'react';
 import {CSS} from '@pinecast/sb-styles';
 
 import atom from '../../elements/atom';
-import {
-  ElementLayout,
-  Link as LinkType,
-  Page,
-  TextStyle,
-} from '../../primitives';
+import {ElementLayout, Link as LinkType, Page} from '../../primitives';
 import {ComponentContext, getsContext} from '../../componentContext';
 import {MountProvider} from '../mounts';
 import renderElements from '../../elements';
 import TextRenderer from '../../common/text';
+
+const Link = atom('a');
 
 export default getsContext(
   (
@@ -23,15 +20,12 @@ export default getsContext(
       layout: {
         linkStyle: CSS;
         linkHoverStyle: CSS;
-        textStyle?: TextStyle;
       };
       template: ElementLayout;
     },
     {ctx}: {ctx: ComponentContext},
   ) => {
-    const Link = atom('a');
     const linkStyles = {
-      color: layout.textStyle && layout.textStyle.color,
       ...layout.linkStyle,
       ':hover': layout.linkHoverStyle,
     };
@@ -41,39 +35,29 @@ export default getsContext(
         mounts={{
           siteLinks: ctx.data.links.map(
             (link: LinkType, i: number): JSX.Element => (
-              <Link
+              <TextRenderer
+                content={link.title}
                 data-link="true"
+                element="a"
+                extends={ctx.textStyles.navigationLinks}
                 href={link.url}
                 key={`link:${i}`}
-                linkHoverStyle={layout.linkHoverStyle}
-                linkStyle={layout.linkStyle}
                 style={linkStyles}
-              >
-                <TextRenderer
-                  color={linkStyles.color}
-                  {...layout.textStyle}
-                  content={link.title}
-                />
-              </Link>
+              />
             ),
           ),
           pageLinks: Object.values(
             ctx.data.pages,
           ).map((page: Page): JSX.Element => (
-            <Link
+            <TextRenderer
+              content={page.title}
               data-link="true"
+              element="a"
+              extends={ctx.textStyles.navigationLinks}
               href={ctx.url('page', {slug: page.slug})}
               key={`page:${page.slug}`}
-              linkHoverStyle={layout.linkHoverStyle}
-              linkStyle={layout.linkStyle}
               style={linkStyles}
-            >
-              <TextRenderer
-                color={linkStyles.color}
-                {...layout.textStyle}
-                content={page.title}
-              />
-            </Link>
+            />
           )),
           subLinks: [
             ['Apple Podcasts', ctx.data.site.itunes_url],
@@ -83,22 +67,17 @@ export default getsContext(
           ]
             .filter(x => x[1])
             .map(([name, url]: [string, string]): JSX.Element => (
-              <Link
+              <TextRenderer
+                content={name}
                 data-link="true"
+                element="a"
+                extends={ctx.textStyles.navigationLinks}
                 href={url}
                 key={`page:${url}`}
-                linkHoverStyle={layout.linkHoverStyle}
-                linkStyle={layout.linkStyle}
                 rel="noopener noreferrer"
                 style={linkStyles}
                 target="_blank"
-              >
-                <TextRenderer
-                  color={linkStyles.color}
-                  {...layout.textStyle}
-                  content={name}
-                />
-              </Link>
+              />
             )),
         }}
       />

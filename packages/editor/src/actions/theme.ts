@@ -21,3 +21,6 @@ export const changeEmbedWidget = actionFactory<EmbedWidgetThemes>(
 export const changePageStyle = actionFactory<primitives.PageStyle>(
   'theme.changePageStyle',
 );
+export const changePageOptions = actionFactory<ReducerType['options']>(
+  'theme.changePageOptions',
+);

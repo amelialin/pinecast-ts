@@ -4,7 +4,7 @@ export default ({contents}) => ({
       type: 'layout.fixedWrapper',
       elementOptions: {
         fgColor: 'secondaryBackground',
-        maxWidth: 960,
+        maxWidth: 'var(--fixedWidthMax)',
       },
       children: contents,
       styles: {

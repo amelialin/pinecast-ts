@@ -49,28 +49,6 @@ function getItemSource<T>(items: Array<T>): ItemSourceContext<T> {
   };
 }
 
-function merge(base: Object, extension: Object): any {
-  if (base === extension) {
-    return base;
-  }
-  const result = {...base};
-  Object.entries(extension).forEach(([key, val]) => {
-    if (
-      !(key in result) ||
-      typeof val !== 'object' ||
-      typeof result[key] !== 'object' ||
-      Array.isArray(result[key]) ||
-      Array.isArray(val)
-    ) {
-      result[key] = val;
-      return;
-    }
-
-    result[key] = merge(result[key], val);
-  });
-  return result;
-}
-
 const themeCache = new WeakMap();
 
 function buildTheme(
@@ -87,7 +65,7 @@ function buildTheme(
   }
   const preset = presets.themes[themeObj.$type || themeName];
 
-  const out = merge(
+  const out = presets.merge(
     {
       options: {},
       styling: {},
@@ -124,7 +102,6 @@ function getContextFromResources(
       },
 
       url: route,
-      pagination: data.episodes,
     };
     return func(context, data, ...args);
   };

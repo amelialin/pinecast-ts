@@ -1,40 +1,27 @@
+import baseTheme from './_base';
 import macroWrapper from '../wrappers/macro';
 import snippetEpisodeItemLayout from '../episodePageLayouts/snippetEpisodeItemLayout';
 import snippetEpisodePostLayout from '../itemLayouts/snippetEpisodePostLayout';
 import header from '../components/header-minimal';
 import paginationForwardBack from '../components/pagination-forwardBack';
 
+import * as colors from './colors/clarity.json';
+
 export default {
-  colors: {
-    background: '#fff',
-    secondaryBackground: '#fff',
-    accent: '#0747A6',
-    text: '#8993A4',
-    buttons: '#0052CC',
-    buttonsText: '#fff',
-
-    foreground: '#fff',
-    links: '#0065FF',
-
-    secondaryAccent: '#FFAB00',
-  },
+  ...baseTheme,
+  colors,
   fonts: {
     logo: 'Archivo',
     headings: 'Archivo',
     body: 'Archivo',
   },
   styling: {
-    buttons: {
-      borderRadius: 3,
-      boxShadow: '0 2px 0.5px rgba(0, 0, 0, 0.15)',
-      padding: '0.5em 1em',
-      fontSize: 20,
-    },
+    ...baseTheme.styling,
     page: {
       backgroundColor: 'background',
       backgroundImage:
         'linear-gradient(90deg, var(--color-accent), var(--color-accent) 40px, transparent 40px)',
-      fontSize: 12,
+      fontSize: 14,
       padding: '0 20%',
 
       '@media (max-width: 700px)': {
@@ -44,34 +31,35 @@ export default {
       },
     },
   },
-  options: {
-    rootFlexibleHeight: true,
-    defaultConsumeCount: 10,
+  textStyles: {
+    ...baseTheme.textStyles,
+    logo: {
+      ...baseTheme.textStyles.logo,
+      color: 'accent',
+      fontFamily: 'logo',
+      fontSize: 50,
+    },
+    navigationLinks: {
+      ...baseTheme.textStyles.navigationLinks,
+      borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+      color: 'text',
+      display: 'inline-block',
+      fontSize: 18,
+      lineHeight: '1.5em',
+      marginRight: 20,
+      whiteSpace: 'nowrap',
+
+      ':last-child': {
+        borderBottom: '0',
+      },
+    },
   },
 
   layout: {
     header: [
       {
         type: 'links.linkMount',
-        layout: {
-          linkStyle: {
-            borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-            color: 'text',
-            display: 'inline-block',
-            fontSize: 18,
-            lineHeight: '1.5em',
-            marginRight: 20,
-            textDecoration: 'none',
-            whiteSpace: 'nowrap',
-
-            ':hover': {
-              textDecoration: 'underline',
-            },
-            ':last-child': {
-              borderBottom: '0',
-            },
-          },
-        },
+        layout: {},
         template: {
           elements: [
             {
@@ -82,9 +70,6 @@ export default {
           tagName: 'nav',
           styles: {
             margin: '30px 0',
-            // '@media (max-width: 700px)': {
-            //   margin: '30px 0',
-            // },
           },
         },
         tag: 'header.pageLinkList',
@@ -108,7 +93,6 @@ export default {
             consumeCount: -1,
 
             alignment: 'center',
-            width: 960,
 
             elementLayout: snippetEpisodePostLayout,
           },
@@ -133,7 +117,6 @@ export default {
               textContent: ['body'],
               textContentFilter: 'markdown',
               styles: {
-                fontSize: 16,
                 lineHeight: 24,
               },
             },

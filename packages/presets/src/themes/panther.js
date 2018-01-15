@@ -1,43 +1,31 @@
+import baseTheme from './_base';
 import slabBody from '../wrappers/slabBody';
 import slabEpisodeItemLayout from '../episodePageLayouts/slabEpisodeItemLayout';
 import slabEpisodePostLayout from '../itemLayouts/slabEpisodePostLayout';
 import headerCenteredFixed from '../components/header-centeredFixed';
 import paginationForwardBackFixed from '../components/pagination-forwardBack-fixed';
 
+import * as colors from './colors/panther.json';
+
 export default {
-  colors: {
-    background: '#34495e',
-    secondaryBackground: '#fcfaff',
-    accent: '#27ae60',
-    text: '#000',
-    buttons: '#c0392b',
-    buttonsText: '#fff',
-
-    foreground: '#fff',
-    links: '#d35400',
-
-    secondaryAccent: '#d35400',
-  },
+  ...baseTheme,
+  colors,
   fonts: {
     logo: 'Lobster',
     headings: 'Lato',
     body: 'Lato',
   },
   styling: {
-    buttons: {
-      borderRadius: 3,
-      boxShadow: '0 2px 0.5px rgba(0, 0, 0, 0.15)',
-      padding: '0.5em 1em',
-      fontSize: 20,
-    },
+    ...baseTheme.styling,
     page: {
       backgroundColor: 'background',
       fontSize: 12,
-      padding: '40px 0',
+      padding: '40px 15px',
     },
   },
   options: {
-    defaultConsumeCount: 10,
+    ...baseTheme.options,
+    fixedWidthMax: '960px',
   },
 
   layout: {
@@ -68,7 +56,7 @@ export default {
             {
               type: 'layout.fixedWrapper',
               elementOptions: {
-                maxWidth: 960,
+                maxWidth: 'var(--fixedWidthMax)',
               },
               children: [
                 {
@@ -151,7 +139,8 @@ export default {
             consumeCount: -1,
 
             alignment: 'center',
-            width: 960,
+            fgColor: 'secondaryBackground',
+            width: 'var(--fixedWidthMax)',
 
             elementLayout: slabEpisodePostLayout,
           },

@@ -76,7 +76,6 @@ export default {
       },
 
       styles: {
-        fontSize: 16,
         lineHeight: 20,
         margin: '20px 0 0',
       },
@@ -100,7 +99,6 @@ export default {
       },
       styles: {
         color: 'secondaryAccent',
-        fontSize: 16,
         marginTop: 15,
 
         ':hover': {

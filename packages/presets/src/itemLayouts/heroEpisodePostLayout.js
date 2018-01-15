@@ -68,7 +68,8 @@ export default (
           elementOptions: {
             bgColor: 'rgba(0, 0, 0, 0.5)',
             innerPadding: '50px 0 30px',
-            maxWidth: 960,
+            maxWidth: 'var(--fixedWidthMax)',
+            outerPadding: '0 15px',
           },
         },
       ],

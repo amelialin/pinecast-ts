@@ -1,50 +1,88 @@
 import baseTheme from './_base';
-import cardBody from '../wrappers/cardBody';
-import cardEpisodeItemLayout from '../episodePageLayouts/cardEpisodeItemLayout';
-import headerCentered from '../components/header-centered';
-import linksLinkBar from '../components/links-linkBar';
-import paginationForwardBack from '../components/pagination-forwardBack';
 import simpleEpisodeTileLayout from '../itemLayouts/simpleEpisodeTileLayout';
-import subheaderSubscribeLinks from '../components/subheader-subscribeLinks';
-import textWrappedText from '../components/text-wrappedText';
+import macroWrapper from '../wrappers/macro';
+import snippetEpisodeItemLayout from '../episodePageLayouts/snippetEpisodeItemLayout';
+import snippetEpisodePostLayout from '../itemLayouts/snippetEpisodePostLayout';
+import header from '../components/header-minimal';
+import paginationForwardBack from '../components/pagination-forwardBack';
 
-import * as colors from './colors/zen.json';
+import * as colors from './colors/smooth.json';
 
 export default {
   ...baseTheme,
   colors,
   fonts: {
-    logo: 'Righteous',
-    headings: 'Lato',
-    body: 'Lato',
+    logo: 'Raleway',
+    headings: 'Inconsolata',
+    body: 'Inconsolata',
   },
   styling: {
     buttons: {
-      borderRadius: 3,
-      boxShadow: '0 2px 0.5px rgba(0, 0, 0, 0.15)',
+      borderRadius: 4,
+      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1)',
       padding: '0.5em 1em',
-      fontSize: 20,
+      fontSize: 16,
     },
     page: {
       backgroundColor: 'background',
       fontSize: 14,
-      padding: '0',
+      padding: '80px 30px',
     },
-  },
-  options: {
-    ...baseTheme.options,
-    fixedWidthMax: '960px',
   },
 
   layout: {
-    header: [headerCentered({content: 'text'}), subheaderSubscribeLinks()],
+    header: [
+      header({
+        content: 'text',
+        showSubtitle: true,
+        subtitleStyle: {
+          color: 'secondaryAccent',
+          fontWeight: 500,
+        },
+        titleStyle: {fontWeight: 600},
+      }),
+      {
+        type: 'links.linkMount',
+        layout: {
+          linkStyle: {
+            borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+            color: 'text',
+            display: 'inline-block',
+            fontSize: 18,
+            lineHeight: '1.5em',
+            marginRight: 20,
+            textDecoration: 'none',
+            whiteSpace: 'nowrap',
+
+            ':hover': {
+              textDecoration: 'underline',
+            },
+            ':last-child': {
+              borderBottom: '0',
+            },
+          },
+        },
+        template: {
+          elements: [
+            {
+              type: 'mount',
+              props: {mount: 'pageLinks'},
+            },
+          ],
+          tagName: 'nav',
+          styles: {
+            margin: '30px 0',
+          },
+        },
+        tag: 'header.pageLinkList',
+        tagMetadata: {},
+      },
+    ],
     footer: [
       paginationForwardBack({
-        nextText: 'Back in time',
-        previousText: 'Onward to the Future',
+        nextText: 'Older',
+        previousText: 'Newer',
       }),
-      linksLinkBar({includes: ['pages', 'links']}),
-      textWrappedText({text: ['podcast', 'copyright']}),
     ],
 
     body: {
@@ -53,48 +91,48 @@ export default {
         segments: [
           {
             type: 'grid',
-            consumeCount: -1,
+            consumeCount: 6,
 
             alignment: 'center',
-            itemSpacing: 30,
-            maxItemsAcross: 3,
-            padding: 0,
 
             elementLayout: simpleEpisodeTileLayout,
           },
         ],
       },
-      episode: cardEpisodeItemLayout,
+      episode: snippetEpisodeItemLayout,
       page: {
-        markdown: cardBody({
+        markdown: macroWrapper({
           contents: [
             {
               type: 'block.text',
               tag_name: 'h1',
               textContent: ['title'],
               styles: {
-                fontSize: 26,
-                fontWeight: 'bold',
-                textAlign: 'center',
+                color: 'accent',
+                fontSize: 30,
+                marginBottom: 20,
               },
             },
             {
               type: 'block.text',
               textContent: ['body'],
               textContentFilter: 'markdown',
+              styles: {
+                lineHeight: 24,
+              },
             },
           ],
         }),
-        contact: cardBody({
+        contact: macroWrapper({
           contents: [
             {
               type: 'block.text',
               tag_name: 'h1',
               textContent: ['title'],
               styles: {
-                fontSize: 26,
-                fontWeight: 'bold',
-                textAlign: 'center',
+                color: 'accent',
+                fontSize: 30,
+                marginBottom: 20,
               },
             },
             {
@@ -118,16 +156,16 @@ export default {
             },
           ],
         }),
-        hosts: cardBody({
+        hosts: macroWrapper({
           contents: [
             {
               type: 'block.text',
               tag_name: 'h1',
               textContent: ['title'],
               styles: {
-                fontSize: 26,
-                fontWeight: 'bold',
-                textAlign: 'center',
+                color: 'accent',
+                fontSize: 30,
+                marginBottom: 20,
               },
             },
             {

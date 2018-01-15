@@ -1,10 +1,9 @@
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
+import {CSS} from '@pinecast/sb-styles';
 
+import atom from '../elements/atom';
 import {ComponentContext, getsContext} from '../componentContext';
-import {formatColor} from '../helpers';
-import {Text, TextStyle} from '../primitives';
 
 function getContent(token: string, ctx: ComponentContext): string {
   switch (token.substr(1)) {
@@ -20,35 +19,29 @@ function getContent(token: string, ctx: ComponentContext): string {
   return token;
 }
 
-const Span = styled('span');
-
-export function computeTextStyle(textStyle: TextStyle, ctx: ComponentContext) {
-  return {
-    color: formatColor(textStyle.color, ctx),
-    fontFamily: (textStyle.font && ctx.fonts[textStyle.font]) || ctx.fonts.body,
-    fontSize: textStyle.size,
-    fontWeight: textStyle.weight || 400,
-    textTransform: textStyle.transform,
-  };
-}
-
 export default getsContext(
-  (props: Text & {style?: Object}, {ctx}: {ctx: ComponentContext}) => (
-    <Span
-      style={{
-        ...computeTextStyle(
-          {
-            color: 'text',
-            ...props,
-          } as TextStyle,
-          ctx,
-        ),
-        ...props.style,
-      }}
-    >
-      {props.content[0] === '$'
-        ? getContent(props.content, ctx)
-        : props.content}
-    </Span>
-  ),
+  (
+    props: {
+      content: string;
+      style?: CSS;
+      element?: string;
+      extends?: CSS;
+      [key: string]: any;
+    },
+    {ctx}: {ctx: ComponentContext},
+  ) => {
+    const {content, element, extends: extends_, style, ...rest} = props;
+    const Span = atom(element || 'span');
+    return (
+      <Span
+        {...rest}
+        style={{
+          ...extends_,
+          ...style,
+        }}
+      >
+        {content[0] === '$' ? getContent(content, ctx) : content}
+      </Span>
+    );
+  },
 );

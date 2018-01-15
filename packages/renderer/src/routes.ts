@@ -85,7 +85,7 @@ export const routes: {[route: string]: Route} = {
       const episodes = await data.getEpisodes(
         siteHostname,
         // offset
-        page === 1 ? 0 : firstPageExtraCount + page * normalPageCount,
+        page === 1 ? 0 : firstPageExtraCount + (page - 1) * normalPageCount,
         page === 1 ? firstPageExtraCount + normalPageCount : normalPageCount,
       );
       return rendering.renderHome({site, episodes}, page);
@@ -133,8 +133,9 @@ export function route(name: string, params: {[name: string]: string}): string {
 }
 
 export function match(url: string): [Route, RequestURLParams] | null {
+  const noQueryURL = url.includes('?') ? url.substr(0, url.indexOf('?')) : url;
   for (const [name, route] of Object.entries(routes)) {
-    const params = route.match(url);
+    const params = route.match(noQueryURL);
     if (!params) {
       continue;
     }

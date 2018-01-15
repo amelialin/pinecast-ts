@@ -30,7 +30,7 @@ export default ({
             bgColor: 'secondaryAccent',
             fgColor: 'secondaryAccent',
             innerPadding: '40px 0',
-            maxWidth: 960,
+            maxWidth: 'var(--fixedWidthMax)',
           },
           elementOptions,
         ),

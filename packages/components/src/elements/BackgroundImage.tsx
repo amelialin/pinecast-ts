@@ -39,6 +39,7 @@ export default ({
   return (
     <ImageContainer
       children={blockChildren(item, element)}
+      extends={element.extendsStyles}
       item={item}
       style={styles}
     />

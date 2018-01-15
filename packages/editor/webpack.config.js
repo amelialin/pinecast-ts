@@ -27,9 +27,9 @@ module.exports = {
         loader: 'awesome-typescript-loader',
       },
       {
-        enforce: 'pre',
         test: /\.js$/,
-        loader: 'source-map-loader',
+        exclude: /node_modules/,
+        loader: 'babel-loader',
       },
       {
         test: /\.css$/,
@@ -62,7 +62,7 @@ module.exports = {
         case 'is-function':
           return callback(
             null,
-            'function(x) {return typeof x === "function";}'
+            'function(x) {return typeof x === "function";}',
           );
         case 'object.assign':
         case 'object-assign':
@@ -70,17 +70,9 @@ module.exports = {
         case 'object-keys':
           return callback(
             null,
-            '(function() {var x = Object.keys.bind(Object); x.shim = x; return x;}())'
+            '(function() {var x = Object.keys.bind(Object); x.shim = x; return x;}())',
           );
         default:
-          // if (
-          //     request[0] === '.' ||
-          //     request.includes('@pinecast') && request.search(/@pinecast\/.*\/node_modules\//) === -1 ||
-          //     context.includes('packages/components/') && request !== 'react'
-          // ) {
-          //     return callback();
-          // }
-          // console.log(context, request);
           return callback();
       }
     },

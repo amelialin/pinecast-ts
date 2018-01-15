@@ -1,3 +1,4 @@
+import baseTheme from './_base';
 import mosaicBody from '../wrappers/mosaicBody';
 import mosaicEpisodeItemLayout from '../episodePageLayouts/mosaicEpisodeItemLayout';
 import fullWidthEpisodePostLayout from '../itemLayouts/fullWidthEpisodePostLayout';
@@ -8,32 +9,18 @@ import paginationForwardBack from '../components/pagination-forwardBack';
 import subheaderSubscribeLinks from '../components/subheader-subscribeLinks';
 import textWrappedText from '../components/text-wrappedText';
 
+import * as colors from './colors/podcasty.json';
+
 export default {
-  colors: {
-    background: '#ddd',
-    secondaryBackground: '#fff',
-    accent: '#222',
-    text: '#444',
-    buttons: '#c0392b',
-    buttonsText: '#fff',
-
-    foreground: '#ddd',
-    links: '#c0392b',
-
-    secondaryAccent: '#bbb',
-  },
+  ...baseTheme,
+  colors,
   fonts: {
     logo: 'Pacifico',
     headings: 'Roboto',
     body: 'Roboto',
   },
   styling: {
-    buttons: {
-      borderRadius: 3,
-      boxShadow: '0 2px 0.5px rgba(0, 0, 0, 0.15)',
-      padding: '0.5em 1em',
-      fontSize: 20,
-    },
+    ...baseTheme.styling,
     page: {
       backgroundColor: 'background',
       fontSize: 12,
@@ -41,7 +28,8 @@ export default {
     },
   },
   options: {
-    defaultConsumeCount: 10,
+    ...baseTheme.options,
+    fixedWidthMax: '960px',
   },
 
   layout: {
@@ -61,6 +49,8 @@ export default {
         style: {
           color: 'text',
           fontSize: 18,
+          paddingLeft: 15,
+          paddingRight: 15,
         },
       }),
       linksLinkBar({
@@ -76,6 +66,8 @@ export default {
           },
         },
         style: {
+          paddingLeft: 15,
+          paddingRight: 15,
           textAlign: 'center',
         },
       }),
@@ -102,8 +94,8 @@ export default {
             consumeCount: -1,
 
             alignment: 'center',
-            padding: '30px 0 0',
-            width: 960,
+            padding: '30px 15px 0',
+            width: 'var(--fixedWidthMax)',
 
             elementLayout: fullWidthEpisodePostLayout,
           },

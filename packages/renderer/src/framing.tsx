@@ -97,7 +97,9 @@ export default async function frame(
           )}; font-family: ${escapeHTML(context.fonts.body)}; ${context.options
     .rootFlexibleHeight
     ? ''
-    : 'height: 100%; '}margin: 0; padding: 0}
+    : 'height: 100%;'}font-size: ${escapeHTML(
+    ((context.styling && context.styling.page) || {}).fontSize,
+  )}px;margin: 0; padding: 0}
           a {color: ${escapeHTML(context.colors.links)}}
         </style>
         ${styletron.getStylesheetsHtml()}
