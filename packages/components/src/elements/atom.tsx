@@ -43,12 +43,12 @@ export function prepareProps(
   }, {});
 }
 
-function replaceVars(value: string, ctx: ComponentContext): string {
+function replaceVars(value: string, ctx: ComponentContext): string | number {
   if (!value.includes('var(')) {
     return value;
   }
 
-  return replaceVars(
+  const out = replaceVars(
     value.replace(/var\(\-\-(\w+)\)/, (_, match) => {
       if (match === 'fixedWidthMax') {
         return ctx.options.fixedWidthMax || '0';
@@ -57,6 +57,11 @@ function replaceVars(value: string, ctx: ComponentContext): string {
     }),
     ctx,
   );
+
+  if (typeof out === 'string' && /^\d+$/.exec(out)) {
+    return Number(out);
+  }
+  return out;
 }
 
 export function prepareStyle(
@@ -66,7 +71,7 @@ export function prepareStyle(
   if (!style) {
     return null;
   }
-  return Object.keys(style).reduce((acc, cur) => {
+  const out = Object.keys(style).reduce((acc, cur) => {
     if (cur[0] === ':' || cur[0] === '@') {
       const restyled = prepareStyle(style[cur], ctx);
       if (cur === '@mobile') {
@@ -119,6 +124,7 @@ export function prepareStyle(
     }
     return acc;
   }, {});
+  return out;
 }
 
 export default (elem: string, baseStyle?: Object, baseProps?: Object) =>

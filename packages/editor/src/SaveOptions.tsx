@@ -85,7 +85,7 @@ class SaveOptions extends React.Component {
       return (
         <ButtonGroup>
           <Button onClick={this.handleClose}>Cancel</Button>
-          <Button autoFocus isPrimary onClick={this.handleOpen}>
+          <Button autoFocus $isPrimary onClick={this.handleOpen}>
             Retry
           </Button>
         </ButtonGroup>
@@ -122,7 +122,7 @@ class SaveOptions extends React.Component {
         </ModalLayer>
         <Button
           disabled={!needsSave}
-          isPrimary
+          $isPrimary
           shortcut={{letter: 's', metaKey: true}}
           onClick={this.handleOpen}
         >

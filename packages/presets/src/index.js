@@ -14,7 +14,7 @@ export function merge(base, extension, ...extensions) {
   if (extensions.length) {
     return extensions.reduce(
       (acc, cur) => merge(acc, cur),
-      merge(merge, extension),
+      merge(base, extension),
     );
   }
   if (!base) {

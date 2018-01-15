@@ -15,6 +15,8 @@ function wrapCtx(
   comp.displayName = `styledWrapper(${from.displayName})`;
 }
 
+const styleIdentity = ({$style}) => $style;
+
 export default function(
   elemType: string,
   props?:
@@ -23,26 +25,30 @@ export default function(
     | null,
   defaultProps?: React.HTMLProps<any>,
 ): React.StatelessComponent<any> {
+  // Basic validation
   if (elemType.toLowerCase() !== elemType) {
     throw new Error(
       `You aren't using lowercase letters for your element name. ${elemType.toLowerCase()} != ${elemType}`,
     );
   }
+
   let StyledComponent;
   if (!props) {
-    StyledComponent = styled(elemType, ({_style}) => _style);
+    StyledComponent = styled(elemType, styleIdentity);
   } else if (typeof props === 'object') {
-    StyledComponent = styled(elemType, ({_style}) => ({...props, ..._style}));
-  } else {
-    StyledComponent = styled(elemType, ({_style, ...rest}) => ({
+    StyledComponent = styled(elemType, ({$style}) => ({...props, ...$style}));
+  } else if (typeof props === 'function') {
+    StyledComponent = styled(elemType, ({$style, ...rest}) => ({
       ...props(rest),
-      ..._style,
+      ...$style,
     }));
+  } else {
+    throw new Error('Unrecognized style prop, typeof ${typeof props}');
   }
+
   StyledComponent.displayName = `styled(${elemType})`;
-  if (defaultProps) {
-    return wrapStyledComponent(StyledComponent, defaultProps);
-  }
+  StyledComponent.defaultProps = defaultProps;
+
   const out = (
     {
       style,
@@ -54,20 +60,13 @@ export default function(
     ctx: any,
   ) => {
     if (style) {
-      return <StyledComponent _style={style} {...props} />;
+      return <StyledComponent $style={style} {...props} />;
+    }
+    if (defaultProps) {
+      return StyledComponent({...defaultProps, ...props}, ctx);
     }
     return StyledComponent(props, ctx);
   };
-  wrapCtx(out, StyledComponent);
-  return out;
-}
-
-function wrapStyledComponent(
-  StyledComponent,
-  defaultProps,
-): React.StatelessComponent<any> {
-  const out: React.StatelessComponent<any> = ({style, ...innerProps}, ctx) =>
-    StyledComponent({_style: style, ...innerProps, ...defaultProps}, ctx);
   wrapCtx(out, StyledComponent);
   return out;
 }

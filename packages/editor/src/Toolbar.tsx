@@ -18,7 +18,7 @@ const Toolbar_ = styled('nav', {
 });
 const ToolbarOption = styled(
   'button',
-  ({isSelected}) => ({
+  ({'aria-selected': isSelected}) => ({
     background: 'transparent',
     border: 0,
     color: isSelected ? '#8d52d1' : '#444',
@@ -42,7 +42,7 @@ const ToolbarOption = styled(
       textShadow: isSelected ? '0 1px 2px rgba(0, 0, 0, 0.15)' : null,
     },
   }),
-  {type: 'button'},
+  {type: 'button', role: 'tab'},
 );
 
 const RHS = styled('div', {
@@ -64,7 +64,7 @@ const ToolbarButton = ({
   switchPage: (page: ReducerType['page']) => void;
 }) => (
   <ToolbarOption
-    isSelected={id === currentPage}
+    aria-selected={id === currentPage ? 'true' : null}
     onClick={e => {
       e.preventDefault();
       switchPage(id);

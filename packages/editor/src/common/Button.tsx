@@ -6,13 +6,13 @@ import KeyboardShortcut, {ShortcutKey} from './KeyboardShortcut';
 
 const NativeButton = styled(
   'button',
-  ({disabled, isPrimary}: {disabled?: boolean; isPrimary?: boolean}) => ({
-    backgroundColor: isPrimary ? '#8d52d1' : '#fff',
+  ({disabled, $isPrimary}: {disabled?: boolean; $isPrimary?: boolean}) => ({
+    backgroundColor: $isPrimary ? '#8d52d1' : '#fff',
     border: 0,
     borderRadius: 3,
     boxShadow:
       '0 2px 5px rgba(0, 0, 0, 0.15), 0 5px 12px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(60, 60, 60, 0.15)',
-    color: isPrimary ? '#fff' : '#000',
+    color: $isPrimary ? '#fff' : '#000',
     display: 'inline-flex',
     fontFamily: 'Fira Mono',
     fontSize: 13,
@@ -42,7 +42,7 @@ const Button = ({
 }: {
   children: JSX.Element | string | Array<JSX.Element | Array<JSX.Element>>;
   disabled?: boolean;
-  isPrimary?: boolean;
+  $isPrimary?: boolean;
   shortcut?: ShortcutKey;
   style?: React.CSSProperties;
   [key: string]: any;
