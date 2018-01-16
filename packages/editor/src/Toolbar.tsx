@@ -4,15 +4,15 @@ import * as React from 'react';
 import styled from '@pinecast/sb-styles';
 
 import {changeChromePage} from './actions/chrome';
+import {DEFAULT_FONT} from './common/constants';
 import {ReducerType} from './reducer';
 import SaveOptions from './SaveOptions';
 
 const Toolbar_ = styled('nav', {
   alignItems: 'center',
   backgroundColor: '#eee',
-  // borderBottom: '1px solid #ddd',
   display: 'flex',
-  fontFamily: 'Fira Mono',
+  fontFamily: DEFAULT_FONT,
   height: 50,
   padding: '0 15px',
 });
@@ -24,6 +24,7 @@ const ToolbarOption = styled(
     color: isSelected ? '#8d52d1' : '#444',
     cursor: isSelected ? null : 'pointer',
     display: 'inline-block',
+    fontFamily: DEFAULT_FONT,
     fontSize: 16,
     fontWeight: 500,
     lineHeight: '20px',

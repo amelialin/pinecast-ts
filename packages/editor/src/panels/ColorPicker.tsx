@@ -6,26 +6,30 @@ import {SketchPicker} from 'react-color';
 import styled from '@pinecast/sb-styles';
 
 import {colorKeyNames} from '../constants';
+import {DEFAULT_FONT} from '../common/constants';
 
 const Wrapper = styled('div', {
   alignItems: 'center',
   display: 'flex',
   marginBottom: 20,
 });
-const Chiclet = styled('div', ({color}) => ({
-  backgroundColor: color,
+const Chiclet = styled('div', ({$color}) => ({
+  backgroundColor: $color,
   borderRadius: 3,
-  boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2), 0 5px 12px rgba(0, 0, 0, 0.1)',
+  boxShadow:
+    '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
   cursor: 'pointer',
   height: 30,
   transition: 'box-shadow 0.2s',
   width: 30,
 
   ':hover': {
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.25), 0 7px 16px rgba(0, 0, 0, 0.1)',
+    boxShadow:
+      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
   },
   ':active': {
-    boxShadow: '0 3px 4.5px rgba(0, 0, 0, 0.25), 0 5px 12px rgba(0, 0, 0, 0.1)',
+    boxShadow:
+      '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
   },
 }));
 const Popover = styled('div', {
@@ -37,7 +41,7 @@ const Popover = styled('div', {
 const NameWrapper = styled('div', {
   alignItems: 'center',
   display: 'flex',
-  fontFamily: 'Fira Mono',
+  fontFamily: DEFAULT_FONT,
   flex: '1 1',
   padding: '0 10px',
 });
@@ -125,7 +129,7 @@ export default class ColorPicker extends React.Component {
             width: 30,
           }}
         >
-          <Chiclet color={colorValue} onClick={this.handleClick} />
+          <Chiclet $color={colorValue} onClick={this.handleClick} />
           {showingPicker && (
             <Popover>
               <SketchPicker

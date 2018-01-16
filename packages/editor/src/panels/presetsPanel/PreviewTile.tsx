@@ -2,8 +2,36 @@ import {connect} from 'react-redux';
 import * as React from 'react';
 
 import * as presets from '@pinecast/sb-presets';
+import styled from '@pinecast/sb-styles';
 
 import {ReducerType} from '../../reducer';
+
+const Button = styled(
+  'button',
+  ({$isActive}) => ({
+    borderRadius: 3,
+    boxShadow: $isActive
+      ? '0 0 0 1.5px rgba(255, 255, 255, 0.8), 0 0 0 5px #8d52d1'
+      : '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+    display: 'block',
+    marginBottom: 30,
+    minHeight: 150,
+    padding: 10,
+    textAlign: 'left',
+    transition: 'box-shadow 0.3s',
+    width: '100%',
+
+    ':hover': {
+      boxShadow:
+        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+    },
+    ':active': {
+      boxShadow:
+        '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+    },
+  }),
+  {type: 'button'},
+);
 
 interface Props {
   onSelect: (string) => void;
@@ -15,24 +43,10 @@ interface StateProps {
 const PreviewTile = ({isActive, onSelect, type}: Props & StateProps) => {
   const theme = presets.themes[type];
   return (
-    <button
+    <Button
+      $isActive={isActive}
       onClick={() => onSelect(type)}
-      style={{
-        background: theme.colors.background,
-        border: !isActive ? '1px solid #aaa' : 'none',
-        borderRadius: 3,
-        boxShadow: isActive
-          ? '0 0 0 1.5px rgba(255, 255, 255, 0.8), 0 0 0 5px #8d52d1'
-          : '0 0 transparent, 0 3px 5px rgba(0, 0, 0, 0.2)',
-        display: 'block',
-        marginBottom: 30,
-        minHeight: 200,
-        padding: 10,
-        textAlign: 'left',
-        transition: 'box-shadow 0.3s',
-        width: '100%',
-      }}
-      type="button"
+      style={{background: theme.colors.background}}
     >
       <div style={{background: theme.colors.accent, padding: 15}}>
         <h2 style={{color: theme.colors.foreground, margin: 0}}>
@@ -50,7 +64,7 @@ const PreviewTile = ({isActive, onSelect, type}: Props & StateProps) => {
           The quick brown fox jumps over the lazy dog
         </p>
       </div>
-    </button>
+    </Button>
   );
 };
 

@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
+import {DEFAULT_FONT} from './constants';
 import KeyboardShortcut, {ShortcutKey} from './KeyboardShortcut';
 
 const NativeButton = styled(
@@ -11,10 +12,10 @@ const NativeButton = styled(
     border: 0,
     borderRadius: 3,
     boxShadow:
-      '0 2px 5px rgba(0, 0, 0, 0.15), 0 5px 12px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(60, 60, 60, 0.15)',
+      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
     color: $isPrimary ? '#fff' : '#000',
     display: 'inline-flex',
-    fontFamily: 'Fira Mono',
+    fontFamily: DEFAULT_FONT,
     fontSize: 13,
     fontWeight: 500,
     height: 30,
@@ -25,11 +26,11 @@ const NativeButton = styled(
 
     ':hover': {
       boxShadow:
-        '0 3px 7px rgba(0, 0, 0, 0.2), 0 8px 17px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(60, 60, 60, 0.15)',
+        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
     },
     ':active': {
       boxShadow:
-        '0 2px 5px rgba(0, 0, 0, 0.2), 0 5px 17px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(60, 60, 60, 0.15)',
+        '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
     },
   }),
 );

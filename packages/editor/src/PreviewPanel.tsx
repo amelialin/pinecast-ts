@@ -8,10 +8,13 @@ import {changePath} from './actions/preview';
 import {fetcher} from './data/dataAPI';
 import {ReducerType} from './reducer';
 import Select from './common/Select';
+import {DEFAULT_FONT} from './common/constants';
 
 const UTIL_PAGE_HEAD = `
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=${encodeURIComponent(
+    DEFAULT_FONT,
+  )}:400,500" rel="stylesheet">
   <style>
     body, html {
       align-items: center;
@@ -22,12 +25,12 @@ const UTIL_PAGE_HEAD = `
       justify-content: center;
       text-align: center;
     }
-    body {padding: 0; margin: 0; font-family: Fira Mono, Helvetica, Arial, sans-serif;}
+    body {padding: 0; margin: 0; font-family: ${DEFAULT_FONT}, Helvetica, Arial, sans-serif;}
     .btn {
       display: inline-block;
       background: #fff;
       border-radius: 3px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 5px 12px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(60, 60, 60, 0.15);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15);
       color: #000;
       font-size: 13px;
       font-weight: 500;
@@ -38,10 +41,10 @@ const UTIL_PAGE_HEAD = `
       transition: box-shadow 0.2s;
     }
     .btn:hover {
-      box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2), 0 8px 17px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(60, 60, 60, 0.15);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15);
     }
     .btn:active {
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 5px 17px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(60, 60, 60, 0.15);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15);
     }
   </style>
 </head>

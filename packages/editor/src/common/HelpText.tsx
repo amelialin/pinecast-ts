@@ -2,8 +2,10 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
+import {DEFAULT_FONT} from './constants';
+
 const HelpText = styled('p', {
-  fontFamily: 'Fira Mono',
+  fontFamily: DEFAULT_FONT,
   fontSize: 14,
   margin: '0 0 1.5em',
 });

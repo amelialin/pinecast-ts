@@ -2,11 +2,14 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
+import {DEFAULT_FONT} from './constants';
+
 const Text = styled('span', {
   display: 'block',
-  fontFamily: 'Fira Mono',
+  fontFamily: DEFAULT_FONT,
   fontSize: 15,
-  fontWeight: 500,
+  fontWeight: 400,
+  marginBottom: 5,
 });
 
 const Label = ({

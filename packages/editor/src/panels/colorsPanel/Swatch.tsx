@@ -11,7 +11,7 @@ const Button = styled(
     background: '#fff',
     border: 0,
     borderRadius: 3,
-    boxShadow: '0 3px 6px rgba(0, 0, 0, 0.2), 0 7px 15px rgba(0, 0, 0, 0.05)',
+    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05)',
     display: 'flex',
     height: 50,
     marginBottom: 30,
@@ -21,12 +21,10 @@ const Button = styled(
     width: '100%',
 
     ':hover': {
-      boxShadow:
-        '0 3px 10px 2px rgba(0, 0, 0, 0.2), 0 7px 20px rgba(0, 0, 0, 0.05)',
+      boxShadow: '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15)',
     },
     ':active': {
-      boxShadow:
-        '0 0 5px 1px rgba(0, 0, 0, 0.5), 0 2px 10px rgba(0, 0, 0, 0.05)',
+      boxShadow: '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15)',
     },
   },
   {type: 'button'},

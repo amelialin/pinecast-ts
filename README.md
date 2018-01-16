@@ -28,7 +28,18 @@ npm run build
 cd packages/editor
 npm run dev
 ```
-```sh
-cd packages/editor
-python -m SimpleHTTPServer 8001
+
+## Configuring Pinecast
+
+### Dev
+
+Update your `settings_local.py` with
+
 ```
+SITE_BUILDER = {
+    'hostname': 'localhost:8001',
+    'version': 'build',
+}
+```
+
+Now visit `http://localhost:8000/sites/site_builder/editor/view/<podcast slug>`

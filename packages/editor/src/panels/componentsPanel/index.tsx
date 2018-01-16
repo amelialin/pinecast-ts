@@ -23,7 +23,8 @@ import {ReducerType} from '../../reducer';
 import Tabs, {Tab} from '../../common/Tabs';
 
 const ButtonStyleWrapper = styled('div', {
-  boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1), 0 3px 7px rgba(0, 0, 0, 0.05)',
+  boxShadow:
+    '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
   marginBottom: 20,
   padding: 20,
 });

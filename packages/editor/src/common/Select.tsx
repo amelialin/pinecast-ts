@@ -2,15 +2,32 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
+import {DEFAULT_FONT} from './constants';
+
 const Wrapper = styled('div', {
   alignItems: 'center',
   background: '#fff',
   borderRadius: 3,
-  boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2), 0 3px 7px rgba(0, 0, 0, 0.1)',
+  boxShadow:
+    '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
   display: 'flex',
   fontSize: 14,
   height: '1.75em',
+  opacity: 1,
   position: 'relative',
+  transition: 'box-shadow 0.2s, opacity 0.2s',
+
+  ':hover': {
+    boxShadow:
+      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+  },
+  ':active': {
+    boxShadow:
+      '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+  },
+  ':disabled': {
+    opacity: 0.5,
+  },
 
   ':before': {
     border: '2px solid #222',
@@ -33,7 +50,7 @@ const Select_ = styled('select', {
   border: 0,
   borderRadius: 3,
   boxShadow: 'rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
-  fontFamily: 'Fira Mono',
+  fontFamily: DEFAULT_FONT,
   fontSize: 14,
   height: '100%',
   lineHeight: '100%',

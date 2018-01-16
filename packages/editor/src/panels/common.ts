@@ -1,11 +1,13 @@
 import styled from '@pinecast/sb-styles';
 
+import {DEFAULT_FONT} from '../common/constants';
+
 export const PanelWrapper = styled('section', {
   padding: 15,
 });
 
 export const PanelHeader = styled('h1', {
-  fontFamily: 'Fira Mono',
+  fontFamily: DEFAULT_FONT,
   fontSize: 30,
   fontWeight: 500,
   marginBottom: 40,
@@ -26,14 +28,14 @@ export const PanelHeader = styled('h1', {
 });
 
 export const PanelDescription = styled('p', {
-  fontFamily: 'Fira Mono',
+  fontFamily: DEFAULT_FONT,
   fontSize: 16,
-  marginBottom: 45,
+  marginBottom: 30,
   marginTop: -10,
 });
 
 export const PanelSection = styled('h2', {
-  fontFamily: 'Fira Mono',
+  fontFamily: DEFAULT_FONT,
   fontSize: 24,
   marginBottom: 30,
   marginTop: 40,

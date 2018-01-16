@@ -3,6 +3,7 @@ import * as React from 'react';
 import styled from '@pinecast/sb-styles';
 
 import AsyncFontPreview from './AsyncFontPreview';
+import {DEFAULT_FONT} from '../../common/constants';
 import {fontKeyNames} from '../../constants';
 import Label from '../../common/Label';
 
@@ -13,10 +14,19 @@ const Wrapper = styled(
     border: '1px solid #eee',
     borderRadius: 3,
     boxShadow:
-      '0 2px 5px rgba(0, 0, 0, 0.2), 0 5px 12px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(50,50,93,.17)',
+      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
     marginBottom: 30,
     padding: 15,
     textAlign: 'left',
+
+    ':hover': {
+      boxShadow:
+        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+    },
+    ':active': {
+      boxShadow:
+        '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+    },
   },
   {type: 'button'},
 );
@@ -27,6 +37,7 @@ const InnerWrapper = styled('div', {
 const PreviewWrapper = styled('div', {
   display: 'flex',
   flexDirection: 'column',
+  fontFamily: DEFAULT_FONT,
   marginBottom: 10,
   width: 250,
 });

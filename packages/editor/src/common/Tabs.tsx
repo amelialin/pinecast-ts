@@ -2,6 +2,8 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
+import {DEFAULT_FONT} from './constants';
+
 const TabWrapper = styled('div', {
   padding: '30px 0',
 });
@@ -23,16 +25,16 @@ const TabButtonWrapper = styled('div', {
 });
 const TabButton = styled(
   'button',
-  ({isActive}) => ({
+  ({$isActive}) => ({
     appearance: 'none',
     background: '#fff',
     border: 0,
-    color: isActive ? '#8d52d1' : '#666',
+    color: $isActive ? '#8d52d1' : '#666',
     display: 'block',
     flex: '0 0',
-    fontFamily: 'Fira Mono',
+    fontFamily: DEFAULT_FONT,
     fontSize: 16,
-    fontWeight: isActive ? 600 : 500,
+    fontWeight: $isActive ? 500 : 400,
     height: 36,
     marginRight: 30,
     padding: 0,
@@ -64,7 +66,7 @@ export default class Tabs extends React.Component {
         <TabButtonWrapper>
           {React.Children.map(this.props.children, (child: any, idx) => (
             <TabButton
-              isActive={idx === this.state.selectedTab}
+              $isActive={idx === this.state.selectedTab}
               onClick={this.handleClick(idx)}
               key={idx}
             >

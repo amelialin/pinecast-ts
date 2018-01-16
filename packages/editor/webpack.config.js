@@ -41,6 +41,11 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    contentBase: __dirname,
+    port: 8001,
+    publicPath: '/build/',
+  },
   externals: [
     function(context, request, callback) {
       switch (request) {

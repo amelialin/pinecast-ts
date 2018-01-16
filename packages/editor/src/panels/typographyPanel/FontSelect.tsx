@@ -11,11 +11,17 @@ const SelectBox = styled('div', {
   alignItems: 'center',
   borderRadius: 3,
   boxShadow:
-    '0 2px 5px rgba(0, 0, 0, 0.2), 0 5px 12px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(50,50,93,.17)',
+    '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
   display: 'flex',
   height: 40,
   marginTop: 10,
   padding: '0 30px 0 10px',
+  transition: 'box-shadow 0.2s',
+
+  ':hover': {
+    boxShadow:
+      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+  },
 
   ':before': {
     border: '2px solid #bbb',
@@ -42,7 +48,8 @@ const SelectBox = styled('div', {
 });
 const InnerWrapper = styled('div', ({isOpen}: {isOpen: boolean}) => ({
   backgroundColor: '#fff',
-  boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2), 0 5px 12px rgba(0, 0, 0, 0.1)',
+  boxShadow:
+    '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
   borderRadius: 3,
   left: 0,
   height: 300,
