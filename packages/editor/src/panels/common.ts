@@ -45,5 +45,6 @@ export const PanelDivider = styled('hr', {
   background: '#8d52d1',
   border: 0,
   height: 1,
+  margin: '0 0 20px',
   width: '100%',
 });

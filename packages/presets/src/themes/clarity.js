@@ -44,7 +44,7 @@ export default {
       borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
       color: 'text',
       display: 'inline-block',
-      fontSize: 18,
+      fontSize: 16,
       lineHeight: '1.5em',
       marginRight: 20,
       whiteSpace: 'nowrap',

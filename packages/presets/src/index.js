@@ -18,12 +18,12 @@ export function merge(base, extension, ...extensions) {
     );
   }
   if (!base) {
-    return extension;
-  }
-  if (base === extension) {
-    return base;
+    return {...extension};
   }
   const result = {...base};
+  if (!extension || base === extension) {
+    return result;
+  }
   Object.entries(extension).forEach(([key, val]) => {
     if (
       !(key in result) ||

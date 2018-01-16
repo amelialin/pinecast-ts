@@ -9,6 +9,7 @@ import {ReducerType} from '../../reducer';
 const Button = styled(
   'button',
   ({$isActive}) => ({
+    border: 0,
     borderRadius: 3,
     boxShadow: $isActive
       ? '0 0 0 1.5px rgba(255, 255, 255, 0.8), 0 0 0 5px #8d52d1'

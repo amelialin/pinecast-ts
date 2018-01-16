@@ -10,13 +10,13 @@
   width: 100%;
   height: 7.4px;
   cursor: pointer;
-  box-shadow: 0 0.6px 5.8px rgba(0, 0, 0, 0.05), 0px 0px 1.6px rgba(13, 13, 13, 0.125), rgba(167, 210, 243, 0) 0 0 0 0;
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.1);
   background: #ffffff;
   border-radius: 4.1px;
   border: 0px solid rgba(1, 1, 1, 0);
 }
 .RangeInput::-webkit-slider-thumb {
-  box-shadow: 0 3px 6.9px rgba(0, 0, 0, 0.34), 0px 0px 3px rgba(13, 13, 13, 0.34);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15);
   border: 0px solid #000000;
   height: 21px;
   width: 21px;
@@ -27,19 +27,19 @@
   margin-top: -6.8px;
 }
 .RangeInput:focus::-webkit-slider-runnable-track {
-  box-shadow: 0 0.6px 5.8px rgba(0, 0, 0, 0.2), 0px 0px 1.6px rgba(13, 13, 13, 0.2), rgba(167, 210, 243, 0.75) 0 0 0 3px;
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.1);
 }
 .RangeInput::-moz-range-track {
   width: 100%;
   height: 7.4px;
   cursor: pointer;
-  box-shadow: 0 0.6px 5.8px rgba(0, 0, 0, 0.2), 0px 0px 1.6px rgba(13, 13, 13, 0.2);
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.1);
   background: #ffffff;
   border-radius: 4.1px;
   border: 0px solid rgba(1, 1, 1, 0);
 }
 .RangeInput::-moz-range-thumb {
-  box-shadow: 0 3px 6.9px rgba(0, 0, 0, 0.34), 0px 0px 3px rgba(13, 13, 13, 0.34);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15);
   border: 0px solid #000000;
   height: 21px;
   width: 21px;
@@ -59,16 +59,16 @@
   background: #f2f2f2;
   border: 0px solid rgba(1, 1, 1, 0);
   border-radius: 8.2px;
-  box-shadow: 0 0.6px 5.8px rgba(0, 0, 0, 0.2), 0px 0px 1.6px rgba(13, 13, 13, 0.2);
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.1);
 }
 .RangeInput::-ms-fill-upper {
   background: #ffffff;
   border: 0px solid rgba(1, 1, 1, 0);
   border-radius: 8.2px;
-  box-shadow: 0 0.6px 5.8px rgba(0, 0, 0, 0.2), 0px 0px 1.6px rgba(13, 13, 13, 0.2);
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.1);
 }
 .RangeInput::-ms-thumb {
-  box-shadow: 0 3px 6.9px rgba(0, 0, 0, 0.34), 0px 0px 3px rgba(13, 13, 13, 0.34);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15);
   border: 0px solid #000000;
   height: 21px;
   width: 21px;

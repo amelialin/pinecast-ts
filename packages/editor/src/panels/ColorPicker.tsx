@@ -42,6 +42,7 @@ const NameWrapper = styled('div', {
   alignItems: 'center',
   display: 'flex',
   fontFamily: DEFAULT_FONT,
+  fontWeight: 500,
   flex: '1 1',
   padding: '0 10px',
 });

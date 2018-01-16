@@ -4,7 +4,6 @@ import styled from '@pinecast/sb-styles';
 
 const Option = styled('label', {
   display: 'block',
-  marginBottom: 15,
   paddingLeft: 50,
   position: 'relative',
 });
@@ -12,15 +11,26 @@ const Radio = styled(
   'div',
   {
     alignItems: 'center',
-    border: '1px solid #ddd',
     borderRadius: 30,
+    boxShadow:
+      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
     display: 'flex',
     height: 30,
     justifyContent: 'center',
     left: 10,
     position: 'absolute',
     top: 0,
+    transition: 'box-shadow 0.2s',
     width: 30,
+
+    ':hover': {
+      boxShadow:
+        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+    },
+    ':active': {
+      boxShadow:
+        '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+    },
   },
   {className: 'radioList-item'},
 );
@@ -35,20 +45,21 @@ const RadioInput = styled(
     width: 30,
 
     ':not(:checked) + .radioList-item:after': {
-      background: 'transparent',
+      backgroundColor: 'transparent',
       borderRadius: 15,
       content: '""',
       display: 'block',
       height: 0,
-      transition: 'background-color 0.2s',
+      transition: 'background-color 1.2s, height 1.2s, width 1.2s',
       width: 0,
     },
     ':checked + .radioList-item:after': {
-      background: '#8d52d1',
+      backgroundColor: '#8d52d1',
       borderRadius: 15,
       content: '""',
       display: 'block',
       height: 14,
+      transition: 'background-color 1.2s, height 1.2s, width 1.2s',
       width: 14,
     },
   },
@@ -84,18 +95,23 @@ export default class RadioList extends React.Component {
   }
 
   render() {
+    const options = Object.entries(this.props.options);
     return (
       <React.Fragment>
-        {Object.entries(
-          this.props.options,
-        ).map(
+        {options.map(
           (
             [key, Value]: [
               string,
               React.StatelessComponent | JSX.Element | string
             ],
+            i: number,
           ) => (
-            <Option key={key}>
+            <Option
+              key={key}
+              style={{
+                marginBottom: i === options.length - 1 ? 30 : 15,
+              }}
+            >
               <RadioInput
                 checked={this.props.value === key}
                 name={this.name}

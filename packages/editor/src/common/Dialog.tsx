@@ -18,7 +18,7 @@ const Header = styled('header', {
   alignItems: 'center',
   borderBottom: '1px solid #eee',
   display: 'flex',
-  fontSize: 16,
+  fontSize: 15,
   fontWeight: 500,
   height: 46,
   padding: '0 15px',
