@@ -15,11 +15,8 @@ export default ({content, showSubtitle = false}) => ({
               props: {
                 href: {name: 'home'},
               },
-              styles: {
-                color: 'foreground',
-                fontFamily: 'logo',
-                fontSize: 40,
-              },
+              extendsStyles: ['textStyles', 'logo'],
+              styles: {},
             },
             content === 'text' && {
               textContent: ['podcast', 'name'],
@@ -39,10 +36,8 @@ export default ({content, showSubtitle = false}) => ({
           showSubtitle && {
             type: 'block.text',
             textContent: ['podcast', 'subtitle'],
+            extendsStyles: ['textStyles', 'subtitle'],
             styles: {
-              color: 'foreground',
-              fontFamily: 'headings',
-              fontSize: 20,
               marginTop: 25,
             },
           },

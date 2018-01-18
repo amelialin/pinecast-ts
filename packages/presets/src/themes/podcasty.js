@@ -31,6 +31,14 @@ export default {
     ...baseTheme.options,
     fixedWidthMax: '960px',
   },
+  textStyles: {
+    ...baseTheme.textStyles,
+    logo: {
+      color: 'foreground',
+      fontFamily: 'logo',
+      fontSize: 36,
+    },
+  },
 
   layout: {
     header: [headerLeftAlign({content: 'text'})],

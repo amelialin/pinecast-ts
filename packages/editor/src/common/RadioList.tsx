@@ -31,6 +31,16 @@ const Radio = styled(
       boxShadow:
         '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
     },
+
+    ':after': {
+      backgroundColor: 'transparent',
+      borderRadius: 15,
+      content: '""',
+      display: 'block',
+      height: 0,
+      transition: 'background-color 1.2s, height 1.2s, width 1.2s',
+      width: 0,
+    },
   },
   {className: 'radioList-item'},
 );
@@ -44,22 +54,9 @@ const RadioInput = styled(
     top: 0,
     width: 30,
 
-    ':not(:checked) + .radioList-item:after': {
-      backgroundColor: 'transparent',
-      borderRadius: 15,
-      content: '""',
-      display: 'block',
-      height: 0,
-      transition: 'background-color 1.2s, height 1.2s, width 1.2s',
-      width: 0,
-    },
     ':checked + .radioList-item:after': {
       backgroundColor: '#8d52d1',
-      borderRadius: 15,
-      content: '""',
-      display: 'block',
       height: 14,
-      transition: 'background-color 1.2s, height 1.2s, width 1.2s',
       width: 14,
     },
   },

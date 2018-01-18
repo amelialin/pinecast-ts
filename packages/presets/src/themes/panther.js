@@ -28,6 +28,20 @@ export default {
     fixedWidthMax: '960px',
   },
 
+  textStyles: {
+    ...baseTheme.textStyles,
+    logo: {
+      color: 'foreground',
+      fontFamily: 'logo',
+      fontSize: 40,
+    },
+    subtitle: {
+      color: 'foreground',
+      fontFamily: 'headings',
+      fontSize: 20,
+    },
+  },
+
   layout: {
     header: [headerCenteredFixed({content: 'text', showSubtitle: true})],
     footer: [

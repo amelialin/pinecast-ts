@@ -12,11 +12,8 @@ export default ({content}) => ({
               props: {
                 href: {name: 'home'},
               },
-              styles: {
-                color: 'foreground',
-                fontFamily: 'logo',
-                fontSize: 36,
-              },
+              extendsStyles: ['textStyles', 'logo'],
+              styles: {},
             },
             content === 'text' && {
               textContent: ['podcast', 'name'],

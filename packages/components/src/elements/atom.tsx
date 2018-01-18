@@ -127,16 +127,18 @@ export function prepareStyle(
   return out;
 }
 
-export default (elem: string, baseStyle?: Object, baseProps?: Object) =>
+export default (elem: string, style?: Object, baseProps?: Object) =>
   getsContext(
     (
       {
+        baseStyle,
         children,
         extends: extends_,
         item,
-        style,
+        style: styleProp,
         ...rest,
       }: {
+        baseStyle?: CSS;
         children?: any;
         extends?: Array<string>;
         item?: any;
@@ -150,14 +152,18 @@ export default (elem: string, baseStyle?: Object, baseProps?: Object) =>
         elem,
         prepareStyle(
           merge(
-            extends_ && extends_.reduce((acc, cur) => acc[cur], ctx),
             baseStyle,
+            extends_ && extends_.reduce((acc, cur) => acc[cur], ctx),
             style,
+            styleProp,
           ),
           ctx,
         ),
-        {...baseProps, ...prepareProps(item, rest, ctx), children},
       );
-      return <Component>{children}</Component>;
+      return (
+        <Component {...baseProps} {...prepareProps(item, rest, ctx)}>
+          {children}
+        </Component>
+      );
     },
   );

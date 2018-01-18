@@ -35,6 +35,16 @@ export default {
     ...baseTheme.options,
     fixedWidthMax: '960px',
   },
+  textStyles: {
+    ...baseTheme.textStyles,
+    logo: {
+      ...baseTheme.textStyles.logo,
+      color: 'foreground',
+      fontFamily: 'logo',
+      fontSize: 60,
+      textTransform: 'uppercase',
+    },
+  },
 
   layout: {
     header: [headerCentered({content: 'text'}), subheaderSubscribeLinks()],

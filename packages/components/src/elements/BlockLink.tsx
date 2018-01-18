@@ -21,18 +21,18 @@ export default ({
   return (
     <Link
       {...props}
-      data-link="true"
-      extends={element.extendsStyles}
-      item={item}
-      style={{
+      baseStyle={{
         display: 'block',
         color: 'links',
         textDecoration: 'none',
-        ...expandElementStyles(
-          {...style, ...element.styles},
-          element.elementOptions,
-        ),
       }}
+      data-link="true"
+      extends={element.extendsStyles}
+      item={item}
+      style={expandElementStyles(
+        {...style, ...element.styles},
+        element.elementOptions,
+      )}
     >
       {blockChildren(item, element)}
     </Link>
