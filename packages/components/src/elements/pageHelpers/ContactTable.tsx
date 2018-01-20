@@ -6,6 +6,9 @@ import expandElementStyles from '../globalElementOptions';
 import {extractProps} from '../extractor';
 import {Page} from '../../primitives';
 
+const Td = atom('td');
+const Container = atom('table');
+
 type BodyType = {[key: string]: Array<string> | string};
 export default ({
   element,
@@ -36,10 +39,10 @@ export default ({
 
     return (
       <tr key={key}>
-        <td style={cellStyles}>
+        <Td style={cellStyles}>
           <strong>{title}</strong>
-        </td>
-        <td style={cellStyles}>
+        </Td>
+        <Td style={cellStyles}>
           {(Array.isArray(item[key])
             ? item[key] as Array<string>
             : [item[key] as string]
@@ -53,12 +56,11 @@ export default ({
               ];
             })
             .reduce((acc, cur) => acc.concat(cur))}
-        </td>
+        </Td>
       </tr>
     );
   }
 
-  const Container = atom('table');
   return (
     <Container
       {...element.props}

@@ -5,15 +5,13 @@ export default ({
   style = null,
 }) => ({
   type: 'links.linkBar',
-  layout: Object.assign(
-    {
-      includes,
-      textStyle: {
-        color: 'text',
-      },
+  layout: {
+    includes,
+    textStyle: {
+      color: 'text',
     },
-    layout,
-  ),
+    ...layout,
+  },
   template: {
     tagName: 'nav',
     elements: [
@@ -25,16 +23,11 @@ export default ({
             props: {mount: 'links'},
           },
         ],
-        elementOptions: Object.assign(
-          {
-            bgColor: 'secondaryAccent',
-            fgColor: 'secondaryAccent',
-            innerPadding: '40px 0',
-            maxWidth: 'var(--fixedWidthMax)',
-          },
-          elementOptions,
-        ),
-        styles: Object.assign({textAlign: 'left'}, style),
+        elementOptions: {
+          maxWidth: 'var(--fixedWidthMax)',
+          ...elementOptions,
+        },
+        styles: {textAlign: 'left', ...style},
       },
     ],
   },

@@ -1,16 +1,16 @@
 export default ({
   contents,
-  elementOptions,
-  styles = {},
+  elementOptions = {maxWidth: 'var(--fixedWidthMax)'},
+  style = {},
   tagName = 'article',
-  type = 'layout.column',
+  type = 'layout.fixedWrapper',
 }) => ({
   elements: [
     {
       type,
       elementOptions,
       children: contents,
-      styles,
+      styles: style,
     },
   ],
   tag_name: tagName,

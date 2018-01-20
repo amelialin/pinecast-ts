@@ -1,11 +1,11 @@
 import baseTheme from './_base';
-import mosaicBody from '../wrappers/mosaicBody';
 import mosaicEpisodeItemLayout from '../episodePageLayouts/mosaicEpisodeItemLayout';
 import fullWidthEpisodePostLayout from '../itemLayouts/fullWidthEpisodePostLayout';
 import heroEpisodePostLayout from '../itemLayouts/heroEpisodePostLayout';
-import headerLeftAlign from '../components/header-leftAlign';
+import header from '../components/header-centeredFixed';
 import linksLinkBar from '../components/links-linkBar';
-import paginationForwardBack from '../components/pagination-forwardBack';
+import pagesTemplate from '../wrappers/pagesTemplate';
+import paginationForwardBack from '../components/pagination-forwardBack-fixed';
 import subheaderSubscribeLinks from '../components/subheader-subscribeLinks';
 import textWrappedText from '../components/text-wrappedText';
 
@@ -38,10 +38,29 @@ export default {
       fontFamily: 'logo',
       fontSize: 36,
     },
+    pageHeading: {
+      fontSize: 36,
+      fontWeight: 'bold',
+      marginBottom: 30,
+    },
   },
 
   layout: {
-    header: [headerLeftAlign({content: 'text'})],
+    header: [
+      header({
+        content: 'text',
+        elementOptions: {
+          bgColor: 'accent',
+          fgColor: 'accent',
+          innerPadding: '20px 0',
+          lineHeight: '60px',
+          outerPadding: '0 15px',
+        },
+        style: {
+          textAlign: 'left',
+        },
+      }),
+    ],
     footer: [
       paginationForwardBack({
         nextText: 'Back in time',
@@ -66,6 +85,7 @@ export default {
         elementOptions: {
           bgColor: 'accent',
           fgColor: 'accent',
+          innerPadding: '40px 0',
         },
         layout: {
           textStyle: {
@@ -110,123 +130,15 @@ export default {
         ],
       },
       episode: mosaicEpisodeItemLayout,
-      page: {
-        markdown: mosaicBody({
-          contents: [
-            {
-              type: 'block.text',
-              tag_name: 'h1',
-              textContent: ['title'],
-              styles: {
-                fontSize: 36,
-                fontWeight: 'bold',
-                marginBottom: 30,
-              },
-            },
-            {
-              type: 'block.text',
-              textContent: ['body'],
-              textContentFilter: 'markdown',
-            },
-          ],
-        }),
-        contact: mosaicBody({
-          contents: [
-            {
-              type: 'block.text',
-              tag_name: 'h1',
-              textContent: ['title'],
-              styles: {
-                fontSize: 36,
-                fontWeight: 'bold',
-                marginBottom: 30,
-              },
-            },
-            {
-              type: 'func.narrowScope',
-              elementOptions: {path: ['body']},
-              children: [
-                {
-                  type: 'helper.page.contact',
-                  elementOptions: {
-                    alignX: 'center',
-                    cellStyles: {
-                      padding: 5,
-                    },
-                  },
-                  styles: {
-                    marginBottom: 20,
-                    marginTop: 20,
-                  },
-                },
-              ],
-            },
-          ],
-        }),
-        hosts: mosaicBody({
-          contents: [
-            {
-              type: 'block.text',
-              tag_name: 'h1',
-              textContent: ['title'],
-              styles: {
-                fontSize: 36,
-                fontWeight: 'bold',
-                marginBottom: 30,
-              },
-            },
-            {
-              type: 'helper.page.hosts',
-              elementOptions: {style: 'flow'},
-              children: [
-                {
-                  type: 'layout.column',
-                  elementOptions: {innerAlignX: 'center'},
-                  children: [
-                    {
-                      type: 'image',
-                      elementOptions: {
-                        gravatar: ['email'],
-                        round: 200,
-                        square: 'element',
-                      },
-                      styles: {
-                        width: 200,
-                      },
-                    },
-                    {
-                      type: 'block.text',
-                      textContent: ['name'],
-                      styles: {
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                        lineHeight: 32,
-                      },
-                    },
-                    {
-                      type: 'helper.page.contact',
-                      elementOptions: {
-                        alignX: 'center',
-                        cellStyles: {
-                          padding: 5,
-                        },
-                      },
-                      styles: {
-                        marginBottom: 20,
-                        marginTop: 20,
-                      },
-                    },
-                  ],
-                  styles: {
-                    padding: 15,
-                    textAlign: 'center',
-                  },
-                },
-              ],
-            },
-          ],
-        }),
-      },
+      page: pagesTemplate({
+        elementOptions: {
+          innerPadding: 15,
+        },
+        style: {
+          marginBottom: 30,
+          marginTop: 30,
+        },
+      }),
     },
   },
 };

@@ -1,8 +1,8 @@
 import baseTheme from './_base';
-import slabBody from '../wrappers/slabBody';
+import pagesTemplate from '../wrappers/pagesTemplate';
 import slabEpisodeItemLayout from '../episodePageLayouts/slabEpisodeItemLayout';
 import slabEpisodePostLayout from '../itemLayouts/slabEpisodePostLayout';
-import headerCenteredFixed from '../components/header-centeredFixed';
+import header from '../components/header-centeredFixed';
 import paginationForwardBackFixed from '../components/pagination-forwardBack-fixed';
 
 import * as colors from './colors/panther.json';
@@ -40,10 +40,24 @@ export default {
       fontFamily: 'headings',
       fontSize: 20,
     },
+    pageHeading: {
+      fontSize: 36,
+      fontWeight: 'bold',
+      marginBottom: 30,
+    },
   },
 
   layout: {
-    header: [headerCenteredFixed({content: 'text', showSubtitle: true})],
+    header: [
+      header({
+        content: 'text',
+        showSubtitle: true,
+        style: {
+          backgroundColor: 'accent',
+          padding: '100px 0',
+        },
+      }),
+    ],
     footer: [
       paginationForwardBackFixed({
         fgColor: 'secondaryBackground',
@@ -161,123 +175,10 @@ export default {
         ],
       },
       episode: slabEpisodeItemLayout,
-      page: {
-        markdown: slabBody({
-          contents: [
-            {
-              type: 'block.text',
-              tag_name: 'h1',
-              textContent: ['title'],
-              styles: {
-                fontSize: 36,
-                fontWeight: 'bold',
-                marginBottom: 30,
-              },
-            },
-            {
-              type: 'block.text',
-              textContent: ['body'],
-              textContentFilter: 'markdown',
-            },
-          ],
-        }),
-        contact: slabBody({
-          contents: [
-            {
-              type: 'block.text',
-              tag_name: 'h1',
-              textContent: ['title'],
-              styles: {
-                fontSize: 36,
-                fontWeight: 'bold',
-                marginBottom: 30,
-              },
-            },
-            {
-              type: 'func.narrowScope',
-              elementOptions: {path: ['body']},
-              children: [
-                {
-                  type: 'helper.page.contact',
-                  elementOptions: {
-                    alignX: 'center',
-                    cellStyles: {
-                      padding: 5,
-                    },
-                  },
-                  styles: {
-                    marginBottom: 20,
-                    marginTop: 20,
-                  },
-                },
-              ],
-            },
-          ],
-        }),
-        hosts: slabBody({
-          contents: [
-            {
-              type: 'block.text',
-              tag_name: 'h1',
-              textContent: ['title'],
-              styles: {
-                fontSize: 36,
-                fontWeight: 'bold',
-                marginBottom: 30,
-              },
-            },
-            {
-              type: 'helper.page.hosts',
-              elementOptions: {style: 'flow'},
-              children: [
-                {
-                  type: 'layout.column',
-                  elementOptions: {innerAlignX: 'center'},
-                  children: [
-                    {
-                      type: 'image',
-                      elementOptions: {
-                        gravatar: ['email'],
-                        round: 200,
-                        square: 'element',
-                      },
-                      styles: {
-                        width: 200,
-                      },
-                    },
-                    {
-                      type: 'block.text',
-                      textContent: ['name'],
-                      styles: {
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                        lineHeight: 32,
-                      },
-                    },
-                    {
-                      type: 'helper.page.contact',
-                      elementOptions: {
-                        alignX: 'center',
-                        cellStyles: {
-                          padding: 5,
-                        },
-                      },
-                      styles: {
-                        marginBottom: 20,
-                        marginTop: 20,
-                      },
-                    },
-                  ],
-                  styles: {
-                    padding: 15,
-                    textAlign: 'center',
-                  },
-                },
-              ],
-            },
-          ],
-        }),
-      },
+      page: pagesTemplate({
+        elementOptions: {fgColor: 'secondaryBackground'},
+        style: {padding: 40},
+      }),
     },
   },
 };

@@ -25,6 +25,7 @@ export default {
     itemSummary: {},
     footerText: {},
   },
+
   styling: {
     buttons: {
       borderRadius: 3,
@@ -37,7 +38,9 @@ export default {
       fontSize: 16,
     },
   },
+
   options: {
+    fixedWidthMax: null,
     rootFlexibleHeight: true,
     defaultConsumeCount: 10,
   },

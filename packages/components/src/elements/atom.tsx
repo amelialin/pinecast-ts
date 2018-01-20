@@ -51,7 +51,7 @@ function replaceVars(value: string, ctx: ComponentContext): string | number {
   const out = replaceVars(
     value.replace(/var\(\-\-(\w+)\)/, (_, match) => {
       if (match === 'fixedWidthMax') {
-        return ctx.options.fixedWidthMax || '0';
+        return ctx.options.fixedWidthMax || '100%';
       }
       return '0';
     }),

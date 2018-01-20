@@ -1,4 +1,4 @@
-export default ({style} = {}) => ({
+export default ({style, subscribeText = 'Subscribe with'} = {}) => ({
   type: 'subheader.subscribeLinks',
   layout: {},
   template: {
@@ -14,7 +14,7 @@ export default ({style} = {}) => ({
               fontSize: 20,
               fontWeight: 500,
             },
-            textContent: 'Subscribe with',
+            textContent: subscribeText,
           },
           {
             type: 'mount',

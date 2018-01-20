@@ -17,7 +17,7 @@ export default ({bgColor, fgColor, nextText, previousText}) => ({
           maxWidth: 'var(--fixedWidthMax)',
         },
         children: [...buttons],
-        styles: Object.assign({padding: '40px 0'}, styles),
+        styles: {padding: '40px 0', ...styles},
       },
     ],
   },

@@ -1,10 +1,10 @@
 import baseTheme from './_base';
 import simpleEpisodeTileLayout from '../itemLayouts/simpleEpisodeTileLayout';
-import macroWrapper from '../wrappers/macro';
+import pagesTemplate from '../wrappers/pagesTemplate';
 import snippetEpisodeItemLayout from '../episodePageLayouts/snippetEpisodeItemLayout';
 import snippetEpisodePostLayout from '../itemLayouts/snippetEpisodePostLayout';
-import header from '../components/header-minimal';
-import paginationForwardBack from '../components/pagination-forwardBack';
+import header from '../components/header-centeredFixed';
+import paginationForwardBack from '../components/pagination-forwardBack-fixed';
 
 import * as colors from './colors/smooth.json';
 
@@ -26,7 +26,39 @@ export default {
     page: {
       backgroundColor: 'background',
       fontSize: 14,
-      padding: '80px 30px',
+      padding: '40px 30px',
+    },
+  },
+
+  textStyles: {
+    ...baseTheme.textStyles,
+    logo: {
+      color: 'accent',
+      fontFamily: 'logo',
+      fontSize: 32,
+      fontWeight: 600,
+    },
+    subtitle: {
+      color: 'secondaryAccent',
+      fontFamily: 'headings',
+      fontSize: 20,
+      fontWeight: 500,
+    },
+    navigationLinks: {
+      ...baseTheme.textStyles.navigationLinks,
+      borderBottom: '1px dotted rgba(0, 0, 0, 0.2)',
+      color: 'text',
+      display: 'inline-block',
+      fontSize: 16,
+
+      ':hover': {
+        borderBottom: '1px dotted rgba(0, 0, 0, 0.4)',
+      },
+    },
+    pageHeading: {
+      color: 'accent',
+      fontSize: 30,
+      marginBottom: 20,
     },
   },
 
@@ -35,31 +67,16 @@ export default {
       header({
         content: 'text',
         showSubtitle: true,
-        subtitleStyle: {
-          color: 'secondaryAccent',
-          fontWeight: 500,
+        style: {
+          textAlign: 'left',
         },
-        titleStyle: {fontWeight: 600},
       }),
       {
         type: 'links.linkMount',
         layout: {
           linkStyle: {
-            borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-            color: 'text',
-            display: 'inline-block',
-            fontSize: 18,
-            lineHeight: '1.5em',
             marginRight: 20,
-            textDecoration: 'none',
             whiteSpace: 'nowrap',
-
-            ':hover': {
-              textDecoration: 'underline',
-            },
-            ':last-child': {
-              borderBottom: '0',
-            },
           },
         },
         template: {
@@ -100,126 +117,7 @@ export default {
         ],
       },
       episode: snippetEpisodeItemLayout,
-      page: {
-        markdown: macroWrapper({
-          contents: [
-            {
-              type: 'block.text',
-              tag_name: 'h1',
-              textContent: ['title'],
-              styles: {
-                color: 'accent',
-                fontSize: 30,
-                marginBottom: 20,
-              },
-            },
-            {
-              type: 'block.text',
-              textContent: ['body'],
-              textContentFilter: 'markdown',
-              styles: {
-                lineHeight: 24,
-              },
-            },
-          ],
-        }),
-        contact: macroWrapper({
-          contents: [
-            {
-              type: 'block.text',
-              tag_name: 'h1',
-              textContent: ['title'],
-              styles: {
-                color: 'accent',
-                fontSize: 30,
-                marginBottom: 20,
-              },
-            },
-            {
-              type: 'func.narrowScope',
-              elementOptions: {path: ['body']},
-              children: [
-                {
-                  type: 'helper.page.contact',
-                  elementOptions: {
-                    alignX: 'center',
-                    cellStyles: {
-                      padding: 5,
-                    },
-                  },
-                  styles: {
-                    marginBottom: 20,
-                    marginTop: 20,
-                  },
-                },
-              ],
-            },
-          ],
-        }),
-        hosts: macroWrapper({
-          contents: [
-            {
-              type: 'block.text',
-              tag_name: 'h1',
-              textContent: ['title'],
-              styles: {
-                color: 'accent',
-                fontSize: 30,
-                marginBottom: 20,
-              },
-            },
-            {
-              type: 'helper.page.hosts',
-              elementOptions: {style: 'flow'},
-              children: [
-                {
-                  type: 'layout.column',
-                  elementOptions: {innerAlignX: 'center'},
-                  children: [
-                    {
-                      type: 'image',
-                      elementOptions: {
-                        gravatar: ['email'],
-                        round: 200,
-                        square: 'element',
-                      },
-                      styles: {
-                        width: 200,
-                      },
-                    },
-                    {
-                      type: 'block.text',
-                      textContent: ['name'],
-                      styles: {
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                        lineHeight: 32,
-                      },
-                    },
-                    {
-                      type: 'helper.page.contact',
-                      elementOptions: {
-                        alignX: 'center',
-                        cellStyles: {
-                          padding: 5,
-                        },
-                      },
-                      styles: {
-                        marginBottom: 20,
-                        marginTop: 20,
-                      },
-                    },
-                  ],
-                  styles: {
-                    padding: 15,
-                    textAlign: 'center',
-                  },
-                },
-              ],
-            },
-          ],
-        }),
-      },
+      page: pagesTemplate(),
     },
   },
 };

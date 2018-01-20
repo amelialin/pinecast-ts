@@ -1,4 +1,4 @@
-export default ({content, showSubtitle = false}) => ({
+export default ({content, showSubtitle = false, style, elementOptions}) => ({
   type: 'abstract',
   template: {
     elements: [
@@ -6,6 +6,7 @@ export default ({content, showSubtitle = false}) => ({
         type: 'layout.fixedWrapper',
         elementOptions: {
           maxWidth: 'var(--fixedWidthMax)',
+          ...elementOptions,
         },
         children: [
           Object.assign(
@@ -43,9 +44,9 @@ export default ({content, showSubtitle = false}) => ({
           },
         ],
         styles: {
-          backgroundColor: 'accent',
-          padding: '100px 0',
           textAlign: 'center',
+
+          ...style,
         },
       },
     ],

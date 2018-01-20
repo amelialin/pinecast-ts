@@ -38,7 +38,7 @@ const Radio = styled(
       content: '""',
       display: 'block',
       height: 0,
-      transition: 'background-color 1.2s, height 1.2s, width 1.2s',
+      transition: 'background-color 0.2s, height 0.2s, width 0.2s',
       width: 0,
     },
   },
@@ -63,7 +63,7 @@ const RadioInput = styled(
   {type: 'radio'},
 );
 
-export default class RadioList extends React.Component {
+export default class RadioList extends React.PureComponent {
   props: {
     onChange: (value: string) => void;
     options: {

@@ -1,9 +1,9 @@
 import baseTheme from './_base';
-import cardBody from '../wrappers/cardBody';
 import cardEpisodeItemLayout from '../episodePageLayouts/cardEpisodeItemLayout';
-import headerCentered from '../components/header-centered';
+import headerCentered from '../components/header-centeredFixed';
 import linksLinkBar from '../components/links-linkBar';
-import paginationForwardBack from '../components/pagination-forwardBack';
+import pagesTemplate from '../wrappers/pagesTemplate';
+import paginationForwardBack from '../components/pagination-forwardBack-fixed';
 import simpleEpisodeTileLayout from '../itemLayouts/simpleEpisodeTileLayout';
 import subheaderSubscribeLinks from '../components/subheader-subscribeLinks';
 import textWrappedText from '../components/text-wrappedText';
@@ -44,17 +44,42 @@ export default {
       fontSize: 60,
       textTransform: 'uppercase',
     },
+    pageHeading: {
+      fontSize: 26,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
   },
 
   layout: {
-    header: [headerCentered({content: 'text'}), subheaderSubscribeLinks()],
+    header: [
+      headerCentered({
+        content: 'text',
+        style: {
+          backgroundColor: 'accent',
+          padding: '200px 25%',
+          '@mobile': {padding: '100px 5%'},
+        },
+      }),
+      subheaderSubscribeLinks(),
+    ],
     footer: [
       paginationForwardBack({
         nextText: 'Back in time',
         previousText: 'Onward to the Future',
       }),
-      linksLinkBar({includes: ['pages', 'links']}),
-      textWrappedText({text: ['podcast', 'copyright']}),
+      linksLinkBar({
+        includes: ['pages', 'links'],
+        elementOptions: {
+          bgColor: 'secondaryAccent',
+          fgColor: 'secondaryAccent',
+          innerPadding: '20px 15px',
+        },
+      }),
+      textWrappedText({
+        text: ['podcast', 'copyright'],
+        elementOptions: {innerPadding: '20px 15px'},
+      }),
     ],
 
     body: {
@@ -75,123 +100,17 @@ export default {
         ],
       },
       episode: cardEpisodeItemLayout,
-      page: {
-        markdown: cardBody({
-          contents: [
-            {
-              type: 'block.text',
-              tag_name: 'h1',
-              textContent: ['title'],
-              styles: {
-                fontSize: 26,
-                fontWeight: 'bold',
-                textAlign: 'center',
-              },
-            },
-            {
-              type: 'block.text',
-              textContent: ['body'],
-              textContentFilter: 'markdown',
-            },
-          ],
-        }),
-        contact: cardBody({
-          contents: [
-            {
-              type: 'block.text',
-              tag_name: 'h1',
-              textContent: ['title'],
-              styles: {
-                fontSize: 26,
-                fontWeight: 'bold',
-                textAlign: 'center',
-              },
-            },
-            {
-              type: 'func.narrowScope',
-              elementOptions: {path: ['body']},
-              children: [
-                {
-                  type: 'helper.page.contact',
-                  elementOptions: {
-                    alignX: 'center',
-                    cellStyles: {
-                      padding: 5,
-                    },
-                  },
-                  styles: {
-                    marginBottom: 20,
-                    marginTop: 20,
-                  },
-                },
-              ],
-            },
-          ],
-        }),
-        hosts: cardBody({
-          contents: [
-            {
-              type: 'block.text',
-              tag_name: 'h1',
-              textContent: ['title'],
-              styles: {
-                fontSize: 26,
-                fontWeight: 'bold',
-                textAlign: 'center',
-              },
-            },
-            {
-              type: 'helper.page.hosts',
-              elementOptions: {style: 'flow'},
-              children: [
-                {
-                  type: 'layout.column',
-                  elementOptions: {innerAlignX: 'center'},
-                  children: [
-                    {
-                      type: 'image',
-                      elementOptions: {
-                        gravatar: ['email'],
-                        round: 200,
-                        square: 'element',
-                      },
-                      styles: {
-                        width: 200,
-                      },
-                    },
-                    {
-                      type: 'block.text',
-                      textContent: ['name'],
-                      styles: {
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                        lineHeight: 32,
-                      },
-                    },
-                    {
-                      type: 'helper.page.contact',
-                      elementOptions: {
-                        alignX: 'center',
-                        cellStyles: {
-                          padding: 5,
-                        },
-                      },
-                      styles: {
-                        marginBottom: 20,
-                        marginTop: 20,
-                      },
-                    },
-                  ],
-                  styles: {
-                    padding: 15,
-                    textAlign: 'center',
-                  },
-                },
-              ],
-            },
-          ],
-        }),
-      },
+      page: pagesTemplate({
+        style: {
+          backgroundColor: 'secondaryBackground',
+          boxShadow: '0 5px 5px rgba(0, 0, 0, 0.2)',
+          marginBottom: 50,
+        },
+        elementOptions: {
+          innerPadding: 30,
+          outerPadding: 15,
+        },
+      }),
     },
   },
 };
