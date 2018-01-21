@@ -107,7 +107,7 @@ export default (
       ...style,
 
       ':last-child': {
-        marginBottom: 0,
+        marginBottom: (style && style.marginBottom) || 0,
       },
       '@mobile': {
         alignItems: 'center',

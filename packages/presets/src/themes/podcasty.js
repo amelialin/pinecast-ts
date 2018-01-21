@@ -44,6 +44,11 @@ export default {
       marginBottom: 30,
     },
 
+    navigationLinks: {
+      color: 'foreground',
+      fontSize: 16,
+    },
+
     heroItemSecondary: {
       color: 'foreground',
       fontSize: 18,

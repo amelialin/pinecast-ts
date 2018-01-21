@@ -1,4 +1,5 @@
 import baseTheme from './_base';
+import fullWidthImageCenterStackedItem from '../itemLayouts/stacked/fullWidthImageCenterStackedItem';
 import pagesTemplate from '../wrappers/pagesTemplate';
 import snippetEpisodeItemLayout from '../episodePageLayouts/snippetEpisodeItemLayout';
 import noImageStackedItem from '../itemLayouts/stacked/noImageStackedItem';
@@ -77,6 +78,7 @@ export default {
       fontFamily: 'headings',
       fontSize: 13,
       fontWeight: 600,
+      padding: '10px 0',
       textTransform: 'uppercase',
     },
   },
@@ -125,7 +127,32 @@ export default {
 
     body: {
       home: {
-        firstPagePrefix: [],
+        firstPagePrefix: [
+          {
+            type: 'stacked',
+            consumeCount: 1,
+
+            alignment: 'center',
+
+            elementLayout: fullWidthImageCenterStackedItem({
+              ordering: [
+                'date',
+                'title',
+                'subtitle',
+                'image',
+                'summary',
+                'readMore',
+              ],
+              style: {
+                borderBottomWidth: 1,
+                borderBottomStyle: 'solid',
+                borderBottomColor: 'text',
+                marginBottom: 20,
+                paddingBottom: 30,
+              },
+            }),
+          },
+        ],
         segments: [
           {
             type: 'stacked',

@@ -58,7 +58,7 @@ class TypographyPanel extends React.Component {
             />
             <PanelDivider />
             <HelpText>
-              Choose a combination of pre-made fonts to style your website.
+              Choose a pre-made combination of fonts to style your website.
             </HelpText>
             {pairings.map(pairing => (
               <FontPreset

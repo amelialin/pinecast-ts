@@ -1,8 +1,8 @@
 import baseTheme from './_base';
+import fullWidthImageCenterStackedItem from '../itemLayouts/stacked/fullWidthImageCenterStackedItem';
+import header from '../components/header-centeredFixed';
 import pagesTemplate from '../wrappers/pagesTemplate';
 import slabEpisodeItemLayout from '../episodePageLayouts/slabEpisodeItemLayout';
-import slabEpisodePostLayout from '../itemLayouts/slabEpisodePostLayout';
-import header from '../components/header-centeredFixed';
 import paginationForwardBackFixed from '../components/pagination-forwardBack-fixed';
 
 import * as colors from './colors/panther.json';
@@ -44,6 +44,29 @@ export default {
       fontSize: 30,
       fontWeight: 500,
       marginBottom: 30,
+    },
+
+    itemHeading: {
+      color: 'text',
+      fontSize: 30,
+      fontWeight: 400,
+      textAlign: 'center',
+      textTransform: 'uppercase',
+    },
+    itemSecondary: {
+      color: 'text',
+      fontFamily: 'logo',
+      fontSize: 16,
+      fontWeight: 600,
+      opacity: 0.4,
+      padding: '20px 0',
+      textAlign: 'center',
+    },
+    itemSubtitle: {
+      color: 'secondaryAccent',
+      fontSize: 20,
+      textAlign: 'center',
+      textTransform: 'uppercase',
     },
   },
 
@@ -170,7 +193,17 @@ export default {
             fgColor: 'secondaryBackground',
             width: 'var(--fixedWidthMax)',
 
-            elementLayout: slabEpisodePostLayout,
+            elementLayout: fullWidthImageCenterStackedItem({
+              showBorder: true,
+              style: {
+                backgroundColor: 'secondaryBackground',
+                margin: '0 15px',
+                padding: 40,
+                ':nth-child(n+1)': {
+                  borderTop: '1px solid #eee',
+                },
+              },
+            }),
           },
         ],
       },
