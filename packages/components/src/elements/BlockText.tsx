@@ -147,14 +147,20 @@ export default getsContext(
       <Wrapper
         {...element.props}
         {...extractProps(item, element.propPaths)}
-        baseStyle={{
-          display: 'block',
-          fontSize: '1em',
-          fontWeight: 'normal',
-        }}
         children={processContent(blockChildren(item, element), element)}
-        extends={element.extendsStyles}
-        style={styleOptions({...style, ...element.styles}, element, ctx)}
+        style={styleOptions(
+          {
+            display: 'block',
+            fontSize: '1em',
+            fontWeight: 'normal',
+            ...(element.extendsStyles &&
+              element.extendsStyles.reduce((acc, cur) => acc[cur], ctx)),
+            ...style,
+            ...element.styles,
+          },
+          element,
+          ctx,
+        )}
       />
     );
   },

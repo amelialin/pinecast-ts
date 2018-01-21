@@ -1,7 +1,7 @@
 import baseTheme from './_base';
 import pagesTemplate from '../wrappers/pagesTemplate';
 import snippetEpisodeItemLayout from '../episodePageLayouts/snippetEpisodeItemLayout';
-import snippetEpisodePostLayout from '../itemLayouts/snippetEpisodePostLayout';
+import noImageStackedItem from '../itemLayouts/stacked/noImageStackedItem';
 import header from '../components/header-centeredFixed';
 import paginationForwardBack from '../components/pagination-forwardBack-fixed';
 
@@ -59,6 +59,26 @@ export default {
       fontSize: 30,
       marginBottom: 20,
     },
+
+    itemHeading: {
+      color: 'accent',
+      fontSize: 30,
+      fontWeight: 400,
+    },
+    itemSubtitle: {
+      color: 'secondaryAccent',
+      fontSize: 20,
+    },
+    itemSummary: {
+      lineHeight: 20,
+    },
+    itemSecondary: {
+      color: 'text',
+      fontFamily: 'headings',
+      fontSize: 13,
+      fontWeight: 600,
+      textTransform: 'uppercase',
+    },
   },
 
   layout: {
@@ -113,7 +133,7 @@ export default {
 
             alignment: 'center',
 
-            elementLayout: snippetEpisodePostLayout,
+            elementLayout: noImageStackedItem(),
           },
         ],
       },

@@ -1,6 +1,6 @@
-import {buttons, styles} from './paginationHelpers/previousNext';
+import {buttons, styles as baseStyles} from './paginationHelpers/previousNext';
 
-export default ({bgColor, fgColor, nextText, previousText}) => ({
+export default ({bgColor, fgColor, nextText, previousText, styles}) => ({
   type: 'pagination.forwardBack',
   layout: {
     nextText,
@@ -17,7 +17,7 @@ export default ({bgColor, fgColor, nextText, previousText}) => ({
           maxWidth: 'var(--fixedWidthMax)',
         },
         children: [...buttons],
-        styles: {padding: '40px 0', ...styles},
+        styles: {padding: '40px 0', ...baseStyles, ...styles},
       },
     ],
   },

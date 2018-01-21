@@ -20,6 +20,10 @@ export interface ComponentContext {
     itemSubtitle: CSS; // Prominent sub-title on an inline item
     itemSecondary: CSS; // Less prominent metadata on an inline item
     itemSummary: CSS;
+    heroItemHeading?: CSS;
+    heroItemSubtitle?: CSS; // Prominent sub-title on the hero post
+    heroItemSecondary?: CSS; // Less prominent metadata on the hero post
+    heroItemSummary?: CSS;
     footerText: CSS; // Copyright, etc.
   };
   resources: {[key: string]: string};

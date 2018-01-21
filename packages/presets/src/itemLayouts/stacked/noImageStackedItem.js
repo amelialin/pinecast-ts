@@ -1,4 +1,4 @@
-export default {
+export default () => ({
   elements: [
     {
       type: 'block.text',
@@ -7,57 +7,38 @@ export default {
       },
       textContent: ['publish'],
 
+      extendsStyles: ['textStyles', 'itemSecondary'],
       styles: {
-        color: 'text',
-        fontFamily: 'headings',
-        fontSize: 13,
-        fontWeight: 600,
         margin: 0,
         padding: '0 0 10px',
-        textTransform: 'uppercase',
       },
     },
     {
       type: 'block.link',
+
       children: [
         {
           type: 'block.text',
           tagName: 'h1',
-
           textContent: ['title'],
-
+          extendsStyles: ['textStyles', 'itemHeading'],
           styles: {
-            color: 'accent',
-            fontSize: 30,
-            fontWeight: 400,
             margin: 0,
           },
         },
-        {
-          type: 'block.text',
-          tagName: 'h2',
-
-          textContent: ['subtitle'],
-
-          styles: {
-            color: 'secondaryAccent',
-            fontSize: 20,
-            margin: '10px 0 0',
-
-            ':empty': {
-              display: 'none',
-            },
-          },
-        },
       ],
-      props: {
-        href: {name: 'episode', params: {id: ['id']}},
-      },
+
+      extendsStyles: ['textStyles', 'itemHeading'],
+    },
+    {
+      type: 'block.text',
+      tagName: 'h2',
+
+      textContent: ['subtitle'],
+
+      extendsStyles: ['textStyles', 'itemSubtitle'],
       styles: {
-        color: 'accent',
-        ':hover': {
-          textDecoration: 'underline',
-        },
+        margin: '10px 0 0',
       },
     },
     {
@@ -75,9 +56,9 @@ export default {
         maxLines: 10,
       },
 
+      extendsStyles: ['textStyles', 'itemSummary'],
       styles: {
-        lineHeight: 20,
-        margin: '20px 0 0',
+        margin: 0,
       },
     },
     {
@@ -112,4 +93,4 @@ export default {
     backgroundColor: 'background',
     padding: '30px 0 50px',
   },
-};
+});

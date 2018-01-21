@@ -11,6 +11,11 @@ export default `
         e.preventDefault();
         e.stopPropagation();
         handle(target.getAttribute('href'));
+        return;
+      } else if (target.getAttribute('href')) {
+        e.preventDefault();
+        window.open(target.getAttribute('href'));
+        return;
       }
       target = target.parentNode;
     }

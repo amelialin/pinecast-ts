@@ -1,5 +1,9 @@
 export default (
-  {position, source} = {position: 'center top', source: 'coverart'},
+  {
+    position = 'center top',
+    source = 'coverart',
+    textStyleType = 'heroItem',
+  } = {},
 ) => ({
   elements: [
     {
@@ -20,13 +24,8 @@ export default (
 
               textContent: 'Latest Episode',
 
-              styles: {
-                color: 'foreground',
-                fontSize: 18,
-                fontFamily: 'headings',
-                fontWeight: '500',
-                textTransform: 'uppercase',
-              },
+              extendsStyles: ['textStyles', 'heroItemSecondary'],
+              styles: {},
             },
             {
               type: 'block.link',
@@ -37,21 +36,17 @@ export default (
 
                   textContent: ['title'],
 
+                  extendsStyles: ['textStyles', `${textStyleType}Heading`],
                   styles: {
-                    fontFamily: 'headings',
-                    fontSize: 36,
-                    fontWeight: 600,
-                    lineHeight: 30,
-                    margin: '50px 0 60px',
-                    textTransform: 'uppercase',
+                    margin: '25px 0 50px',
                   },
                 },
               ],
               props: {
                 href: {name: 'episode', params: {id: ['id']}},
               },
+              extendsStyles: ['textStyles', `${textStyleType}Heading`],
               styles: {
-                color: 'foreground',
                 ':hover': {
                   textDecoration: 'underline',
                 },

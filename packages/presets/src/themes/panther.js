@@ -19,7 +19,7 @@ export default {
     ...baseTheme.styling,
     page: {
       backgroundColor: 'background',
-      fontSize: 12,
+      fontSize: 14,
       padding: '40px 15px',
     },
   },
@@ -41,8 +41,8 @@ export default {
       fontSize: 20,
     },
     pageHeading: {
-      fontSize: 36,
-      fontWeight: 'bold',
+      fontSize: 30,
+      fontWeight: 500,
       marginBottom: 30,
     },
   },

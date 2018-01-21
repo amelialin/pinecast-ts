@@ -1,10 +1,10 @@
 import baseTheme from './_base';
 import cardEpisodeItemLayout from '../episodePageLayouts/cardEpisodeItemLayout';
+import gridItem from '../itemLayouts/grid/minimalGridItem';
 import headerCentered from '../components/header-centeredFixed';
 import linksLinkBar from '../components/links-linkBar';
 import pagesTemplate from '../wrappers/pagesTemplate';
 import paginationForwardBack from '../components/pagination-forwardBack-fixed';
-import simpleEpisodeTileLayout from '../itemLayouts/simpleEpisodeTileLayout';
 import subheaderSubscribeLinks from '../components/subheader-subscribeLinks';
 import textWrappedText from '../components/text-wrappedText';
 
@@ -48,6 +48,13 @@ export default {
       fontSize: 26,
       fontWeight: 'bold',
       textAlign: 'center',
+    },
+    itemHeading: {
+      fontSize: 16,
+      fontWeight: 'normal',
+      lineHeight: 22,
+      paddingLeft: 15,
+      paddingRight: 15,
     },
   },
 
@@ -95,7 +102,7 @@ export default {
             maxItemsAcross: 3,
             padding: 0,
 
-            elementLayout: simpleEpisodeTileLayout,
+            elementLayout: gridItem({}),
           },
         ],
       },

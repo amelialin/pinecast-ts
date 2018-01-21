@@ -81,9 +81,10 @@ const ColorsPanel = ({
 export default connect(
   (state: ReducerType) => ({
     presetSwatch: presets.themes[state.theme.$type].colors,
-    colors:
-      state.theme.colors ||
-      (presets.themes[state.theme.$type].colors as {[key: string]: string}),
+    colors: {
+      ...presets.themes[state.theme.$type].colors,
+      ...state.theme.colors,
+    },
   }),
   {changeColor},
 )(ColorsPanel);

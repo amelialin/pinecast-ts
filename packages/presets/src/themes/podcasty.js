@@ -1,7 +1,7 @@
 import baseTheme from './_base';
+import fullWidthImageLeftStackedItem from '../itemLayouts/stacked/fullWidthImageLeftStackedItem';
+import heroFullWidthStackedItem from '../itemLayouts/stacked/heroFullWidthStackedItem';
 import mosaicEpisodeItemLayout from '../episodePageLayouts/mosaicEpisodeItemLayout';
-import fullWidthEpisodePostLayout from '../itemLayouts/fullWidthEpisodePostLayout';
-import heroEpisodePostLayout from '../itemLayouts/heroEpisodePostLayout';
 import header from '../components/header-centeredFixed';
 import linksLinkBar from '../components/links-linkBar';
 import pagesTemplate from '../wrappers/pagesTemplate';
@@ -42,6 +42,41 @@ export default {
       fontSize: 36,
       fontWeight: 'bold',
       marginBottom: 30,
+    },
+
+    heroItemSecondary: {
+      color: 'foreground',
+      fontSize: 18,
+      fontFamily: 'headings',
+      fontWeight: '500',
+      // textTransform: 'uppercase',
+    },
+    heroItemHeading: {
+      color: 'foreground',
+      fontFamily: 'headings',
+      fontSize: 36,
+      fontWeight: 600,
+      lineHeight: 30,
+      textTransform: 'uppercase',
+    },
+
+    itemHeading: {
+      color: 'inherit',
+      fontFamily: 'headings',
+      fontSize: 30,
+      fontWeight: 600,
+      lineHeight: 30,
+      textDecoration: 'underline',
+    },
+    itemSubtitle: {
+      fontSize: 16,
+      fontWeight: 600,
+      lineHeight: 16,
+      textTransform: 'uppercase',
+    },
+    itemSummary: {
+      fontSize: 12,
+      lineHeight: 18,
     },
   },
 
@@ -110,7 +145,7 @@ export default {
 
             width: 'full',
 
-            elementLayout: heroEpisodePostLayout(),
+            elementLayout: heroFullWidthStackedItem(),
           },
         ],
         firstPageAfterPrefix: [
@@ -125,7 +160,9 @@ export default {
             padding: '30px 15px 0',
             width: 'var(--fixedWidthMax)',
 
-            elementLayout: fullWidthEpisodePostLayout,
+            elementLayout: fullWidthImageLeftStackedItem({
+              padding: '30px 20px',
+            }),
           },
         ],
       },

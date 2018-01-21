@@ -1,4 +1,4 @@
-export default {
+export default ({size = 300, style, showSubtitle, textStyle}) => ({
   elements: [
     {
       type: 'block.link',
@@ -13,14 +13,15 @@ export default {
             src: ['image_url'],
           },
           styles: {
-            height: 300,
-            width: 300,
+            height: size,
+            width: size,
           },
         },
         {
           type: 'block.text',
           tagName: 'strong',
 
+          extendsStyles: ['textStyles', 'itemHeading'],
           textContent: ['title'],
 
           elementOptions: {
@@ -29,12 +30,23 @@ export default {
             maxLineFade: {color: 'background', height: 10},
           },
           styles: {
-            fontWeight: 'normal',
-            lineHeight: 22,
             marginBottom: 16,
             marginTop: 16,
-            paddingLeft: 15,
-            paddingRight: 15,
+          },
+        },
+        showSubtitle && {
+          type: 'block.text',
+          tagName: 'p',
+          extendsStyles: ['textStyles', 'itemSubtitle'],
+          textContent: ['subtitle'],
+          elementOptions: {
+            maxLines: 3,
+            maxLinesOnHover: 4,
+            maxLineFade: {color: 'background', height: 5},
+          },
+          styles: {
+            marginBottom: 16,
+            marginTop: -16,
           },
         },
       ],
@@ -47,5 +59,6 @@ export default {
   styles: {
     display: 'block',
     textAlign: 'center',
+    ...style,
   },
-};
+});

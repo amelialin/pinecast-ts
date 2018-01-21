@@ -12,6 +12,7 @@ const presets: Array<Preset> = [
       borderRadius: 2,
       boxShadow:
         '0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)',
+      fontSize: 16,
       padding: '0.75em 1.5em',
       transition: 'box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1)',
 
@@ -36,6 +37,7 @@ const presets: Array<Preset> = [
       borderRadius: '7px 7px 9px 9px',
       boxShadow:
         '0 -1px 1px 0 rgba(255,255,255,0.701961) inset, 0 1px 1px 0 var(--color-buttons)',
+      fontSize: 16,
       padding: '0.75em 1.5em',
       position: 'relative',
       textShadow: '0 1px 1px rgba(0, 0, 0, 0.5)',
@@ -57,6 +59,7 @@ const presets: Array<Preset> = [
     style: {
       borderRadius: 2,
       boxShadow: 'rgba(0, 0, 0, 0.25) 0px -3px 0px 0px inset',
+      fontSize: 16,
       fontWeight: 500,
       padding: '0.75em 1.5em calc(0.75em + 2px)',
       position: 'relative',
@@ -75,6 +78,8 @@ const presets: Array<Preset> = [
       backgroundImage:
         'linear-gradient(180deg, transparent 0, transparent 100%)',
       borderRadius: 3,
+      boxShadow: 'none',
+      fontSize: 16,
       padding: '0.75em 1.5em',
       transition: 'background-image 0.2s',
 
@@ -92,6 +97,8 @@ const presets: Array<Preset> = [
     name: 'Pill',
     style: {
       borderRadius: 100,
+      boxShadow: 'none',
+      fontSize: 16,
       padding: '0.65em 2em',
       transform: 'scale(1)',
       transition: 'transform 0.2s',
@@ -107,6 +114,9 @@ const presets: Array<Preset> = [
   {
     name: 'Isometric',
     style: {
+      borderRadius: 0,
+      boxShadow: 'none',
+      fontSize: 16,
       left: 0,
       padding: '1em 1.5em',
       position: 'relative',
@@ -161,6 +171,9 @@ const presets: Array<Preset> = [
   {
     name: 'Glitch',
     style: {
+      borderRadius: 0,
+      boxShadow: 'none',
+      fontSize: 16,
       padding: '1em 1.5em',
       position: 'relative',
       textTransform: 'uppercase',
@@ -209,6 +222,10 @@ const presets: Array<Preset> = [
   {
     name: 'Slant',
     style: {
+      borderRadius: 0,
+      boxShadow: 'none',
+      fontSize: 16,
+      margin: '0 10px',
       padding: '1em 30px',
       position: 'relative',
       zIndex: 2,

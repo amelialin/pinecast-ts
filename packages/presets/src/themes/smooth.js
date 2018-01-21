@@ -1,8 +1,8 @@
 import baseTheme from './_base';
-import simpleEpisodeTileLayout from '../itemLayouts/simpleEpisodeTileLayout';
+import fullWidthImageLeftStackedItem from '../itemLayouts/stacked/fullWidthImageLeftStackedItem';
+import gridItem from '../itemLayouts/grid/minimalGridItem';
 import pagesTemplate from '../wrappers/pagesTemplate';
 import snippetEpisodeItemLayout from '../episodePageLayouts/snippetEpisodeItemLayout';
-import snippetEpisodePostLayout from '../itemLayouts/snippetEpisodePostLayout';
 import header from '../components/header-centeredFixed';
 import paginationForwardBack from '../components/pagination-forwardBack-fixed';
 
@@ -60,6 +60,37 @@ export default {
       fontSize: 30,
       marginBottom: 20,
     },
+    heroItemHeading: {
+      color: 'accent',
+      fontSize: 20,
+      fontWeight: 'bold',
+      lineHeight: 32,
+    },
+    heroItemSubtitle: {
+      fontSize: 20,
+      fontWeight: 'normal',
+      lineHeight: 32,
+    },
+    heroItemSummary: {
+      fontSize: 14,
+      fontWeight: 'normal',
+      lineHeight: 22,
+    },
+    itemHeading: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      lineHeight: 22,
+    },
+    itemSubtitle: {
+      fontSize: 16,
+      fontWeight: 'normal',
+      lineHeight: 22,
+    },
+    itemSummary: {
+      fontSize: 14,
+      fontWeight: 'normal',
+      lineHeight: 22,
+    },
   },
 
   layout: {
@@ -99,20 +130,53 @@ export default {
       paginationForwardBack({
         nextText: 'Older',
         previousText: 'Newer',
+
+        styles: {
+          padding: '0 0 40px',
+        },
       }),
     ],
 
     body: {
       home: {
-        firstPagePrefix: [],
+        firstPagePrefix: [
+          {
+            type: 'stacked',
+            consumeCount: 1,
+
+            alignment: 'center',
+            width: 'var(--fixedWidthMax)',
+
+            elementLayout: fullWidthImageLeftStackedItem({
+              imageSize: 200,
+              maxLinesOfSummary: 8,
+              ordering: ['title', 'subtitle', 'player', 'summary'],
+              padding: '0 0 0 20px',
+              style: {
+                backgroundColor: 'background',
+                borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+                marginBottom: 50,
+                paddingBottom: 20,
+              },
+              textStyleType: 'heroItem',
+            }),
+          },
+        ],
         segments: [
           {
             type: 'grid',
-            consumeCount: 6,
+            consumeCount: 8,
+
+            itemSpacing: 40,
+            padding: 0,
 
             alignment: 'center',
 
-            elementLayout: simpleEpisodeTileLayout,
+            elementLayout: gridItem({
+              size: 150,
+              style: {textAlign: 'left'},
+              showSubtitle: true,
+            }),
           },
         ],
       },
