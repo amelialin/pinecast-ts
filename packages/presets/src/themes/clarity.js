@@ -1,7 +1,7 @@
 import baseTheme from './_base';
+import episodePageLayout from '../wrappers/episodePageLayout';
 import fullWidthImageCenterStackedItem from '../itemLayouts/stacked/fullWidthImageCenterStackedItem';
 import pagesTemplate from '../wrappers/pagesTemplate';
-import snippetEpisodeItemLayout from '../episodePageLayouts/snippetEpisodeItemLayout';
 import noImageStackedItem from '../itemLayouts/stacked/noImageStackedItem';
 import header from '../components/header-centeredFixed';
 import paginationForwardBack from '../components/pagination-forwardBack-fixed';
@@ -59,6 +59,18 @@ export default {
       color: 'accent',
       fontSize: 30,
       marginBottom: 20,
+    },
+    pageSubtitle: {
+      color: 'secondaryAccent',
+      fontSize: 20,
+      marginBottom: 20,
+      marginTop: -10,
+    },
+    pageSecondary: {
+      color: 'text',
+      fontFamily: 'headings',
+      fontWeight: 500,
+      textTransform: 'uppercase',
     },
 
     itemHeading: {
@@ -164,7 +176,32 @@ export default {
           },
         ],
       },
-      episode: snippetEpisodeItemLayout,
+      episode: episodePageLayout({
+        elementOptions: {
+          fgColor: 'background',
+          innerPadding: '30px 0',
+        },
+        innerElementOptions: {
+          image: {
+            alignX: 'left',
+          },
+        },
+        innerStyling: {
+          publish: {
+            padding: 0,
+          },
+          image: {},
+        },
+        ordering: [
+          'publish',
+          'title',
+          'subtitle',
+          'image',
+          'player',
+          'description',
+        ],
+        style: {},
+      }),
       page: pagesTemplate(),
     },
   },

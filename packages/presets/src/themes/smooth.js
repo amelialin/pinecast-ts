@@ -3,7 +3,6 @@ import episodePageLayout from '../wrappers/episodePageLayout';
 import fullWidthImageLeftStackedItem from '../itemLayouts/stacked/fullWidthImageLeftStackedItem';
 import gridItem from '../itemLayouts/grid/minimalGridItem';
 import pagesTemplate from '../wrappers/pagesTemplate';
-import snippetEpisodeItemLayout from '../episodePageLayouts/snippetEpisodeItemLayout';
 import header from '../components/header-centeredFixed';
 import paginationForwardBack from '../components/pagination-forwardBack-fixed';
 
@@ -60,6 +59,12 @@ export default {
       color: 'accent',
       fontSize: 30,
       marginBottom: 20,
+    },
+    pageSubtitle: {
+      color: 'text',
+      fontSize: 24,
+      marginBottom: 20,
+      marginTop: -10,
     },
     pageSecondary: {
       color: 'text',

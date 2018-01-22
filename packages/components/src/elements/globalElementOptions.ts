@@ -23,14 +23,14 @@ export default function(
       case 'alignX':
         switch (value) {
           case 'left':
-            acc.marginLeft = 'auto';
+            acc.marginRight = 'auto';
             break;
           case 'center':
             acc.marginLeft = 'auto';
             acc.marginRight = 'auto';
             break;
-          case 'left':
-            acc.marginRight = 'auto';
+          case 'right':
+            acc.marginLeft = 'auto';
             break;
         }
         break;

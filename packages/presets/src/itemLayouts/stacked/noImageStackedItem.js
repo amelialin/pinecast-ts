@@ -15,6 +15,9 @@ export default () => ({
     },
     {
       type: 'block.link',
+      props: {
+        href: {name: 'episode', params: {id: ['id']}},
+      },
 
       children: [
         {
