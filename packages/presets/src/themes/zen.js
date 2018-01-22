@@ -62,8 +62,10 @@ export default {
     header: [
       headerCentered({
         content: 'text',
+        elementOptions: {
+          bgColor: 'accent',
+        },
         style: {
-          backgroundColor: 'accent',
           padding: '200px 25%',
           '@mobile': {padding: '100px 5%'},
         },

@@ -37,11 +37,11 @@ export default getsItemSource(function<T>(
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'center',
+          margin: '0 auto',
           maxWidth:
             config.width === 'full'
               ? '100%'
-              : config.width ||
-                `calc(var(--fixedWidthMax) + ${config.itemSpacing}px * ${config.maxItemsAcross})`,
+              : config.width || 'var(--fixedWidthMax)',
           padding: config.padding,
         }}
       >

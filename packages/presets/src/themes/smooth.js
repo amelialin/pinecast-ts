@@ -121,8 +121,13 @@ export default {
         template: {
           elements: [
             {
-              type: 'mount',
-              props: {mount: 'pageLinks'},
+              type: 'layout.fixedWrapper',
+              children: [
+                {
+                  type: 'mount',
+                  props: {mount: 'pageLinks'},
+                },
+              ],
             },
           ],
           tagName: 'nav',
@@ -176,6 +181,7 @@ export default {
             consumeCount: 8,
 
             itemSpacing: 40,
+            maxItemsAcross: 10,
             padding: 0,
 
             alignment: 'center',
