@@ -1,8 +1,8 @@
 import baseTheme from './_base';
+import episodePageLayout from '../wrappers/episodePageLayout';
 import fullWidthImageCenterStackedItem from '../itemLayouts/stacked/fullWidthImageCenterStackedItem';
 import header from '../components/header-centeredFixed';
 import pagesTemplate from '../wrappers/pagesTemplate';
-import slabEpisodeItemLayout from '../episodePageLayouts/slabEpisodeItemLayout';
 import paginationForwardBackFixed from '../components/pagination-forwardBack-fixed';
 
 import * as colors from './colors/panther.json';
@@ -44,6 +44,24 @@ export default {
       fontSize: 30,
       fontWeight: 500,
       marginBottom: 30,
+      textAlign: 'center',
+    },
+    pageSubtitle: {
+      color: 'secondaryAccent',
+      fontSize: 20,
+      marginBottom: 20,
+      marginTop: -20,
+      textAlign: 'center',
+      textTransform: 'uppercase',
+    },
+    pageSecondary: {
+      color: 'text',
+      fontFamily: 'logo',
+      fontSize: 16,
+      fontWeight: 600,
+      opacity: 0.4,
+      padding: '20px 0',
+      textAlign: 'center',
     },
 
     itemHeading: {
@@ -207,7 +225,40 @@ export default {
           },
         ],
       },
-      episode: slabEpisodeItemLayout,
+      episode: episodePageLayout({
+        elementOptions: {
+          fgColor: 'secondaryBackground',
+          innerPadding: '30px 40px',
+        },
+        innerElementOptions: {
+          image: {
+            alignX: null,
+            square: 'background',
+          },
+        },
+        innerStyling: {
+          publish: {
+            padding: 0,
+          },
+          image: {
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            height: 400,
+            marginLeft: 0,
+            maxWidth: null,
+            width: '100%',
+          },
+        },
+        ordering: [
+          'publish',
+          'title',
+          'subtitle',
+          'image',
+          'player',
+          'description',
+        ],
+        style: {},
+      }),
       page: pagesTemplate({
         elementOptions: {fgColor: 'secondaryBackground'},
         style: {padding: 40},

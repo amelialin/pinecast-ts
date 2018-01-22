@@ -25,10 +25,8 @@ export default {
     {
       type: 'block.text',
       tagName: 'h1',
+      extendsStyles: ['textStyles', 'pageHeading'],
       styles: {
-        fontFamily: 'headings',
-        fontSize: 30,
-        fontWeight: 'bold',
         margin: 0,
       },
       textContent: ['title'],
@@ -36,10 +34,8 @@ export default {
     {
       type: 'block.text',
       tagName: 'h2',
+      extendsStyles: ['textStyles', 'pageSubtitle'],
       styles: {
-        color: 'buttons',
-        fontFamily: 'headings',
-        fontSize: 24,
         margin: 0,
       },
       textContent: ['subtitle'],
@@ -48,20 +44,14 @@ export default {
       type: 'block.player',
       propPaths: {src: ['player_url']},
       styles: {
-        marginBottom: 40,
-        marginTop: 40,
+        marginBottom: 20,
+        marginTop: 30,
       },
     },
     {
-      type: 'layout.column',
-      tagName: 'div',
-      children: [
-        {
-          type: 'block.text',
-          textContent: ['description'],
-          textContentFilter: 'raw',
-        },
-      ],
+      type: 'block.text',
+      textContent: ['description'],
+      textContentFilter: 'raw',
     },
   ],
   tagName: 'article',
