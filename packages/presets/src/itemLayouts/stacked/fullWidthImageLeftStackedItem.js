@@ -61,7 +61,7 @@ export default (
       elementOptions: {
         maxLines: maxLinesOfSummary,
         maxLineFade: {
-          color: (style && style.backgroundColor) || '#fff',
+          color: (style && style.backgroundColor) || 'secondaryBackground',
           height: 25,
         },
       },
@@ -101,7 +101,7 @@ export default (
     ],
     tagName: 'article',
     styles: {
-      backgroundColor: '#fff',
+      backgroundColor: 'secondaryBackground',
       display: 'flex',
       marginBottom: 40,
       ...style,

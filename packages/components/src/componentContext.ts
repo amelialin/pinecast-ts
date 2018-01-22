@@ -12,19 +12,21 @@ export interface ComponentContext {
     body: string;
   };
   textStyles: {
-    logo: CSS;
-    subtitle: CSS;
-    pageHeading: CSS;
-    navigationLinks: CSS;
-    itemHeading: CSS;
-    itemSubtitle: CSS; // Prominent sub-title on an inline item
-    itemSecondary: CSS; // Less prominent metadata on an inline item
-    itemSummary: CSS;
+    logo?: CSS;
+    subtitle?: CSS;
+    pageHeading?: CSS;
+    pageSubtitle?: CSS;
+    pageSecondary?: CSS;
+    navigationLinks?: CSS;
+    itemHeading?: CSS;
+    itemSubtitle?: CSS; // Prominent sub-title on an inline item
+    itemSecondary?: CSS; // Less prominent metadata on an inline item
+    itemSummary?: CSS;
     heroItemHeading?: CSS;
     heroItemSubtitle?: CSS; // Prominent sub-title on the hero post
     heroItemSecondary?: CSS; // Less prominent metadata on the hero post
     heroItemSummary?: CSS;
-    footerText: CSS; // Copyright, etc.
+    // footerText?: CSS; // Copyright, etc.
   };
   resources: {[key: string]: string};
   data: {

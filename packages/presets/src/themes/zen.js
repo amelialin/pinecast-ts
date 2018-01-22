@@ -1,5 +1,5 @@
 import baseTheme from './_base';
-import cardEpisodeItemLayout from '../episodePageLayouts/cardEpisodeItemLayout';
+import episodePageLayout from '../wrappers/episodePageLayout';
 import gridItem from '../itemLayouts/grid/minimalGridItem';
 import headerCentered from '../components/header-centeredFixed';
 import linksLinkBar from '../components/links-linkBar';
@@ -106,11 +106,23 @@ export default {
           },
         ],
       },
-      episode: cardEpisodeItemLayout,
+      episode: episodePageLayout({
+        elementOptions: {
+          fgColor: 'secondaryBackground',
+          innerPadding: 30,
+          outerPadding: '0 5px',
+        },
+        ordering: ['title', 'image', 'player', 'subtitle', 'description'],
+        style: {
+          boxShadow: '0 2px 1px rgba(0, 0, 0, 0.1)',
+          borderRadius: 3,
+          marginBottom: 50,
+        },
+      }),
       page: pagesTemplate({
         style: {
           backgroundColor: 'secondaryBackground',
-          boxShadow: '0 5px 5px rgba(0, 0, 0, 0.2)',
+          boxShadow: '0 2px 1px rgba(0, 0, 0, 0.1)',
           marginBottom: 50,
         },
         elementOptions: {

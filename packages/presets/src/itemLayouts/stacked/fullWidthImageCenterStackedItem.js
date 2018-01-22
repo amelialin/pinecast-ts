@@ -69,7 +69,7 @@ export default (
       elementOptions: {
         maxLines: maxLinesOfSummary,
         maxLineFade: {
-          color: (style && style.backgroundColor) || '#fff',
+          color: (style && style.backgroundColor) || 'background',
           height: 25,
         },
       },

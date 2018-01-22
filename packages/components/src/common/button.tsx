@@ -3,17 +3,13 @@ import * as React from 'react';
 import atom from '../elements/atom';
 import {ComponentContext, getsContext} from '../componentContext';
 
-const Button = atom(
-  'a',
-  {
-    border: 0,
-    borderRadius: 0,
-    display: 'inline-flex',
-    lineHeight: '1em',
-    textDecoration: 'none',
-  },
-  {'data-link': true},
-);
+const Button = atom('a', {
+  border: 0,
+  borderRadius: 0,
+  display: 'inline-flex',
+  lineHeight: '1em',
+  textDecoration: 'none',
+});
 
 export default getsContext(
   (
@@ -22,6 +18,11 @@ export default getsContext(
   ) => {
     return (
       <Button
+        data-link={
+          typeof props.href !== 'string' || props.href.startsWith('/')
+            ? true
+            : null
+        }
         href={props.href}
         style={{
           backgroundColor: 'buttons',

@@ -1,4 +1,5 @@
 import baseTheme from './_base';
+import episodePageLayout from '../wrappers/episodePageLayout';
 import fullWidthImageLeftStackedItem from '../itemLayouts/stacked/fullWidthImageLeftStackedItem';
 import gridItem from '../itemLayouts/grid/minimalGridItem';
 import pagesTemplate from '../wrappers/pagesTemplate';
@@ -60,6 +61,13 @@ export default {
       fontSize: 30,
       marginBottom: 20,
     },
+    pageSecondary: {
+      color: 'text',
+      fontFamily: 'headings',
+      fontSize: 13,
+      fontWeight: 600,
+      textTransform: 'uppercase',
+    },
     heroItemHeading: {
       color: 'accent',
       fontSize: 20,
@@ -119,7 +127,7 @@ export default {
           ],
           tagName: 'nav',
           styles: {
-            margin: '30px 0',
+            margin: '30px 0 60px',
           },
         },
         tag: 'header.pageLinkList',
@@ -180,7 +188,40 @@ export default {
           },
         ],
       },
-      episode: snippetEpisodeItemLayout,
+      episode: episodePageLayout({
+        elementOptions: {
+          fgColor: 'background',
+          innerPadding: '30px 0',
+        },
+        innerElementOptions: {
+          image: {
+            alignX: null,
+            square: 'background',
+          },
+        },
+        innerStyling: {
+          publish: {
+            padding: 0,
+          },
+          image: {
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            height: 400,
+            marginLeft: 0,
+            maxWidth: null,
+            width: '100%',
+          },
+        },
+        ordering: [
+          'publish',
+          'title',
+          'subtitle',
+          'image',
+          'player',
+          'description',
+        ],
+        style: {},
+      }),
       page: pagesTemplate(),
     },
   },
