@@ -13,11 +13,12 @@ import ModalLayer from './common/ModalLayer';
 import {ReducerType} from './reducer';
 import {ReducerType as SaveReducerType} from './reducers/save';
 
-class SaveOptions extends React.Component {
+class SaveOptions extends React.PureComponent {
   props: {
     doSave: () => Promise<void>;
     needsSave: boolean;
     save: SaveReducerType;
+    style?: React.CSSProperties;
   };
   state: {
     open: boolean;
@@ -125,6 +126,7 @@ class SaveOptions extends React.Component {
           $isPrimary
           shortcut={{letter: 's', metaKey: true}}
           onClick={this.handleOpen}
+          style={this.props.style}
         >
           Save
         </Button>

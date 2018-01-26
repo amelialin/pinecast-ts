@@ -129,7 +129,7 @@ type State = {
   showingPicker: boolean;
 };
 
-export default class FontSelect extends React.Component {
+export default class FontSelect extends React.PureComponent {
   props: {
     onChange: (string) => void;
     value: string;

@@ -38,31 +38,60 @@ const Footer = styled('footer', {
   textAlign: 'right',
 });
 
-const Dialog = ({
-  actions,
-  children,
-  title,
-}: {
-  actions?: JSX.Element | Array<JSX.Element> | string | null;
-  children: JSX.Element | Array<JSX.Element> | string | null;
-  title: string;
-}) => {
-  if (!open) {
-    return null;
+// const Dialog = ({
+//   actions,
+//   children,
+//   title,
+// }: {
+//   actions?: JSX.Element | Array<JSX.Element> | string | null;
+//   children: JSX.Element | Array<JSX.Element> | string | null;
+//   title: string;
+// }) => {
+//   if (!open) {
+//     return null;
+//   }
+
+//   let actionWrapper: JSX.Element | null = null;
+//   if (actions) {
+//     actionWrapper = <Footer>{actions}</Footer>;
+//   }
+
+//   return (
+//     <Wrapper role="dialog">
+//       <Header>{title}</Header>
+//       <Body>{children}</Body>
+//       {actionWrapper}
+//     </Wrapper>
+//   );
+// };
+
+// export default Dialog;
+
+export default class Dialog extends React.PureComponent {
+  props: {
+    actions?: JSX.Element | Array<JSX.Element> | string | null;
+    children: JSX.Element | Array<JSX.Element> | string | null;
+    title: string;
+  };
+
+  render() {
+    const {actions, children, title} = this.props;
+
+    if (!open) {
+      return null;
+    }
+
+    let actionWrapper: JSX.Element | null = null;
+    if (actions) {
+      actionWrapper = <Footer>{actions}</Footer>;
+    }
+
+    return (
+      <Wrapper role="dialog">
+        <Header>{title}</Header>
+        <Body>{children}</Body>
+        {actionWrapper}
+      </Wrapper>
+    );
   }
-
-  let actionWrapper: JSX.Element | null = null;
-  if (actions) {
-    actionWrapper = <Footer>{actions}</Footer>;
-  }
-
-  return (
-    <Wrapper role="dialog">
-      <Header>{title}</Header>
-      <Body>{children}</Body>
-      {actionWrapper}
-    </Wrapper>
-  );
-};
-
-export default Dialog;
+}

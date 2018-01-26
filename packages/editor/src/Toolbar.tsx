@@ -3,9 +3,11 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
+import {ButtonGroup} from './common/Button';
 import {changeChromePage} from './actions/chrome';
 import {DEFAULT_FONT} from './common/constants';
 import {ReducerType} from './reducer';
+import ReportProblem from './ReportProblem';
 import SaveOptions from './SaveOptions';
 
 const Toolbar_ = styled('nav', {
@@ -87,7 +89,10 @@ const Toolbar = () => (
     <ConnectedToolbarButton id="typography">Typography</ConnectedToolbarButton>
     <ConnectedToolbarButton id="components">Components</ConnectedToolbarButton>
     <RHS>
-      <SaveOptions />
+      <ButtonGroup>
+        <ReportProblem />
+        <SaveOptions />
+      </ButtonGroup>
     </RHS>
   </Toolbar_>
 );

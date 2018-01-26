@@ -8,7 +8,7 @@ const TabWrapper = styled('div', {
   padding: '30px 0',
 });
 
-export class Tab extends React.Component {
+export class Tab extends React.PureComponent {
   props: {
     children?: Array<JSX.Element | Array<JSX.Element>> | JSX.Element | string;
     name: string;

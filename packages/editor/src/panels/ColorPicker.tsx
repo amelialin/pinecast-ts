@@ -47,7 +47,7 @@ const NameWrapper = styled('div', {
   padding: '0 10px',
 });
 
-export default class ColorPicker extends React.Component {
+export default class ColorPicker extends React.PureComponent {
   props: {
     colorKey: string;
     colorValue: string;

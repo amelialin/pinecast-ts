@@ -31,6 +31,9 @@ export default class ModalLayer extends React.PureComponent {
   };
 
   escListener = (e: KeyboardEvent) => {
+    if (!this.props.open) {
+      return;
+    }
     if (e.keyCode !== 27) {
       // ESC
       return;

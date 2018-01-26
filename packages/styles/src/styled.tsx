@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {styled} from 'styletron-react';
+import * as PropTypes from 'prop-types';
 
 // This is a hack to disable Styletron's built-in autoprefixing.
 declare function require(name: string);
@@ -24,7 +24,7 @@ export default function(
     | ((props: any, ctx?: any) => React.CSSProperties)
     | null,
   defaultProps?: React.HTMLProps<any>,
-): React.StatelessComponent<any> {
+): React.ComponentType<any> {
   // Basic validation
   if (elemType.toLowerCase() !== elemType) {
     throw new Error(
@@ -32,41 +32,44 @@ export default function(
     );
   }
 
-  let StyledComponent;
-  if (!props) {
-    StyledComponent = styled(elemType, styleIdentity);
-  } else if (typeof props === 'object') {
-    StyledComponent = styled(elemType, ({$style}) => ({...props, ...$style}));
-  } else if (typeof props === 'function') {
-    StyledComponent = styled(elemType, ({$style, ...rest}) => ({
-      ...props(rest),
-      ...$style,
-    }));
-  } else {
-    throw new Error('Unrecognized style prop, typeof ${typeof props}');
-  }
-
-  StyledComponent.displayName = `styled(${elemType})`;
-  StyledComponent.defaultProps = defaultProps;
-
-  const out = (
-    {
-      style,
-      ...props,
-    }: {
+  return class StyledElement extends React.PureComponent {
+    props: {
+      className?: string;
       style?: React.CSSProperties;
-      [prop: string]: any;
-    },
-    ctx: any,
-  ) => {
-    if (style) {
-      return <StyledComponent $style={style} {...props} />;
+      [key: string]: any;
+    };
+
+    static contextTypes = {
+      styletron: PropTypes.object,
+    };
+    static defaultProps = defaultProps;
+    static displayName = `Styled(${elemType})`;
+
+    render() {
+      const {className, style, ...ownProps} = this.props;
+      const styleResult = {};
+      if (typeof props === 'function') {
+        Object.assign(styleResult, props(ownProps), style);
+      } else {
+        Object.assign(styleResult, props, style);
+      }
+
+      for (const key in ownProps) {
+        if (key[0] === '$') {
+          delete ownProps[key];
+        }
+      }
+
+      const styletronClassNames: string = su.injectStyle(
+        this.context.styletron,
+        styleResult,
+      );
+      if (className) {
+        ownProps.className = `${styletronClassNames} ${className}`;
+      } else {
+        ownProps.className = styletronClassNames;
+      }
+      return React.createElement(elemType, ownProps);
     }
-    if (defaultProps) {
-      return StyledComponent({...defaultProps, ...props}, ctx);
-    }
-    return StyledComponent(props, ctx);
   };
-  wrapCtx(out, StyledComponent);
-  return out;
 }
