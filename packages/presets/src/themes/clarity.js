@@ -124,6 +124,11 @@ export default {
       header({
         content: 'text',
         showSubtitle: true,
+        elementOptions: {
+          imageElementOptions: {
+            alignX: 'left',
+          },
+        },
         style: {
           marginBottom: 50,
           textAlign: 'left',

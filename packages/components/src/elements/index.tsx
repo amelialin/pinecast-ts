@@ -5,6 +5,7 @@ import {Element, ElementLayout, InlineElement} from '../primitives';
 
 import BackgroundImage from './BackgroundImage';
 import BlockLink from './BlockLink';
+import BlockLogo from './BlockLogo';
 import BlockText from './BlockText';
 import EmbedPlayer from './EmbedPlayer';
 import FixedWrapper from './FixedWrapper';
@@ -28,6 +29,9 @@ export function layoutElements(
     switch (element.type) {
       case 'block.link':
         Element = BlockLink;
+        break;
+      case 'block.logo':
+        Element = BlockLogo;
         break;
       case 'block.player':
         Element = EmbedPlayer;

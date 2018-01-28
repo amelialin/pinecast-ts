@@ -2,18 +2,18 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
-const Wrapper = styled('div', {
+const Wrapper = styled('div', ({$size}) => ({
   backgroundColor: '#fff',
   borderRadius: 3,
   boxShadow:
     'rgba(0, 0, 0, 0.2) 0px 3px 12px, rgba(0, 0, 0, 0.2) 0px 10px 20px',
   display: 'flex',
   flexDirection: 'column',
-  maxWidth: 400,
-  minWidth: 350,
+  maxWidth: $size === 'small' ? 400 : $size === 'medium' ? 625 : 850,
+  minWidth: $size === 'small' ? 350 : $size === 'medium' ? 550 : 650,
   overflow: 'hidden',
   textAlign: 'left',
-});
+}));
 const Header = styled('header', {
   alignItems: 'center',
   borderBottom: '1px solid #eee',
@@ -71,11 +71,12 @@ export default class Dialog extends React.PureComponent {
   props: {
     actions?: JSX.Element | Array<JSX.Element> | string | null;
     children: JSX.Element | Array<JSX.Element> | string | null;
+    size?: 'small' | 'medium' | 'large';
     title: string;
   };
 
   render() {
-    const {actions, children, title} = this.props;
+    const {actions, children, size, title} = this.props;
 
     if (!open) {
       return null;
@@ -87,7 +88,7 @@ export default class Dialog extends React.PureComponent {
     }
 
     return (
-      <Wrapper role="dialog">
+      <Wrapper role="dialog" $size={size || 'medium'}>
         <Header>{title}</Header>
         <Body>{children}</Body>
         {actionWrapper}

@@ -79,6 +79,7 @@ export interface StyleableElement {
 export interface Element extends StyleableElement {
   type:
     | 'block.link'
+    | 'block.logo'
     | 'block.player'
     | 'block.text'
     | 'image'

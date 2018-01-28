@@ -8,6 +8,13 @@ const Text = styled('span', {
   display: 'block',
   fontFamily: DEFAULT_FONT,
   fontSize: 14,
+  fontWeight: 500,
+  marginBottom: 5,
+});
+const SubText = styled('span', {
+  display: 'block',
+  fontFamily: DEFAULT_FONT,
+  fontSize: 14,
   fontWeight: 400,
   marginBottom: 5,
 });
@@ -21,12 +28,14 @@ const Label = ({
   componentType = 'label',
   labelStyle,
   style,
+  subText,
   text,
 }: {
   children: JSX.Element | string | Array<JSX.Element | Array<JSX.Element>>;
   componentType?: string;
   labelStyle?: React.CSSProperties;
   style?: React.CSSProperties;
+  subText?: JSX.Element | string;
   text: JSX.Element | string;
 }) => {
   if (!nativeLabelMap.has(componentType)) {
@@ -41,7 +50,8 @@ const Label = ({
   }
   return (
     <NativeLabel style={style}>
-      <Text style={labelStyle}>{text}</Text>
+      <Text style={!subText && labelStyle}>{text}</Text>
+      {subText && <SubText style={labelStyle}>{subText}</SubText>}
       {children}
     </NativeLabel>
   );

@@ -64,7 +64,10 @@ const ComponentsPanel = ({
 
   return (
     <React.Fragment>
-      <Label text={`Horizontal padding (${units[horizUnit]})`}>
+      <Label
+        text={`Horizontal padding (${units[horizUnit]})`}
+        subText="The space between the left and right edges of the window and the page content"
+      >
         <Range
           min={0}
           max={101}
@@ -76,7 +79,10 @@ const ComponentsPanel = ({
           value={horizAmount}
         />
       </Label>
-      <Label text={`Vertical padding (${units[vertUnit]})`}>
+      <Label
+        text={`Vertical padding (${units[vertUnit]})`}
+        subText="The space between the top and bottom of the inside of the window and the page content"
+      >
         <Range
           min={0}
           max={101}
@@ -92,6 +98,7 @@ const ComponentsPanel = ({
         componentType="div"
         labelStyle={{marginBottom: '1em'}}
         text="Body style"
+        subText="How your page adjusts to different screen sizes; fixed width will keep the page at a maximum size while flued width will grow to the window size"
       >
         <RadioList
           options={{
@@ -127,7 +134,10 @@ const ComponentsPanel = ({
         />
       </Label>
       <PanelDivider />
-      <Label text="Default font size">
+      <Label
+        text="Default font size"
+        subText="The size of text used in episode descriptions and page bodies"
+      >
         <Range
           min={10}
           max={30}
