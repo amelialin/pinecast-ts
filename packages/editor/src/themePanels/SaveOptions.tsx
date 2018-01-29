@@ -117,7 +117,11 @@ class SaveOptions extends React.PureComponent {
     return (
       <React.Fragment>
         <ModalLayer canEscape={!saving} open={open} onClose={this.handleClose}>
-          <Dialog actions={this.renderActions()} title={this.renderTitle()}>
+          <Dialog
+            actions={this.renderActions()}
+            size="small"
+            title={this.renderTitle()}
+          >
             {this.renderInner()}
           </Dialog>
         </ModalLayer>

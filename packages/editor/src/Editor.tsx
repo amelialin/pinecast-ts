@@ -5,7 +5,7 @@ import * as React from 'react';
 import {ClientStyletron, StyletronProvider, styled} from '@pinecast/sb-styles';
 
 import OptionsPanel from './OptionsPanel';
-import PreviewPanel from './PreviewPanel';
+import Preview from './preview';
 import {store} from './reducer';
 import Toolbar from './Toolbar';
 import WelcomeDialog from './WelcomeDialog';
@@ -37,7 +37,7 @@ export default class Editor extends React.PureComponent {
             <Toolbar />
             <BelowToolbar>
               <OptionsPanel />
-              <PreviewPanel />
+              <Preview />
             </BelowToolbar>
             <WelcomeDialog />
           </HeightWrapper>

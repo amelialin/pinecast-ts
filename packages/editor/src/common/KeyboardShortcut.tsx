@@ -35,7 +35,7 @@ const KeyboardShortcut = ({
   ...shortcut,
 }: ShortcutKey & {style?: React.CSSProperties}) => {
   if (isMobile) {
-    return <React.Fragment />;
+    return <span />;
   }
   const modifiers = [
     shortcut.metaKey ? renderMeta() : null,
