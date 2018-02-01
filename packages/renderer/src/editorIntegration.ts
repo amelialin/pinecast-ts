@@ -7,7 +7,7 @@ export default `
   document.body.addEventListener('click', function(e) {
     let target = e.target;
     while (target && target !== document.body && target !== document) {
-      if (target.hasAttribute('data-link')) {
+      if (target.hasAttribute('data-link') && target.getAttribute('href')[0] === '/') {
         e.preventDefault();
         e.stopPropagation();
         handle(target.getAttribute('href'));

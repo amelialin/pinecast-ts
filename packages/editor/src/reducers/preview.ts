@@ -3,6 +3,7 @@ import {actionHandler} from './util';
 
 export interface ReducerType {
   readonly path: string;
+  readonly refreshIncrement: number;
 
   // readonly data: {
   //     readonly site: Object | null,
@@ -13,9 +14,14 @@ export interface ReducerType {
 
 export const initialState: ReducerType = {
   path: '/',
+  refreshIncrement: 0,
 };
 
 export default actionHandler<ReducerType>({
+  refreshIncrement: actionReducer<ReducerType['refreshIncrement']>(
+    'preview.refresh',
+    state => state + 1,
+  ),
   path: actionReducer<ReducerType['path']>(
     'preview.changePath',
     (state, action) => action.payload,

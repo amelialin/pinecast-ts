@@ -15,7 +15,8 @@ import {
   PanelWrapper,
 } from '../panelComponents';
 import {ReducerType} from '../reducer';
-import request from '../data/requests';
+import {refresh} from '../actions/preview';
+import request, {clearCache} from '../data/requests';
 import xhr from '../data/xhr';
 
 const pageOptions = [
@@ -48,11 +49,15 @@ const LinkHeaderCell = styled('th', {
   textAlign: 'left',
   textTransform: 'uppercase',
 });
-const LinkBodyCell = styled('td', {
+const LinkBodyCell = styled('td', ({$wrapAt}: {$wrapAt?: number}) => ({
   borderBottom: '1px solid #ccc',
   fontSize: 16,
+  maxWidth: $wrapAt,
+  overflow: 'hidden',
   padding: '0 8px',
-});
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+}));
 
 const DeleteButton = styled(
   'button',
@@ -100,7 +105,7 @@ const DeleteButton = styled(
 );
 
 class LinkPanel extends React.PureComponent {
-  props: {csrf: string; slug: string};
+  props: {csrf: string; onRefresh: () => void; slug: string};
   state: {
     data: Array<{title: string; url: string}> | null;
     error: string | null;
@@ -145,7 +150,11 @@ class LinkPanel extends React.PureComponent {
     })
       .then(data => JSON.parse(data))
       .then(
-        parsed => this.setState({data: parsed}),
+        parsed => {
+          this.setState({data: parsed});
+          clearCache();
+          this.props.onRefresh();
+        },
         () => {
           this.setState({error: 'Could not contact Pinecast'});
         },
@@ -187,8 +196,8 @@ class LinkPanel extends React.PureComponent {
         <LinkTable>
           <thead>
             <tr>
-              <LinkHeaderCell>Title</LinkHeaderCell>
-              <LinkHeaderCell>URL</LinkHeaderCell>
+              <LinkHeaderCell $wrapAt={150}>Link text</LinkHeaderCell>
+              <LinkHeaderCell $wrapAt={200}>URL</LinkHeaderCell>
               <LinkHeaderCell />
             </tr>
           </thead>
@@ -196,8 +205,10 @@ class LinkPanel extends React.PureComponent {
             {this.state.data.map((link, i) => {
               return (
                 <tr key={i}>
-                  <LinkBodyCell>{link.title}</LinkBodyCell>
-                  <LinkBodyCell>{link.url}</LinkBodyCell>
+                  <LinkBodyCell $wrapAt={150}>{link.title}</LinkBodyCell>
+                  <LinkBodyCell $wrapAt={200} title={link.url}>
+                    {link.url}
+                  </LinkBodyCell>
                   <LinkBodyCell style={{width: 30}}>
                     <DeleteButton
                       onClick={() => {
@@ -235,7 +246,10 @@ class LinkPanel extends React.PureComponent {
   }
 }
 
-export default connect((state: ReducerType) => ({
-  csrf: state.csrf,
-  slug: state.slug,
-}))(LinkPanel);
+export default connect(
+  (state: ReducerType) => ({
+    csrf: state.csrf,
+    slug: state.slug,
+  }),
+  {onRefresh: refresh},
+)(LinkPanel);

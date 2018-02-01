@@ -102,6 +102,7 @@ class PreviewRenderer extends React.Component {
   props: {
     changePath: (path: string) => void;
     path: string;
+    refreshIncrement: number;
     slug: string;
     theme: Object;
   };
@@ -134,6 +135,7 @@ class PreviewRenderer extends React.Component {
     return (
       this.props.path !== nextProps.path ||
       this.props.theme !== nextProps.theme ||
+      this.props.refreshIncrement !== nextProps.refreshIncrement ||
       this.state.frame !== nextState.frame ||
       this.state.orientation !== nextState.orientation ||
       this.state.fullScreen !== nextState.fullScreen
@@ -144,7 +146,8 @@ class PreviewRenderer extends React.Component {
     if (
       this.iframe &&
       (this.props.path !== prevProps.path ||
-        this.props.theme !== prevProps.theme)
+        this.props.theme !== prevProps.theme ||
+        this.props.refreshIncrement !== prevProps.refreshIncrement)
     ) {
       this.doInnerRender();
     }
@@ -256,6 +259,7 @@ class PreviewRenderer extends React.Component {
 export default connect(
   (state: ReducerType) => ({
     path: state.preview.path,
+    refreshIncrement: state.preview.refreshIncrement,
     slug: state.slug,
     theme: state.theme,
   }),
