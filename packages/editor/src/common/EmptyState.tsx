@@ -6,6 +6,7 @@ import ErrorIcon from './icons/ErrorIcon';
 import Spinner from './Spinner';
 
 const Wrapper = styled('div', {
+  marginBottom: 20,
   padding: '40px 0',
   textAlign: 'center',
 });

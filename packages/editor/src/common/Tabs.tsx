@@ -20,7 +20,7 @@ export class Tab extends React.PureComponent {
 }
 
 const TabButtonWrapper = styled('div', {
-  borderBottom: '1px solid #52d1c7',
+  borderBottom: '1px solid #8d52d1',
   display: 'flex',
 });
 const TabButton = styled(
@@ -29,7 +29,7 @@ const TabButton = styled(
     appearance: 'none',
     background: '#fff',
     border: 0,
-    color: $isActive ? '#52d1c7' : '#666',
+    color: $isActive ? '#8d52d1' : '#666',
     display: 'block',
     flex: '0 0',
     fontFamily: DEFAULT_FONT,

@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Button from '../common/Button';
+import Form from '../common/Form';
 import Label from '../common/Label';
 import TextInput from '../common/TextInput';
 
@@ -14,8 +15,7 @@ export default class NewLinkForm extends React.PureComponent {
     url: string;
   } = {title: '', url: ''};
 
-  handleCreateSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  handleCreateSubmit = () => {
     if (!this.state.title || !this.state.url) {
       return;
     }
@@ -33,7 +33,7 @@ export default class NewLinkForm extends React.PureComponent {
 
   render() {
     return (
-      <form onSubmit={this.handleCreateSubmit}>
+      <Form onSubmit={this.handleCreateSubmit}>
         <Label text="Link title">
           <TextInput
             onChange={this.handleTitleChange}
@@ -51,7 +51,7 @@ export default class NewLinkForm extends React.PureComponent {
         <Button $isPrimary type="submit">
           Create
         </Button>
-      </form>
+      </Form>
     );
   }
 }

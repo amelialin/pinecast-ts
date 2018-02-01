@@ -204,9 +204,10 @@ export const PanelDescription = styled('p', {
 
 export const PanelSection = styled('h2', {
   fontFamily: DEFAULT_FONT,
-  fontSize: 24,
-  marginBottom: 30,
-  marginTop: 40,
+  fontSize: 20,
+  fontWeight: 500,
+  marginBottom: 20,
+  marginTop: 20,
 });
 
 export const PanelDivider = styled('hr', {

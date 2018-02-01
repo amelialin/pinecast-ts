@@ -7,21 +7,19 @@ import {DEFAULT_FONT} from './constants';
 const Text = styled('span', {
   display: 'block',
   fontFamily: DEFAULT_FONT,
-  fontSize: 14,
   fontWeight: 500,
   marginBottom: 5,
 });
 const SubText = styled('span', {
   display: 'block',
   fontFamily: DEFAULT_FONT,
-  fontSize: 14,
   fontWeight: 400,
   marginBottom: 5,
 });
 
 const nativeLabelMap = new Map<string, React.ComponentType<any>>();
-nativeLabelMap.set('label', styled('label', {display: 'block', fontSize: 13}));
-nativeLabelMap.set('div', styled('div', {display: 'block', fontSize: 13}));
+nativeLabelMap.set('label', styled('label', {display: 'block', fontSize: 14}));
+nativeLabelMap.set('div', styled('div', {display: 'block', fontSize: 14}));
 
 const Label = ({
   children,
@@ -41,7 +39,7 @@ const Label = ({
   if (!nativeLabelMap.has(componentType)) {
     nativeLabelMap.set(
       componentType,
-      styled(componentType, {display: 'block', fontSize: 13}),
+      styled(componentType, {display: 'block', fontSize: 14}),
     );
   }
   const NativeLabel = nativeLabelMap.get(componentType);

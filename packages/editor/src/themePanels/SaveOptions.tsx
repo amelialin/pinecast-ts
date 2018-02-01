@@ -43,6 +43,10 @@ class SaveOptions extends React.PureComponent {
     e.preventDefault();
     e.stopPropagation();
 
+    if (!this.props.needsSave) {
+      return;
+    }
+
     this.handleOpen();
   };
   handleBeforeUnload = (e: BeforeUnloadEvent) => {
