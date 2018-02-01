@@ -17,7 +17,7 @@ import ColorPicker from '../ColorPicker';
 import {EmbedWidgetThemes} from '../../reducers/theme';
 import Label from '../../common/Label';
 import PageStyles from './PageStyles';
-import {PanelDescription, PanelHeader, PanelWrapper} from '../common';
+import {PanelDescription, PanelWrapper} from '../../panelComponents';
 import RadioList from '../../common/RadioList';
 import {ReducerType} from '../../reducer';
 import Tabs, {Tab} from '../../common/Tabs';
@@ -90,7 +90,6 @@ const ComponentsPanel = ({
 
   return (
     <PanelWrapper>
-      <PanelHeader>Components</PanelHeader>
       <PanelDescription>
         Each of these components make up various parts of your website.
       </PanelDescription>

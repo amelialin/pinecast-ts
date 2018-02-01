@@ -5,7 +5,7 @@ import * as presets from '@pinecast/sb-presets';
 import styled from '@pinecast/sb-styles';
 
 import {changePreset} from '../../actions/theme';
-import {PanelDescription, PanelHeader, PanelWrapper} from '../common';
+import {PanelDescription, PanelWrapper} from '../../panelComponents';
 import PreviewTile from './PreviewTile';
 import {ReducerType} from '../../reducer';
 
@@ -17,7 +17,6 @@ const PresetsPanel = ({
   changePreset: (string) => void;
 }) => (
   <PanelWrapper>
-    <PanelHeader>Presets</PanelHeader>
     <PanelDescription>
       Presets are the foundation of your site's theme. Choosing a preset will
       reset your theme to use the preset's settings.

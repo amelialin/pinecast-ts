@@ -6,7 +6,7 @@ import * as presets from '@pinecast/sb-presets';
 
 import {changePageOptions, changePageStyle} from '../../actions/theme';
 import Label from '../../common/Label';
-import {PanelDivider} from '../common';
+import {PanelDivider} from '../../panelComponents';
 import RadioList from '../../common/RadioList';
 import Range from '../../common/Range';
 import {ReducerType} from '../../reducer';

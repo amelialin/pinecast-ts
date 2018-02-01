@@ -16,9 +16,8 @@ import pairings from './pairings';
 import {
   PanelDescription,
   PanelDivider,
-  PanelHeader,
   PanelWrapper,
-} from '../common';
+} from '../../panelComponents';
 import {ReducerType} from '../../reducer';
 import Tabs, {Tab} from '../../common/Tabs';
 
@@ -46,7 +45,6 @@ class TypographyPanel extends React.Component {
     const {changeFont, defaultFonts, fonts} = this.props;
     return (
       <PanelWrapper>
-        <PanelHeader>Typography</PanelHeader>
         <PanelDescription>
           Choose the typefaces that you wish to use on your site.
         </PanelDescription>

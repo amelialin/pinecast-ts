@@ -48,7 +48,7 @@ const Button = ({
   style?: React.CSSProperties;
   [key: string]: any;
 }) => (
-  <NativeButton {...rest} style={style}>
+  <NativeButton {...rest} style={style} type={rest.type || 'button'}>
     {children}
     {shortcut ? (
       <KeyboardShortcut

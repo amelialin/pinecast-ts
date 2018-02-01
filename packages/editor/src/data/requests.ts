@@ -10,6 +10,16 @@ export default function(url: string): Promise<string> {
 
   const req = xhr(url);
   existingRequests.set(url, req);
-  req.catch(() => existingRequests.delete(url));
-  return req;
+  return req.catch(err => {
+    existingRequests.delete(url);
+    return Promise.reject(err);
+  });
+}
+
+export function clearCache(url?: string) {
+  if (!url) {
+    existingRequests.clear();
+  } else {
+    existingRequests.delete(url);
+  }
 }

@@ -21,7 +21,8 @@ export interface ReducerType {
   readonly wasLoaded: boolean;
   readonly needsSave: boolean;
 
-  readonly page: 'presets' | 'colors' | 'typography' | 'components';
+  readonly page: 'theme' | 'links';
+  readonly themePage: 'presets' | 'colors' | 'typography' | 'components';
   readonly preview: PreviewReducerType;
   readonly save: SaveReducerType;
   readonly theme: ThemeReducerType;
@@ -33,7 +34,8 @@ const initialState: ReducerType = {
   wasLoaded: false,
   needsSave: false,
 
-  page: 'presets',
+  page: 'theme',
+  themePage: 'presets',
   preview: previewInitialState,
   save: saveInitialState,
   theme: themeInitialState,
@@ -64,6 +66,10 @@ function reducer(state: ReducerType = initialState, action): ReducerType {
       'switchPage',
       (state, action) => action.payload,
     )(state.page, action),
+    themePage: actionReducer<ReducerType['themePage']>(
+      'switchThemePage',
+      (state, action) => action.payload,
+    )(state.themePage, action),
     preview: previewReducer(state.preview, action),
     save: saveReducer(state.save, action),
     theme: themeState,

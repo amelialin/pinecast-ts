@@ -3,12 +3,10 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
-import {ButtonGroup} from './common/Button';
 import {changeChromePage} from './actions/chrome';
 import {DEFAULT_FONT} from './common/constants';
 import {ReducerType} from './reducer';
 import ReportProblem from './ReportProblem';
-import SaveOptions from './SaveOptions';
 
 const Toolbar_ = styled('nav', {
   alignItems: 'center',
@@ -84,15 +82,10 @@ const ConnectedToolbarButton = connect(
 
 const Toolbar = () => (
   <Toolbar_>
-    <ConnectedToolbarButton id="presets">Presets</ConnectedToolbarButton>
-    <ConnectedToolbarButton id="colors">Colors</ConnectedToolbarButton>
-    <ConnectedToolbarButton id="typography">Typography</ConnectedToolbarButton>
-    <ConnectedToolbarButton id="components">Components</ConnectedToolbarButton>
+    <ConnectedToolbarButton id="theme">Theme</ConnectedToolbarButton>
+    <ConnectedToolbarButton id="links">Links</ConnectedToolbarButton>
     <RHS>
-      <ButtonGroup>
-        <ReportProblem />
-        <SaveOptions />
-      </ButtonGroup>
+      <ReportProblem />
     </RHS>
   </Toolbar_>
 );

@@ -9,9 +9,8 @@ import HelpText from '../../common/HelpText';
 import {
   PanelDescription,
   PanelDivider,
-  PanelHeader,
   PanelWrapper,
-} from '../common';
+} from '../../panelComponents';
 import {ReducerType} from '../../reducer';
 import Swatch from './Swatch';
 import swatches from './swatches';
@@ -42,7 +41,6 @@ const ColorsPanel = ({
   presetSwatch: {[key: string]: string};
 }) => (
   <PanelWrapper>
-    <PanelHeader>Colors</PanelHeader>
     <PanelDescription>
       Changing colors here will adjust the color palette for your site.
     </PanelDescription>
