@@ -84,6 +84,8 @@ const Toolbar = () => (
   <Toolbar_>
     <ConnectedToolbarButton id="theme">Theme</ConnectedToolbarButton>
     <ConnectedToolbarButton id="links">Links</ConnectedToolbarButton>
+    <ConnectedToolbarButton id="pages">Pages</ConnectedToolbarButton>
+    <ConnectedToolbarButton id="settings">Settings</ConnectedToolbarButton>
     <RHS>
       <ReportProblem />
     </RHS>

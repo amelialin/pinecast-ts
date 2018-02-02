@@ -17,7 +17,7 @@ export interface PartialStylingType {
   readonly page?: primitives.PageStyle;
 }
 export interface PartialOptionsType {
-  readonly embedtheme?: EmbedWidgetThemes;
+  readonly embedTheme?: EmbedWidgetThemes;
   readonly fixedWidthMax?: string | null;
   readonly rootFlexibleHeight?: boolean;
 }

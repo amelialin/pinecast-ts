@@ -19,13 +19,6 @@ import {refresh} from '../actions/preview';
 import request, {clearCache} from '../data/requests';
 import xhr from '../data/xhr';
 
-const pageOptions = [
-  {value: 'presets', name: 'Presets'},
-  {value: 'colors', name: 'Colors'},
-  {value: 'typography', name: 'Typography'},
-  {value: 'components', name: 'Components'},
-];
-
 const HeaderWrapper = styled('div', {
   alignItems: 'center',
   display: 'flex',
@@ -45,6 +38,7 @@ const LinkHeaderCell = styled('th', {
   color: '#888',
   fontSize: 12,
   fontWeight: 500,
+  lineHeight: 26,
   padding: '0 8px',
   textAlign: 'left',
   textTransform: 'uppercase',
@@ -68,6 +62,7 @@ const DeleteButton = styled(
     cursor: 'pointer',
     display: 'inline-flex',
     height: 20,
+    marginTop: -3,
     padding: 0,
     verticalAlign: 'middle',
     width: 20,

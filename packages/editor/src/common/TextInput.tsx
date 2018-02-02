@@ -29,7 +29,12 @@ export default class TextInput extends React.PureComponent {
     onChange: (value: string) => void;
     placeholder?: string;
     style?: React.CSSProperties;
+    type?: 'text' | 'url';
     value: string;
+  };
+
+  static defaultProps = {
+    type: 'text',
   };
 
   handleChange = e => {

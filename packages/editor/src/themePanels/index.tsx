@@ -5,7 +5,9 @@ import styled from '@pinecast/sb-styles';
 
 import {changeThemePage} from '../actions/chrome';
 import ColorsPanel from './colorsPanel';
-import ComponentsPanel from './componentsPanel';
+import ButtonsPanel from './buttonsPanel';
+import EmbedWidgetPanel from './EmbedWidgetPanel';
+import PageBodyPanel from './PageBodyPanel';
 import {PageSelector} from '../panelComponents';
 import PresetsPanel from './presetsPanel';
 import {ReducerType} from '../reducer';
@@ -16,7 +18,9 @@ const pageOptions = [
   {value: 'presets', name: 'Presets'},
   {value: 'colors', name: 'Colors'},
   {value: 'typography', name: 'Typography'},
-  {value: 'components', name: 'Components'},
+  {value: 'buttons', name: 'Buttons'},
+  {value: 'embedPlayer', name: 'Embed player'},
+  {value: 'page', name: 'Page body'},
 ];
 
 const HeaderWrapper = styled('div', {
@@ -44,8 +48,10 @@ class ThemePanel extends React.PureComponent {
         </HeaderWrapper>
         {themePage === 'presets' && <PresetsPanel />}
         {themePage === 'colors' && <ColorsPanel />}
-        {themePage === 'components' && <ComponentsPanel />}
         {themePage === 'typography' && <TypographyPanel />}
+        {themePage === 'page' && <PageBodyPanel />}
+        {themePage === 'embedPlayer' && <EmbedWidgetPanel />}
+        {themePage === 'buttons' && <ButtonsPanel />}
       </React.Fragment>
     );
   }

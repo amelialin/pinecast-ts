@@ -21,8 +21,14 @@ export interface ReducerType {
   readonly wasLoaded: boolean;
   readonly needsSave: boolean;
 
-  readonly page: 'theme' | 'links';
-  readonly themePage: 'presets' | 'colors' | 'typography' | 'components';
+  readonly page: 'theme' | 'links' | 'pages' | 'settings';
+  readonly themePage:
+    | 'presets'
+    | 'colors'
+    | 'typography'
+    | 'page'
+    | 'embedPlayer'
+    | 'buttons';
   readonly preview: PreviewReducerType;
   readonly save: SaveReducerType;
   readonly theme: ThemeReducerType;

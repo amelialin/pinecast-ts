@@ -4,14 +4,14 @@ import * as React from 'react';
 import {primitives} from '@pinecast/sb-components';
 import * as presets from '@pinecast/sb-presets';
 
-import {changePageOptions, changePageStyle} from '../../actions/theme';
-import Label from '../../common/Label';
-import {PanelDivider} from '../../panelComponents';
-import RadioList from '../../common/RadioList';
-import Range from '../../common/Range';
-import {ReducerType} from '../../reducer';
-import TextInput from '../../common/TextInput';
-import Tabs, {Tab} from '../../common/Tabs';
+import {changePageOptions, changePageStyle} from '../actions/theme';
+import Label from '../common/Label';
+import {PanelDivider} from '../panelComponents';
+import RadioList from '../common/RadioList';
+import Range from '../common/Range';
+import {ReducerType} from '../reducer';
+import TextInput from '../common/TextInput';
+import Tabs, {Tab} from '../common/Tabs';
 
 const units = {
   px: 'pixels',
@@ -43,7 +43,7 @@ function formatPadding(
   return `${vert} ${horiz}`;
 }
 
-const ComponentsPanel = ({
+const PageBodyPanel = ({
   changePageOptions,
   changePageStyle,
   theme,
@@ -190,4 +190,4 @@ export default connect(
     changePageOptions,
     changePageStyle,
   },
-)(ComponentsPanel);
+)(PageBodyPanel);

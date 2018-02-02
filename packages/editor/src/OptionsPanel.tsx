@@ -5,6 +5,8 @@ import styled from '@pinecast/sb-styles';
 
 import LinkPaenl from './linkPanel';
 import {ReducerType} from './reducer';
+import PagesPanel from './pagesPanel';
+import SettingsPanel from './settingsPanel';
 import ThemePanel from './themePanels';
 
 const Wrapper = styled('div', {
@@ -17,6 +19,8 @@ const OptionsPanel = ({page}: {page: ReducerType['page']}) => (
   <Wrapper>
     {page === 'theme' && <ThemePanel />}
     {page === 'links' && <LinkPaenl />}
+    {page === 'pages' && <PagesPanel />}
+    {page === 'settings' && <SettingsPanel />}
   </Wrapper>
 );
 
