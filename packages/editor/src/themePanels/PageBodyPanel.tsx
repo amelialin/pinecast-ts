@@ -161,23 +161,11 @@ export default connect(
     return {
       theme: {
         ...presetTheme,
-        colors: {
-          ...presetTheme.colors,
-          ...theme.colors,
-        },
-        fonts: {
-          ...presetTheme.fonts,
-          ...theme.fonts,
-        },
         options: {
           ...presetTheme.options,
           ...theme.options,
         },
         styling: {
-          buttons: {
-            ...(presetTheme.styling && presetTheme.styling.buttons),
-            ...(theme.styling && theme.styling.buttons),
-          },
           page: {
             ...(presetTheme.styling && presetTheme.styling.page),
             ...(theme.styling && theme.styling.page),
