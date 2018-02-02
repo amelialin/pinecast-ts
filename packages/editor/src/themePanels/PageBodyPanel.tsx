@@ -6,7 +6,7 @@ import * as presets from '@pinecast/sb-presets';
 
 import {changePageOptions, changePageStyle} from '../actions/theme';
 import Label from '../common/Label';
-import {PanelDivider} from '../panelComponents';
+import {PanelDivider, PanelWrapper} from '../panelComponents';
 import RadioList from '../common/RadioList';
 import Range from '../common/Range';
 import {ReducerType} from '../reducer';
@@ -63,7 +63,7 @@ const PageBodyPanel = ({
   );
 
   return (
-    <React.Fragment>
+    <PanelWrapper>
       <Label
         text={`Horizontal padding (${units[horizUnit]})`}
         subText="The space between the left and right edges of the window and the page content"
@@ -149,7 +149,7 @@ const PageBodyPanel = ({
           value={(theme.styling.page && theme.styling.page.fontSize) || 16}
         />
       </Label>
-    </React.Fragment>
+    </PanelWrapper>
   );
 };
 
