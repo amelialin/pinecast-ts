@@ -7,7 +7,7 @@ lerna bootstrap
 
 pushd packages/editor
 
-# npm run build
+npm run build
 aws s3 sync build/ s3://pinecast-js/site-builder/${DATE}_${UUID}/ --acl public-read
 
 echo "Run the following commands to deploy:"
