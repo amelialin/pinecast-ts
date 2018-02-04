@@ -27,6 +27,7 @@ const Input = styled('input', {
 export default class TextInput extends React.PureComponent {
   props: {
     onChange: (value: string) => void;
+    pattern?: string;
     placeholder?: string;
     style?: React.CSSProperties;
     type?: 'text' | 'url';
