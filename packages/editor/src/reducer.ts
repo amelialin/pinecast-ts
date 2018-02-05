@@ -21,7 +21,7 @@ export interface ReducerType {
   readonly wasLoaded: boolean;
   readonly needsSave: boolean;
 
-  readonly page: 'theme' | 'links' | 'pages' | 'settings';
+  readonly page: 'theme' | 'links' | 'pages' | 'assets' | 'settings';
   readonly themePage:
     | 'presets'
     | 'colors'

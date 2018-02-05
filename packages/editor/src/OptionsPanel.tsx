@@ -3,7 +3,8 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
-import LinkPaenl from './linkPanel';
+import AssetsPanel from './assetsPanel';
+import LinkPanel from './linkPanel';
 import {ReducerType} from './reducer';
 import PagesPanel from './pagesPanel';
 import SettingsPanel from './settingsPanel';
@@ -18,8 +19,9 @@ const Wrapper = styled('div', {
 const OptionsPanel = ({page}: {page: ReducerType['page']}) => (
   <Wrapper>
     {page === 'theme' && <ThemePanel />}
-    {page === 'links' && <LinkPaenl />}
+    {page === 'links' && <LinkPanel />}
     {page === 'pages' && <PagesPanel />}
+    {page === 'assets' && <AssetsPanel />}
     {page === 'settings' && <SettingsPanel />}
   </Wrapper>
 );
