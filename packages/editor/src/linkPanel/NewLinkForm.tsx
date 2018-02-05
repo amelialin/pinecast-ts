@@ -48,7 +48,7 @@ export default class NewLinkForm extends React.PureComponent {
             value={this.state.url}
           />
         </Label>
-        <Button $isPrimary type="submit">
+        <Button $isBlock $isPrimary type="submit">
           Create
         </Button>
       </Form>

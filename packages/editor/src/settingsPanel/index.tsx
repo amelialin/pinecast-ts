@@ -4,20 +4,25 @@ import * as React from 'react';
 import styled from '@pinecast/sb-styles';
 
 import Button from '../common/Button';
+import Checkbox from '../common/Checkbox';
 import ErrorState from '../common/ErrorState';
 import Form from '../common/Form';
 import Label from '../common/Label';
+import Link from '../common/Link';
 import LoadingState from '../common/LoadingState';
 import {
   PageHeading,
   PanelDescription,
   PanelDivider,
+  PanelSectionTitle,
+  PanelSectionDescription,
   PanelWrapper,
 } from '../panelComponents';
 import {ReducerType} from '../reducer';
 import {refresh} from '../actions/preview';
 import request, {clearCache} from '../data/requests';
 import TextInput from '../common/TextInput';
+import {TextPill} from '../common/Text';
 import xhr from '../data/xhr';
 
 const HeaderWrapper = styled('div', {
@@ -27,10 +32,12 @@ const HeaderWrapper = styled('div', {
 });
 
 interface Settings {
-  analytics_id: string;
-  itunes_url: string;
-  google_play_url: string;
-  stitcher_url: string;
+  analytics_id: string | null;
+  itunes_url: string | null;
+  google_play_url: string | null;
+  stitcher_url: string | null;
+  custom_cname: string | null;
+  show_itunes_banner: boolean;
 }
 
 class SettingsPanel extends React.PureComponent {
@@ -39,11 +46,13 @@ class SettingsPanel extends React.PureComponent {
     data: Settings | null;
     error: string | null;
     updatedData: Settings | null;
+    pending: boolean;
   } = {
     data: null,
     error: null,
 
     updatedData: null,
+    pending: true,
   };
 
   componentDidMount() {
@@ -52,10 +61,13 @@ class SettingsPanel extends React.PureComponent {
       .then(data => JSON.parse(data))
       .then(
         parsed => {
-          this.setState({data: parsed, updatedData: parsed});
+          this.setState({data: parsed, updatedData: parsed, pending: false});
         },
         () => {
-          this.setState({error: 'Failed to load settings from Pinecast'});
+          this.setState({
+            error: 'Failed to load settings from Pinecast',
+            pending: false,
+          });
         },
       );
   }
@@ -68,7 +80,22 @@ class SettingsPanel extends React.PureComponent {
 
   handleChangeApplePodcastsURL = (itunesURL: string) => {
     this.setState({
-      updatedData: {...this.state.updatedData, itunes_url: itunesURL},
+      updatedData: {
+        ...this.state.updatedData,
+        itunes_url: itunesURL,
+        show_itunes_banner: itunesURL
+          ? (this.state.updatedData || {show_itunes_banner: false})
+              .show_itunes_banner
+          : false,
+      },
+    });
+  };
+  handleChangeShowITunesBanner = (showITunesBanner: boolean) => {
+    this.setState({
+      updatedData: {
+        ...this.state.updatedData,
+        show_itunes_banner: showITunesBanner,
+      },
     });
   };
   handleChangeGooglePlayURL = (googlePlayURL: string) => {
@@ -81,60 +108,165 @@ class SettingsPanel extends React.PureComponent {
       updatedData: {...this.state.updatedData, stitcher_url: stitcherURL},
     });
   };
+  handleChangeCustomDomain = (customDomain: string) => {
+    this.setState({
+      updatedData: {...this.state.updatedData, custom_cname: customDomain},
+    });
+  };
 
-  handleSubmit = () => {};
+  handleSubmit = () => {
+    const updatedData = this.state.updatedData;
+    this.setState({error: null, pending: true});
+
+    const {csrf, slug} = this.props;
+    xhr({
+      body: JSON.stringify(updatedData),
+      headers: {'X-CSRFToken': csrf},
+      method: 'POST',
+      url: `/sites/site_builder/editor/settings/${encodeURIComponent(slug)}`,
+    })
+      .then(data => JSON.parse(data))
+      .then(
+        parsed => {
+          this.setState({data: parsed, updatedData: parsed, pending: false});
+          clearCache();
+          this.props.onRefresh();
+        },
+        () => {
+          this.setState({error: 'Could not contact Pinecast', pending: false});
+        },
+      );
+  };
 
   renderInner() {
-    const {data, updatedData} = this.state;
+    const {data, error, pending, updatedData} = this.state;
+
+    if (error) {
+      return <ErrorState title={error} />;
+    }
+
+    if (!data) {
+      return <LoadingState title="Loading site settings…" />;
+    }
+
     if (!updatedData) {
       return;
     }
 
     return (
       <PanelWrapper>
-        <Form onSubmit={this.handleSubmit}>
-          <Label
-            text="Google Analytics ID"
-            subText="If you have a Google Analytics account, you can copy your account ID here to get visitor data reported to your Google Analytics account."
-          >
-            <TextInput
-              onChange={this.handleChangeAnalyticsID}
-              pattern="[\\w-]+"
-              placeholder="UA-123456"
-              value={updatedData.analytics_id}
-            />
-          </Label>
+        <PanelDescription>
+          These settings and preferences allow you to customize options that
+          don't involve the look and feel of your Pinecast site.
+        </PanelDescription>
 
-          <PanelDivider />
+        <Form onSubmit={this.handleSubmit}>
+          <PanelSectionTitle>Subscribe links</PanelSectionTitle>
+          <PanelSectionDescription>
+            Add links to your show on podcast directories to drive listeners to
+            subscribe.
+          </PanelSectionDescription>
 
           <Label text="Apple Podcasts URL">
             <TextInput
+              disabled={pending}
               onChange={this.handleChangeApplePodcastsURL}
-              pattern="https://itunes\\.apple\\.com/la/podcast/[^\\/]+/.+"
-              placeholder="https://itunes.apple.com/la/podcast/almost-better-than-dragons/id981540916?mt=2"
-              value={updatedData.itunes_url}
+              pattern="https://itunes\\.apple\\.com/\\w{2,3}/podcast/[\\w-]+/.+"
+              placeholder="https://itunes.apple.com/us/podcast/almost-better-than-dragons/id981540916?mt=2"
+              value={updatedData.itunes_url || ''}
             />
           </Label>
+          <Checkbox
+            checked={updatedData.show_itunes_banner}
+            disabled={!updatedData.itunes_url}
+            onChange={this.handleChangeShowITunesBanner}
+            text="Show iTunes directory banner on iOS Safari"
+          />
 
           <Label text="Google Play URL">
             <TextInput
+              disabled={pending}
               onChange={this.handleChangeGooglePlayURL}
-              pattern="https://play\\.google\\.com/music/listen?u=0#.+"
+              pattern="https://play\\.google\\.com/music/listen\\?.+"
               placeholder="https://play.google.com/music/listen?u=0#/ps/Iuscgum4gmep6isira64kdeskjm"
-              value={updatedData.google_play_url}
+              value={updatedData.google_play_url || ''}
             />
           </Label>
 
           <Label text="Stitcher Radio URL">
             <TextInput
+              disabled={pending}
               onChange={this.handleChangeStitcherRadioURL}
               pattern="https?://www\\.stitcher\\.com/podcast/.+"
               placeholder="https://www.stitcher.com/podcast/this-american-life"
-              value={updatedData.stitcher_url}
+              value={updatedData.stitcher_url || ''}
             />
           </Label>
 
-          <Button $isPrimary>Save</Button>
+          <Button $isBlock $isPrimary pending={pending} type="submit">
+            Save
+          </Button>
+
+          <PanelDivider />
+
+          <PanelSectionTitle>Custom domain name</PanelSectionTitle>
+
+          <PanelSectionDescription>
+            Host your Pinecast website on your own web domain. Once this has
+            been set and your DNS settings have been configured, your Pinecast
+            website will be available on this domain.
+          </PanelSectionDescription>
+          <PanelSectionDescription>
+            Leaving this field blank will make your website available at{' '}
+            <TextPill>
+              {`https://${this.props.slug.toLowerCase()}.pinecast.co/`}
+            </TextPill>.
+          </PanelSectionDescription>
+
+          <PanelSectionDescription>
+            <Link href="http://help.pinecast.com/knowledge-base/custom-domains/configuring-dns-settings-for-a-custom-domain">
+              Instructions for configuring DNS…
+            </Link>
+          </PanelSectionDescription>
+
+          <Label
+            text="Domain"
+            subText="Enter the domain name that you've purchased exactly, without slashes."
+          >
+            <TextInput
+              disabled={pending}
+              onChange={this.handleChangeCustomDomain}
+              pattern="([\\w-]+\\.)+[a-z]+"
+              placeholder="your-domain.com"
+              prefix="https://"
+              value={updatedData.custom_cname || ''}
+            />
+          </Label>
+
+          <Button $isBlock $isPrimary pending={pending} type="submit">
+            Save
+          </Button>
+
+          <PanelDivider />
+
+          <PanelSectionTitle>Integrations</PanelSectionTitle>
+
+          <Label
+            text="Google Analytics ID"
+            subText="If you have a Google Analytics account, you can copy your account ID here to get visitor data reported to your Google Analytics account."
+          >
+            <TextInput
+              disabled={pending}
+              onChange={this.handleChangeAnalyticsID}
+              pattern="[\\w-]+"
+              placeholder="UA-123456"
+              value={updatedData.analytics_id || ''}
+            />
+          </Label>
+
+          <Button $isBlock $isPrimary pending={pending} type="submit">
+            Save
+          </Button>
         </Form>
       </PanelWrapper>
     );

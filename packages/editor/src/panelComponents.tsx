@@ -244,13 +244,25 @@ export const PanelDescription = styled('p', {
   marginTop: -10,
 });
 
-export const PanelSection = styled('h2', {
+export const PanelSectionTitle = styled('h2', {
   fontFamily: DEFAULT_FONT,
   fontSize: 20,
   fontWeight: 500,
   marginBottom: 20,
   marginTop: 20,
 });
+export const PanelSectionDescription = styled(
+  'p',
+  {
+    fontFamily: DEFAULT_FONT,
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: '20px',
+    marginBottom: 20,
+    marginTop: -8,
+  },
+  {className: 'panelSectionDescription'},
+);
 
 export const PanelDivider = styled('hr', {
   background: '#8d52d1',

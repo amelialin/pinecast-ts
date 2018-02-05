@@ -7,16 +7,19 @@ const TextAreaInput = styled('textarea', {
   backgroundColor: '#fff',
   border: '1px solid #ccc',
   borderRadius: 4,
+  boxShadow: '0 0 0 0 #c9d9e0',
   display: 'flex',
   flex: '0 0 100%',
   fontSize: 14,
   height: 150,
   margin: '10px 0 20px',
   padding: '8px',
+  transition: 'box-shadow 0.2s',
   width: '100%',
 
   ':focus': {
-    border: '1px solid #999',
+    boxShadow: '0 0 0 3px #c9d9e0',
+    outline: 'none',
   },
 });
 

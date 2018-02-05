@@ -7,14 +7,15 @@ import {DEFAULT_FONT} from './constants';
 const Text = styled('span', {
   display: 'block',
   fontFamily: DEFAULT_FONT,
+  fontSize: 14,
   fontWeight: 500,
-  marginBottom: 5,
+  marginBottom: 4,
 });
 const SubText = styled('span', {
   display: 'block',
   fontFamily: DEFAULT_FONT,
   fontWeight: 400,
-  marginBottom: 5,
+  marginBottom: 4,
 });
 
 const nativeLabelMap = new Map<string, React.ComponentType<any>>();

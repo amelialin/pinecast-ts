@@ -11,7 +11,7 @@ import {
   PageHeading,
   PanelDescription,
   PanelDivider,
-  PanelSection,
+  PanelSectionTitle,
   PanelWrapper,
 } from '../panelComponents';
 import {ReducerType} from '../reducer';
@@ -159,7 +159,7 @@ class LinkPanel extends React.PureComponent {
   renderCreateForm() {
     return (
       <React.Fragment>
-        <PanelSection>Add site link</PanelSection>
+        <PanelSectionTitle>Add site link</PanelSectionTitle>
         <NewLinkForm onNewLink={this.handleNewLink} />
       </React.Fragment>
     );
