@@ -12,7 +12,7 @@ const FullScreenButton = ({
   <Button
     onClick={onClick}
     style={{
-      color: '#666',
+      color: '#616669',
       paddingLeft: 5,
       paddingRight: 5,
       ...style,

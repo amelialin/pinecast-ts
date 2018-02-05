@@ -10,7 +10,7 @@ import ReportProblem from './ReportProblem';
 
 const Toolbar_ = styled('nav', {
   alignItems: 'center',
-  backgroundColor: '#eee',
+  backgroundColor: '#eeefea',
   display: 'flex',
   fontFamily: DEFAULT_FONT,
   height: 50,

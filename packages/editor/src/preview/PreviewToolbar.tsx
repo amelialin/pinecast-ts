@@ -7,7 +7,7 @@ import Select from '../common/Select';
 
 const Toolbar = styled('div', {
   alignItems: 'center',
-  background: '#99a',
+  background: '#b0b5b5',
   display: 'flex',
   height: 40,
   left: 0,
