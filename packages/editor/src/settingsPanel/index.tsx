@@ -187,7 +187,7 @@ class SettingsPanel extends React.PureComponent {
             <TextInput
               disabled={pending}
               onChange={this.handleChangeGooglePlayURL}
-              pattern="https://play\\.google\\.com/music/listen\\?.+"
+              pattern="https://play\\.google\\.com/music/(listen\\?|m/).+"
               placeholder="https://play.google.com/music/listen?u=0#/ps/Iuscgum4gmep6isira64kdeskjm"
               value={updatedData.google_play_url || ''}
             />
