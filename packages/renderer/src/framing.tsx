@@ -36,11 +36,9 @@ export default async function frame(
   siteData: any,
   {context, headExtra = '', title, urlPath}: Options,
 ): Promise<string> {
-  const styletron = new (ServerStyletron as any)();
-  // HACK: https://github.com/rtsao/styletron/issues/153
-  const StyletronProviderCast: any = StyletronProvider;
+  const styletron = new ServerStyletron();
   const root = (
-    <StyletronProviderCast styletron={styletron}>{elem}</StyletronProviderCast>
+    <StyletronProvider styletron={styletron}>{elem}</StyletronProvider>
   );
 
   // This can't be inlined because we need to get the styletron styles out of it.

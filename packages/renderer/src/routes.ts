@@ -12,7 +12,6 @@ export interface Route {
   path: string;
   format: (params: RequestURLParams) => string;
   match: (url: string) => RequestURLParams | null;
-  // canBeBuilt: (hostname: string, tester: ReadinessTester, params: RequestURLParams, query: RequestQueryParams) => boolean,
   build: (
     dataProvider: DataAPI,
     siteHostname: string,
@@ -107,7 +106,6 @@ export const routes: {[route: string]: Route} = {
     path: '/:slug',
     format: ({slug}) => `/${encodeURIComponent(slug)}`,
     match: matcher('/:slug'),
-    // canBeBuilt: (hostname, tester) => tester.getSite(hostname),
     build: async (data, siteHostname, query, params): Promise<string> => {
       const slug = params.slug;
       const resources = {site: await data.getSite(siteHostname)};
