@@ -13,14 +13,13 @@ import LoadingState from '../common/LoadingState';
 import {
   PageHeading,
   PanelDescription,
-  PanelDivider,
-  PanelSectionTitle,
   PanelSectionDescription,
   PanelWrapper,
 } from '../panelComponents';
 import {ReducerType} from '../reducer';
 import {refresh} from '../actions/preview';
 import request, {clearCache} from '../data/requests';
+import Tabs, {Tab} from '../common/Tabs';
 import TextInput from '../common/TextInput';
 import {TextPill} from '../common/Text';
 import xhr from '../data/xhr';
@@ -161,112 +160,109 @@ class SettingsPanel extends React.PureComponent {
         </PanelDescription>
 
         <Form onSubmit={this.handleSubmit}>
-          <PanelSectionTitle>Subscribe links</PanelSectionTitle>
-          <PanelSectionDescription>
-            Add links to your show on podcast directories to drive listeners to
-            subscribe.
-          </PanelSectionDescription>
+          <Tabs>
+            <Tab name="Subscribe links">
+              <PanelSectionDescription>
+                Add links to your show on podcast directories to drive listeners
+                to subscribe.
+              </PanelSectionDescription>
 
-          <Label text="Apple Podcasts URL">
-            <TextInput
-              disabled={pending}
-              onChange={this.handleChangeApplePodcastsURL}
-              pattern="https://itunes\\.apple\\.com/\\w{2,3}/podcast/[\\w-]+/.+"
-              placeholder="https://itunes.apple.com/us/podcast/almost-better-than-dragons/id981540916?mt=2"
-              value={updatedData.itunes_url || ''}
-            />
-          </Label>
-          <Checkbox
-            checked={updatedData.show_itunes_banner}
-            disabled={!updatedData.itunes_url}
-            onChange={this.handleChangeShowITunesBanner}
-            text="Show iTunes directory banner on iOS Safari"
-          />
+              <Label text="Apple Podcasts URL">
+                <TextInput
+                  disabled={pending}
+                  onChange={this.handleChangeApplePodcastsURL}
+                  pattern="https://itunes\\.apple\\.com/\\w{2,3}/podcast/[\\w-]+/.+"
+                  placeholder="https://itunes.apple.com/us/podcast/almost-better-than-dragons/id981540916?mt=2"
+                  value={updatedData.itunes_url || ''}
+                />
+              </Label>
+              <Checkbox
+                checked={updatedData.show_itunes_banner}
+                disabled={!updatedData.itunes_url}
+                onChange={this.handleChangeShowITunesBanner}
+                text="Show iTunes directory banner on iOS Safari"
+              />
 
-          <Label text="Google Play URL">
-            <TextInput
-              disabled={pending}
-              onChange={this.handleChangeGooglePlayURL}
-              pattern="https://play\\.google\\.com/music/(listen\\?|m/).+"
-              placeholder="https://play.google.com/music/listen?u=0#/ps/Iuscgum4gmep6isira64kdeskjm"
-              value={updatedData.google_play_url || ''}
-            />
-          </Label>
+              <Label text="Google Play URL">
+                <TextInput
+                  disabled={pending}
+                  onChange={this.handleChangeGooglePlayURL}
+                  pattern="https://play\\.google\\.com/music/(listen\\?|m/).+"
+                  placeholder="https://play.google.com/music/listen?u=0#/ps/Iuscgum4gmep6isira64kdeskjm"
+                  value={updatedData.google_play_url || ''}
+                />
+              </Label>
 
-          <Label text="Stitcher Radio URL">
-            <TextInput
-              disabled={pending}
-              onChange={this.handleChangeStitcherRadioURL}
-              pattern="https?://www\\.stitcher\\.com/podcast/.+"
-              placeholder="https://www.stitcher.com/podcast/this-american-life"
-              value={updatedData.stitcher_url || ''}
-            />
-          </Label>
+              <Label text="Stitcher Radio URL">
+                <TextInput
+                  disabled={pending}
+                  onChange={this.handleChangeStitcherRadioURL}
+                  pattern="https?://www\\.stitcher\\.com/podcast/.+"
+                  placeholder="https://www.stitcher.com/podcast/this-american-life"
+                  value={updatedData.stitcher_url || ''}
+                />
+              </Label>
 
-          <Button $isBlock $isPrimary pending={pending} type="submit">
-            Save
-          </Button>
+              <Button $isBlock $isPrimary pending={pending} type="submit">
+                Save
+              </Button>
+            </Tab>
+            <Tab name="Custom domain name">
+              <PanelSectionDescription>
+                Host your Pinecast website on your own web domain. Once this has
+                been set and your DNS settings have been configured, your
+                Pinecast website will be available on this domain.
+              </PanelSectionDescription>
+              <PanelSectionDescription>
+                Leaving this field blank will make your website available at{' '}
+                <TextPill>
+                  {`https://${this.props.slug.toLowerCase()}.pinecast.co/`}
+                </TextPill>.
+              </PanelSectionDescription>
 
-          <PanelDivider />
+              <PanelSectionDescription>
+                <Link href="http://help.pinecast.com/knowledge-base/custom-domains/configuring-dns-settings-for-a-custom-domain">
+                  Instructions for configuring DNS…
+                </Link>
+              </PanelSectionDescription>
 
-          <PanelSectionTitle>Custom domain name</PanelSectionTitle>
+              <Label
+                text="Domain"
+                subText="Enter the domain name that you've purchased exactly, without slashes."
+              >
+                <TextInput
+                  disabled={pending}
+                  onChange={this.handleChangeCustomDomain}
+                  pattern="([\\w-]+\\.)+[a-z]+"
+                  placeholder="your-domain.com"
+                  prefix="https://"
+                  value={updatedData.custom_cname || ''}
+                />
+              </Label>
 
-          <PanelSectionDescription>
-            Host your Pinecast website on your own web domain. Once this has
-            been set and your DNS settings have been configured, your Pinecast
-            website will be available on this domain.
-          </PanelSectionDescription>
-          <PanelSectionDescription>
-            Leaving this field blank will make your website available at{' '}
-            <TextPill>
-              {`https://${this.props.slug.toLowerCase()}.pinecast.co/`}
-            </TextPill>.
-          </PanelSectionDescription>
+              <Button $isBlock $isPrimary pending={pending} type="submit">
+                Save
+              </Button>
+            </Tab>
+            <Tab name="Integrations">
+              <Label
+                text="Google Analytics ID"
+                subText="If you have a Google Analytics account, you can copy your account ID here to get visitor data reported to your Google Analytics account."
+              >
+                <TextInput
+                  disabled={pending}
+                  onChange={this.handleChangeAnalyticsID}
+                  pattern="[\\w-]+"
+                  placeholder="UA-123456"
+                  value={updatedData.analytics_id || ''}
+                />
+              </Label>
 
-          <PanelSectionDescription>
-            <Link href="http://help.pinecast.com/knowledge-base/custom-domains/configuring-dns-settings-for-a-custom-domain">
-              Instructions for configuring DNS…
-            </Link>
-          </PanelSectionDescription>
-
-          <Label
-            text="Domain"
-            subText="Enter the domain name that you've purchased exactly, without slashes."
-          >
-            <TextInput
-              disabled={pending}
-              onChange={this.handleChangeCustomDomain}
-              pattern="([\\w-]+\\.)+[a-z]+"
-              placeholder="your-domain.com"
-              prefix="https://"
-              value={updatedData.custom_cname || ''}
-            />
-          </Label>
-
-          <Button $isBlock $isPrimary pending={pending} type="submit">
-            Save
-          </Button>
-
-          <PanelDivider />
-
-          <PanelSectionTitle>Integrations</PanelSectionTitle>
-
-          <Label
-            text="Google Analytics ID"
-            subText="If you have a Google Analytics account, you can copy your account ID here to get visitor data reported to your Google Analytics account."
-          >
-            <TextInput
-              disabled={pending}
-              onChange={this.handleChangeAnalyticsID}
-              pattern="[\\w-]+"
-              placeholder="UA-123456"
-              value={updatedData.analytics_id || ''}
-            />
-          </Label>
-
-          <Button $isBlock $isPrimary pending={pending} type="submit">
-            Save
-          </Button>
+              <Button $isBlock $isPrimary pending={pending} type="submit">
+                Save
+              </Button>
+            </Tab>
+          </Tabs>
         </Form>
       </PanelWrapper>
     );
