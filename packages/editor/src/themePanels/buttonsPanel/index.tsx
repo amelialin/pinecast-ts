@@ -6,17 +6,11 @@ import styled from '@pinecast/sb-styles';
 
 import ButtonPresetList from './ButtonPresetList';
 import ButtonPreview from './ButtonPreview';
+import Card from '../../common/Card';
 import {changeColor} from '../../actions/theme';
 import ColorPicker from '../ColorPicker';
 import {PanelDescription, PanelWrapper} from '../../panelComponents';
 import {ReducerType} from '../../reducer';
-
-const ButtonStyleWrapper = styled('div', {
-  boxShadow:
-    '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
-  marginBottom: 20,
-  padding: 20,
-});
 
 const ComponentsPanel = ({
   colorButtons,
@@ -38,13 +32,13 @@ const ComponentsPanel = ({
       Customize the look and feel of the buttons used for pagination and
       subscriptions.
     </PanelDescription>
-    <ButtonStyleWrapper style={{backgroundColor: currentForeground}}>
+    <Card style={{backgroundColor: currentForeground}}>
       <ButtonPreview
         preset={{name: 'Current style', style: theme.styling.buttons}}
         style={{marginRight: 0, marginBottom: 0}}
         theme={theme}
       />
-    </ButtonStyleWrapper>
+    </Card>
 
     <ColorPicker
       colorKey="buttons"
