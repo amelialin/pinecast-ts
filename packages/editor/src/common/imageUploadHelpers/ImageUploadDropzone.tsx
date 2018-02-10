@@ -46,6 +46,7 @@ const ImageUploadDropzone = ({onChange}: Props) => (
           '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
       }}
       className="ImageUpload-ImageUploadDropzone-dropzone"
+      disableClick // We do this because it's inside a label
       disablePreview
       onDrop={files => files.length && onChange(files[0])}
       style={{

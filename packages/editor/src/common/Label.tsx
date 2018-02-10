@@ -30,7 +30,10 @@ const Label = ({
   subText,
   text,
 }: {
-  children: JSX.Element | string | Array<JSX.Element | Array<JSX.Element>>;
+  children:
+    | JSX.Element
+    | string
+    | Array<JSX.Element | Array<JSX.Element> | string | false | null>;
   componentType?: string;
   labelStyle?: React.CSSProperties;
   style?: React.CSSProperties;

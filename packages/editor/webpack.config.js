@@ -34,7 +34,7 @@ module.exports = env => {
       index: './src/index.ts',
     },
     resolve: {
-      mainFields: ['ts:main', 'jsnext:main', 'main'],
+      mainFields: ['ts:main', 'jsnext:main', 'module', 'main'],
       modules: ['node_modules'],
       extensions: ['.ts', '.tsx', '.js', '.json'],
     },

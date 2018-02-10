@@ -1,11 +1,8 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 
-// This is a hack to disable Styletron's built-in autoprefixing.
 declare function require(name: string);
 const su = require('styletron-utils');
-su.injectStylePrefixed = (styletron, styles, media, pseudo) =>
-  su.injectStyle(styletron, styles, media, pseudo);
 
 function wrapCtx(
   comp: React.StatelessComponent<any>,

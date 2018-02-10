@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import Tooltip from 'rc-tooltip';
 
 import styled from '@pinecast/sb-styles';

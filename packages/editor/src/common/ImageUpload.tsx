@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
+import Callout from './Callout';
 import {dropZoneStyle} from './imageUploadHelpers/styles';
 import Label from './Label';
 import ImageUploadDropzone from './imageUploadHelpers/ImageUploadDropzone';
@@ -18,12 +19,14 @@ interface Upload {
 }
 
 class ImageUpload extends React.PureComponent {
-  ongoingUpload: {file: File; abort: () => Promise<void>} | null = null;
+  ongoingUpload: {file: Blob; abort: () => Promise<void>} | null = null;
   ongoingRequest: number = 0;
 
   props: {
     imageType: 'site_logo' | 'site_favicon';
-    labelText: string;
+    labelText: JSX.Element | string;
+    maxHeight?: number;
+    maxWidth?: number;
     onCleared: () => void;
     onNewFile: (signedURL: string) => Promise<void>;
     value: string | null;
@@ -41,6 +44,10 @@ class ImageUpload extends React.PureComponent {
     uploadProgress: 0,
   };
 
+  componentWillUnmount() {
+    this.ongoingRequest += 1;
+  }
+
   asyncSetState(newState) {
     return new Promise(resolve => {
       this.setState(newState, resolve);
@@ -55,8 +62,18 @@ class ImageUpload extends React.PureComponent {
       await this.ongoingUpload.abort();
     }
 
+    // const resizedFile = await this.resize(file);
+    const resizedFile = file;
+
+    if (resizedFile.size > 1024 * 1024 * 2) {
+      this.setState({
+        error: 'That file is too big to upload. Images may be up to 2MB.',
+      });
+      return;
+    }
+
     this.ongoingUpload = {
-      file,
+      file: resizedFile,
       abort: () => Promise.resolve(),
     };
 
@@ -133,7 +150,80 @@ class ImageUpload extends React.PureComponent {
     };
   }
 
-  upload(file: File, upload: Upload): [(() => Promise<void>), Promise<void>] {
+  decodeImage(file: Blob): Promise<HTMLImageElement> {
+    return new Promise((resolve, reject) => {
+      const u = URL.createObjectURL(file);
+      const img = new Image();
+      img.src = u;
+      img.onload = () => {
+        URL.revokeObjectURL(u);
+        resolve(img);
+      };
+      img.onerror = err => {
+        reject(err);
+        URL.revokeObjectURL(u);
+      };
+    });
+  }
+
+  async resize(file: File): Promise<Blob> {
+    const {maxHeight, maxWidth} = this.props;
+    if (!maxHeight || !maxWidth) {
+      return Promise.resolve(file);
+    }
+
+    const img = await this.decodeImage(file);
+    if (img.width < maxWidth && img.height < maxHeight) {
+      return file;
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.width = maxWidth;
+    canvas.height = maxHeight;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      throw new Error('unreachable');
+    }
+    ctx.drawImage(
+      img,
+      img.width / 2 - maxWidth / 2,
+      img.height / 2 - maxHeight / 2,
+      maxWidth,
+      maxHeight,
+      0,
+      0,
+      maxWidth,
+      maxHeight,
+    );
+
+    return new Promise<Blob>((resolve, reject) => {
+      canvas.toBlob(
+        resizedBlob => {
+          if (!resizedBlob) {
+            reject();
+            return;
+          }
+          const fr = new FileReader();
+          fr.onload = () => {
+            const result = fr.result as any;
+            result.type = 'image/jpeg';
+            if (!result.name.endsWith('.jpg')) {
+              result.name = file.name + '.jpg';
+            } else {
+              result.name = file.name;
+            }
+            resolve(result);
+          };
+          fr.onerror = reject;
+          fr.readAsArrayBuffer(resizedBlob);
+        },
+        'image/jpeg',
+        0.75,
+      );
+    });
+  }
+
+  upload(file: Blob, upload: Upload): [(() => Promise<void>), Promise<void>] {
     let resolver;
     const abortPromise = new Promise<void>(resolve => {
       resolver = resolve;
@@ -161,9 +251,11 @@ class ImageUpload extends React.PureComponent {
   }
 
   renderUploadButton() {
-    // TODO: render error
     return (
       <Label text={this.props.labelText}>
+        {this.state.error && (
+          <Callout type="negative">{this.state.error}</Callout>
+        )}
         <ImageUploadDropzone onChange={this.handleGotFile} />
       </Label>
     );

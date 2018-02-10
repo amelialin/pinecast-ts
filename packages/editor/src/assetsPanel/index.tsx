@@ -8,6 +8,8 @@ import ImageSettingsUpdate from './ImageSettingsUpdate';
 import ImageUpload from '../common/ImageUpload';
 import LoadingState from '../common/LoadingState';
 import {PageHeading, PanelDescription, PanelWrapper} from '../panelComponents';
+import ProBadge from '../common/ProBadge';
+import ProGuard from '../common/ProGuard';
 import {ReducerType} from '../reducer';
 import {refresh} from '../actions/preview';
 import request, {clearCache} from '../data/requests';
@@ -27,6 +29,8 @@ class AssetsPanel extends React.PureComponent {
   props: {
     csrf: string;
     slug: string;
+
+    onRefresh: () => void;
   };
   state: {
     data: Assets | null;
@@ -49,8 +53,15 @@ class AssetsPanel extends React.PureComponent {
       );
   }
 
+  handleGotNewFavicon = (newFavicon: string | null) => {
+    this.setState({data: {...this.state.data, site_favicon: newFavicon}});
+    clearCache();
+    this.props.onRefresh();
+  };
   handleGotNewLogo = (newLogo: string | null) => {
     this.setState({data: {...this.state.data, site_logo: newLogo}});
+    clearCache();
+    this.props.onRefresh();
   };
 
   renderInputs() {
@@ -60,17 +71,37 @@ class AssetsPanel extends React.PureComponent {
       return null;
     }
     return (
-      <ImageSettingsUpdate
-        csrf={csrf}
-        onFileUpdate={this.handleGotNewLogo}
-        slug={slug}
-      >
-        <ImageUpload
-          imageType="site_logo"
-          labelText="Logo"
-          value={data.site_logo}
-        />
-      </ImageSettingsUpdate>
+      <React.Fragment>
+        <ImageSettingsUpdate
+          csrf={csrf}
+          onFileUpdate={this.handleGotNewLogo}
+          slug={slug}
+        >
+          <ImageUpload
+            imageType="site_logo"
+            labelText="Logo"
+            value={data.site_logo}
+          />
+        </ImageSettingsUpdate>
+        <ProGuard>
+          <ImageSettingsUpdate
+            csrf={csrf}
+            onFileUpdate={this.handleGotNewFavicon}
+            slug={slug}
+          >
+            <ImageUpload
+              imageType="site_favicon"
+              labelText={
+                <React.Fragment>
+                  <ProBadge />
+                  Favicon
+                </React.Fragment>
+              }
+              value={data.site_favicon}
+            />
+          </ImageSettingsUpdate>
+        </ProGuard>
+      </React.Fragment>
     );
   }
 

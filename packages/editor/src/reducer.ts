@@ -17,6 +17,7 @@ import themeReducer, {
 
 export interface ReducerType {
   readonly csrf: string | null;
+  readonly isPro: boolean;
   readonly slug: string | null;
   readonly wasLoaded: boolean;
   readonly needsSave: boolean;
@@ -36,6 +37,7 @@ export interface ReducerType {
 
 const initialState: ReducerType = {
   csrf: null,
+  isPro: false,
   slug: null,
   wasLoaded: false,
   needsSave: false,
@@ -64,6 +66,7 @@ function reducer(state: ReducerType = initialState, action): ReducerType {
   return {
     ...state,
     csrf: action.type === 'init' ? action.payload.csrf : state.csrf,
+    isPro: action.type === 'init' ? Boolean(action.payload.isPro) : state.isPro,
     slug: action.type === 'init' ? action.payload.slug : state.slug,
     wasLoaded: action.type === 'init.loaded' ? true : state.wasLoaded,
     needsSave,

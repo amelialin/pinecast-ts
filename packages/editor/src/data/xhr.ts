@@ -33,6 +33,24 @@ export default function(args: Options | string): Promise<string> {
   }
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
+
+    if (onProgress) {
+      xhr.upload.addEventListener(
+        'progress',
+        e => {
+          console.log(e);
+          if (!e.lengthComputable) {
+            return;
+          }
+          if (!onProgress) {
+            return;
+          }
+          onProgress(Math.min(e.loaded / e.total * 100, 99.9));
+        },
+        false,
+      );
+    }
+
     xhr.open(method, url, true);
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
       xhr.withCredentials = true;
@@ -59,17 +77,5 @@ export default function(args: Options | string): Promise<string> {
       console.warn(xhr);
       reject();
     });
-
-    if (onProgress) {
-      xhr.upload.addEventListener('progress', e => {
-        if (!e.lengthComputable) {
-          return;
-        }
-        if (!onProgress) {
-          return;
-        }
-        onProgress(Math.min(e.loaded / e.total * 100, 99.9));
-      });
-    }
   });
 }

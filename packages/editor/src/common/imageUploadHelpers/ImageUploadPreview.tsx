@@ -11,7 +11,10 @@ const Wrapper = styled('div', {
   justifyContent: 'center',
   position: 'relative',
 });
-const Image = styled('img', {});
+const Image = styled('img', {
+  backgroundColor: '#eeefea',
+  minHeight: 150,
+});
 
 const buttonStyle = {
   position: 'absolute',

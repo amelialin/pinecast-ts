@@ -21,6 +21,7 @@ const BelowToolbar = styled('div', {
 export default class Editor extends React.PureComponent {
   props: {
     csrf: string;
+    isPro: boolean;
     slug: string;
     theme: Object;
   };
