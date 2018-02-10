@@ -13,7 +13,7 @@ const Toolbar_ = styled('nav', {
   backgroundColor: '#eeefea',
   display: 'flex',
   fontFamily: DEFAULT_FONT,
-  height: 50,
+  height: 48,
   padding: '0 15px',
 });
 const ToolbarOption = styled(

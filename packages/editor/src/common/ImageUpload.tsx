@@ -1,95 +1,218 @@
+import {connect} from 'react-redux';
 import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
-import Card from './Card';
+import {dropZoneStyle} from './imageUploadHelpers/styles';
 import Label from './Label';
+import ImageUploadDropzone from './imageUploadHelpers/ImageUploadDropzone';
+import ImageUploadPreview from './imageUploadHelpers/ImageUploadPreview';
+import ImageUploadProgress from './imageUploadHelpers/ImageUploadProgress';
+import xhr from '../data/xhr';
 
-const dropZoneStyle = {
-  alignItems: 'stretch',
-  cursor: 'pointer',
-  padding: 0,
-  textAlign: 'center',
-};
+interface Upload {
+  url: string;
+  method: string;
+  fields: {[key: string]: string};
+  destinationURL: string;
+}
 
-const DashedWrap = styled('div', {
-  border: '3px dashed #b7c9d1',
-  borderRadius: 2,
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '40px 20px',
-  transition: 'border-color 0.2s',
-  width: '100%',
-
-  ':hover': {
-    borderColor: '#c9d9e0',
-  },
-});
-const BlockB = styled('b', {display: 'block', fontWeight: 500});
-const BlockSpan = styled('span', {display: 'block'});
-const U = styled('span', {textDecoration: 'underline'});
-
-const NativeFileInput = styled(
-  'input',
-  {
-    display: 'block',
-    height: 0,
-    opacity: 0,
-    ':focus + .imageUpload-dropZone': {
-      boxShadow:
-        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15), rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
-    },
-  },
-  {accept: 'image/png, image/jpg, image/jpeg', type: 'file'},
-);
-
-export default class ImageUpload extends React.PureComponent {
-  ongoingUpload: {abort: () => void} | null = null;
+class ImageUpload extends React.PureComponent {
+  ongoingUpload: {file: File; abort: () => Promise<void>} | null = null;
+  ongoingRequest: number = 0;
 
   props: {
-    imageType: string;
+    imageType: 'site_logo' | 'site_favicon';
     labelText: string;
     onCleared: () => void;
-    onNewFile: (signedURL: string) => void;
+    onNewFile: (signedURL: string) => Promise<void>;
     value: string | null;
+
+    slug: string;
+    csrf: string;
   };
   state: {
     error: JSX.Element | string | null;
-    selectedFile: File | null;
     uploading: boolean;
     uploadProgress: number;
   } = {
     error: null,
-    selectedFile: null,
     uploading: false,
     uploadProgress: 0,
   };
 
-  handleGotFile = (e: React.FormEvent<HTMLInputElement>) => {
-    const files = e.currentTarget.files;
-    if (!files || !files.length) {
+  asyncSetState(newState) {
+    return new Promise(resolve => {
+      this.setState(newState, resolve);
+    });
+  }
+
+  handleGotFile = async (file: File) => {
+    this.ongoingRequest += 1;
+    const reqId = this.ongoingRequest;
+
+    if (this.ongoingUpload) {
+      await this.ongoingUpload.abort();
+    }
+
+    this.ongoingUpload = {
+      file,
+      abort: () => Promise.resolve(),
+    };
+
+    await this.asyncSetState({
+      selectedFile: file,
+      uploading: true,
+      uploadProgress: 0,
+    });
+
+    let data;
+    try {
+      data = await this.getUploadData(file);
+      if (reqId < this.ongoingRequest) {
+        return;
+      }
+    } catch {
+      if (reqId < this.ongoingRequest) {
+        return;
+      }
+      this.setState({
+        error: 'Unable to contact Pinecast',
+        uploading: false,
+        uploadProgress: 0,
+      });
       return;
     }
 
-    this.setState({
-      selectedFile: files[0],
-      uploading: true,
-    });
+    const [aborter, completion] = this.upload(file, data);
+    this.ongoingUpload.abort = aborter;
+
+    try {
+      await completion;
+      if (reqId < this.ongoingRequest) {
+        return;
+      }
+    } catch {
+      if (reqId < this.ongoingRequest) {
+        return;
+      }
+      this.setState({
+        error: 'Failed to upload file',
+        uploading: false,
+        uploadProgress: 0,
+      });
+      return;
+    }
+
+    await this.props.onNewFile(data.destinationURL);
+    if (reqId < this.ongoingRequest) {
+      return;
+    }
+
+    this.setState({uploading: false, error: null, uploadProgress: 100});
   };
 
-  render() {
+  async getUploadData(file: File): Promise<Upload> {
+    const name = file.name.replace(/[^a-zA-Z0-9\._\-]/g, '_');
+    const {imageType, slug} = this.props;
+    const response = JSON.parse(
+      await xhr({
+        method: 'GET',
+        url: `/assets/upload_url/${imageType}/${encodeURIComponent(
+          slug,
+        )}?name=${encodeURIComponent(name)}&type=${encodeURIComponent(
+          file.type,
+        )}`,
+      }),
+    );
+    return {
+      url: response.url,
+      method: response.method,
+      fields: response.fields,
+      destinationURL: response.destination_url,
+    };
+  }
+
+  upload(file: File, upload: Upload): [(() => Promise<void>), Promise<void>] {
+    let resolver;
+    const abortPromise = new Promise<void>(resolve => {
+      resolver = resolve;
+    });
+
+    const data = new FormData();
+    for (let key in upload.fields) {
+      if (upload.fields.hasOwnProperty(key)) {
+        data.append(key, upload.fields[key]);
+      }
+    }
+    data.append('file', file);
+
+    const uploadXHR = xhr({
+      method: 'POST', // TODO: use upload.method
+      url: upload.url,
+      body: data,
+      abortPromise,
+      onProgress: uploadProgress => {
+        this.setState({uploadProgress});
+      },
+    });
+
+    return [async () => resolver(), uploadXHR.then(() => {})];
+  }
+
+  renderUploadButton() {
+    // TODO: render error
     return (
       <Label text={this.props.labelText}>
-        <NativeFileInput onChange={this.handleGotFile} />
-        <Card className="imageUpload-dropZone" style={dropZoneStyle}>
-          <DashedWrap>
-            <BlockB>Drop an image here</BlockB>
-            <BlockSpan>
-              or <U>click here</U> to browse
-            </BlockSpan>
-          </DashedWrap>
-        </Card>
+        <ImageUploadDropzone onChange={this.handleGotFile} />
       </Label>
     );
   }
+
+  renderPreview() {
+    const {value} = this.props;
+    if (!value) {
+      throw new Error('unreachable');
+    }
+    return (
+      <Label componentType="div" text={this.props.labelText}>
+        <ImageUploadPreview
+          maxHeight={200}
+          maxWidth="100%"
+          onClear={this.props.onCleared}
+          src={value}
+        />
+      </Label>
+    );
+  }
+
+  renderUploadProgress() {
+    const abort =
+      (this.ongoingUpload && this.ongoingUpload.abort) || (() => {});
+    return (
+      <Label componentType="div" text={this.props.labelText}>
+        <ImageUploadProgress
+          onAbort={abort}
+          percent={this.state.uploadProgress}
+        />
+      </Label>
+    );
+  }
+
+  render() {
+    const {props: {value}, state: {uploading}} = this;
+
+    if (uploading) {
+      return this.renderUploadProgress();
+    }
+    if (!uploading && !value) {
+      return this.renderUploadButton();
+    }
+
+    return this.renderPreview();
+  }
 }
+
+export default connect(state => ({csrf: state.csrf, slug: state.slug}))(
+  ImageUpload,
+);

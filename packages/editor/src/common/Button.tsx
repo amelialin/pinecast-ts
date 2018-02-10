@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
+import styled, {CSS} from '@pinecast/sb-styles';
 
 import {DEFAULT_FONT} from './constants';
 import KeyboardShortcut, {ShortcutKey} from './KeyboardShortcut';
@@ -13,11 +13,13 @@ const NativeButton = styled(
     $isBlock,
     $isPrimary,
     $pending,
+    $size,
   }: {
     disabled?: boolean;
     $isBlock?: boolean;
     $isPrimary?: boolean;
     $pending?: boolean;
+    $size: 'normal' | 'large' | 'small';
   }) => ({
     backgroundColor: $isPrimary ? '#8d52d1' : '#fff',
     border: 0,
@@ -27,12 +29,13 @@ const NativeButton = styled(
     color: $isPrimary ? '#fff' : '#000',
     display: $isBlock ? 'flex' : 'inline-flex',
     fontFamily: DEFAULT_FONT,
-    fontSize: 13,
+    fontSize: $size === 'normal' ? 13 : $size === 'small' ? 12 : 16,
     fontWeight: 500,
-    height: 30,
+    height: $size === 'normal' ? 30 : $size === 'small' ? 24 : 36,
     margin: $isBlock ? '0 0 20px' : 0,
     opacity: $pending || disabled ? 0.5 : 1,
-    padding: '0 15px',
+    padding:
+      $size === 'normal' ? '0 16px' : $size === 'small' ? '0 12px' : '0 20px',
     pointerEvents: $pending || disabled ? 'none' : null,
     transition: 'box-shadow 0.2s, opacity 0.2s',
 
@@ -61,8 +64,9 @@ const Button = ({
   children,
   pending,
   shortcut,
+  size = 'normal',
   style,
-  ...rest,
+  ...rest
 }: {
   children: JSX.Element | string | Array<JSX.Element | Array<JSX.Element>>;
   disabled?: boolean;
@@ -70,11 +74,13 @@ const Button = ({
   $isPrimary?: boolean;
   pending?: boolean;
   shortcut?: ShortcutKey;
-  style?: React.CSSProperties;
+  size?: 'normal' | 'small' | 'large';
+  style?: CSS;
   [key: string]: any;
 }) => (
   <NativeButton
     $pending={pending}
+    $size={size}
     {...rest}
     style={style}
     type={rest.type || 'button'}
