@@ -44,7 +44,7 @@ function getItemSource<T>(items: Array<T>): ItemSourceContext<T> {
   const inst = yielder();
   return {
     getItem: inst.next.bind(inst),
-    hasNextItem: () => yielded + 1 < items.length,
+    hasNextItem: () => yielded < items.length,
     [Symbol.iterator]: inst[Symbol.iterator].bind(inst),
   };
 }
@@ -199,8 +199,9 @@ export const renderEpisode = getContextFromResources(
         )}?theme=${embedTheme}&card=true">
         <meta name="twitter:player:width" content="480">
         <meta name="twitter:player:height" content="${embedHeight}">
-        <meta name="twitter:player:stream" content="https://pinecast.com/listen/${resources
-          .episode.id}">
+        <meta name="twitter:player:stream" content="https://pinecast.com/listen/${
+          resources.episode.id
+        }">
         <meta name="twitter:player:stream:content_type" content="${escapeHTML(
           resources.episode.audio_type,
         )}">
