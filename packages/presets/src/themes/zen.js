@@ -66,7 +66,7 @@ export default {
           bgColor: 'accent',
         },
         style: {
-          padding: '200px 25%',
+          padding: '200px 150px',
           '@mobile': {padding: '100px 5%'},
         },
       }),
