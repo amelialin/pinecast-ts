@@ -19,7 +19,11 @@ export default getsContext(
         propPaths: {
           src: ['site', 'logo_url'],
         },
-        styles: element.elementOptions && element.elementOptions.imageStyles,
+        styles: {
+          maxWidth: 300,
+          maxHeight: 300,
+          ...(element.elementOptions && element.elementOptions.imageStyles),
+        },
       });
     } else {
       children.push({
