@@ -1,13 +1,11 @@
-export default (
-  {
-    imageSize = 300,
-    maxLinesOfSummary = 3.5,
-    padding,
-    ordering = ['title', 'subtitle', 'summary', 'player'],
-    style,
-    textStyleType = 'item',
-  } = {},
-) => {
+export default ({
+  imageSize = 300,
+  maxLinesOfSummary = 3.5,
+  padding,
+  ordering = ['title', 'subtitle', 'summary', 'player'],
+  style,
+  textStyleType = 'item',
+} = {}) => {
   const results = {
     title: {
       type: 'block.link',
@@ -96,6 +94,11 @@ export default (
           flex: '1 1',
           maxWidth: `calc(100% - ${imageSize}px)`,
           padding,
+
+          '@mobile': {
+            maxWidth: '100%',
+            width: '100%',
+          },
         },
       },
     ],
