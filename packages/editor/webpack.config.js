@@ -23,7 +23,7 @@ module.exports = env => {
             blacklist: ['Buffer'],
           },
         },
-        {sourceMap: 'cheap-source-maps'},
+        {sourceMap: 'source-maps'},
       ),
     );
   }
