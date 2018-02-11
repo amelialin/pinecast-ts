@@ -6,6 +6,7 @@
   "jsnext:main": "dist/index.js",
   "ts:main": "src/jsAPI.ts",
   "scripts": {
+    "build_prod": "../../node_modules/.bin/webpack --config=webpack.config.prod.js --progress",
     "dev": "../../node_modules/.bin/webpack --config=webpack.config.js --progress --watch --colors",
     "start": "nodemon build/index.js"
   },
