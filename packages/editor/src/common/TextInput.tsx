@@ -70,6 +70,7 @@ export interface Props {
   pattern?: string;
   placeholder?: string;
   prefix?: JSX.Element | string;
+  required?: boolean;
   style?: React.CSSProperties;
   suffix?: JSX.Element | string;
   type?: 'text' | 'url';

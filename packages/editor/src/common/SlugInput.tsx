@@ -25,13 +25,21 @@ type ProviderResponse = {
 };
 export type ProviderType = (slug: string) => ProviderResponse;
 
+export type Status =
+  | 'waiting'
+  | 'loading'
+  | 'failed'
+  | 'available'
+  | 'unavailable';
+
 export default class SlugInput extends React.PureComponent {
   props: Props & {
+    onStatusChanged: (status: Status) => void;
     provider: ProviderType;
     sourceValue: string;
   };
   state: {
-    response: 'waiting' | 'loading' | 'failed' | 'available' | 'unavailable';
+    response: Status;
     tentativeSlug: string;
   } = {
     response: 'waiting',
@@ -89,6 +97,11 @@ export default class SlugInput extends React.PureComponent {
     this.triggerLookup(filteredSlug);
   };
 
+  changeStatus(newStatus: Status) {
+    this.setState({response: newStatus});
+    this.props.onStatusChanged(newStatus);
+  }
+
   triggerLookup(slug: string) {
     if (this.ongoingRequest) {
       this.ongoingRequest.abort();
@@ -100,20 +113,20 @@ export default class SlugInput extends React.PureComponent {
     }
 
     if (!slug) {
-      this.setState({response: 'waiting'});
+      this.changeStatus('waiting');
       return;
     }
-    this.setState({response: 'loading'});
+    this.changeStatus('loading');
 
     this.pendingRequest = setTimeout(() => {
       this.pendingRequest = null;
       this.ongoingRequest = this.props.provider(slug);
       this.ongoingRequest.status.then(
         response => {
-          this.setState({response});
+          this.changeStatus(response);
         },
         () => {
-          this.setState({response: 'failed'});
+          this.changeStatus('failed');
         },
       );
     }, 500);
@@ -143,7 +156,19 @@ export default class SlugInput extends React.PureComponent {
   }
 
   render() {
-    const {onChange, provider, sourceValue, value, ...rest} = this.props;
+    const {
+      onChange,
+      onStatusChanged,
+      provider,
+      sourceValue,
+      value,
+      ...rest
+    } = this.props;
+    void onChange;
+    void onStatusChanged;
+    void provider;
+    void sourceValue;
+
     return (
       <TextInput
         onChange={this.handleChange}

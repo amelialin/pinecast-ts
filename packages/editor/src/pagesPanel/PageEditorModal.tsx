@@ -6,7 +6,7 @@ import Dialog from '../common/Dialog';
 import Label from '../common/Label';
 import {Page} from './types';
 import {ReducerType} from '../reducer';
-import SlugInput from '../common/SlugInput';
+import SlugInput, {Status as SlugStatus} from '../common/SlugInput';
 import TextInput from '../common/TextInput';
 import xhr from '../data/xhr';
 
@@ -26,11 +26,17 @@ class PageEditorModal extends React.PureComponent {
   state: {
     rawValue: string;
     title: string;
+    titleError: JSX.Element | string | null;
     slug: string | null;
+    slugError: JSX.Element | string | null;
+    slugStatus: SlugStatus;
   } = {
     rawValue: '',
     title: '',
+    titleError: null,
     slug: null,
+    slugError: null,
+    slugStatus: 'waiting',
   };
 
   componentDidMount() {
@@ -52,6 +58,36 @@ class PageEditorModal extends React.PureComponent {
     }
   }
 
+  handleSave = () => {
+    const {title, slug, slugStatus} = this.state;
+    if (!title) {
+      this.setState({titleError: 'A title is required.'});
+      return;
+    }
+    if (this.props.showSlug) {
+      if (!slug) {
+        this.setState({slugError: 'A slug is required.'});
+        return;
+      }
+      if (slugStatus === 'unavailable') {
+        this.setState({slugError: 'You must choose a different slug.'});
+        return;
+      }
+      if (slugStatus !== 'available') {
+        this.setState({slugError: 'Please choose a different slug.'});
+        return;
+      }
+    }
+
+    const {onSave, page} = this.props;
+    onSave({
+      ...page,
+      body: this.state.rawValue,
+      slug: page.slug || this.state.slug || '',
+      title: this.state.title,
+    });
+  };
+
   renderActions() {
     return (
       <ButtonGroup>
@@ -67,18 +103,8 @@ class PageEditorModal extends React.PureComponent {
     this.setState({rawValue: newValue});
   };
 
-  handleSave = () => {
-    const {onSave, page} = this.props;
-    onSave({
-      ...page,
-      body: this.state.rawValue,
-      slug: page.slug || this.state.slug || '',
-      title: this.state.title,
-    });
-  };
-
   handleTitleChange = (newTitle: string) => {
-    this.setState({title: newTitle});
+    this.setState({title: newTitle, titleError: null});
   };
 
   slugProvider = (newSlug: string) => {
@@ -99,31 +125,47 @@ class PageEditorModal extends React.PureComponent {
     return {status: promise, abort: abortResolve};
   };
   handleSlugChange = (newSlug: string) => {
-    //
+    this.setState({slug: newSlug, slugError: null});
+  };
+  handleSlugStatusChange = (newStatus: SlugStatus) => {
+    this.setState({slugStatus: newStatus});
+  };
+
+  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.handleSave();
   };
 
   render() {
     const {editorComponent: EditorComponent, page, showSlug} = this.props;
-    const {rawValue, slug, title} = this.state;
+    const {rawValue, slug, slugError, title, titleError} = this.state;
     return (
       <Dialog
         actions={this.renderActions()}
         title={page.title ? `Edit: ${page.title}` : 'New page'}
       >
-        <Label $oneLine text="Page Title">
-          <TextInput onChange={this.handleTitleChange} value={title} />
-        </Label>
-        {showSlug && (
-          <Label $oneLine text="Slug">
-            <SlugInput
-              onChange={this.handleSlugChange}
-              provider={this.slugProvider}
-              sourceValue={this.state.title}
-              value={slug || ''}
+        <form onSubmit={this.handleSubmit}>
+          <Label $oneLine error={titleError} text="Page Title">
+            <TextInput
+              onChange={this.handleTitleChange}
+              required
+              value={title}
             />
           </Label>
-        )}
-        <EditorComponent onChange={this.handleChange} value={rawValue} />
+          {showSlug && (
+            <Label $oneLine error={slugError} text="Slug">
+              <SlugInput
+                onChange={this.handleSlugChange}
+                onStatusChanged={this.handleSlugStatusChange}
+                provider={this.slugProvider}
+                required
+                sourceValue={this.state.title}
+                value={slug || ''}
+              />
+            </Label>
+          )}
+          <EditorComponent onChange={this.handleChange} value={rawValue} />
+        </form>
       </Dialog>
     );
   }
