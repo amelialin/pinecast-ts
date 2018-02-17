@@ -33,7 +33,7 @@ export default class Range extends React.Component {
         return;
       }
       const val = Number(this.range.value);
-      if (props.value === val) {
+      if (this.props.value === val) {
         return;
       }
       props.onChange(val);
