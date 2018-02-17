@@ -7,7 +7,7 @@ Array.from(document.querySelectorAll('.sb-editor-placeholder')).forEach(el =>
   ReactDOM.render(
     <Editor
       csrf={el.getAttribute('data-csrf') || ''}
-      isPro={el.getAttribute('data-isPro') === 'true'}
+      isPro={el.getAttribute('data-is-pro') === 'true'}
       slug={el.getAttribute('data-slug') || ''}
       theme={JSON.parse(el.getAttribute('data-theme') || '{}')}
     />,

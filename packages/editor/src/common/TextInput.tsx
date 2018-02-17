@@ -6,6 +6,7 @@ import {DEFAULT_FONT} from '../common/constants';
 
 const InputWrapper = styled('div', ({$disabled}) => ({
   alignItems: 'center',
+  backgroundColor: '#fff',
   border: $disabled ? '1px solid #eee' : '1px solid #ccc',
   borderRadius: 4,
   display: 'flex',
@@ -63,18 +64,20 @@ const Suffix = styled('span', {
   padding: '0 8px',
 });
 
+export interface Props {
+  disabled?: boolean;
+  onChange: (value: string) => void;
+  pattern?: string;
+  placeholder?: string;
+  prefix?: JSX.Element | string;
+  style?: React.CSSProperties;
+  suffix?: JSX.Element | string;
+  type?: 'text' | 'url';
+  value: string;
+}
+
 export default class TextInput extends React.PureComponent {
-  props: {
-    disabled?: boolean;
-    onChange: (value: string) => void;
-    pattern?: string;
-    placeholder?: string;
-    prefix?: JSX.Element | string;
-    style?: React.CSSProperties;
-    suffix?: JSX.Element | string;
-    type?: 'text' | 'url';
-    value: string;
-  };
+  props: Props;
 
   static defaultProps = {
     type: 'text',

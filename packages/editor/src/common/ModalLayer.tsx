@@ -6,6 +6,7 @@ const Wash = styled('div', {
   alignItems: 'center',
   backgroundColor: 'rgba(0, 0, 0, 0.6)',
   display: 'flex',
+  flexDirection: 'column',
   height: '100vh',
   justifyContent: 'center',
   left: 0,
@@ -15,7 +16,10 @@ const Wash = styled('div', {
   zIndex: 100,
 });
 const Container = styled('div', {
-  flex: '0 0',
+  flex: '0 0 100%',
+  maxHeight: '100%',
+  overflowY: 'auto',
+  padding: 20,
 });
 
 export default class ModalLayer extends React.PureComponent {

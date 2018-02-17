@@ -3,19 +3,20 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
+import Button, {ButtonGroup} from '../common/Button';
+import {changePath, refresh} from '../actions/preview';
 import EmptyState from '../common/EmptyState';
 import ErrorState from '../common/ErrorState';
 import LoadingState from '../common/LoadingState';
-import {
-  PageHeading,
-  PanelDescription,
-  PanelDivider,
-  PanelSectionTitle,
-  PanelWrapper,
-} from '../panelComponents';
+import PageEditorModal from './PageEditorModal';
+import MarkdownEditor from './MarkdownEditor';
+import ModalLayer from '../common/ModalLayer';
+import {Page} from './types';
+import PageTableRow from './PageTableRow';
+import {PageHeading, PanelDescription, PanelWrapper} from '../panelComponents';
 import {ReducerType} from '../reducer';
-import {refresh} from '../actions/preview';
 import request, {clearCache} from '../data/requests';
+import {Table, TableHeaderCell} from '../common/Table';
 import xhr from '../data/xhr';
 
 const HeaderWrapper = styled('div', {
@@ -24,96 +25,24 @@ const HeaderWrapper = styled('div', {
   justifyContent: 'space-between',
 });
 
-const PageTable = styled('table', {
-  border: 0,
-  borderBottom: '1px solid #ccc',
-  borderCollapse: 'collapse',
-  lineHeight: '36px',
-  marginBottom: 40,
-  width: '100%',
-});
-const PageHeaderCell = styled('th', {
-  borderBottom: '1px solid #ccc',
-  color: '#888',
-  fontSize: 12,
-  fontWeight: 500,
-  lineHeight: 26,
-  padding: '0 8px',
-  textAlign: 'left',
-  textTransform: 'uppercase',
-});
-const PageBodyCell = styled('td', ({$wrapAt}: {$wrapAt?: number}) => ({
-  borderBottom: '1px solid #ccc',
-  fontSize: 16,
-  maxWidth: $wrapAt,
-  overflow: 'hidden',
-  padding: '0 8px',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-}));
-
-const DeleteButton = styled(
-  'button',
-  {
-    background: 'transparent',
-    border: 0,
-    borderRadius: 0,
-    cursor: 'pointer',
-    display: 'inline-flex',
-    height: 20,
-    marginTop: -3,
-    padding: 0,
-    verticalAlign: 'middle',
-    width: 20,
-
-    ':before': {
-      backgroundColor: '#ccc',
-      content: '""',
-      display: 'block',
-      height: 2,
-      margin: 'auto',
-      transform: 'translateX(5px) rotate(45deg)',
-      transformOrigin: 'center',
-      transition: 'background-color 0.25s',
-      width: 20,
-    },
-    ':after': {
-      backgroundColor: '#ccc',
-      content: '""',
-      display: 'block',
-      height: 2,
-      margin: 'auto',
-      transform: 'translateX(-5px) rotate(-45deg)',
-      transformOrigin: 'center',
-      transition: 'background-color 0.25s',
-      width: 20,
-    },
-    ':hover:before': {
-      backgroundColor: '#b00',
-    },
-    ':hover:after': {
-      backgroundColor: '#b00',
-    },
-  },
-  {'aria-label': 'Delete link'},
-);
-
-interface Page {
-  title: string;
-  slug: string;
-  page_type: 'markdown' | 'hosts' | 'contact';
-  created: string;
-  body: string;
-}
-
 class PagesPanel extends React.PureComponent {
-  props: {csrf: string; onRefresh: () => void; slug: string};
+  props: {
+    csrf: string;
+    onNavigate: (path: string) => void;
+    onRefresh: () => void;
+    path: string;
+    slug: string;
+  };
   state: {
-    data: Array<Page> | null;
+    data: {[slug: string]: Page} | null;
+    editing: string | null;
     error: string | null;
+    new_: 'markdown' | 'contact' | 'hosts' | null;
   } = {
     data: null,
+    editing: null,
     error: null,
+    new_: null,
   };
 
   componentWillMount() {
@@ -130,92 +59,227 @@ class PagesPanel extends React.PureComponent {
       );
   }
 
-  save(newLinksArr: Array<{title: string; url: string}>) {
+  handleNewMarkdown = () => this.setState({new_: 'markdown'});
+  handleNewContact = () => this.setState({new_: 'contact'});
+  handleNewHosts = () => this.setState({new_: 'hosts'});
+
+  renderToolbar() {
+    return (
+      <ButtonGroup style={{marginBottom: 24}}>
+        <Button size="small" onClick={this.handleNewMarkdown}>
+          New Markdown page
+        </Button>
+        <Button size="small" onClick={this.handleNewContact}>
+          New contact page
+        </Button>
+        <Button size="small" onClick={this.handleNewHosts}>
+          New hosts page
+        </Button>
+      </ButtonGroup>
+    );
+  }
+
+  handleDelete = (pageSlug: string) => {
+    const data = this.state.data;
+    if (!data) {
+      return;
+    }
+
+    const newData = {...data};
+    delete newData[pageSlug];
     this.setState({data: null, error: null});
+
     const {csrf, slug} = this.props;
     xhr({
-      body: JSON.stringify(newLinksArr),
       headers: {'X-CSRFToken': csrf},
       method: 'POST',
-      url: `/sites/site_builder/editor/pages/${encodeURIComponent(slug)}`,
-    })
-      .then(data => JSON.parse(data))
-      .then(
-        parsed => {
-          this.setState({data: parsed});
-          clearCache();
-          this.props.onRefresh();
-        },
-        () => {
-          this.setState({error: 'Could not contact Pinecast'});
-        },
-      );
-  }
+      url: `/sites/site_builder/editor/pages/${encodeURIComponent(
+        slug,
+      )}/${encodeURIComponent(pageSlug)}/delete`,
+    }).then(
+      () => {
+        this.setState({data: newData});
+        clearCache();
+        this.props.onRefresh();
 
-  deleteItem(index: number) {
-    //
-  }
+        if (this.props.path === '/' + encodeURIComponent(pageSlug)) {
+          this.props.onNavigate('/');
+        }
+      },
+      () => {
+        this.setState({error: 'Could not contact Pinecast'});
+      },
+    );
+  };
+
+  handleEdit = (pageSlug: string) => {
+    this.setState({editing: pageSlug});
+  };
 
   renderInner() {
-    if (this.state.error) {
-      return <ErrorState title={this.state.error} />;
+    const {data, error} = this.state;
+    if (error) {
+      return <ErrorState title={error} />;
     }
-    if (!this.state.data) {
+    if (!data) {
       return <LoadingState title="Loading pages…" />;
     }
 
-    if (!this.state.data.length) {
+    if (!Object.keys(data).length) {
       return (
-        <React.Fragment>
-          <EmptyState
-            title="No pages"
-            copy="You don't have any pages created yet."
-          />
-          <PanelDivider />
-        </React.Fragment>
+        <EmptyState
+          title="No pages"
+          copy="You don't have any pages created yet."
+        />
       );
     }
 
     return (
-      <React.Fragment>
-        <PageTable>
-          <thead>
-            <tr>
-              <PageHeaderCell $wrapAt={150}>Title</PageHeaderCell>
-              <PageHeaderCell $wrapAt={100}>Slug</PageHeaderCell>
-              <PageHeaderCell $wrapAt={100}>Type</PageHeaderCell>
-              <PageHeaderCell />
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.data.map((page, i) => {
+      <Table>
+        <thead>
+          <tr>
+            <TableHeaderCell $wrapAt={150}>Title</TableHeaderCell>
+            <TableHeaderCell $wrapAt={100}>Slug</TableHeaderCell>
+            <TableHeaderCell $wrapAt={100}>Type</TableHeaderCell>
+            <TableHeaderCell />
+            <TableHeaderCell />
+          </tr>
+        </thead>
+        <tbody>
+          {Object.keys(data)
+            .sort((a, b) => a.localeCompare(b))
+            .map((pageKey, i) => {
+              const page = data[pageKey];
               return (
-                <tr key={i}>
-                  <PageBodyCell $wrapAt={150} title={page.title}>
-                    {page.title}
-                  </PageBodyCell>
-                  <PageBodyCell $wrapAt={100} title={page.slug}>
-                    {page.slug}
-                  </PageBodyCell>
-                  <PageBodyCell $wrapAt={100}>
-                    {page.page_type === 'markdown' && 'Markdown'}
-                    {page.page_type === 'hosts' && 'Hosts'}
-                    {page.page_type === 'contact' && 'Contact'}
-                  </PageBodyCell>
-                  <PageBodyCell style={{width: 30}}>
-                    <DeleteButton
-                      onClick={() => {
-                        this.deleteItem(i);
-                      }}
-                    />
-                  </PageBodyCell>
-                </tr>
+                <PageTableRow
+                  key={page.slug}
+                  onDelete={this.handleDelete}
+                  onEdit={this.handleEdit}
+                  onNavigate={this.props.onNavigate}
+                  page={page}
+                />
               );
             })}
-          </tbody>
-        </PageTable>
-        <PanelDivider />
-      </React.Fragment>
+        </tbody>
+      </Table>
+    );
+  }
+
+  handleCloseEditing = () => {
+    this.setState({editing: null});
+  };
+
+  handlePageSave = (page: Page) => {
+    const data = this.state.data;
+    if (!data) {
+      return;
+    }
+
+    const newData = {...data, [page.slug]: page};
+    this.setState({data: null, error: null, editing: null});
+
+    const body = new FormData();
+    body.append('title', page.title);
+    const pageBody = page.body;
+    switch (page.page_type) {
+      case 'markdown':
+        if (typeof pageBody !== 'string') {
+          throw new Error('unreachable');
+        }
+        body.append('body', pageBody);
+        break;
+      case 'hosts':
+      case 'contact':
+        body.append('body', JSON.stringify(pageBody));
+        break;
+    }
+
+    const {csrf, slug} = this.props;
+    xhr({
+      body,
+      headers: {'X-CSRFToken': csrf},
+      method: 'POST',
+      url: `/sites/site_builder/editor/pages/${encodeURIComponent(
+        slug,
+      )}/${encodeURIComponent(page.slug)}`,
+    }).then(
+      () => {
+        this.setState({data: newData});
+        clearCache();
+        this.props.onRefresh();
+      },
+      () => {
+        this.setState({error: 'Could not contact Pinecast'});
+      },
+    );
+  };
+
+  renderEditing() {
+    const {data, editing} = this.state;
+    if (!data) {
+      return null;
+    }
+    if (!editing) {
+      throw new Error('unreachable');
+    }
+
+    const page = data[editing];
+    if (!page) {
+      throw new Error('unreachable');
+    }
+
+    let innerType;
+    switch (page.page_type) {
+      case 'markdown':
+        innerType = MarkdownEditor;
+        break;
+      case 'hosts':
+      case 'contact':
+        break;
+    }
+
+    return (
+      <ModalLayer canEscape={false} onClose={this.handleCloseEditing} open>
+        <PageEditorModal
+          editorComponent={innerType}
+          onClose={this.handleCloseEditing}
+          onSave={this.handlePageSave}
+          page={page}
+        />
+      </ModalLayer>
+    );
+  }
+
+  handleCloseNew = () => this.setState({new_: null});
+
+  renderNew() {
+    const {new_} = this.state;
+
+    let innerType;
+    switch (this.state.new_) {
+      case 'markdown':
+        innerType = MarkdownEditor;
+        break;
+      case 'hosts':
+      case 'contact':
+        break;
+    }
+    return (
+      <ModalLayer canEscape={true} onClose={this.handleCloseNew} open>
+        <PageEditorModal
+          editorComponent={innerType}
+          onClose={this.handleCloseNew}
+          onSave={() => {}}
+          page={{
+            title: '',
+            slug: '',
+            page_type: new_,
+            created: new Date().toISOString(),
+            body: '',
+          }}
+          showSlug
+        />
+      </ModalLayer>
     );
   }
 
@@ -230,8 +294,12 @@ class PagesPanel extends React.PureComponent {
             Add pages to your site to add content alongside your episodes.
           </PanelDescription>
 
+          {this.renderToolbar()}
+
           {this.renderInner()}
         </PanelWrapper>
+        {this.state.editing && this.renderEditing()}
+        {this.state.new_ && this.renderNew()}
       </React.Fragment>
     );
   }
@@ -240,7 +308,8 @@ class PagesPanel extends React.PureComponent {
 export default connect(
   (state: ReducerType) => ({
     csrf: state.csrf,
+    path: state.preview.path,
     slug: state.slug,
   }),
-  {onRefresh: refresh},
+  {onNavigate: changePath, onRefresh: refresh},
 )(PagesPanel);

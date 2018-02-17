@@ -103,14 +103,20 @@ const Button = ({
 
 export default Button;
 
-export const ButtonGroup = ({children}: {children: Array<JSX.Element>}) => {
+export const ButtonGroup = ({
+  children,
+  style,
+}: {
+  children: Array<JSX.Element>;
+  style?: React.CSSProperties;
+}) => {
   return (
     <React.Fragment>
       {React.Children.map(children, (child: any, i) => {
         if (!i) {
-          return child;
+          return React.cloneElement(child, {style});
         }
-        return React.cloneElement(child, {style: {marginLeft: 8}});
+        return React.cloneElement(child, {style: {...style, marginLeft: 8}});
       })}
     </React.Fragment>
   );

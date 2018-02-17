@@ -235,7 +235,7 @@ class SettingsPanel extends React.PureComponent {
                   onChange={this.handleChangeCustomDomain}
                   pattern="([\\w-]+\\.)+[a-z]+"
                   placeholder="your-domain.com"
-                  prefix="https://"
+                  prefix="http://"
                   value={updatedData.custom_cname || ''}
                 />
               </Label>

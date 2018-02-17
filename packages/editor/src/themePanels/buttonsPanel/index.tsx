@@ -32,7 +32,7 @@ const ComponentsPanel = ({
       Customize the look and feel of the buttons used for pagination and
       subscriptions.
     </PanelDescription>
-    <Card style={{backgroundColor: currentForeground}}>
+    <Card style={{backgroundColor: currentForeground, display: 'block'}}>
       <ButtonPreview
         preset={{name: 'Current style', style: theme.styling.buttons}}
         style={{marginRight: 0, marginBottom: 0}}

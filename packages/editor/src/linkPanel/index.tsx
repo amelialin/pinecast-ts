@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
+import DeleteButton from '../common/DeleteButton';
 import EmptyState from '../common/EmptyState';
 import ErrorState from '../common/ErrorState';
 import LoadingState from '../common/LoadingState';
@@ -17,6 +18,7 @@ import {
 import {ReducerType} from '../reducer';
 import {refresh} from '../actions/preview';
 import request, {clearCache} from '../data/requests';
+import {Table, TableBodyCell, TableHeaderCell} from '../common/Table';
 import xhr from '../data/xhr';
 
 const HeaderWrapper = styled('div', {
@@ -24,80 +26,6 @@ const HeaderWrapper = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
 });
-
-const LinkTable = styled('table', {
-  border: 0,
-  borderBottom: '1px solid #ccc',
-  borderCollapse: 'collapse',
-  lineHeight: '36px',
-  marginBottom: 40,
-  width: '100%',
-});
-const LinkHeaderCell = styled('th', {
-  borderBottom: '1px solid #ccc',
-  color: '#888',
-  fontSize: 12,
-  fontWeight: 500,
-  lineHeight: 26,
-  padding: '0 8px',
-  textAlign: 'left',
-  textTransform: 'uppercase',
-});
-const LinkBodyCell = styled('td', ({$wrapAt}: {$wrapAt?: number}) => ({
-  borderBottom: '1px solid #ccc',
-  fontSize: 16,
-  maxWidth: $wrapAt,
-  overflow: 'hidden',
-  padding: '0 8px',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-}));
-
-const DeleteButton = styled(
-  'button',
-  {
-    background: 'transparent',
-    border: 0,
-    borderRadius: 0,
-    cursor: 'pointer',
-    display: 'inline-flex',
-    height: 20,
-    marginTop: -3,
-    padding: 0,
-    verticalAlign: 'middle',
-    width: 20,
-
-    ':before': {
-      backgroundColor: '#ccc',
-      content: '""',
-      display: 'block',
-      height: 2,
-      margin: 'auto',
-      transform: 'translateX(5px) rotate(45deg)',
-      transformOrigin: 'center',
-      transition: 'background-color 0.25s',
-      width: 20,
-    },
-    ':after': {
-      backgroundColor: '#ccc',
-      content: '""',
-      display: 'block',
-      height: 2,
-      margin: 'auto',
-      transform: 'translateX(-5px) rotate(-45deg)',
-      transformOrigin: 'center',
-      transition: 'background-color 0.25s',
-      width: 20,
-    },
-    ':hover:before': {
-      backgroundColor: '#b00',
-    },
-    ':hover:after': {
-      backgroundColor: '#b00',
-    },
-  },
-  {'aria-label': 'Delete link'},
-);
 
 class LinkPanel extends React.PureComponent {
   props: {csrf: string; onRefresh: () => void; slug: string};
@@ -188,34 +116,34 @@ class LinkPanel extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <LinkTable>
+        <Table>
           <thead>
             <tr>
-              <LinkHeaderCell $wrapAt={150}>Link text</LinkHeaderCell>
-              <LinkHeaderCell $wrapAt={200}>URL</LinkHeaderCell>
-              <LinkHeaderCell />
+              <TableHeaderCell $wrapAt={150}>Link text</TableHeaderCell>
+              <TableHeaderCell $wrapAt={200}>URL</TableHeaderCell>
+              <TableHeaderCell />
             </tr>
           </thead>
           <tbody>
             {this.state.data.map((link, i) => {
               return (
                 <tr key={i}>
-                  <LinkBodyCell $wrapAt={150}>{link.title}</LinkBodyCell>
-                  <LinkBodyCell $wrapAt={200} title={link.url}>
+                  <TableBodyCell $wrapAt={150}>{link.title}</TableBodyCell>
+                  <TableBodyCell $wrapAt={200} title={link.url}>
                     {link.url}
-                  </LinkBodyCell>
-                  <LinkBodyCell style={{width: 30}}>
+                  </TableBodyCell>
+                  <TableBodyCell style={{width: 30}}>
                     <DeleteButton
                       onClick={() => {
                         this.deleteItem(i);
                       }}
                     />
-                  </LinkBodyCell>
+                  </TableBodyCell>
                 </tr>
               );
             })}
           </tbody>
-        </LinkTable>
+        </Table>
         <PanelDivider />
         {this.renderCreateForm()}
       </React.Fragment>

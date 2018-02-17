@@ -4,13 +4,16 @@ import styled from '@pinecast/sb-styles';
 
 import {DEFAULT_FONT} from './constants';
 
-const Text = styled('span', {
+const Text = styled('span', ({$oneLine}) => ({
   display: 'block',
+  flex: $oneLine ? '0 0 20%' : null,
   fontFamily: DEFAULT_FONT,
   fontSize: 14,
   fontWeight: 500,
   marginBottom: 4,
-});
+  marginRight: 8,
+  textAlign: $oneLine ? 'right' : null,
+}));
 const SubText = styled('span', {
   display: 'block',
   fontFamily: DEFAULT_FONT,
@@ -23,6 +26,7 @@ nativeLabelMap.set('label', styled('label', {display: 'block', fontSize: 14}));
 nativeLabelMap.set('div', styled('div', {display: 'block', fontSize: 14}));
 
 const Label = ({
+  $oneLine,
   children,
   componentType = 'label',
   labelStyle,
@@ -30,6 +34,7 @@ const Label = ({
   subText,
   text,
 }: {
+  $oneLine?: boolean;
   children:
     | JSX.Element
     | string
@@ -50,11 +55,41 @@ const Label = ({
   if (!NativeLabel) {
     throw new Error(`Could not build styled component for ${componentType}`);
   }
+  if ($oneLine && subText) {
+    throw new Error('Cannot have both subText and $oneLine');
+  }
   return (
-    <NativeLabel style={style}>
-      <Text style={!subText && labelStyle}>{text}</Text>
+    <NativeLabel
+      style={
+        style || $oneLine
+          ? {
+              ...style,
+              ...($oneLine
+                ? {alignItems: 'center', display: 'flex', marginBottom: 20}
+                : null),
+            }
+          : null
+      }
+    >
+      <Text $oneLine={$oneLine} style={!subText && labelStyle}>
+        {text}
+      </Text>
       {subText && <SubText style={labelStyle}>{subText}</SubText>}
-      {children}
+      {$oneLine
+        ? React.Children.map(
+            children,
+            (child, i) =>
+              React.isValidElement(child)
+                ? React.cloneElement(child as any, {
+                    style: {
+                      flex: '1 1',
+                      marginTop: 0,
+                      marginBottom: 0,
+                    },
+                  })
+                : child,
+          )
+        : children}
     </NativeLabel>
   );
 };
