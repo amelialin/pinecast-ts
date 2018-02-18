@@ -5,6 +5,7 @@ import styled from '@pinecast/sb-styles';
 
 import Button, {ButtonGroup} from '../common/Button';
 import {changePath, refresh} from '../actions/preview';
+import ContactFields from './ContactFields';
 import EmptyState from '../common/EmptyState';
 import ErrorState from '../common/ErrorState';
 import LoadingState from '../common/LoadingState';
@@ -234,7 +235,9 @@ class PagesPanel extends React.PureComponent {
         innerType = MarkdownEditor;
         break;
       case 'hosts':
+        break;
       case 'contact':
+        innerType = ContactFields;
         break;
     }
 
@@ -251,6 +254,37 @@ class PagesPanel extends React.PureComponent {
   }
 
   handleCloseNew = () => this.setState({new_: null});
+  handlePageSaveNew = (page: Page) => {
+    const data = this.state.data;
+    if (!data) {
+      return;
+    }
+
+    const newData = {...data, [page.slug]: page};
+    this.setState({data: null, error: null, new_: null});
+
+    const body = new FormData();
+    body.append('title', page.title);
+    body.append('slug', page.slug);
+    body.append('body', page.body);
+    body.append('page_type', page.page_type);
+    const {csrf, slug} = this.props;
+    xhr({
+      body,
+      headers: {'X-CSRFToken': csrf},
+      method: 'POST',
+      url: `/sites/site_builder/editor/pages/${encodeURIComponent(slug)}`,
+    }).then(
+      () => {
+        this.setState({data: newData});
+        clearCache();
+        this.props.onRefresh();
+      },
+      () => {
+        this.setState({error: 'Could not contact Pinecast'});
+      },
+    );
+  };
 
   renderNew() {
     const {new_} = this.state;
@@ -261,7 +295,9 @@ class PagesPanel extends React.PureComponent {
         innerType = MarkdownEditor;
         break;
       case 'hosts':
+        break;
       case 'contact':
+        innerType = ContactFields;
         break;
     }
     return (
@@ -269,7 +305,7 @@ class PagesPanel extends React.PureComponent {
         <PageEditorModal
           editorComponent={innerType}
           onClose={this.handleCloseNew}
-          onSave={() => {}}
+          onSave={this.handlePageSaveNew}
           page={{
             title: '',
             slug: '',

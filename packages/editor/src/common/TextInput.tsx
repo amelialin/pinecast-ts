@@ -73,7 +73,7 @@ export interface Props {
   required?: boolean;
   style?: React.CSSProperties;
   suffix?: JSX.Element | string;
-  type?: 'text' | 'url';
+  type?: 'email' | 'text' | 'url';
   value: string;
 }
 

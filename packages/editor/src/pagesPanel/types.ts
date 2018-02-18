@@ -22,5 +22,5 @@ export interface Page {
   slug: string;
   page_type: 'markdown' | 'hosts' | 'contact';
   created: string;
-  body: string | ContactBody | HostsBody;
+  body: string;
 }
