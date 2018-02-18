@@ -107,12 +107,12 @@ export const ButtonGroup = ({
   children,
   style,
 }: {
-  children: Array<JSX.Element>;
+  children: Array<JSX.Element | false | null>;
   style?: React.CSSProperties;
 }) => {
   return (
     <React.Fragment>
-      {React.Children.map(children, (child: any, i) => {
+      {React.Children.map(children.filter(x => x), (child: any, i) => {
         if (!i) {
           return React.cloneElement(child, {style});
         }

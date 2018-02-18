@@ -13,39 +13,35 @@ import xhr from '../data/xhr';
 class PageEditorModal extends React.PureComponent {
   props: {
     editorComponent: React.ComponentType<{
-      onChange: (value: string) => void;
-      value: string;
+      onChange: (value: Page['body']) => void;
+      value: Page['body'];
     }>;
     onClose: () => void;
     onSave: (newPage: Page) => void;
     page: Page;
     showSlug?: boolean;
-
     slug: string;
   };
   state: {
-    rawValue: string;
+    rawValue: Page['body'];
     title: string;
     titleError: JSX.Element | string | null;
     slug: string | null;
     slugError: JSX.Element | string | null;
     slugStatus: SlugStatus;
-  } = {
-    rawValue: '',
-    title: '',
-    titleError: null,
-    slug: null,
-    slugError: null,
-    slugStatus: 'waiting',
   };
 
-  componentDidMount() {
-    const {page} = this.props;
-    this.setState({
-      title: page.title,
+  constructor(props) {
+    super(props);
+    const {page} = props;
+    this.state = {
       rawValue: page.body,
+      title: page.title,
+      titleError: null,
       slug: page.slug || null,
-    });
+      slugError: null,
+      slugStatus: 'waiting',
+    };
   }
 
   componentWillReceiveProps(newProps) {
@@ -99,7 +95,7 @@ class PageEditorModal extends React.PureComponent {
     );
   }
 
-  handleChange = (newValue: string) => {
+  handleChange = (newValue: Page['body']) => {
     this.setState({rawValue: newValue});
   };
 

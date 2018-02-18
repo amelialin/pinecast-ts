@@ -8,19 +8,19 @@ export interface ContactBody {
 }
 export interface Host {
   name: string;
-  email?: string;
-  twitter?: string;
-  instagram?: string;
-  twitch?: string;
-  youtube?: string;
-  facebook?: string;
-  url?: string;
+  email?: Array<string>;
+  twitter?: Array<string>;
+  instagram?: Array<string>;
+  twitch?: Array<string>;
+  youtube?: Array<string>;
+  facebook?: Array<string>;
+  url?: Array<string>;
 }
 export type HostsBody = Array<Host>;
 export interface Page {
   title: string;
   slug: string;
   page_type: 'markdown' | 'hosts' | 'contact';
-  created: string;
-  body: string;
+  created?: string;
+  body: string | HostsBody | ContactBody;
 }

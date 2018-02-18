@@ -66,6 +66,8 @@ const Suffix = styled('span', {
 
 export interface Props {
   disabled?: boolean;
+  maxLength?: number;
+  minlength?: number;
   onChange: (value: string) => void;
   pattern?: string;
   placeholder?: string;
@@ -85,7 +87,13 @@ export default class TextInput extends React.PureComponent {
   };
 
   handleChange = e => {
-    this.props.onChange(e.target.value);
+    const value = e.target.value;
+    const {maxLength} = this.props;
+    if (maxLength && value.length > maxLength) {
+      this.props.onChange(value.substr(0, maxLength));
+    } else {
+      this.props.onChange(value);
+    }
   };
 
   render() {

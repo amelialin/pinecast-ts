@@ -8,6 +8,7 @@ import {changePath, refresh} from '../actions/preview';
 import ContactFields from './ContactFields';
 import EmptyState from '../common/EmptyState';
 import ErrorState from '../common/ErrorState';
+import HostsFields from './HostsFields';
 import LoadingState from '../common/LoadingState';
 import PageEditorModal from './PageEditorModal';
 import MarkdownEditor from './MarkdownEditor';
@@ -235,6 +236,7 @@ class PagesPanel extends React.PureComponent {
         innerType = MarkdownEditor;
         break;
       case 'hosts':
+        innerType = HostsFields;
         break;
       case 'contact':
         innerType = ContactFields;
@@ -266,7 +268,10 @@ class PagesPanel extends React.PureComponent {
     const body = new FormData();
     body.append('title', page.title);
     body.append('slug', page.slug);
-    body.append('body', page.body);
+    body.append(
+      'body',
+      typeof page.body === 'object' ? JSON.stringify(page.body) : page.body,
+    );
     body.append('page_type', page.page_type);
     const {csrf, slug} = this.props;
     xhr({
@@ -290,14 +295,19 @@ class PagesPanel extends React.PureComponent {
     const {new_} = this.state;
 
     let innerType;
-    switch (this.state.new_) {
+    let initial;
+    switch (new_) {
       case 'markdown':
         innerType = MarkdownEditor;
+        initial = '';
         break;
       case 'hosts':
+        innerType = HostsFields;
+        initial = [{name: ''}];
         break;
       case 'contact':
         innerType = ContactFields;
+        initial = {};
         break;
     }
     return (
@@ -310,8 +320,7 @@ class PagesPanel extends React.PureComponent {
             title: '',
             slug: '',
             page_type: new_,
-            created: new Date().toISOString(),
-            body: '',
+            body: initial,
           }}
           showSlug
         />

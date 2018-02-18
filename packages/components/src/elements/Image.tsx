@@ -41,7 +41,10 @@ export default ({
   );
   const eo = element.elementOptions || {};
   if (eo.gravatar) {
-    const email = eo.gravatar;
+    let email = eo.gravatar;
+    if (Array.isArray(email) && typeof email[0] === 'string') {
+      email = email[0];
+    }
     const hash = md5(
       typeof email === 'string' ? email : extractPath(item, email),
     );

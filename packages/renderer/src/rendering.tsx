@@ -229,14 +229,14 @@ export const renderPage = getContextFromResources(async function renderPage(
           context.layout.body.page.markdown,
         );
       case 'hosts':
-        const hostData = JSON.parse(page.body);
+        const hostData = page.body;
         return renderElement(
           'page.hosts',
           {...page, body: hostData},
           context.layout.body.page.hosts,
         );
       case 'contact':
-        const contactData = JSON.parse(page.body);
+        const contactData = page.body;
         return renderElement(
           'page.contact',
           {...page, body: contactData},

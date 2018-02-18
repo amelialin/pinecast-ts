@@ -6,36 +6,13 @@ import {ContactBody} from './types';
 
 export default class ContactFields extends React.PureComponent {
   props: {
-    onChange: (value: string) => void;
-    value: string;
+    onChange: (value: ContactBody) => void;
+    value: ContactBody;
   };
-  state: {
-    rawValue: ContactBody;
-    serialized: string;
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      rawValue: JSON.parse(props.value || '{}'),
-      serialized: props.value || '{}',
-    };
-  }
-
-  componentWillReceiveProps(props) {
-    if (props.value && props.value !== this.state.serialized) {
-      this.setState({
-        serialized: props.value,
-        rawValue: JSON.parse(props.value),
-      });
-    }
-  }
 
   changed(field: string, value: string) {
-    const updated = {...this.state.rawValue, [field]: value || undefined};
-    const serialized = JSON.stringify(updated);
-    this.setState({rawValue: updated, serialized});
-    this.props.onChange(serialized);
+    const updated = {...this.props.value, [field]: value || undefined};
+    this.props.onChange(updated);
   }
 
   handleEmailChange = (email: string) => this.changed('email', email);
@@ -51,49 +28,55 @@ export default class ContactFields extends React.PureComponent {
       <React.Fragment>
         <Label text="Podcast email">
           <TextInput
+            maxLength={64}
             onChange={this.handleEmailChange}
             placeholder="contact@mygreatshow.com"
             type="email"
-            value={this.state.rawValue.email || ''}
+            value={this.props.value.email || ''}
           />
         </Label>
         <Label text="Twitter">
           <TextInput
+            maxLength={32}
             onChange={this.handleTwitterChange}
             placeholder="mygreatshow"
             prefix="@"
-            value={this.state.rawValue.twitter || ''}
+            value={this.props.value.twitter || ''}
           />
         </Label>
         <Label text="Facebook">
           <TextInput
+            maxLength={256}
             onChange={this.handleFacebookChange}
             placeholder="https://www.facebook.com/mygreatshow/"
-            value={this.state.rawValue.facebook || ''}
+            value={this.props.value.facebook || ''}
           />
         </Label>
         <Label text="Instagram">
           <TextInput
+            maxLength={32}
             onChange={this.handleInstagramChange}
             placeholder="mygreatshow"
             prefix="@"
-            value={this.state.rawValue.instagram || ''}
+            value={this.props.value.instagram || ''}
           />
         </Label>
         <Label text="Twitch">
           <TextInput
+            maxLength={32}
             onChange={this.handleTwitchChange}
             placeholder="mygreatshow"
             prefix="https://www.twitch.tv/"
-            value={this.state.rawValue.twitch || ''}
+            value={this.props.value.twitch || ''}
           />
         </Label>
         <Label text="YouTube">
           <TextInput
+            maxLength={32}
             onChange={this.handleYoutubeChange}
             placeholder="mygreatshow"
             prefix="https://www.youtube.com/"
-            value={this.state.rawValue.youtube || ''}
+            value={this.props.value.youtube || ''}
           />
         </Label>
       </React.Fragment>

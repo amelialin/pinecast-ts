@@ -46,18 +46,18 @@ const SelectBox = styled('div', {
     width: 10,
   },
 });
-const InnerWrapper = styled('div', ({isOpen}: {isOpen: boolean}) => ({
+const InnerWrapper = styled('div', ({$isOpen}: {$isOpen: boolean}) => ({
   backgroundColor: '#fff',
   boxShadow:
     '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
   borderRadius: 3,
   left: 0,
   height: 300,
-  opacity: isOpen ? 1 : 0,
-  pointerEvents: isOpen ? null : 'none',
+  opacity: $isOpen ? 1 : 0,
+  pointerEvents: $isOpen ? null : 'none',
   position: 'absolute',
   top: '100%',
-  transform: isOpen ? 'translateY(1px)' : 'translateY(6px)',
+  transform: $isOpen ? 'translateY(1px)' : 'translateY(6px)',
   transition: 'opacity 0.25s, transform 0.3s',
   width: 270,
   zIndex: 2,
@@ -258,9 +258,9 @@ export default class FontSelect extends React.PureComponent {
           <FontPreview />
         </SelectBox>
         <InnerWrapper
+          $isOpen={showingPicker}
           aria-activedescendant={showingPicker ? 'font-select-selected' : null}
           aria-hidden={!showingPicker}
-          isOpen={showingPicker}
           role="listbox"
         >
           <InnerWrapperToolbar>
