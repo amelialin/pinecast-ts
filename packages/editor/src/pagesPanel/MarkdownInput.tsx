@@ -7,7 +7,7 @@ import {
   ReactMdeToolbar,
   ReactMdeTypes,
 } from 'react-mde';
-import {sanitize} from 'bleach';
+import * as sanitizeHTML from 'sanitize-html';
 
 import * as RichTextIcons from '../common/icons/richText';
 
@@ -15,11 +15,13 @@ class SaferPreview extends ReactMdePreview {
   origMakeHTML: ReactMdePreview['converter']['makeHtml'];
 
   static options = {
-    mode: 'white',
-    list: [
+    allowedTags: [
       'a',
       'b',
+      'blockquote',
       'br',
+      'caption',
+      'code',
       'dd',
       'div',
       'dl',
@@ -32,13 +34,29 @@ class SaferPreview extends ReactMdePreview {
       'h5',
       'h6',
       'hr',
+      'i',
       'li',
+      'nl',
       'ol',
       'p',
+      'pre',
       'span',
+      'strike',
       'strong',
+      'table',
+      'tbody',
+      'td',
+      'th',
+      'thead',
+      'tr',
       'ul',
     ],
+    allowedAttributes: {
+      a: ['href', 'title'],
+      img: ['alt', 'src', 'title'],
+    },
+    allowedSchemes: ['http', 'https'],
+    selfClosing: ['img', 'br', 'hr'],
   };
 
   constructor(props) {
@@ -52,12 +70,7 @@ class SaferPreview extends ReactMdePreview {
     // NOTE: This is not a security panacea. And this is only on the preview,
     // not on the value itself. This just makes it less likely that the user
     // will self-XSS themselves for now.
-    //
-    // The JS bleach library does nothing with attributes, so onload="" or
-    // onmouseenter="" will all fire. But nobody really writes those, and if
-    // the user XSSs themselves on one, it's fine. The *actual* sanitization
-    // happens with jsocol's Python bleach library on the server side.
-    return sanitize(out, SaferPreview.options);
+    return sanitizeHTML(out, SaferPreview.options);
   };
 }
 
