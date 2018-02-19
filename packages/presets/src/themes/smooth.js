@@ -135,6 +135,10 @@ export default {
               children: [
                 {
                   type: 'mount',
+                  props: {mount: 'siteLinks'},
+                },
+                {
+                  type: 'mount',
                   props: {mount: 'pageLinks'},
                 },
               ],
