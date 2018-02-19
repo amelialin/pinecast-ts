@@ -3,15 +3,15 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
-import {Action} from '../actions';
-import Button, {ButtonGroup} from '../common/Button';
-import Dialog from '../common/Dialog';
-import {doSave} from '../actions/save';
-import ErrorState from '../common/ErrorState';
-import LoadingState from '../common/LoadingState';
-import ModalLayer from '../common/ModalLayer';
-import {ReducerType} from '../reducer';
-import {ReducerType as SaveReducerType} from '../reducers/save';
+import {Action} from './actions';
+import Button, {ButtonGroup} from './common/Button';
+import Dialog from './common/Dialog';
+import {doSave} from './actions/save';
+import ErrorState from './common/ErrorState';
+import LoadingState from './common/LoadingState';
+import ModalLayer from './common/ModalLayer';
+import {ReducerType} from './reducer';
+import {ReducerType as SaveReducerType} from './reducers/save';
 
 class SaveOptions extends React.PureComponent {
   props: {

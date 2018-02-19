@@ -11,7 +11,8 @@ import PageBodyPanel from './PageBodyPanel';
 import {PageSelector} from '../panelComponents';
 import PresetsPanel from './presetsPanel';
 import {ReducerType} from '../reducer';
-import SaveOptions from './SaveOptions';
+import SaveOptions from '../SaveOptions';
+import * as StickyHeader from '../common/StickyHeader';
 import TypographyPanel from './typographyPanel';
 
 const pageOptions = [
@@ -23,12 +24,6 @@ const pageOptions = [
   {value: 'page', name: 'Page body'},
 ];
 
-const HeaderWrapper = styled('div', {
-  alignItems: 'center',
-  display: 'flex',
-  justifyContent: 'space-between',
-});
-
 class ThemePanel extends React.PureComponent {
   props: {
     changeThemePage: (name: string) => void;
@@ -37,22 +32,26 @@ class ThemePanel extends React.PureComponent {
   render() {
     const {changeThemePage, themePage} = this.props;
     return (
-      <React.Fragment>
-        <HeaderWrapper>
-          <PageSelector
-            onChange={changeThemePage}
-            options={pageOptions}
-            selected={themePage}
-          />
-          <SaveOptions style={{margin: 15}} />
-        </HeaderWrapper>
+      <StickyHeader.Wrapper
+        header={
+          <StickyHeader.Header>
+            <PageSelector
+              onChange={changeThemePage}
+              options={pageOptions}
+              selected={themePage}
+            />
+            <SaveOptions style={{margin: 15}} />
+          </StickyHeader.Header>
+        }
+        keyScrollOn={themePage}
+      >
         {themePage === 'presets' && <PresetsPanel />}
         {themePage === 'colors' && <ColorsPanel />}
         {themePage === 'typography' && <TypographyPanel />}
         {themePage === 'page' && <PageBodyPanel />}
         {themePage === 'embedPlayer' && <EmbedWidgetPanel />}
         {themePage === 'buttons' && <ButtonsPanel />}
-      </React.Fragment>
+      </StickyHeader.Wrapper>
     );
   }
 }
