@@ -6,7 +6,7 @@ import {DEFAULT_FONT} from './constants';
 import {ErrorFlag} from './icons';
 
 const Text = styled('span', ({$oneLine}) => ({
-  alignItems: $oneLine ? 'center' : null,
+  alignItems: 'center',
   alignSelf: $oneLine ? 'stretch' : null,
   display: 'flex',
   flex: $oneLine ? '0 0 20%' : null,
