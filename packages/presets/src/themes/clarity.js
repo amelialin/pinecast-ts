@@ -110,6 +110,10 @@ export default {
           elements: [
             {
               type: 'mount',
+              props: {mount: 'siteLinks'},
+            },
+            {
+              type: 'mount',
               props: {mount: 'pageLinks'},
             },
           ],

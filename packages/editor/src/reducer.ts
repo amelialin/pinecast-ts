@@ -22,7 +22,7 @@ export interface ReducerType {
   readonly wasLoaded: boolean;
   readonly needsSave: boolean;
 
-  readonly page: 'theme' | 'links' | 'pages' | 'assets' | 'settings';
+  readonly page: 'theme' | 'layout' | 'links' | 'pages' | 'assets' | 'settings';
   readonly themePage:
     | 'presets'
     | 'colors'

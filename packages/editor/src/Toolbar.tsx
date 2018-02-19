@@ -83,6 +83,7 @@ const ConnectedToolbarButton = connect(
 const Toolbar = () => (
   <Toolbar_>
     <ConnectedToolbarButton id="theme">Theme</ConnectedToolbarButton>
+    <ConnectedToolbarButton id="layout">Layout</ConnectedToolbarButton>
     <ConnectedToolbarButton id="links">Links</ConnectedToolbarButton>
     <ConnectedToolbarButton id="pages">Pages</ConnectedToolbarButton>
     <ConnectedToolbarButton id="assets">Assets</ConnectedToolbarButton>
