@@ -30,6 +30,7 @@ export interface ReducerType {
     | 'page'
     | 'embedPlayer'
     | 'buttons';
+  readonly layoutPage: 'modules' | 'textStyles';
   readonly preview: PreviewReducerType;
   readonly save: SaveReducerType;
   readonly theme: ThemeReducerType;
@@ -44,6 +45,7 @@ const initialState: ReducerType = {
 
   page: 'theme',
   themePage: 'presets',
+  layoutPage: 'modules',
   preview: previewInitialState,
   save: saveInitialState,
   theme: themeInitialState,
@@ -79,6 +81,10 @@ function reducer(state: ReducerType = initialState, action): ReducerType {
       'switchThemePage',
       (state, action) => action.payload,
     )(state.themePage, action),
+    layoutPage: actionReducer<ReducerType['layoutPage']>(
+      'switchLayoutPage',
+      (state, action) => action.payload,
+    )(state.layoutPage, action),
     preview: previewReducer(state.preview, action),
     save: saveReducer(state.save, action),
     theme: themeState,

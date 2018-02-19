@@ -7,3 +7,6 @@ export const changeChromePage = actionFactory<ReducerType['page']>(
 export const changeThemePage = actionFactory<ReducerType['themePage']>(
   'switchThemePage',
 );
+export const changeLayoutPage = actionFactory<ReducerType['layoutPage']>(
+  'switchLayoutPage',
+);

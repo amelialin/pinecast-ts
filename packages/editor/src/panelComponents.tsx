@@ -5,7 +5,7 @@ import styled from '@pinecast/sb-styles';
 import {DEFAULT_FONT} from './common/constants';
 
 export const PanelWrapper = styled('section', {
-  padding: 15,
+  padding: 16,
 });
 
 const PageSelectorWrapper = styled('div', {
@@ -25,16 +25,17 @@ const PageSelection = styled(
     WebkitAppearance: 'none',
     background: 'none',
     border: 0,
-    borderRadius: 0,
+    borderRadius: 3,
+    boxShadow: '0 0 0 0 #c9d9e0',
     cursor: 'pointer',
     fontFamily: DEFAULT_FONT,
     fontSize: 30,
     fontWeight: 500,
-    margin: 15,
-    padding: '0 20px 0 0',
+    margin: '16px 0 16px -2px',
+    padding: '0 24px 0 2px',
     textShadow: '0 0 0 transparent',
     transform: 'translateY(0)',
-    transition: 'transform 0.2s, text-shadow 0.2s',
+    transition: 'box-shadow 0.2s, transform 0.2s, text-shadow 0.2s',
 
     ':hover': {
       textShadow: '0 3px 0 rgba(0, 0, 0, 0.1)',
@@ -53,7 +54,7 @@ const PageSelection = styled(
       display: 'block',
       height: 12,
       position: 'absolute',
-      right: 0,
+      right: 4,
       top: 0,
       transform: 'scaleY(0.9) translateY(10px) rotate(45deg)',
       width: 12,
@@ -67,7 +68,7 @@ const PageSelection = styled(
       display: 'block',
       height: 12,
       position: 'absolute',
-      right: 0,
+      right: 4,
       top: 0,
       transform: 'scaleY(0.9) translateY(10px) rotate(45deg)',
       transition: 'border-color 0.2s, transform 0.2s',
@@ -81,6 +82,11 @@ const PageSelection = styled(
     ':active:after': {
       transform: 'scaleY(0.9) translateY(11px) rotate(45deg)',
     },
+
+    ':focus': {
+      boxShadow: '0 0 0 3px #c9d9e0',
+      outline: 'none',
+    },
   },
   {
     'aria-haspopup': 'listbox',
@@ -93,7 +99,7 @@ const PageSelectorInner = styled(
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.125)',
     display: 'flex',
     flexDirection: 'column',
-    left: 15,
+    left: 0,
     minWidth: 200,
     opacity: hidden ? 0 : 1,
     padding: '4px 0',

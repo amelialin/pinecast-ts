@@ -24,37 +24,34 @@ const pageOptions = [
   {value: 'page', name: 'Page body'},
 ];
 
-class ThemePanel extends React.PureComponent {
-  props: {
-    changeThemePage: (name: string) => void;
-    themePage: ReducerType['themePage'];
-  };
-  render() {
-    const {changeThemePage, themePage} = this.props;
-    return (
-      <StickyHeader.Wrapper
-        header={
-          <StickyHeader.Header>
-            <PageSelector
-              onChange={changeThemePage}
-              options={pageOptions}
-              selected={themePage}
-            />
-            <SaveOptions style={{margin: 15}} />
-          </StickyHeader.Header>
-        }
-        keyScrollOn={themePage}
-      >
-        {themePage === 'presets' && <PresetsPanel />}
-        {themePage === 'colors' && <ColorsPanel />}
-        {themePage === 'typography' && <TypographyPanel />}
-        {themePage === 'page' && <PageBodyPanel />}
-        {themePage === 'embedPlayer' && <EmbedWidgetPanel />}
-        {themePage === 'buttons' && <ButtonsPanel />}
-      </StickyHeader.Wrapper>
-    );
-  }
-}
+const ThemePanel = ({
+  changeThemePage,
+  themePage,
+}: {
+  changeThemePage: (name: string) => void;
+  themePage: ReducerType['themePage'];
+}) => (
+  <StickyHeader.Wrapper
+    header={
+      <StickyHeader.Header>
+        <PageSelector
+          onChange={changeThemePage}
+          options={pageOptions}
+          selected={themePage}
+        />
+        <SaveOptions />
+      </StickyHeader.Header>
+    }
+    keyScrollOn={themePage}
+  >
+    {themePage === 'presets' && <PresetsPanel />}
+    {themePage === 'colors' && <ColorsPanel />}
+    {themePage === 'typography' && <TypographyPanel />}
+    {themePage === 'page' && <PageBodyPanel />}
+    {themePage === 'embedPlayer' && <EmbedWidgetPanel />}
+    {themePage === 'buttons' && <ButtonsPanel />}
+  </StickyHeader.Wrapper>
+);
 
 export default connect(
   (state: ReducerType) => ({themePage: state.themePage}),

@@ -15,6 +15,7 @@ export const Header = styled(
     height: HEADER_HEIGHT,
     left: $scrolled ? $scrolled.left : 0,
     justifyContent: 'space-between',
+    padding: '0 16px',
     position: $scrolled ? 'fixed' : 'absolute',
     right: $scrolled ? $scrolled.right : 0,
     top: $scrolled ? $scrolled.top : 0,
