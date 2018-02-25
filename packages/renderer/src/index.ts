@@ -5,7 +5,7 @@ import * as Router from 'koa-router';
 
 import * as data from './data';
 import {DataAPI} from './jsAPI';
-import {NotFoundError} from './errors';
+import {NotFoundError, RedirectException} from './errors';
 import {routes} from './routes';
 
 const app = new Koa();
@@ -33,7 +33,7 @@ async function proxy(ctx: Koa.Context) {
           headers: {
             ...ctx.request.header,
             'X-Pinecast-Forward':
-              ctx.request.header['x-pinecast-forward'] || 'abts.pinecast.co',
+              ctx.request.header['x-pinecast-forward'] || 'abtd.pinecast.co',
             Host: 'pinecast.co',
           },
         },
@@ -70,6 +70,12 @@ app.use(async (ctx, next) => {
       ctx.status = 404;
       ctx.body = 'Not Found';
       return;
+    } else if (e instanceof RedirectException) {
+      ctx.status = 302;
+      ctx.set('Location', e.toURL);
+      return;
+    } else {
+      console.error(`Unexpected error type: ${e}`);
     }
     console.error(e);
     ctx.status = 500;

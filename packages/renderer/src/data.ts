@@ -3,7 +3,7 @@ import * as http from 'http';
 import * as Koa from 'koa';
 
 import {JSONObject} from './jsonType';
-import {NotFoundError} from './errors';
+import {NotFoundError, RedirectException} from './errors';
 
 function fetch(siteHostname: string, url: string) {
   const framedURL = url + (url.includes('?') ? '&' : '?') + 'format=json';
@@ -21,7 +21,15 @@ function fetch(siteHostname: string, url: string) {
           },
         },
         resp => {
-          if (resp.statusCode === 404) {
+          if (
+            typeof resp.statusCode === 'number' &&
+            resp.statusCode >= 300 &&
+            resp.statusCode < 400
+          ) {
+            console.warn(`Redirected to ${resp.headers.location}`);
+            reject(new RedirectException(resp.headers.location));
+          }
+          if (resp.statusCode !== 200) {
             console.error(`Could not get ${siteHostname}/${framedURL}`);
             reject(new NotFoundError());
             return;
@@ -39,10 +47,10 @@ async function parse(response: string): Promise<JSONObject> {
   try {
     return JSON.parse(response) as JSONObject;
   } catch (e) {
+    console.error(`Error parsing JSON response: ${e}`);
     try {
       console.log(response.substr(0, 100));
     } catch (e) {}
-    console.log(e);
     console.warn(response);
     throw e;
   }
@@ -73,10 +81,11 @@ export async function awaitAll(promises: {
   [key: string]: Promise<any>;
 }): Promise<{[key: string]: any}> {
   const keys = Object.keys(promises);
-  return (await Promise.all(
-    keys.map(key => promises[key]),
-  )).reduce((acc, cur, i) => {
-    acc[keys[i]] = cur;
-    return acc;
-  }, {});
+  return (await Promise.all(keys.map(key => promises[key]))).reduce(
+    (acc, cur, i) => {
+      acc[keys[i]] = cur;
+      return acc;
+    },
+    {},
+  );
 }
