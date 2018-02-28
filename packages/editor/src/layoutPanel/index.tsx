@@ -1,9 +1,8 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
-// import styled from '@pinecast/sb-styles';
-
 import {changeLayoutPage} from '../actions/chrome';
+import ModulesPanel from './modulesPanel';
 import {PageSelector} from '../panelComponents';
 import {ReducerType} from '../reducer';
 import SaveOptions from '../SaveOptions';
@@ -33,7 +32,7 @@ const LayoutPanel = ({
       </StickyHeader.Header>
     }
   >
-    Coming soon
+    {layoutPage === 'modules' && <ModulesPanel />}
   </StickyHeader.Wrapper>
 );
 

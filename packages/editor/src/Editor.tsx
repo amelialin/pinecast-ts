@@ -8,7 +8,6 @@ import OptionsPanel from './OptionsPanel';
 import Preview from './preview';
 import {store} from './reducer';
 import Toolbar from './Toolbar';
-import WelcomeDialog from './WelcomeDialog';
 
 const styletron = new ClientStyletron();
 
@@ -40,7 +39,6 @@ export default class Editor extends React.PureComponent {
               <OptionsPanel />
               <Preview />
             </BelowToolbar>
-            <WelcomeDialog />
           </HeightWrapper>
         </ReduxProvider>
       </StyletronProvider>

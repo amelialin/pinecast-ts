@@ -25,6 +25,7 @@ export interface ReducerType {
   readonly $type: string;
   readonly colors?: {[key: string]: string};
   readonly fonts?: PartialFontHashType;
+  readonly layout?: primitives.PageLayout;
   readonly styling?: PartialStylingType;
   readonly options?: PartialOptionsType;
 }

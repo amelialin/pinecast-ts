@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
-const HEADER_HEIGHT = 80;
+const HEADER_HEIGHT = 60;
 
 type ScrolledFlag = {top: number; right: number; left: number} | false;
 
@@ -19,6 +19,7 @@ export const Header = styled(
     position: $scrolled ? 'fixed' : 'absolute',
     right: $scrolled ? $scrolled.right : 0,
     top: $scrolled ? $scrolled.top : 0,
+    zIndex: 3,
 
     '::after': {
       backgroundImage:
@@ -28,6 +29,7 @@ export const Header = styled(
       height: 4,
       left: 0,
       opacity: $scrolled ? 1 : 0,
+      pointerEvents: 'none',
       position: 'absolute',
       right: 0,
       top: '100%',

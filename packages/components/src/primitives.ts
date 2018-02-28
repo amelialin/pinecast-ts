@@ -6,6 +6,7 @@ export interface ComponentLayout {
   type: string;
   layout: any;
   template?: ElementLayout;
+  tag: string;
 }
 export interface PageLayout {
   header: Array<ComponentLayout>;

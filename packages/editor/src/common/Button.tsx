@@ -58,6 +58,7 @@ const NativeButton = styled(
         '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15), rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
     },
   }),
+  {className: 'Button-nativeButton'},
 );
 
 const Button = ({

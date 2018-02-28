@@ -58,7 +58,7 @@ const Card = ({
   children,
   hairline = true,
   shadow = true,
-  tabindex = -1,
+  tabindex = null,
   type = 'div',
   ...rest
 }: {
@@ -66,7 +66,7 @@ const Card = ({
   children: any;
   hairline?: boolean;
   shadow?: boolean;
-  tabindex?: number;
+  tabindex?: number | null;
   type?: string;
   [key: string]: any;
 }) => {
