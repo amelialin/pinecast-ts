@@ -12,15 +12,25 @@ export const changeFont = actionFactory<ReducerType['fonts']>(
 export const changeColor = actionFactory<ReducerType['colors']>(
   'theme.changeColor',
 );
-export const changeButtonStyle = actionFactory<primitives.ButtonType>(
+export const changeButtonStyle = actionFactory<React.CSSProperties>(
   'theme.changeButtons',
 );
 export const changeEmbedWidget = actionFactory<EmbedWidgetThemes>(
   'theme.changeEmbedWidget',
 );
-export const changePageStyle = actionFactory<primitives.PageStyle>(
+export const changePageStyle = actionFactory<Partial<primitives.PageStyle>>(
   'theme.changePageStyle',
 );
 export const changePageOptions = actionFactory<ReducerType['options']>(
   'theme.changePageOptions',
 );
+
+export const setHeaderLayouts = actionFactory<
+  Array<primitives.ComponentLayout>
+>('theme.changeLayout.header');
+export const setHeroLayouts = actionFactory<Array<primitives.ComponentLayout>>(
+  'theme.changeLayout.hero',
+);
+export const setFooterLayouts = actionFactory<
+  Array<primitives.ComponentLayout>
+>('theme.changeLayout.footer');

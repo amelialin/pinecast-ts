@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
+import styled, {CSS} from '@pinecast/sb-styles';
 
 import Button from '../Button';
 import Card from '../Card';
@@ -16,7 +16,7 @@ const Image = styled('img', {
   minHeight: 150,
 });
 
-const buttonStyle = {
+const buttonStyle: CSS = {
   position: 'absolute',
   right: 0,
   top: 0,

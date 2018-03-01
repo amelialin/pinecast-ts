@@ -3,6 +3,17 @@ export interface Action<T> {
   payload: T;
 }
 
+export function overrideReducer<T>(
+  listenForType: string,
+): ((state: T, action: Action<any>) => T) {
+  return (state: T, action: Action<any>) => {
+    if (action.type === listenForType) {
+      return action.payload;
+    }
+    return state;
+  };
+}
+
 export function actionReducer<T>(
   listenForType: string,
   reducer: (state: T, action: Action<any>) => T,

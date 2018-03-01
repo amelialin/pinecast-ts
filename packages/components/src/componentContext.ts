@@ -53,7 +53,7 @@ export interface ComponentContext {
   layout: primitives.PageLayout;
 
   styling: {
-    buttons: primitives.ButtonStyle;
+    buttons: CSS;
     page: primitives.PageStyle;
   };
   options: {

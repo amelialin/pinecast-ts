@@ -9,25 +9,25 @@ import styled from './styled';
 export default styled;
 export {ClientStyletron, ServerStyletron, StyletronProvider, styled};
 
-export type CSSPropertiesWithMedia = React.CSSProperties & {
-  [mediaQuery: string]: React.CSSProperties;
-};
+export type CSSProperties = React.CSSProperties;
 
-export type CSS = CSSPropertiesWithMedia & {
-  ':active'?: CSSPropertiesWithMedia;
-  ':focus'?: CSSPropertiesWithMedia;
-  ':hover'?: CSSPropertiesWithMedia;
-  ':visited'?: CSSPropertiesWithMedia;
+export interface CSS extends CSSProperties {
+  ':active'?: CSSProperties;
+  ':focus'?: CSSProperties;
+  ':hover'?: CSSProperties;
+  ':visited'?: CSSProperties;
 
-  ':first-child'?: CSSPropertiesWithMedia;
-  ':last-child'?: CSSPropertiesWithMedia;
+  ':first-child'?: CSSProperties;
+  ':last-child'?: CSSProperties;
 
-  ':after'?: CSSPropertiesWithMedia & {content: string};
-  ':before'?: CSSPropertiesWithMedia & {content: string};
-  ':active:before'?: CSSPropertiesWithMedia & {content: string};
-  ':focus:before'?: CSSPropertiesWithMedia & {content: string};
-  ':hover:before'?: CSSPropertiesWithMedia & {content: string};
-  ':active:after'?: CSSPropertiesWithMedia & {content: string};
-  ':focus:after'?: CSSPropertiesWithMedia & {content: string};
-  ':hover:after'?: CSSPropertiesWithMedia & {content: string};
-};
+  ':after'?: CSSProperties & {content: string};
+  ':before'?: CSSProperties & {content: string};
+  ':active:before'?: CSSProperties & {content: string};
+  ':focus:before'?: CSSProperties & {content: string};
+  ':hover:before'?: CSSProperties & {content: string};
+  ':active:after'?: CSSProperties & {content: string};
+  ':focus:after'?: CSSProperties & {content: string};
+  ':hover:after'?: CSSProperties & {content: string};
+
+  '@media(mobile)'?: CSS;
+}

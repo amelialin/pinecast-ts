@@ -14,13 +14,18 @@ function wrapCtx(
 
 const styleIdentity = ({$style}) => $style;
 
+type HTMLProps = React.HTMLProps<any> & {
+  'aria-haspopup'?: string;
+  'aria-label'?: string;
+};
+
 export default function(
   elemType: string,
   props?:
     | React.CSSProperties
     | ((props: any, ctx?: any) => React.CSSProperties)
     | null,
-  defaultProps?: React.HTMLProps<any>,
+  defaultProps?: HTMLProps,
 ): React.ComponentType<any> {
   // Basic validation
   if (elemType.toLowerCase() !== elemType) {

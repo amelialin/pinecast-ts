@@ -35,10 +35,11 @@ export default ({
     ...element.props,
     ...extractProps(item, element.propPaths),
   };
-  const styles = expandElementStyles(
-    {...style, ...element.styles},
-    element.elementOptions || {},
-  );
+  const styles =
+    expandElementStyles(
+      {...style, ...element.styles},
+      element.elementOptions || {},
+    ) || {};
   const eo = element.elementOptions || {};
   if (eo.gravatar) {
     let email = eo.gravatar;

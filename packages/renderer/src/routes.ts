@@ -3,7 +3,7 @@ import {primitives} from '@pinecast/sb-components/dist';
 import * as defaultData from './data';
 import {NotFoundError} from './errors';
 import * as rendering from './rendering';
-import {DataAPI} from './jsAPI';
+import {DataAPI} from './index';
 
 export type RequestURLParams = {[param: string]: string};
 export type RequestQueryParams = {[param: string]: string};

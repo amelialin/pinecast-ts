@@ -5,7 +5,7 @@ const webpack = require('webpack');
 module.exports = {
   devtool: 'source-maps',
   entry: {
-    app: ['./src/index.ts'],
+    app: ['./src/server.ts'],
   },
   resolve: {
     mainFields: ['jsnext:main', 'main'],

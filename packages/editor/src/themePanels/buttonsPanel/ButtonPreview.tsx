@@ -31,7 +31,7 @@ const ButtonPreview = ({
   onClick?: () => void;
   preset: Preset;
   style?: React.CSSProperties;
-  theme: Object;
+  theme: any;
 }) => (
   <Button
     onClick={onClick}

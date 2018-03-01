@@ -1,45 +1,45 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
+import ComponentLayoutGroup from './ComponentLayoutGroup';
 import Label from '../../common/Label';
+import {setHeaderLayouts, setFooterLayouts} from '../../actions/theme';
 import {mergedTheme} from '../../reducers/selectors';
-import ModuleCard from './ModuleCard';
 import {PanelDescription, PanelWrapper} from '../../panelComponents';
+import {primitives} from '@pinecast/sb-components';
 import {ReducerType} from '../../reducer';
 
-type Props = {theme: ReducerType['theme']};
+type Props = {
+  onFooterUpdate: (layout: Array<primitives.ComponentLayout>) => void;
+  onHeaderUpdate: (layout: Array<primitives.ComponentLayout>) => void;
+  theme: {layout: primitives.PageLayout};
+};
 
-const ModulesPanel = ({theme}: Props) => (
+const ModulesPanel = ({onFooterUpdate, onHeaderUpdate, theme}: Props) => (
   <PanelWrapper>
     <PanelDescription>
       Adding and removing modules lets you add or remove features from your
       podcast website.
     </PanelDescription>
     <Label componentType="div" text="Header">
-      {theme.layout.header.map((layout, i) => (
-        <ModuleCard
-          canDelete={theme.layout.header.length > 1}
-          key={i}
-          isFirst={i === 0}
-          isLast={i === theme.layout.header.length - 1}
-          tag={layout.tag}
-        />
-      ))}
+      <ComponentLayoutGroup
+        layouts={theme.layout.header}
+        onUpdated={onHeaderUpdate}
+      />
     </Label>
     <Label componentType="div" text="Footer">
-      {theme.layout.footer.map((layout, i) => (
-        <ModuleCard
-          canDelete={theme.layout.footer.length > 1}
-          key={i}
-          isFirst={i === 0}
-          isLast={i === theme.layout.footer.length - 1}
-          tag={layout.tag}
-        />
-      ))}
+      <ComponentLayoutGroup
+        layouts={theme.layout.footer}
+        onUpdated={onFooterUpdate}
+      />
     </Label>
   </PanelWrapper>
 );
 
-export default connect((state: ReducerType) => ({theme: mergedTheme(state)}))(
-  ModulesPanel,
-);
+export default connect(
+  (state: ReducerType) => ({theme: mergedTheme(state)}),
+  dispatch => ({
+    onHeaderUpdate: data => dispatch(setHeaderLayouts(data)),
+    onFooterUpdate: data => dispatch(setFooterLayouts(data)),
+  }),
+)(ModulesPanel);

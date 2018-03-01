@@ -136,14 +136,14 @@ export default (elem: string, style?: Object, baseProps?: Object) =>
         extends: extends_,
         item,
         style: styleProp,
-        ...rest,
+        ...rest
       }: {
-        baseStyle?: CSS;
+        baseStyle?: CSS | null;
         children?: any;
         extends?: Array<string>;
         item?: any;
         key?: string;
-        style?: CSS;
+        style?: CSS | null;
         [prop: string]: any;
       },
       {ctx}: {ctx: ComponentContext},

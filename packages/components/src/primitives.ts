@@ -27,7 +27,7 @@ export interface PageLayout {
   };
 }
 
-export interface PageStyle {
+export interface PageStyle extends React.CSSProperties {
   backgroundColor: string;
   fontSize: number;
   padding: string;
@@ -51,15 +51,6 @@ export interface BackgroundImage {
     | 'right bottom'
     | 'left top'
     | 'right top';
-}
-
-export interface ButtonStyle {
-  bgColor: string;
-  paddingX: number; // em
-  paddingY: number; // em
-  roundedCorners: boolean;
-  textColor: string;
-  textSize?: number;
 }
 
 export type DataPath = Array<string>;

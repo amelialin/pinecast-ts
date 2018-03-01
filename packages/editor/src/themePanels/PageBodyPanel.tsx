@@ -49,7 +49,7 @@ const PageBodyPanel = ({
   theme,
 }: {
   changePageOptions: ((options: ReducerType['theme']['options']) => void);
-  changePageStyle: ((style: primitives.PageStyle) => void);
+  changePageStyle: ((style: Partial<primitives.PageStyle>) => void);
   theme: any;
 }) => {
   const paddingValue = String(

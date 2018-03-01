@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   devtool: 'source-maps',
   entry: {
-    app: ['./src/index.ts'],
+    app: ['./src/server.ts'],
   },
   resolve: {
     mainFields: ['jsnext:main', 'main'],

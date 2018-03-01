@@ -13,7 +13,7 @@ export interface PartialFontHashType {
   readonly body?: string;
 }
 export interface PartialStylingType {
-  readonly buttons?: primitives.ButtonStyle;
+  readonly buttons?: React.CSSProperties;
   readonly page?: primitives.PageStyle;
 }
 export interface PartialOptionsType {

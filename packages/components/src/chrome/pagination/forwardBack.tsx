@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {backgroundImage} from '../../styleMixins';
-import {ButtonStyle, ElementLayout} from '../../primitives';
+import {ElementLayout} from '../../primitives';
 import Button from '../../common/button';
 import {ComponentContext, getsContext} from '../../componentContext';
 import {formatColor} from '../../helpers';

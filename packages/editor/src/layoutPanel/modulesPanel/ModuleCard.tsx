@@ -88,9 +88,21 @@ const buttonStyle: React.CSSProperties = {
 export default class ModuleCard extends React.Component {
   props: {
     canDelete: boolean;
+    index: number;
     isFirst: boolean;
     isLast: boolean;
-    tag: string;
+    onMove: (oldIndex: number, newIndex: number) => void;
+    onRemove: (index: number) => void;
+  };
+
+  handleMoveUp = () => {
+    this.props.onMove(this.props.index, this.props.index - 1);
+  };
+  handleDelete = () => {
+    this.props.onRemove(this.props.index);
+  };
+  handleMoveDown = () => {
+    this.props.onMove(this.props.index, this.props.index + 1);
   };
 
   render() {
@@ -104,17 +116,17 @@ export default class ModuleCard extends React.Component {
               <Kebab color="#c6caca" />
             </MenuSymbol>
             {!isFirst && (
-              <Button onClick={() => {}} style={buttonStyle}>
+              <Button onClick={this.handleMoveUp} style={buttonStyle}>
                 <Up />
               </Button>
             )}
             {canDelete && (
-              <Button onClick={() => {}} style={buttonStyle}>
+              <Button onClick={this.handleDelete} style={buttonStyle}>
                 <Delete style={{transform: 'translateX(-0.5px)'}} />
               </Button>
             )}
             {!isLast && (
-              <Button onClick={() => {}} style={buttonStyle}>
+              <Button onClick={this.handleMoveDown} style={buttonStyle}>
                 <Down />
               </Button>
             )}

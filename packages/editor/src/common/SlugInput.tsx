@@ -46,7 +46,7 @@ export default class SlugInput extends React.PureComponent {
     tentativeSlug: '',
   };
 
-  pendingRequest: number | null = null;
+  pendingRequest: any | null = null;
   ongoingRequest: ProviderResponse | null = null;
 
   componentWillReceiveProps({sourceValue, value}) {

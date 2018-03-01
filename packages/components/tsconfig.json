@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
         "declaration": true,
         "outDir": "./dist/",
         "sourceMap": true,
@@ -13,6 +14,14 @@
         ],
         "module": "es6",
         "moduleResolution": "Node",
+        "paths": {
+            "@pinecast/sb-components": ["../components/src/index.ts"],
+            "@pinecast/sb-editor": ["../editor/src/index.ts"],
+            "@pinecast/sb-presets": ["../presets/src/index.ts"],
+            "@pinecast/sb-renderer": ["../renderer/src/index.ts"],
+            "@pinecast/sb-resources": ["../resources/src/index.ts"],
+            "@pinecast/sb-styles": ["../styles/src/index.ts"]
+        },
         "target": "es6",
         "jsx": "react"
     },

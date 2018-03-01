@@ -20,7 +20,7 @@ const ButtonPresetList = ({
   changeButtonStyle,
 }: {
   theme: Object;
-  changeButtonStyle: ((payload: primitives.ButtonStyle) => void);
+  changeButtonStyle: ((payload: React.CSSProperties) => void);
 }) => (
   <Wrapper>
     {buttonPresets.map((preset, i) => (
