@@ -2,6 +2,7 @@ import {primitives} from '@pinecast/sb-components';
 
 import {Action, actionReducer} from '../actions';
 import {actionHandler, reduceReducers} from './util';
+import layoutReducer from './theme/layout';
 
 // TODO: move some of this to a types file?
 export type EmbedWidgetThemes = 'minimal' | 'thick' | 'slim';
@@ -56,6 +57,7 @@ export default reduceReducers(
         ...payload,
       }),
     ),
+    layout: layoutReducer,
     styling: reduceReducers(
       actionReducer<ReducerType['styling']>(
         'theme.changeButtons',

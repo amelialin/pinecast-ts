@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import {primitives} from '@pinecast/sb-components';
 import styled from '@pinecast/sb-styles';
 
 import Button from '../../common/Button';
@@ -91,8 +92,10 @@ export default class ModuleCard extends React.Component {
     index: number;
     isFirst: boolean;
     isLast: boolean;
+    layout: primitives.ComponentLayout;
     onMove: (oldIndex: number, newIndex: number) => void;
     onRemove: (index: number) => void;
+    onUpdate: (index: number, newLayout: primitives.ComponentLayout) => void;
   };
 
   handleMoveUp = () => {
@@ -106,10 +109,10 @@ export default class ModuleCard extends React.Component {
   };
 
   render() {
-    const {canDelete, isFirst, isLast} = this.props;
+    const {canDelete, isFirst, isLast, layout} = this.props;
     return (
       <OuterWrapper>
-        <BodyWrapper>Name</BodyWrapper>
+        <BodyWrapper>{layout.tag}</BodyWrapper>
         {(!isFirst || canDelete || !isLast) && (
           <MenuWrapper>
             <MenuSymbol>

@@ -9,7 +9,10 @@ interface ReducerType {
   readonly footer?: Array<ComponentLayout>;
 }
 
-export default actionHandler<ReducerType>({
-  header: overrideReducer<ReducerType['header']>('theme.changeLayout.header'),
-  footer: overrideReducer<ReducerType['footer']>('theme.changeLayout.footer'),
-});
+export default reduceReducers(
+  (state: ReducerType) => state || {},
+  actionHandler<ReducerType>({
+    header: overrideReducer<ReducerType['header']>('theme.changeLayout.header'),
+    footer: overrideReducer<ReducerType['footer']>('theme.changeLayout.footer'),
+  }),
+);

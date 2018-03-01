@@ -21,6 +21,11 @@ export default class ComponentLayoutGroup extends React.PureComponent {
     out.splice(index, 1);
     this.props.onUpdated(out);
   };
+  handleReplace = (index: number, newLayout: primitives.ComponentLayout) => {
+    const out = [...this.props.layouts];
+    out[index] = newLayout;
+    this.props.onUpdated(out);
+  };
 
   render() {
     const {layouts} = this.props;
@@ -31,8 +36,10 @@ export default class ComponentLayoutGroup extends React.PureComponent {
         index={i}
         isFirst={i === 0}
         isLast={i === layouts.length - 1}
+        layout={layout}
         onMove={this.handleMove}
         onRemove={this.handleRemove}
+        onUpdate={this.handleReplace}
       />
     ));
   }
