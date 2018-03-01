@@ -1,16 +1,7 @@
 {
   "name": "@pinecast/sb-components",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
-  "jsnext:main": "dist/index.js",
   "ts:main": "src/index.ts",
-  "scripts": {
-    "build": "../../node_modules/.bin/tsc -p tsconfig.json",
-    "dev": "../../node_modules/.bin/tsc -p tsconfig.json --watch"
-  },
-  "author": "Matt Basta <me@mattbasta.com>",
-  "license": "MIT",
   "dependencies": {
     "@pinecast/sb-styles": "^1.0.0",
     "@pinecast/sb-presets": "^1.0.0",

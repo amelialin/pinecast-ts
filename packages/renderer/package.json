@@ -1,17 +1,13 @@
 {
   "name": "@pinecast/sb-renderer",
   "version": "1.0.0",
-  "description": "",
-  "main": "build/index.js",
-  "jsnext:main": "dist/index.js",
-  "ts:main": "src/jsAPI.ts",
   "scripts": {
     "build_prod": "../../node_modules/.bin/webpack --config=webpack.config.prod.js --progress",
     "dev": "../../node_modules/.bin/webpack --config=webpack.config.js --progress --watch --colors",
     "start": "nodemon build/index.js"
   },
-  "author": "Matt Basta <me@mattbasta.com>",
-  "license": "MIT",
+  "main": "src/",
+  "ts:main": "src/index.ts",
   "dependencies": {
     "@pinecast/sb-components": "^1.0.0",
     "@pinecast/sb-presets": "^1.0.0",

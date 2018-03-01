@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 
-import {ComponentContext} from '@pinecast/sb-components/dist';
-import {ItemSourceContext} from '@pinecast/sb-components/dist';
+import {ComponentContext} from '@pinecast/sb-components';
+import {ItemSourceContext} from '@pinecast/sb-components';
 
 // TODO: have a non-any value for item source type
 export interface Props {

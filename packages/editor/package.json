@@ -2,13 +2,12 @@
   "name": "@pinecast/sb-editor",
   "version": "1.0.0",
   "description": "An editor component for the Pinecast site builder",
-  "main": "dist/index.js",
   "scripts": {
     "dev": "webpack-dev-server",
     "build": "../../node_modules/.bin/webpack --config webpack.config.js --env prod"
   },
-  "author": "Matt Basta <me@mattbasta.com>",
-  "license": "MIT",
+  "main": "src/",
+  "ts:main": "src/index.ts",
   "dependencies": {
     "@pinecast/sb-components": "^1.0.0",
     "@pinecast/sb-presets": "^1.0.0",

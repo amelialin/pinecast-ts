@@ -6,6 +6,7 @@ module.exports = {
     app: ['./src/server.ts'],
   },
   resolve: {
+    alias: require('../../webpack.aliases'),
     mainFields: ['jsnext:main', 'main'],
     modules: ['node_modules'],
     extensions: ['.ts', '.tsx', '.js', '.json'],
@@ -37,4 +38,5 @@ module.exports = {
     setImmediate: false,
     process: false,
   },
+  externals: require('../../webpack.externals'),
 };

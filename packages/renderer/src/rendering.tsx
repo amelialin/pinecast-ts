@@ -8,7 +8,7 @@ import {
   renderBlock,
   renderElement,
   renderLayout,
-} from '@pinecast/sb-components/dist';
+} from '@pinecast/sb-components';
 import {PLAYER_HEIGHTS} from '@pinecast/sb-components/src/elements/EmbedPlayer';
 import * as presets from '@pinecast/sb-presets';
 

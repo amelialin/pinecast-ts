@@ -1,4 +1,4 @@
-import {primitives} from '@pinecast/sb-components/dist';
+import {primitives} from '@pinecast/sb-components';
 
 import * as defaultData from './data';
 import {NotFoundError} from './errors';
