@@ -1,11 +1,20 @@
 import * as React from 'react';
 
 import {primitives} from '@pinecast/sb-components';
+import {componentsMetadata} from '@pinecast/sb-presets';
 import styled from '@pinecast/sb-styles';
 
 import Button from '../../common/Button';
 import {Delete, Down, Up} from '../../common/icons';
 import {Kebab} from '../../common/icons/menus';
+
+type MetadataType = {
+  name: string;
+  type: 'header' | 'links' | 'pagination' | 'subscribeLinks' | 'unknown';
+  func: (params: Object) => primitives.ComponentLayout;
+
+  obsolete?: true;
+};
 
 const OuterWrapper = styled(
   'div',
@@ -46,6 +55,11 @@ const BodyWrapper = styled('div', {
   flex: '1 1',
   padding: 16,
 });
+const ComponentName = styled('b', {
+  display: 'block',
+  fontWeight: 500,
+});
+
 const MenuWrapper = styled(
   'div',
   {
@@ -108,11 +122,26 @@ export default class ModuleCard extends React.Component {
     this.props.onMove(this.props.index, this.props.index + 1);
   };
 
+  getMetadata(): MetadataType {
+    return (
+      componentsMetadata[this.props.layout.tag] || {
+        name: 'Obsolete module',
+        type: 'unknown',
+        func: () => {},
+
+        obsolete: true,
+      }
+    );
+  }
+
   render() {
     const {canDelete, isFirst, isLast, layout} = this.props;
+    const metadata = this.getMetadata();
     return (
       <OuterWrapper>
-        <BodyWrapper>{layout.tag}</BodyWrapper>
+        <BodyWrapper>
+          <ComponentName>{metadata.name}</ComponentName>
+        </BodyWrapper>
         {(!isFirst || canDelete || !isLast) && (
           <MenuWrapper>
             <MenuSymbol>

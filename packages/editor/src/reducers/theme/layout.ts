@@ -1,4 +1,4 @@
-import {Action, overrideReducer} from '../../actions';
+import {overrideReducer} from '../../actions';
 import {actionHandler, reduceReducers} from '../util';
 import {primitives} from '@pinecast/sb-components';
 
