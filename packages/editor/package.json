@@ -4,7 +4,8 @@
   "description": "An editor component for the Pinecast site builder",
   "scripts": {
     "dev": "webpack-dev-server",
-    "build": "../../node_modules/.bin/webpack --config webpack.config.js --env prod"
+    "build": "../../node_modules/.bin/webpack --config webpack.config.js --env prod --display-optimization-bailout",
+    "build_stat": "../../node_modules/.bin/webpack --config webpack.config.js --env prod --json > stat.json"
   },
   "main": "src/",
   "ts:main": "src/index.ts",
