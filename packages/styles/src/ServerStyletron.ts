@@ -41,4 +41,4 @@ Styletron.prototype.incrementVirtualCount = function() {
   return output;
 };
 
-export default (Styletron as any) as typeof BaseStyletron;
+export default Styletron as typeof BaseStyletron;
