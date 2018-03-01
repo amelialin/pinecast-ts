@@ -1,37 +1,17 @@
 # Pinecast Site Builder
 
-You're goign to need to open some terminals. Ignore errors. Do them in this order:
+## Running
 
-```sh
-cd packages/styles
-npm run dev
-```
-```sh
-cd packages/components
-npm run dev
-```
-```sh
-cd packages/styles
-npm run dev
-```
 ```sh
 cd packages/renderer
 npm run start
-```
-```sh
-cd packages/resources
-npm run build
-# This will terminate. You can run `npm run build` again if you make changes to
-# resources, but you probably won't.
 ```
 ```sh
 cd packages/editor
 npm run dev
 ```
 
-## Configuring Pinecast
-
-### Dev
+## Configuring dev installation
 
 Update your `settings_local.py` with
 
@@ -43,3 +23,17 @@ SITE_BUILDER = {
 ```
 
 Now visit `http://localhost:8000/sites/site_builder/editor/view/<podcast slug>`
+
+## Deploying
+
+```sh
+# Deploy the editor to production or staging
+./deployEditor.sh
+
+# Deploy the renderer
+./deployRenderer.sh
+```
+
+To deploy the editor, you must have the Heroku command line tools installed and configured, and the AWS CLI installed and configured.
+
+To deploy the renderer, you must have the correct key for the application server(s) installed.
