@@ -7,6 +7,7 @@ export interface ComponentLayout {
   layout: any;
   template?: ElementLayout;
   tag: string;
+  tagOptions: Object;
 }
 export interface PageLayout {
   header: Array<ComponentLayout>;

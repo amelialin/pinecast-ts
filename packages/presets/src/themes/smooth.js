@@ -4,6 +4,7 @@ import fullWidthImageLeftStackedItem from '../itemLayouts/stacked/fullWidthImage
 import gridItem from '../itemLayouts/grid/minimalGridItem';
 import pagesTemplate from '../wrappers/pagesTemplate';
 import header from '../components/header-centeredFixed';
+import headerPageLinkList from '../components/header-pageLinkList';
 import paginationForwardBack from '../components/pagination-forwardBack-fixed';
 
 import * as colors from './colors/smooth.json';
@@ -120,38 +121,12 @@ export default {
           textAlign: 'left',
         },
       }),
-      {
-        type: 'links.linkMount',
-        layout: {
-          linkStyle: {
-            marginRight: 20,
-            whiteSpace: 'nowrap',
-          },
+      headerPageLinkList({
+        fixed: true,
+        style: {
+          margin: '30px 0 60px',
         },
-        template: {
-          elements: [
-            {
-              type: 'layout.fixedWrapper',
-              children: [
-                {
-                  type: 'mount',
-                  props: {mount: 'siteLinks'},
-                },
-                {
-                  type: 'mount',
-                  props: {mount: 'pageLinks'},
-                },
-              ],
-            },
-          ],
-          tagName: 'nav',
-          styles: {
-            margin: '30px 0 60px',
-          },
-        },
-        tag: 'header.pageLinkList',
-        tagMetadata: {},
-      },
+      }),
     ],
     footer: [
       paginationForwardBack({

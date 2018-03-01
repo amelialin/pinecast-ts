@@ -1,4 +1,4 @@
-export default ({text, elementOptions = null, style = null}) => ({
+export default data => ({
   type: 'abstract',
   template: {
     elements: [
@@ -7,7 +7,7 @@ export default ({text, elementOptions = null, style = null}) => ({
         children: [
           {
             type: 'block.text',
-            textContent: text,
+            textContent: data.text,
           },
         ],
         elementOptions: {
@@ -15,20 +15,20 @@ export default ({text, elementOptions = null, style = null}) => ({
           fgColor: 'accent',
           innerPadding: '20px 0',
           maxWidth: 'var(--fixedWidthMax)',
-          ...elementOptions,
+          ...data.elementOptions,
         },
         styles: {
           color: 'foreground',
           textAlign: 'left',
-          ...style,
+          ...data.style,
         },
       },
     ],
   },
 
   tag: 'text.wrappedText',
-  tagMetadata: {
-    text,
-    style,
+  tagOptions: {
+    elementOptions: {},
+    ...data,
   },
 });

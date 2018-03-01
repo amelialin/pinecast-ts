@@ -193,7 +193,7 @@ export default {
           },
         },
         tag: 'footer.columnsFixed',
-        tagMetadata: {
+        tagOptions: {
           cols: ['page,site', 'sub'],
         },
       },

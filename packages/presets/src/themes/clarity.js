@@ -4,6 +4,7 @@ import fullWidthImageCenterStackedItem from '../itemLayouts/stacked/fullWidthIma
 import pagesTemplate from '../wrappers/pagesTemplate';
 import noImageStackedItem from '../itemLayouts/stacked/noImageStackedItem';
 import header from '../components/header-centeredFixed';
+import headerPageLinkList from '../components/header-pageLinkList';
 import paginationForwardBack from '../components/pagination-forwardBack-fixed';
 
 import * as colors from './colors/clarity.json';
@@ -97,34 +98,11 @@ export default {
 
   layout: {
     header: [
-      {
-        type: 'links.linkMount',
-        layout: {
-          linkStyle: {
-            marginRight: 20,
-            lineHeight: '1.5em',
-            whiteSpace: 'nowrap',
-          },
+      headerPageLinkList({
+        linkStyle: {
+          lineHeight: '1.5em',
         },
-        template: {
-          elements: [
-            {
-              type: 'mount',
-              props: {mount: 'siteLinks'},
-            },
-            {
-              type: 'mount',
-              props: {mount: 'pageLinks'},
-            },
-          ],
-          tagName: 'nav',
-          styles: {
-            margin: '30px 0',
-          },
-        },
-        tag: 'header.pageLinkList',
-        tagMetadata: {},
-      },
+      }),
       header({
         content: 'text',
         showSubtitle: true,

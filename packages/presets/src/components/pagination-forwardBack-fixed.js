@@ -1,10 +1,10 @@
 import {buttons, styles as baseStyles} from './paginationHelpers/previousNext';
 
-export default ({bgColor, fgColor, nextText, previousText, styles}) => ({
+export default data => ({
   type: 'pagination.forwardBack',
   layout: {
-    nextText,
-    previousText,
+    nextText: data.nextText,
+    previousText: data.previousText,
   },
   template: {
     tagName: 'nav',
@@ -12,19 +12,16 @@ export default ({bgColor, fgColor, nextText, previousText, styles}) => ({
       {
         type: 'layout.fixedWrapper',
         elementOptions: {
-          bgColor,
-          fgColor,
+          bgColor: data.bgColor,
+          fgColor: data.fgColor,
           maxWidth: 'var(--fixedWidthMax)',
         },
         children: [...buttons],
-        styles: {padding: '40px 0', ...baseStyles, ...styles},
+        styles: {padding: '40px 0', ...baseStyles, ...data.styles},
       },
     ],
   },
 
   tag: 'pagination.forwardBack',
-  tagMetadata: {
-    nextText,
-    previousText,
-  },
+  tagOptions: data,
 });

@@ -1,16 +1,11 @@
-export default ({
-  includes,
-  layout = null,
-  elementOptions = null,
-  style = null,
-}) => ({
+export default data => ({
   type: 'links.linkBar',
   layout: {
-    includes,
+    includes: data.includes,
     textStyle: {
       color: 'text',
     },
-    ...layout,
+    ...data.layout,
   },
   template: {
     tagName: 'nav',
@@ -25,15 +20,17 @@ export default ({
         ],
         elementOptions: {
           maxWidth: 'var(--fixedWidthMax)',
-          ...elementOptions,
+          ...data.elementOptions,
         },
-        styles: {textAlign: 'left', ...style},
+        styles: {textAlign: 'left', ...data.style},
       },
     ],
   },
 
   tag: 'links.linkBar',
-  tagMetadata: {
-    includes,
+  tagOptions: {
+    elementOptions: {},
+    layout: null,
+    ...data,
   },
 });

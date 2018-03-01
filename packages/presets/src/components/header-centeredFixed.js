@@ -1,9 +1,4 @@
-export default ({
-  content,
-  showSubtitle = false,
-  style,
-  elementOptions = {},
-}) => ({
+export default data => ({
   type: 'abstract',
   template: {
     elements: [
@@ -11,7 +6,7 @@ export default ({
         type: 'layout.fixedWrapper',
         elementOptions: {
           maxWidth: 'var(--fixedWidthMax)',
-          ...elementOptions,
+          ...data.elementOptions,
         },
         children: [
           {
@@ -29,16 +24,16 @@ export default ({
                 elementOptions: {
                   imageElementOptions: {
                     alignX: 'center',
-                    ...elementOptions.imageElementOptions,
+                    ...(data.elementOptions || {}).imageElementOptions,
                   },
                   imageStyles: {
-                    ...elementOptions.imageStyles,
+                    ...(data.elementOptions || {}).imageStyles,
                   },
                 },
               },
             ],
           },
-          showSubtitle && {
+          data.showSubtitle && {
             type: 'block.text',
             textContent: ['podcast', 'subtitle'],
             extendsStyles: ['textStyles', 'subtitle'],
@@ -50,7 +45,7 @@ export default ({
         styles: {
           textAlign: 'center',
 
-          ...style,
+          ...data.style,
         },
       },
     ],
@@ -58,7 +53,9 @@ export default ({
   },
 
   tag: 'header.centeredFixed',
-  tagMetadata: {
-    content,
+  tagOptions: {
+    elementOptions: {},
+    showSubtitle: false,
+    ...data,
   },
 });
