@@ -250,13 +250,23 @@ class ImageUpload extends React.PureComponent {
     return [async () => resolver(), uploadXHR.then(() => {})];
   }
 
+  getAccept() {
+    if (this.props.imageType === 'site_favicon') {
+      return 'image/png';
+    }
+    return undefined;
+  }
+
   renderUploadButton() {
     return (
       <Label text={this.props.labelText}>
         {this.state.error && (
           <Callout type="negative">{this.state.error}</Callout>
         )}
-        <ImageUploadDropzone onChange={this.handleGotFile} />
+        <ImageUploadDropzone
+          accept={this.getAccept()}
+          onChange={this.handleGotFile}
+        />
       </Label>
     );
   }

@@ -17,6 +17,7 @@ const Stub = styled('b', {
 });
 
 interface Props {
+  accept?: string;
   onChange: (file: File) => void;
 }
 
@@ -34,11 +35,14 @@ const baseStyle = {
   transition: 'border-color 0.2s, box-shadow 0.2s',
 };
 
-const ImageUploadDropzone = ({onChange}: Props) => (
+const ImageUploadDropzone = ({
+  accept = 'image/png, image/jpg, image/jpeg',
+  onChange,
+}: Props) => (
   <React.Fragment>
     <Stub />
     <Dropzone
-      accept="image/png, image/jpg, image/jpeg"
+      accept={accept}
       activeStyle={{
         ...baseStyle,
         borderColor: '#c9d9e0',
