@@ -7,8 +7,21 @@ export interface ComponentLayout {
   layout: any;
   template?: ElementLayout;
   tag: string;
-  tagOptions: Object;
+  tagOptions: {[optionName: string]: any};
 }
+
+export interface ComponentLayoutOption {
+  name: string;
+  type: 'text' | 'longText' | 'enum' | 'set' | 'bool' | 'css';
+
+  // Used for 'enum' and 'set'
+  options?: Array<{name: string; value: any}>;
+
+  // Used for 'css'
+  allowedStyles?: Array<string>; // ['fontSize']
+  allowedPseudoselectors?: Array<string>; // [':hover', '@media(mobile)']
+}
+
 export interface PageLayout {
   header: Array<ComponentLayout>;
   footer: Array<ComponentLayout>;

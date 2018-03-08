@@ -29,6 +29,7 @@ export default data => ({
 
   tag: 'links.linkBar',
   tagOptions: {
+    includes: ['links', 'pages'],
     elementOptions: {},
     layout: null,
     ...data,

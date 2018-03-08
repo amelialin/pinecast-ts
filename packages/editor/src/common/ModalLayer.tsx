@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 
 import styled from '@pinecast/sb-styles';
 
@@ -29,10 +30,18 @@ export default class ModalLayer extends React.PureComponent {
     open: boolean;
     onClose: () => void;
   };
+  portal: HTMLDivElement;
 
   static defaultProps = {
     canEscape: true,
   };
+
+  constructor(props) {
+    super(props);
+    const portal = document.createElement('div');
+    this.portal = portal;
+    document.body.appendChild(portal);
+  }
 
   escListener = (e: KeyboardEvent) => {
     if (!this.props.open) {
@@ -57,6 +66,7 @@ export default class ModalLayer extends React.PureComponent {
   }
   componentWillUnmount() {
     window.removeEventListener('keyup', this.escListener);
+    document.body.removeChild(this.portal);
   }
 
   handleContentClick = (e: MouseEvent) => {
@@ -68,10 +78,11 @@ export default class ModalLayer extends React.PureComponent {
     if (!open) {
       return null;
     }
-    return (
+    return ReactDOM.createPortal(
       <Wash onClick={this.handleClose}>
         <Container onClick={this.handleContentClick}>{children}</Container>
-      </Wash>
+      </Wash>,
+      this.portal,
     );
   }
 }

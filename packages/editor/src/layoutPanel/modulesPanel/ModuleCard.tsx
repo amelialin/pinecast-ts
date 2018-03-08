@@ -7,14 +7,8 @@ import styled from '@pinecast/sb-styles';
 import Button from '../../common/Button';
 import {Delete, Down, Up} from '../../common/icons';
 import {Kebab} from '../../common/icons/menus';
-
-type MetadataType = {
-  name: string;
-  type: 'header' | 'links' | 'pagination' | 'subscribeLinks' | 'unknown';
-  func: (params: Object) => primitives.ComponentLayout;
-
-  obsolete?: true;
-};
+import {MetadataType} from './types';
+import ModuleOptions from './ModuleOptions';
 
 const OuterWrapper = styled(
   'div',
@@ -134,6 +128,10 @@ export default class ModuleCard extends React.Component {
     );
   }
 
+  handleUpdate = (newLayout: primitives.ComponentLayout) => {
+    this.props.onUpdate(this.props.index, newLayout);
+  };
+
   render() {
     const {canDelete, isFirst, isLast, layout} = this.props;
     const metadata = this.getMetadata();
@@ -141,6 +139,11 @@ export default class ModuleCard extends React.Component {
       <OuterWrapper>
         <BodyWrapper>
           <ComponentName>{metadata.name}</ComponentName>
+          <ModuleOptions
+            layout={layout}
+            metadata={metadata}
+            onUpdate={this.handleUpdate}
+          />
         </BodyWrapper>
         {(!isFirst || canDelete || !isLast) && (
           <MenuWrapper>
