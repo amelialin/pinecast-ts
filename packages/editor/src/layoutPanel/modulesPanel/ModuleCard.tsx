@@ -21,7 +21,7 @@ const OuterWrapper = styled(
     padding: 0,
 
     ':hover .ModuleCard-menuWrapper': {
-      right: -10,
+      right: -4,
     },
     ':hover .ModuleCard-menuSymbol': {
       opacity: 0,
@@ -47,6 +47,7 @@ const OuterWrapper = styled(
 
 const BodyWrapper = styled('div', {
   flex: '1 1',
+  marginRight: -22,
   padding: 16,
 });
 const ComponentName = styled('b', {
@@ -59,7 +60,7 @@ const MenuWrapper = styled(
   {
     alignItems: 'center',
     display: 'flex',
-    flex: '0 0 56px',
+    flex: '0 0 44px',
     flexDirection: 'column',
     padding: '2px 0',
     position: 'relative',

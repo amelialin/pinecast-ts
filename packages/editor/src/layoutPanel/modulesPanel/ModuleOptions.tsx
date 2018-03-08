@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import Checkbox from '../../common/Checkbox';
 import Label from '../../common/Label';
 import {MetadataType} from './types';
 import {primitives} from '@pinecast/sb-components';
@@ -7,7 +8,11 @@ import Select from '../../common/Select';
 import styled from '@pinecast/sb-styles';
 import TextInput from '../../common/TextInput';
 
-const Wrapper = styled('div', {});
+const Wrapper = styled('div', {
+  borderTop: '1px solid #dee1df',
+  marginTop: 12,
+  paddingTop: 12,
+});
 
 type SchemaProps = {
   name: string;
@@ -48,6 +53,22 @@ class SchemaEnum extends React.PureComponent {
     );
   }
 }
+class SchemaBool extends React.PureComponent {
+  props: SchemaProps;
+
+  handleChange = (newValue: boolean) => {
+    this.props.onChange(this.props.field, newValue);
+  };
+  render() {
+    return (
+      <Checkbox
+        checked={this.props.value}
+        onChange={this.handleChange}
+        text={this.props.name}
+      />
+    );
+  }
+}
 
 export default class ModuleOptions extends React.PureComponent {
   props: {
@@ -73,6 +94,9 @@ export default class ModuleOptions extends React.PureComponent {
     const option = metadata.schema[key];
     let Component: React.ComponentType;
     switch (option.type) {
+      case 'bool':
+        Component = SchemaBool;
+        break;
       case 'enum':
         Component = SchemaEnum;
         break;
@@ -110,9 +134,11 @@ export default class ModuleOptions extends React.PureComponent {
       return null;
     }
 
+    const keys = Object.keys(metadata.schema);
+
     return (
       <Wrapper>
-        {Object.keys(metadata.schema)
+        {keys
           .map(this.renderSchemaElement)
           .filter(x => x)
           .map((x, i) => x && React.cloneElement(x, {key: i}))}
