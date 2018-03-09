@@ -11,7 +11,7 @@ const InputWrapper = styled('div', ({$disabled}) => ({
   borderRadius: 4,
   display: 'flex',
   height: 35,
-  margin: '10px 0 20px',
+  margin: '8px 0 20px',
 }));
 const Input = styled('input', {
   appearance: 'none',

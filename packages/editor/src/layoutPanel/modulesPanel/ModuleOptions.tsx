@@ -1,18 +1,31 @@
 import * as React from 'react';
 
+import styled from '@pinecast/sb-styles';
+
+import Button from '../../common/Button';
 import Checkbox from '../../common/Checkbox';
 import Label from '../../common/Label';
 import {MetadataType} from './types';
 import {primitives} from '@pinecast/sb-components';
 import Select from '../../common/Select';
-import styled from '@pinecast/sb-styles';
 import TextInput from '../../common/TextInput';
 
 const Wrapper = styled('div', {
   borderTop: '1px solid #dee1df',
+  marginBottom: -16,
   marginTop: 12,
   paddingTop: 12,
 });
+const ButtonWrapper = styled('div', {
+  paddingBottom: 16,
+});
+const Collapser = styled('div', ({$height}) => ({
+  height: $height,
+  margin: '0 -4px',
+  overflowY: 'hidden',
+  padding: '0 4px',
+  transition: 'height 0.2s',
+}));
 
 type SchemaProps = {
   name: string;
@@ -71,11 +84,13 @@ class SchemaBool extends React.PureComponent {
 }
 
 export default class ModuleOptions extends React.PureComponent {
+  optionsEl: HTMLElement | null;
   props: {
     layout: primitives.ComponentLayout;
     metadata: MetadataType;
     onUpdate: (newLayout: primitives.ComponentLayout) => void;
   };
+  state: {open: boolean} = {open: false};
 
   handleChange = (field: string, newValue: any) => {
     this.props.onUpdate(
@@ -128,6 +143,13 @@ export default class ModuleOptions extends React.PureComponent {
     return <Component {...props} />;
   };
 
+  handleToggle = () => {
+    this.setState({open: !this.state.open});
+  };
+  handleOptionsElRef = (el: HTMLElement | null) => {
+    this.optionsEl = el;
+  };
+
   render() {
     const {metadata} = this.props;
     if (!metadata.schema) {
@@ -138,10 +160,25 @@ export default class ModuleOptions extends React.PureComponent {
 
     return (
       <Wrapper>
-        {keys
-          .map(this.renderSchemaElement)
-          .filter(x => x)
-          .map((x, i) => x && React.cloneElement(x, {key: i}))}
+        <ButtonWrapper>
+          <Button onClick={this.handleToggle} size="small">
+            {this.state.open ? 'Hide options' : 'Show options'}
+          </Button>
+        </ButtonWrapper>
+        <Collapser
+          $height={
+            this.state.open && this.optionsEl
+              ? this.optionsEl.clientHeight - 8
+              : 0
+          }
+        >
+          <div ref={this.handleOptionsElRef} style={{marginTop: -8}}>
+            {keys
+              .map(this.renderSchemaElement)
+              .filter(x => x)
+              .map((x, i) => x && React.cloneElement(x, {key: i}))}
+          </div>
+        </Collapser>
       </Wrapper>
     );
   }

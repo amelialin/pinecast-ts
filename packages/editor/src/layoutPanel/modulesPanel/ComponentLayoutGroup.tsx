@@ -1,7 +1,13 @@
 import * as React from 'react';
 
+import styled from '@pinecast/sb-styles';
 import {primitives} from '@pinecast/sb-components';
+
 import ModuleCard from './ModuleCard';
+
+const Wrapper = styled('div', {
+  marginBottom: 28,
+});
 
 export default class ComponentLayoutGroup extends React.PureComponent {
   props: {
@@ -29,18 +35,22 @@ export default class ComponentLayoutGroup extends React.PureComponent {
 
   render() {
     const {layouts} = this.props;
-    return layouts.map((layout, i) => (
-      <ModuleCard
-        canDelete
-        key={i}
-        index={i}
-        isFirst={i === 0}
-        isLast={i === layouts.length - 1}
-        layout={layout}
-        onMove={this.handleMove}
-        onRemove={this.handleRemove}
-        onUpdate={this.handleReplace}
-      />
-    ));
+    return (
+      <Wrapper>
+        {layouts.map((layout, i) => (
+          <ModuleCard
+            canDelete
+            key={i}
+            index={i}
+            isFirst={i === 0}
+            isLast={i === layouts.length - 1}
+            layout={layout}
+            onMove={this.handleMove}
+            onRemove={this.handleRemove}
+            onUpdate={this.handleReplace}
+          />
+        ))}
+      </Wrapper>
+    );
   }
 }

@@ -6,7 +6,7 @@ import {DEFAULT_FONT} from './constants';
 
 const WrapperLabel = styled('label', {
   display: 'flex',
-  margin: '10px 0 20px',
+  padding: '10px 0 20px',
 });
 const InvisibleCheckbox = styled(
   'input',
@@ -29,7 +29,7 @@ const InvisibleCheckbox = styled(
       outline: 'none',
     },
     ':focus + .checkBox-text::before': {
-      boxShadow: '0 0 0 3px #c9d9e0',
+      boxShadow: '0 0 0 2px #c9d9e0',
     },
   },
   {type: 'checkbox'},

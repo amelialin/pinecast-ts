@@ -26,10 +26,10 @@ const OuterWrapper = styled(
     ':hover .ModuleCard-menuSymbol': {
       opacity: 0,
     },
-    ':not(:hover) .Button-nativeButton': {
+    ':not(:hover) .ModuleCard--ToolButton': {
       opacity: 0,
     },
-    ':hover .Button-nativeButton': {
+    ':hover .ModuleCard--ToolButton': {
       opacity: 1,
     },
 
@@ -152,17 +152,29 @@ export default class ModuleCard extends React.Component {
               <Kebab color="#c6caca" />
             </MenuSymbol>
             {!isFirst && (
-              <Button onClick={this.handleMoveUp} style={buttonStyle}>
+              <Button
+                className="ModuleCard--ToolButton"
+                onClick={this.handleMoveUp}
+                style={buttonStyle}
+              >
                 <Up />
               </Button>
             )}
             {canDelete && (
-              <Button onClick={this.handleDelete} style={buttonStyle}>
+              <Button
+                className="ModuleCard--ToolButton"
+                onClick={this.handleDelete}
+                style={buttonStyle}
+              >
                 <Delete style={{transform: 'translateX(-0.5px)'}} />
               </Button>
             )}
             {!isLast && (
-              <Button onClick={this.handleMoveDown} style={buttonStyle}>
+              <Button
+                className="ModuleCard--ToolButton"
+                onClick={this.handleMoveDown}
+                style={buttonStyle}
+              >
                 <Down />
               </Button>
             )}

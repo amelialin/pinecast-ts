@@ -12,7 +12,7 @@ const TextAreaInput = styled('textarea', {
   flex: '0 0 100%',
   fontSize: 14,
   height: 150,
-  margin: '10px 0 20px',
+  margin: '8px 0 20px',
   padding: '8px',
   transition: 'box-shadow 0.2s',
   width: '100%',

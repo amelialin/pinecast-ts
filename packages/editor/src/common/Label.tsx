@@ -14,8 +14,8 @@ const Text = styled('span', ({$oneLine}) => ({
   fontSize: 14,
   fontWeight: 500,
   justifyContent: $oneLine ? 'flex-end' : 'flex-start',
-  marginBottom: $oneLine ? 0 : 4,
-  marginRight: 8,
+  paddingBottom: $oneLine ? 0 : 4,
+  paddingRight: 8,
   maxHeight: $oneLine ? 35 : null,
   textAlign: $oneLine ? 'right' : null,
 }));
@@ -97,7 +97,7 @@ const Label = ({
           ? {
               ...style,
               ...($oneLine
-                ? {alignItems: 'center', display: 'flex', marginBottom: 20}
+                ? {alignItems: 'center', display: 'flex', paddingBottom: 20}
                 : null),
             }
           : null

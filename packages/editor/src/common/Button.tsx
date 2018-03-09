@@ -63,6 +63,7 @@ const NativeButton = styled(
 
 const Button = ({
   children,
+  className,
   pending,
   shortcut,
   size = 'normal',
@@ -70,6 +71,7 @@ const Button = ({
   ...rest
 }: {
   children: JSX.Element | string | Array<JSX.Element | Array<JSX.Element>>;
+  className?: string;
   disabled?: boolean;
   $isBlock?: boolean;
   $isPrimary?: boolean;
@@ -80,6 +82,7 @@ const Button = ({
   [key: string]: any;
 }) => (
   <NativeButton
+    className={className}
     $pending={pending}
     $size={size}
     {...rest}
