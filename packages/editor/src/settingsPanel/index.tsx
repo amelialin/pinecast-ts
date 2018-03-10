@@ -171,7 +171,7 @@ class SettingsPanel extends React.PureComponent {
                 <TextInput
                   disabled={pending}
                   onChange={this.handleChangeApplePodcastsURL}
-                  pattern="https://itunes\\.apple\\.com/\\w{2,3}/podcast/[\\w-]+/.+"
+                  pattern="https://itunes\\.apple\\.com/\\w{2,3}/podcast/[^/]+/.+"
                   placeholder="https://itunes.apple.com/us/podcast/almost-better-than-dragons/id981540916?mt=2"
                   value={updatedData.itunes_url || ''}
                 />
