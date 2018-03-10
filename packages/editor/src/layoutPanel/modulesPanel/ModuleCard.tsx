@@ -19,7 +19,7 @@ const OuterWrapper = styled(
     marginBottom: 2,
     padding: 12,
 
-    ':not(:empty) ~ .ModuleCard-outerWrapper': {
+    ':not(:empty) ~ .ModuleCard--outerWrapper': {
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0,
     },
@@ -28,7 +28,7 @@ const OuterWrapper = styled(
       borderBottomRightRadius: 0,
     },
   },
-  {className: 'ModuleCard-outerWrapper'},
+  {className: 'ModuleCard--outerWrapper'},
 );
 const ComponentName = styled('b', {
   display: 'block',

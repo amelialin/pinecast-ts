@@ -10,13 +10,23 @@ import {MetadataType} from './types';
 import ModalLayer from '../../common/ModalLayer';
 import Select from '../../common/Select';
 
-const Wrapper = styled('aside', {
-  display: 'flex',
-  justifyContent: 'flex-end',
-  margin: '-16px -4px -16px 0',
-  position: 'relative',
-  zIndex: 2,
-});
+const Wrapper = styled(
+  'aside',
+  {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    margin: '-12px -4px -10px 0',
+    opacity: 0,
+    position: 'relative',
+    transition: 'opacity 0.2s',
+    zIndex: 2,
+
+    ':hover': {
+      opacity: 1,
+    },
+  },
+  {className: 'ModuleInsertionPoint--Wrapper'},
+);
 
 export default class ModuleInsertionPoint extends React.Component {
   props: {

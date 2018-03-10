@@ -10,6 +10,9 @@ import ModuleInsertionPoint from './ModuleInsertionPoint';
 
 const Wrapper = styled('div', {
   marginBottom: 28,
+  ':not(:empty) .ModuleCard--outerWrapper:hover + .ModuleInsertionPoint--Wrapper': {
+    opacity: 1,
+  },
 });
 
 export default class ComponentLayoutGroup extends React.PureComponent {
