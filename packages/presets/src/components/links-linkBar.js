@@ -32,6 +32,7 @@ export default (data = {}) => ({
     includes: ['links', 'pages'],
     elementOptions: {},
     layout: null,
+    openInNewWindow: false,
     ...data,
   },
 });

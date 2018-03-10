@@ -29,6 +29,7 @@ export default data => ({
   tag: 'text.wrappedText',
   tagOptions: {
     elementOptions: {},
+    text: ['podcast', 'copyright'],
     ...data,
   },
 });

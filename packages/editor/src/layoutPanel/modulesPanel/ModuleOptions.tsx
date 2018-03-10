@@ -12,14 +12,12 @@ import Select from '../../common/Select';
 import TextInput from '../../common/TextInput';
 
 const Wrapper = styled('div', {
-  borderTop: '1px solid #dee1df',
   marginBottom: -12,
   marginTop: 12,
-  paddingTop: 12,
 });
 const ButtonWrapper = styled('div', {
   display: 'flex',
-  paddingBottom: 16,
+  paddingBottom: 12,
 });
 
 type SchemaProps = {
@@ -88,10 +86,24 @@ export default class ModuleOptions extends React.PureComponent {
   state: {open: boolean} = {open: false};
 
   handleChange = (field: string, newValue: any) => {
+    const {metadata} = this.props;
+    if (!metadata.schema) {
+      return;
+    }
+    const option = metadata.schema[field];
+
+    let value = newValue;
+    if (option.type === 'enum' && option.options) {
+      const optionToChoose: any = option.options.find(
+        x => x.key === newValue || x.value === newValue,
+      );
+      value = optionToChoose.value;
+    }
+
     this.props.onUpdate(
       this.props.metadata.func({
         ...this.props.layout.tagOptions,
-        [field]: newValue,
+        [field]: value,
       }),
     );
   };
@@ -129,10 +141,14 @@ export default class ModuleOptions extends React.PureComponent {
         (props as any).options =
           (option.options &&
             option.options.reduce((acc, cur) => {
-              acc[cur.value] = cur.name;
+              acc[cur.key || cur.value] = cur.name;
               return acc;
             }, {})) ||
           [];
+        if (option.options) {
+          const selOpt = option.options.find(x => x.value === props.value);
+          props.value = (selOpt && selOpt.key) || props.value;
+        }
         break;
     }
     return <Component {...props} />;

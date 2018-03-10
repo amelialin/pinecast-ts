@@ -4,6 +4,7 @@ import headerPageLinkList from './header-pageLinkList';
 import linksLinkBar from './links-linkBar';
 import paginationForwardBack from './pagination-forwardBack-fixed';
 import subheaderSubscribeLinks from './subheader-subscribeLinks';
+import textWrappedText from './text-wrappedText';
 
 export default {
   'footer.columnsFixed': {
@@ -42,6 +43,7 @@ export default {
       },
     },
   },
+
   'header.centeredFixed': {
     name: 'Title header',
     description:
@@ -56,6 +58,7 @@ export default {
       },
     },
   },
+
   'header.pageLinkList': {
     name: 'Link header',
     description: 'A header component to show page and site links',
@@ -73,6 +76,7 @@ export default {
       },
     },
   },
+
   'links.linkBar': {
     name: 'Link bar',
     description: 'A link bar component for showing site and page links',
@@ -88,8 +92,13 @@ export default {
           {name: 'Pages', value: 'pages'},
         ],
       },
+      openInNewWindow: {
+        name: 'Open links in new tab',
+        type: 'bool',
+      },
     },
   },
+
   'pagination.forwardBack': {
     name: 'Pagination, forward/back',
     description:
@@ -108,6 +117,7 @@ export default {
       },
     },
   },
+
   'subheader.subscribeLinks': {
     name: 'Subscribe links',
     description:
@@ -119,6 +129,35 @@ export default {
       subscribeText: {
         name: 'Subscribe text',
         type: 'text',
+      },
+    },
+  },
+
+  'text.wrappedText': {
+    name: 'Podcast text',
+    description: 'Display text about your podcast',
+    type: 'generic',
+    func: textWrappedText,
+
+    schema: {
+      text: {
+        name: 'Content',
+        type: 'enum',
+
+        options: [
+          {
+            name: 'Copyright',
+            value: ['podcast', 'copyright'],
+            key: 'copyright',
+          },
+          {
+            name: 'Description',
+            value: ['podcast', 'description'],
+            key: 'description',
+          },
+          {name: 'Podcast name', value: ['podcast', 'name'], key: 'name'},
+          {name: 'Subtitle', value: ['podcast', 'subtitle'], key: 'subtitle'},
+        ],
       },
     },
   },

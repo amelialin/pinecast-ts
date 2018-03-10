@@ -14,6 +14,10 @@ const Divider = atom('span', {
   marginRight: 15,
 });
 
+const newWindowProps = {
+  target: '_blank',
+  rel: 'noopener noreferrer',
+};
 const linkStyle = {
   marginRight: 15,
 };
@@ -36,6 +40,7 @@ export default getsContext(
       layout: {
         divider?: dividerStyle;
         includes: includedTypes;
+        openInNewWindow?: boolean;
       };
       template: ElementLayout;
     },
@@ -58,23 +63,25 @@ export default getsContext(
                     href={link.url}
                     key={`link:${i}`}
                     style={linkStyle}
+                    {...(layout.openInNewWindow ? newWindowProps : {})}
                   />
                 ),
               );
             } else {
-              linkEls = Object.values(
-                ctx.data.pages,
-              ).map((page: Page): JSX.Element => (
-                <TextRenderer
-                  content={page.title}
-                  data-link="true"
-                  element="a"
-                  extends={ctx.textStyles.navigationLinks}
-                  href={ctx.url('page', {slug: page.slug})}
-                  key={`page:${page.slug}`}
-                  style={linkStyle}
-                />
-              ));
+              linkEls = Object.values(ctx.data.pages).map(
+                (page: Page): JSX.Element => (
+                  <TextRenderer
+                    content={page.title}
+                    data-link="true"
+                    element="a"
+                    extends={ctx.textStyles.navigationLinks}
+                    href={ctx.url('page', {slug: page.slug})}
+                    key={`page:${page.slug}`}
+                    style={linkStyle}
+                    {...(layout.openInNewWindow ? newWindowProps : {})}
+                  />
+                ),
+              );
             }
             if (!layout.divider || layout.divider === 'none') {
               return linkEls;

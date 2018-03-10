@@ -35,5 +35,5 @@ export default (data = {}) => ({
     },
   },
   tag: 'header.pageLinkList',
-  tagOptions: {fixed: false, linkStyle: {}, ...data},
+  tagOptions: {fixed: false, openInNewWindow: false, linkStyle: {}, ...data},
 });

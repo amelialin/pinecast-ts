@@ -18,7 +18,7 @@ export default class AsyncFontPreview extends React.PureComponent {
     fontPreviews: null,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     import(/* webpackChunkName: "resources" */ '@pinecast/sb-resources').then(
       ({fontPreviews}) => {
         this.setState({fontPreviews});

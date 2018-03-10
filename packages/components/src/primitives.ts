@@ -15,7 +15,7 @@ export interface ComponentLayoutOption {
   type: 'text' | 'longText' | 'enum' | 'set' | 'bool' | 'css';
 
   // Used for 'enum' and 'set'
-  options?: Array<{name: string; value: any}>;
+  options?: Array<{name: string; key?: string; value: any}>;
 
   // Used for 'css'
   allowedStyles?: Array<string>; // ['fontSize']
