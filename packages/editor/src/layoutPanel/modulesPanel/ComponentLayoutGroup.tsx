@@ -1,9 +1,12 @@
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
+import {componentsMetadata} from '@pinecast/sb-presets';
 import {primitives} from '@pinecast/sb-components';
+import styled from '@pinecast/sb-styles';
 
+import {MetadataType} from './types';
 import ModuleCard from './ModuleCard';
+import ModuleInsertionPoint from './ModuleInsertionPoint';
 
 const Wrapper = styled('div', {
   marginBottom: 28,
@@ -33,23 +36,38 @@ export default class ComponentLayoutGroup extends React.PureComponent {
     this.props.onUpdated(out);
   };
 
+  handleOnInsert = (index: number, tag: string) => {
+    const newAddition = (componentsMetadata as {[key: string]: MetadataType})[
+      tag
+    ].func({});
+    const out = [...this.props.layouts];
+    out.splice(index, 0, newAddition);
+    this.props.onUpdated(out);
+  };
+
   render() {
     const {layouts} = this.props;
     return (
       <Wrapper>
         {layouts.map((layout, i) => (
-          <ModuleCard
-            canDelete
-            key={i}
-            index={i}
-            isFirst={i === 0}
-            isLast={i === layouts.length - 1}
-            layout={layout}
-            onMove={this.handleMove}
-            onRemove={this.handleRemove}
-            onUpdate={this.handleReplace}
-          />
+          <React.Fragment key={i}>
+            <ModuleInsertionPoint index={i} onInsert={this.handleOnInsert} />
+            <ModuleCard
+              canDelete
+              index={i}
+              isFirst={i === 0}
+              isLast={i === layouts.length - 1}
+              layout={layout}
+              onMove={this.handleMove}
+              onRemove={this.handleRemove}
+              onUpdate={this.handleReplace}
+            />
+          </React.Fragment>
         ))}
+        <ModuleInsertionPoint
+          index={layouts.length}
+          onInsert={this.handleOnInsert}
+        />
       </Wrapper>
     );
   }

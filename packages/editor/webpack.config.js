@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = env => {
-  const plugins = [new webpack.LoaderOptionsPlugin({minimize: true})];
+  const plugins = [];
 
   if (env === 'prod') {
     console.log('Building as production bundle');
@@ -20,7 +20,7 @@ module.exports = env => {
       new MinifyPlugin(
         {
           mangle: {
-            blacklist: ['Buffer'],
+            blacklist: [' Buffer'],
           },
         },
         {sourceMap: 'source-maps'},
@@ -46,12 +46,16 @@ module.exports = env => {
       chunkFilename: '[name].chunk.js',
     },
     plugins,
+    mode: env === 'prod' ? 'production' : 'development',
     module: {
       rules: [
         {
           test: /\.tsx?$/,
           exclude: /node_modules/,
-          loader: 'awesome-typescript-loader',
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: env === 'prod',
+          },
         },
         {
           test: /\.js$/,
@@ -62,11 +66,14 @@ module.exports = env => {
           test: /\.css$/,
           use: ['style-loader', 'css-loader'],
         },
-        {
-          test: /\.json$/,
-          use: 'json-loader',
-        },
       ],
+    },
+    optimization: {
+      minimizer: [],
+      splitChunks: false,
+    },
+    performance: {
+      maxAssetSize: 4000000,
     },
     devServer: {
       contentBase: __dirname,

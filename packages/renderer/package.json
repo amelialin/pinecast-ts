@@ -12,14 +12,14 @@
     "@pinecast/sb-components": "^1.0.0",
     "@pinecast/sb-presets": "^1.0.0",
     "@pinecast/sb-styles": "^1.0.0",
-    "@types/koa": "^2.0.39",
-    "@types/koa-router": "^7.0.22",
-    "babel-loader": "^7.1.2",
+    "@types/koa": "^2.0.44",
+    "@types/koa-router": "^7.0.27",
+    "babel-loader": "^7.1.4",
     "babel-preset-stage-3": "^6.24.1",
-    "koa": "^2.2.0",
-    "koa-router": "^7.1.1"
+    "koa": "^2.5.0",
+    "koa-router": "^7.4.0"
   },
   "devDependencies": {
-    "nodemon": "^1.12.4"
+    "nodemon": "^1.17.0"
   }
 }

@@ -8,8 +8,8 @@
     "dev": "../../node_modules/.bin/tsc -p tsconfig.json --watch"
   },
   "dependencies": {
-    "styletron-client": "^3.0.2",
-    "styletron-react": "^3.0.2",
-    "styletron-server": "^3.0.2"
+    "styletron-client": "^3.0.4",
+    "styletron-react": "^3.0.4",
+    "styletron-server": "^3.0.4"
   }
 }

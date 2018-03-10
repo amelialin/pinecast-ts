@@ -19,7 +19,7 @@ const OuterWrapper = styled(
     marginBottom: 2,
     padding: 12,
 
-    ':not(:empty) + .ModuleCard-outerWrapper': {
+    ':not(:empty) ~ .ModuleCard-outerWrapper': {
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0,
     },

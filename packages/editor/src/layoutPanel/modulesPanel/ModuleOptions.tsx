@@ -146,7 +146,20 @@ export default class ModuleOptions extends React.PureComponent {
             }, {})) ||
           [];
         if (option.options) {
-          const selOpt = option.options.find(x => x.value === props.value);
+          const selOpt = option.options.find(x => {
+            if (
+              Array.isArray(props.value) &&
+              Array.isArray(x.value) &&
+              x.value.length === props.value.length &&
+              x.value.every((val, i) => val === props.value[i])
+            ) {
+              return true;
+            }
+            if (typeof props.value === 'object') {
+              throw new Error('Cannot compare object keys');
+            }
+            return x.value === props.value;
+          });
           props.value = (selOpt && selOpt.key) || props.value;
         }
         break;
