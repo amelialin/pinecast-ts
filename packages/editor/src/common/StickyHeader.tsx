@@ -71,7 +71,6 @@ export class Wrapper extends React.Component {
           return;
         }
         const rect = el.getBoundingClientRect();
-        console.log(rect);
         this.setState({
           scrolled: {
             top: rect.top,

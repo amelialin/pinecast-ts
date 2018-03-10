@@ -41,7 +41,7 @@ const PreviewToolbar = ({
         phone: 'Phone',
         tablet: 'Tablet',
       }}
-      style={{height: 32}}
+      style={{height: 30, margin: 0}}
       value={frame || 'desktop'}
     />
     {frame !== 'desktop' && (
@@ -51,7 +51,7 @@ const PreviewToolbar = ({
           portrait: 'Portrait',
           landscape: 'Landscape',
         }}
-        style={{height: 32, marginLeft: 4}}
+        style={{height: 30, marginLeft: 4}}
         value={orientation || 'portrait'}
       />
     )}
