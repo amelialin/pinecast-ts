@@ -30,7 +30,7 @@ export interface ReducerType {
     | 'page'
     | 'embedPlayer'
     | 'buttons';
-  readonly layoutPage: 'modules' | 'textStyles';
+  readonly layoutPage: 'modules' | 'episodeItems' | 'wrappers';
   readonly preview: PreviewReducerType;
   readonly save: SaveReducerType;
   readonly theme: ThemeReducerType;

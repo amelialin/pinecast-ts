@@ -23,13 +23,16 @@ const Container = styled('div', {
   padding: 20,
 });
 
+type SharedProps = {
+  canEscape?: boolean;
+};
+
 export default class ModalLayer extends React.PureComponent {
   props: {
-    canEscape?: boolean;
     children: JSX.Element | Array<JSX.Element>;
     open: boolean;
     onClose: () => void;
-  };
+  } & SharedProps;
   portal: HTMLDivElement;
 
   static defaultProps = {
@@ -83,6 +86,35 @@ export default class ModalLayer extends React.PureComponent {
         <Container onClick={this.handleContentClick}>{children}</Container>
       </Wash>,
       this.portal,
+    );
+  }
+}
+
+export class ModalOpener extends React.Component {
+  props: SharedProps & {
+    children: (renderPropArgs: {handleOpen: () => void}) => JSX.Element;
+    renderModal: (renderPropArgs: {handleClose: () => void}) => JSX.Element;
+  };
+  state: {isOpen: boolean} = {isOpen: false};
+
+  handleOpen = () => this.setState({isOpen: true});
+  handleClose = () => this.setState({isOpen: false});
+
+  render() {
+    const {
+      props: {children, renderModal, ...rest},
+      state: {isOpen},
+      handleOpen,
+      handleClose,
+    } = this;
+
+    return (
+      <React.Fragment>
+        {children({handleOpen})}
+        <ModalLayer {...rest} onClose={handleClose} open={isOpen}>
+          {(isOpen && renderModal({handleClose})) || <div />}
+        </ModalLayer>
+      </React.Fragment>
     );
   }
 }

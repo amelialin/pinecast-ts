@@ -4,9 +4,12 @@ import {componentsMetadata} from '@pinecast/sb-presets';
 import {primitives} from '@pinecast/sb-components';
 import styled from '@pinecast/sb-styles';
 
+import EmptyState from '../../common/EmptyState';
 import {MetadataType} from './types';
+import {ModalOpener} from '../../common/ModalLayer';
 import ModuleCard from './ModuleCard';
 import ModuleInsertionPoint from './ModuleInsertionPoint';
+import ModuleInsertionModal from './ModuleInsertionModal';
 
 const Wrapper = styled('div', {
   marginBottom: 28,
@@ -50,6 +53,32 @@ export default class ComponentLayoutGroup extends React.PureComponent {
 
   render() {
     const {layouts} = this.props;
+
+    if (!layouts.length) {
+      return (
+        <Wrapper>
+          <ModalOpener
+            renderModal={({handleClose}) => (
+              <ModuleInsertionModal
+                index={0}
+                onClose={handleClose}
+                onInsert={this.handleOnInsert}
+              />
+            )}
+          >
+            {({handleOpen}) => (
+              <EmptyState
+                actionLabel="Add module"
+                copy="This section will appear empty until you add a module."
+                onAction={handleOpen}
+                title="There are no modules in this section."
+              />
+            )}
+          </ModalOpener>
+        </Wrapper>
+      );
+    }
+
     return (
       <Wrapper>
         {layouts.map((layout, i) => (

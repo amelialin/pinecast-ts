@@ -10,7 +10,8 @@ import * as StickyHeader from '../common/StickyHeader';
 
 const pageOptions = [
   {value: 'modules', name: 'Modules'},
-  {value: 'textStyles', name: 'Text styles'},
+  {value: 'episodeItems', name: 'Episode items'},
+  {value: 'wrappers', name: 'Page wrappers'},
 ];
 
 const LayoutPanel = ({
