@@ -99,12 +99,14 @@ const Checkbox = ({
   disabled,
   onChange,
   style,
+  tabIndex,
   text,
 }: {
   checked: boolean;
   disabled?: boolean;
   onChange: (checkedValue: boolean) => void;
   style?: React.CSSProperties;
+  tabIndex?: number;
   text: JSX.Element | string;
 }) => {
   return (
@@ -113,6 +115,7 @@ const Checkbox = ({
         checked={checked}
         disabled={disabled}
         onChange={e => onChange(e.target.checked)}
+        tabIndex={tabIndex}
       />
       <Text $disabled={disabled}>{text}</Text>
     </WrapperLabel>

@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
-import ComponentLayoutGroup from './ComponentLayoutGroup';
+import ComponentLayoutGroup from '../moduleHelpers/ComponentLayoutGroup';
 import Label from '../../common/Label';
 import {setHeaderLayouts, setFooterLayouts} from '../../actions/theme';
 import {mergedTheme} from '../../reducers/selectors';

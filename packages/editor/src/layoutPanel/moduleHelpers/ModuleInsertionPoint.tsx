@@ -16,12 +16,17 @@ const Wrapper = styled(
     display: 'flex',
     justifyContent: 'flex-end',
     margin: '-12px -4px -10px 0',
-    opacity: 0,
     position: 'relative',
-    transition: 'opacity 0.2s',
     zIndex: 2,
 
-    ':hover': {
+    ':not(:hover) .Button-nativeButton': {
+      opacity: 0,
+      transition: 'opacity 0.2s',
+    },
+    ':not(:hover) .Button-nativeButton:focus': {
+      opacity: 1,
+    },
+    ':hover .Button-nativeButton': {
       opacity: 1,
     },
   },

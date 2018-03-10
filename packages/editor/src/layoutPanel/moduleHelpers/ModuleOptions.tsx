@@ -24,6 +24,7 @@ type SchemaProps = {
   name: string;
   field: string;
   onChange: (field: string, newValue: any) => void;
+  open: boolean;
   value: any;
 };
 
@@ -36,7 +37,11 @@ class SchemaText extends React.PureComponent {
   render() {
     return (
       <Label text={this.props.name}>
-        <TextInput onChange={this.handleChange} value={this.props.value} />
+        <TextInput
+          onChange={this.handleChange}
+          tabIndex={this.props.open ? 0 : -1}
+          value={this.props.value}
+        />
       </Label>
     );
   }
@@ -53,6 +58,7 @@ class SchemaEnum extends React.PureComponent {
         <Select
           onChange={this.handleChange}
           options={this.props.options}
+          tabIndex={this.props.open ? 0 : -1}
           value={this.props.value}
         />
       </Label>
@@ -70,6 +76,7 @@ class SchemaBool extends React.PureComponent {
       <Checkbox
         checked={this.props.value}
         onChange={this.handleChange}
+        tabIndex={this.props.open ? 0 : -1}
         text={this.props.name}
       />
     );
@@ -134,6 +141,7 @@ export default class ModuleOptions extends React.PureComponent {
       field: key,
       name: option.name,
       onChange: this.handleChange,
+      open: this.state.open,
       value: layout.tagOptions[key],
     };
     switch (option.type) {

@@ -75,6 +75,7 @@ export interface Props {
   required?: boolean;
   style?: React.CSSProperties;
   suffix?: JSX.Element | string;
+  tabIndex?: number;
   type?: 'email' | 'text' | 'url';
   value: string;
 }

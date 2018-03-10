@@ -221,6 +221,7 @@ export class PageSelector extends React.PureComponent {
         onMouseEnter={() => {
           this.setState({selectionIndex: i});
         }}
+        tabIndex={this.state.open ? 0 : -1}
       >
         {name}
       </PageSelectorOption>

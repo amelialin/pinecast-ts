@@ -70,15 +70,21 @@ const Select = ({
   onChange,
   options,
   style,
+  tabIndex,
   value,
 }: {
   onChange: (string) => void;
   options: {[key: string]: string};
   style?: React.CSSProperties;
+  tabIndex?: number;
   value: string;
 }) => (
   <Wrapper style={style}>
-    <Select_ onChange={e => onChange(e.target.value)} value={value}>
+    <Select_
+      onChange={e => onChange(e.target.value)}
+      tabIndex={tabIndex}
+      value={value}
+    >
       {Object.entries(options).map(([k, v]) => (
         <option key={k} value={k}>
           {v}

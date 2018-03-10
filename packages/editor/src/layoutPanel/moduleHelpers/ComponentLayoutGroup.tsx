@@ -10,7 +10,7 @@ import ModuleInsertionPoint from './ModuleInsertionPoint';
 
 const Wrapper = styled('div', {
   marginBottom: 28,
-  ':not(:empty) .ModuleCard--outerWrapper:hover + .ModuleInsertionPoint--Wrapper': {
+  ':not(:empty) .ModuleCard--outerWrapper:hover + .ModuleInsertionPoint--Wrapper .Button-nativeButton': {
     opacity: 1,
   },
 });
