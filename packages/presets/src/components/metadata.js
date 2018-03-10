@@ -8,6 +8,8 @@ import subheaderSubscribeLinks from './subheader-subscribeLinks';
 export default {
   'footer.columnsFixed': {
     name: 'Footer columns',
+    description:
+      'Two columns of links, used for page, site, and subscribe links in a site footer',
     type: 'footer',
     func: footerColumnsFixed,
 
@@ -42,6 +44,8 @@ export default {
   },
   'header.centeredFixed': {
     name: 'Title header',
+    description:
+      'A generic header component, used to show the podcast title, logo, and subtitle',
     type: 'header',
     func: headerCenteredFixed,
 
@@ -54,6 +58,7 @@ export default {
   },
   'header.pageLinkList': {
     name: 'Link header',
+    description: 'A header component to show page and site links',
     type: 'header',
     func: headerPageLinkList,
 
@@ -62,10 +67,15 @@ export default {
         name: 'Fixed width',
         type: 'bool',
       },
+      openInNewWindow: {
+        name: 'Open links in new tab',
+        type: 'bool',
+      },
     },
   },
   'links.linkBar': {
     name: 'Link bar',
+    description: 'A link bar component for showing site and page links',
     type: 'links',
     func: linksLinkBar,
 
@@ -82,6 +92,8 @@ export default {
   },
   'pagination.forwardBack': {
     name: 'Pagination, forward/back',
+    description:
+      'Basic forward/backward pagination for navigating the episode list',
     type: 'pagination',
     func: paginationForwardBack,
 
@@ -98,6 +110,8 @@ export default {
   },
   'subheader.subscribeLinks': {
     name: 'Subscribe links',
+    description:
+      'A subheader component for displaying links to subscribe to your podcast',
     type: 'subscribeLinks',
     func: subheaderSubscribeLinks,
 

@@ -1,4 +1,4 @@
-export default data => ({
+export default (data = {}) => ({
   type: 'links.linkBar',
   layout: {
     includes: data.includes,

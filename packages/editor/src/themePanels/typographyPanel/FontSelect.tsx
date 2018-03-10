@@ -89,8 +89,8 @@ const InnerWrapperList = styled('div', {
 });
 const FilterItem = styled(
   'a',
-  ({isSelected}) => ({
-    color: isSelected ? '#8d52d1' : '#aaa',
+  ({$isSelected}: {$isSelected: boolean}) => ({
+    color: $isSelected ? '#8d52d1' : '#aaa',
     textDecoration: 'none',
     transition: 'color 0.2s',
   }),
@@ -265,35 +265,35 @@ export default class FontSelect extends React.PureComponent {
         >
           <InnerWrapperToolbar>
             <FilterItem
-              isSelected={filter === 'serif'}
+              $isSelected={filter === 'serif'}
               onClick={this.handleFilter('serif')}
               style={{fontFamily: 'serif'}}
             >
               Serif
             </FilterItem>
             <FilterItem
-              isSelected={filter === 'sans-serif'}
+              $isSelected={filter === 'sans-serif'}
               onClick={this.handleFilter('sans-serif')}
               style={{fontFamily: 'sans-serif'}}
             >
               Sans
             </FilterItem>
             <FilterItem
-              isSelected={filter === 'monospace'}
+              $isSelected={filter === 'monospace'}
               onClick={this.handleFilter('monospace')}
               style={{fontFamily: 'Courier, Courier New, monospace'}}
             >
               Mono
             </FilterItem>
             <FilterItem
-              isSelected={filter === 'display'}
+              $isSelected={filter === 'display'}
               onClick={this.handleFilter('display')}
               style={{fontFamily: 'Impact, Arial Black'}}
             >
               Disp
             </FilterItem>
             <FilterItem
-              isSelected={filter === 'handwriting'}
+              $isSelected={filter === 'handwriting'}
               onClick={this.handleFilter('handwriting')}
               style={{fontFamily: 'Comic, Comic Sans, cursive'}}
             >

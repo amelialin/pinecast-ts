@@ -2,8 +2,9 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
-import Button from '../../common/Button';
+import Button, {ButtonGroup} from '../../common/Button';
 import Checkbox from '../../common/Checkbox';
+import Collapser from '../../common/Collapser';
 import Label from '../../common/Label';
 import {MetadataType} from './types';
 import {primitives} from '@pinecast/sb-components';
@@ -12,20 +13,14 @@ import TextInput from '../../common/TextInput';
 
 const Wrapper = styled('div', {
   borderTop: '1px solid #dee1df',
-  marginBottom: -16,
+  marginBottom: -12,
   marginTop: 12,
   paddingTop: 12,
 });
 const ButtonWrapper = styled('div', {
+  display: 'flex',
   paddingBottom: 16,
 });
-const Collapser = styled('div', ({$height}) => ({
-  height: $height,
-  margin: '0 -4px',
-  overflowY: 'hidden',
-  padding: '0 4px',
-  transition: 'height 0.2s',
-}));
 
 type SchemaProps = {
   name: string;
@@ -84,10 +79,10 @@ class SchemaBool extends React.PureComponent {
 }
 
 export default class ModuleOptions extends React.PureComponent {
-  optionsEl: HTMLElement | null;
   props: {
     layout: primitives.ComponentLayout;
     metadata: MetadataType;
+    moreButtons: JSX.Element | Array<JSX.Element | null | false> | null | false;
     onUpdate: (newLayout: primitives.ComponentLayout) => void;
   };
   state: {open: boolean} = {open: false};
@@ -146,12 +141,9 @@ export default class ModuleOptions extends React.PureComponent {
   handleToggle = () => {
     this.setState({open: !this.state.open});
   };
-  handleOptionsElRef = (el: HTMLElement | null) => {
-    this.optionsEl = el;
-  };
 
   render() {
-    const {metadata} = this.props;
+    const {metadata, moreButtons} = this.props;
     if (!metadata.schema) {
       return null;
     }
@@ -161,23 +153,20 @@ export default class ModuleOptions extends React.PureComponent {
     return (
       <Wrapper>
         <ButtonWrapper>
-          <Button onClick={this.handleToggle} size="small">
-            {this.state.open ? 'Hide options' : 'Show options'}
-          </Button>
+          <ButtonGroup>
+            {Boolean(keys.length) && (
+              <Button onClick={this.handleToggle}>
+                {this.state.open ? 'Hide options' : 'Show options'}
+              </Button>
+            )}
+            {this.props.moreButtons}
+          </ButtonGroup>
         </ButtonWrapper>
-        <Collapser
-          $height={
-            this.state.open && this.optionsEl
-              ? this.optionsEl.clientHeight - 8
-              : 0
-          }
-        >
-          <div ref={this.handleOptionsElRef} style={{marginTop: -8}}>
-            {keys
-              .map(this.renderSchemaElement)
-              .filter(x => x)
-              .map((x, i) => x && React.cloneElement(x, {key: i}))}
-          </div>
+        <Collapser open={this.state.open}>
+          {keys
+            .map(this.renderSchemaElement)
+            .filter(x => x)
+            .map((x, i) => x && React.cloneElement(x, {key: i}))}
         </Collapser>
       </Wrapper>
     );

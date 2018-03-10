@@ -13,7 +13,13 @@ const Button = atom('a', {
 
 export default getsContext(
   (
-    props: {href: string; children?: any; style?: Object},
+    props: {
+      href: string;
+      children?: any;
+      rel?: string;
+      style?: Object;
+      target?: '_blank';
+    },
     {ctx}: {ctx: ComponentContext},
   ) => {
     return (
@@ -24,12 +30,14 @@ export default getsContext(
             : null
         }
         href={props.href}
+        rel={props.rel}
         style={{
           backgroundColor: 'buttons',
           color: 'buttonsText',
           ...(ctx.styling && ctx.styling.buttons),
           ...props.style,
         }}
+        target={props.target}
       >
         {props.children}
       </Button>

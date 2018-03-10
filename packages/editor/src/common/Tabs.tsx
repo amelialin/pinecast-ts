@@ -25,7 +25,7 @@ const TabButtonWrapper = styled('div', {
 });
 const TabButton = styled(
   'button',
-  ({$isActive}) => ({
+  ({$isActive}: {$isActive: boolean}) => ({
     appearance: 'none',
     background: '#fff',
     border: 0,

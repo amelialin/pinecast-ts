@@ -4,7 +4,7 @@ import styled from '@pinecast/sb-styles';
 
 import {DEFAULT_FONT} from '../common/constants';
 
-const InputWrapper = styled('div', ({$disabled}) => ({
+const InputWrapper = styled('div', ({$disabled}: {$disabled: boolean}) => ({
   alignItems: 'center',
   backgroundColor: '#fff',
   border: $disabled ? '1px solid #eee' : '1px solid #ccc',

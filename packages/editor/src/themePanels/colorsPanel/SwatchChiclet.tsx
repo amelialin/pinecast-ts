@@ -7,8 +7,8 @@ import {colorKeyNames} from '../../constants';
 
 import './rc-tooltip.css';
 
-const Chiclet = styled('div', ({color}) => ({
-  background: color,
+const Chiclet = styled('div', ({$color}: {$color: string}) => ({
+  background: $color,
   flex: '1 1 100px',
   height: 50,
 }));
@@ -21,7 +21,7 @@ const SwatchChiclet = ({
   colorKey: string;
 }) => (
   <Tooltip placement="bottom" overlay={<span>{colorKeyNames[colorKey]}</span>}>
-    <Chiclet color={color} />
+    <Chiclet $color={color} />
   </Tooltip>
 );
 

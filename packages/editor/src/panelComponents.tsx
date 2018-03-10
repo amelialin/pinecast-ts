@@ -56,7 +56,7 @@ const PageSelection = styled(
       position: 'absolute',
       right: 4,
       top: 0,
-      transform: 'scaleY(0.9) translateY(10px) rotate(45deg)',
+      transform: 'scaleY(0.9) translateY(12px) rotate(45deg)',
       width: 12,
       zIndex: 3,
     },
@@ -70,17 +70,17 @@ const PageSelection = styled(
       position: 'absolute',
       right: 4,
       top: 0,
-      transform: 'scaleY(0.9) translateY(10px) rotate(45deg)',
+      transform: 'scaleY(0.9) translateY(12px) rotate(45deg)',
       transition: 'border-color 0.2s, transform 0.2s',
       width: 12,
       zIndex: 2,
     },
     ':hover:after': {
       borderColor: 'rgba(0, 0, 0, 0.2)',
-      transform: 'scaleY(0.9) translateY(13px) rotate(45deg)',
+      transform: 'scaleY(0.9) translateY(15px) rotate(45deg)',
     },
     ':active:after': {
-      transform: 'scaleY(0.9) translateY(11px) rotate(45deg)',
+      transform: 'scaleY(0.9) translateY(14px) rotate(45deg)',
     },
 
     ':focus': {
@@ -94,7 +94,7 @@ const PageSelection = styled(
 );
 const PageSelectorInner = styled(
   'div',
-  ({'aria-hidden': hidden}) => ({
+  ({'aria-hidden': hidden}: {'aria-hidden': boolean}) => ({
     background: '#fff',
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.125)',
     display: 'flex',
@@ -115,7 +115,7 @@ const PageSelectorInner = styled(
 );
 const PageSelectorOption = styled(
   'button',
-  ({'aria-selected': selected}) => ({
+  ({'aria-selected': selected}: {'aria-selected': boolean}) => ({
     WebkitAppearance: 'none',
     background: selected ? '#eee' : 'none',
     border: 0,

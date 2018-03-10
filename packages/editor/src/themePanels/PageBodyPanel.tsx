@@ -13,6 +13,8 @@ import {ReducerType} from '../reducer';
 import TextInput from '../common/TextInput';
 import Tabs, {Tab} from '../common/Tabs';
 
+const labelStyle = {fontSize: 16};
+
 const units = {
   px: 'pixels',
   '%': 'percent',
@@ -103,22 +105,38 @@ const PageBodyPanel = ({
         <RadioList
           options={{
             fluid: () => (
-              <Label componentType="div" text="Fluid width">
+              <Label
+                componentType="div"
+                labelStyle={labelStyle}
+                text="Fluid width"
+              >
                 The page will automatically adjust to the size of the window
               </Label>
             ),
             '1280px': () => (
-              <Label componentType="div" text="Wide fixed-width">
+              <Label
+                componentType="div"
+                labelStyle={labelStyle}
+                text="Wide fixed-width"
+              >
                 Centered on the page, 1280 pixels wide
               </Label>
             ),
             '960px': () => (
-              <Label componentType="div" text="Standard fixed-width">
+              <Label
+                componentType="div"
+                labelStyle={labelStyle}
+                text="Standard fixed-width"
+              >
                 Centered on the page, 960 pixels wide
               </Label>
             ),
             '600px': () => (
-              <Label componentType="div" text="Narrow fixed-width">
+              <Label
+                componentType="div"
+                labelStyle={labelStyle}
+                text="Narrow fixed-width"
+              >
                 Centered on the page, 600 pixels wide
               </Label>
             ),

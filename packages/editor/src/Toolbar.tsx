@@ -18,7 +18,7 @@ const Toolbar_ = styled('nav', {
 });
 const ToolbarOption = styled(
   'button',
-  ({'aria-selected': isSelected}) => ({
+  ({'aria-selected': isSelected}: {'aria-selected': boolean}) => ({
     background: 'transparent',
     border: 0,
     color: isSelected ? '#8d52d1' : '#444',

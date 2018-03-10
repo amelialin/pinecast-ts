@@ -5,7 +5,7 @@ import styled from '@pinecast/sb-styles';
 import {DEFAULT_FONT} from './constants';
 import {ErrorFlag} from './icons';
 
-const Text = styled('span', ({$oneLine}) => ({
+const Text = styled('span', ({$oneLine}: {$oneLine: boolean}) => ({
   alignItems: 'center',
   alignSelf: $oneLine ? 'stretch' : null,
   display: 'flex',

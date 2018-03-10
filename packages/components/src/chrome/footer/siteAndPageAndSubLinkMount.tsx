@@ -9,7 +9,10 @@ import {MountProvider} from '../mounts';
 import renderElements from '../../elements';
 import TextRenderer from '../../common/text';
 
-const Link = atom('a');
+const newWindowProps = {
+  target: '_blank',
+  rel: 'noopener noreferrer',
+};
 
 export default getsContext(
   (
@@ -20,6 +23,7 @@ export default getsContext(
       layout: {
         linkStyle: CSS;
         linkHoverStyle: CSS;
+        openInNewWindow?: boolean;
       };
       template: ElementLayout;
     },
@@ -43,22 +47,24 @@ export default getsContext(
                 href={link.url}
                 key={`link:${i}`}
                 style={linkStyles}
+                {...(layout.openInNewWindow ? newWindowProps : {})}
               />
             ),
           ),
-          pageLinks: Object.values(
-            ctx.data.pages,
-          ).map((page: Page): JSX.Element => (
-            <TextRenderer
-              content={page.title}
-              data-link="true"
-              element="a"
-              extends={ctx.textStyles.navigationLinks}
-              href={ctx.url('page', {slug: page.slug})}
-              key={`page:${page.slug}`}
-              style={linkStyles}
-            />
-          )),
+          pageLinks: Object.values(ctx.data.pages).map(
+            (page: Page): JSX.Element => (
+              <TextRenderer
+                content={page.title}
+                data-link="true"
+                element="a"
+                extends={ctx.textStyles.navigationLinks}
+                href={ctx.url('page', {slug: page.slug})}
+                key={`page:${page.slug}`}
+                style={linkStyles}
+                {...(layout.openInNewWindow ? newWindowProps : {})}
+              />
+            ),
+          ),
           subLinks: [
             ['Apple Podcasts', ctx.data.site.itunes_url],
             ['Google Play', ctx.data.site.google_play_url],

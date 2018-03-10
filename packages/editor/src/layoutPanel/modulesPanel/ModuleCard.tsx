@@ -2,11 +2,10 @@ import * as React from 'react';
 
 import {primitives} from '@pinecast/sb-components';
 import {componentsMetadata} from '@pinecast/sb-presets';
-import styled from '@pinecast/sb-styles';
+import styled, {CSS} from '@pinecast/sb-styles';
 
 import Button from '../../common/Button';
 import {Delete, Down, Up} from '../../common/icons';
-import {Kebab} from '../../common/icons/menus';
 import {MetadataType} from './types';
 import ModuleOptions from './ModuleOptions';
 
@@ -16,22 +15,9 @@ const OuterWrapper = styled(
     border: '1px solid #dee1df',
     borderRadius: 4,
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     marginBottom: 2,
-    padding: 0,
-
-    ':hover .ModuleCard-menuWrapper': {
-      right: -4,
-    },
-    ':hover .ModuleCard-menuSymbol': {
-      opacity: 0,
-    },
-    ':not(:hover) .ModuleCard--ToolButton': {
-      opacity: 0,
-    },
-    ':hover .ModuleCard--ToolButton': {
-      opacity: 1,
-    },
+    padding: 12,
 
     ':not(:empty) + .ModuleCard-outerWrapper': {
       borderTopLeftRadius: 0,
@@ -44,55 +30,20 @@ const OuterWrapper = styled(
   },
   {className: 'ModuleCard-outerWrapper'},
 );
-
-const BodyWrapper = styled('div', {
-  flex: '1 1',
-  marginRight: -22,
-  padding: 16,
-});
 const ComponentName = styled('b', {
   display: 'block',
+  fontSize: 16,
   fontWeight: 500,
 });
+const ComponentDescription = styled('div', {
+  fontSize: 14,
+  marginTop: 4,
+});
 
-const MenuWrapper = styled(
-  'div',
-  {
-    alignItems: 'center',
-    display: 'flex',
-    flex: '0 0 44px',
-    flexDirection: 'column',
-    padding: '2px 0',
-    position: 'relative',
-    right: 0,
-    transition: 'right 0.2s',
-  },
-  {className: 'ModuleCard-menuWrapper'},
-);
-const MenuSymbol = styled(
-  'div',
-  {
-    display: 'flex',
-    justifyContent: 'center',
-    opacity: 1,
-    padding: '4px 0',
-    pointerEvents: 'none',
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    transition: 'opacity 0.2s',
-    width: 20,
-  },
-  {className: 'ModuleCard-menuSymbol'},
-);
-
-const buttonStyle: React.CSSProperties = {
-  height: 27, // To match width
+const buttonStyle: CSS = {
   justifyContent: 'center',
-  margin: '2px 0',
   padding: 0,
-  width: 27, // Because icon is odd width
-  transition: 'opacity 0.2s',
+  width: 32,
 };
 
 export default class ModuleCard extends React.Component {
@@ -138,48 +89,44 @@ export default class ModuleCard extends React.Component {
     const metadata = this.getMetadata();
     return (
       <OuterWrapper>
-        <BodyWrapper>
-          <ComponentName>{metadata.name}</ComponentName>
-          <ModuleOptions
-            layout={layout}
-            metadata={metadata}
-            onUpdate={this.handleUpdate}
-          />
-        </BodyWrapper>
-        {(!isFirst || canDelete || !isLast) && (
-          <MenuWrapper>
-            <MenuSymbol>
-              <Kebab color="#c6caca" />
-            </MenuSymbol>
-            {!isFirst && (
-              <Button
-                className="ModuleCard--ToolButton"
-                onClick={this.handleMoveUp}
-                style={buttonStyle}
-              >
-                <Up />
-              </Button>
-            )}
-            {canDelete && (
-              <Button
-                className="ModuleCard--ToolButton"
-                onClick={this.handleDelete}
-                style={buttonStyle}
-              >
-                <Delete style={{transform: 'translateX(-0.5px)'}} />
-              </Button>
-            )}
-            {!isLast && (
-              <Button
-                className="ModuleCard--ToolButton"
-                onClick={this.handleMoveDown}
-                style={buttonStyle}
-              >
-                <Down />
-              </Button>
-            )}
-          </MenuWrapper>
-        )}
+        <ComponentName>{metadata.name}</ComponentName>
+        <ComponentDescription>{metadata.description}</ComponentDescription>
+        <ModuleOptions
+          layout={layout}
+          metadata={metadata}
+          moreButtons={
+            <React.Fragment>
+              {!isFirst && (
+                <Button
+                  className="ModuleCard--ToolButton"
+                  onClick={this.handleMoveUp}
+                  style={buttonStyle}
+                >
+                  <Up />
+                </Button>
+              )}
+              {canDelete && (
+                <Button
+                  className="ModuleCard--ToolButton"
+                  onClick={this.handleDelete}
+                  style={buttonStyle}
+                >
+                  <Delete style={{transform: 'translateX(-0.5px)'}} />
+                </Button>
+              )}
+              {!isLast && (
+                <Button
+                  className="ModuleCard--ToolButton"
+                  onClick={this.handleMoveDown}
+                  style={buttonStyle}
+                >
+                  <Down />
+                </Button>
+              )}
+            </React.Fragment>
+          }
+          onUpdate={this.handleUpdate}
+        />
       </OuterWrapper>
     );
   }

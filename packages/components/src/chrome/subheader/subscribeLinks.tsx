@@ -25,7 +25,9 @@ export default getsContext(
             <ButtonRenderer
               href={ctx.data.site.itunes_url}
               key="apple"
+              rel="noopener noreferrer"
               style={marginStyles}
+              target="_blank"
             >
               Apple Podcasts
             </ButtonRenderer>
@@ -34,7 +36,9 @@ export default getsContext(
             <ButtonRenderer
               href={ctx.data.site.google_play_url}
               key="google"
+              rel="noopener noreferrer"
               style={marginStyles}
+              target="_blank"
             >
               Google Play
             </ButtonRenderer>
@@ -43,7 +47,9 @@ export default getsContext(
             <ButtonRenderer
               href={ctx.data.site.stitcher_url}
               key="stitcher"
+              rel="noopener noreferrer"
               style={marginStyles}
+              target="_blank"
             >
               Stitcher
             </ButtonRenderer>
@@ -53,7 +59,9 @@ export default getsContext(
               ctx.data.podcast.slug,
             )}`}
             key="rss"
+            rel="noopener noreferrer"
             style={marginStyles}
+            target="_blank"
           >
             RSS
           </ButtonRenderer>,

@@ -67,7 +67,7 @@ export default class RadioList extends React.PureComponent {
   props: {
     onChange: (value: string) => void;
     options: {
-      [value: string]: React.StatelessComponent | JSX.Element | string;
+      [value: string]: React.ComponentType<{}> | JSX.Element | string;
     };
     value: string;
   };
@@ -118,7 +118,7 @@ export default class RadioList extends React.PureComponent {
               <Radio />
               {typeof Value === 'string' || React.isValidElement(Value)
                 ? Value
-                : React.createElement(Value as any)}
+                : React.createElement(Value as React.ComponentType<{}>)}
             </Option>
           ),
         )}

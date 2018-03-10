@@ -4,10 +4,18 @@ import styled from '@pinecast/sb-styles';
 
 import {DEFAULT_FONT} from './constants';
 
-const WrapperLabel = styled('label', {
-  display: 'flex',
-  padding: '10px 0 20px',
-});
+const WrapperLabel = styled(
+  'label',
+  {
+    display: 'flex',
+    padding: '0 0 20px',
+
+    ':not(:empty) + .Checkbox--WrapperLabel': {
+      marginTop: -12,
+    },
+  },
+  {className: 'Checkbox--WrapperLabel'},
+);
 const InvisibleCheckbox = styled(
   'input',
   {
@@ -37,14 +45,14 @@ const InvisibleCheckbox = styled(
 
 const Text = styled(
   'div',
-  ({$disabled}) => ({
+  ({$disabled}: {$disabled: boolean}) => ({
     display: 'flex',
     fontFamily: DEFAULT_FONT,
     fontSize: 14,
     fontWeight: 500,
     flex: '1 1',
     opacity: $disabled ? 0.5 : 1,
-    paddingLeft: 20,
+    paddingLeft: 24,
     position: 'relative',
     transition: 'opacity 0.2s',
 

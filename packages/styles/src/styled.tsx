@@ -21,10 +21,7 @@ type HTMLProps = React.HTMLProps<any> & {
 
 export default function(
   elemType: string,
-  props?:
-    | React.CSSProperties
-    | ((props: any, ctx?: any) => React.CSSProperties)
-    | null,
+  props?: React.CSSProperties | ((props: Object) => React.CSSProperties) | null,
   defaultProps?: HTMLProps,
 ): React.ComponentType<any> {
   // Basic validation
@@ -52,6 +49,10 @@ export default function(
       const styleResult = {};
       if (typeof props === 'function') {
         Object.assign(styleResult, props(ownProps), style);
+      } else if (!props) {
+        if (style) {
+          Object.assign(styleResult, style);
+        }
       } else {
         Object.assign(styleResult, props, style);
       }

@@ -17,6 +17,7 @@ export default (data = {}) => ({
       whiteSpace: 'nowrap',
       ...data.linkStyle,
     },
+    openInNewWindow: data.openInNewWindow || false,
   },
   template: {
     elements: data.fixed

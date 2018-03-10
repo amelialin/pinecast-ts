@@ -13,7 +13,7 @@ const Wrapper = styled('div', {
   display: 'flex',
   marginBottom: 20,
 });
-const Chiclet = styled('div', ({$color}) => ({
+const Chiclet = styled('div', ({$color}: {$color: string}) => ({
   backgroundColor: $color,
   borderRadius: 3,
   boxShadow:

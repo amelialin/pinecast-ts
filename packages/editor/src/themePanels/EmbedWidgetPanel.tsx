@@ -9,6 +9,8 @@ import {PanelDescription, PanelDivider, PanelWrapper} from '../panelComponents';
 import RadioList from '../common/RadioList';
 import {ReducerType} from '../reducer';
 
+const labelStyle = {fontSize: 16};
+
 const EmbedWidgetPanel = ({
   changeEmbedWidget,
   embedTheme,
@@ -24,17 +26,17 @@ const EmbedWidgetPanel = ({
       <RadioList
         options={{
           minimal: () => (
-            <Label componentType="div" text="Minimal">
+            <Label componentType="div" labelStyle={labelStyle} text="Minimal">
               Simple, clean, and to the point
             </Label>
           ),
           thick: () => (
-            <Label componentType="div" text="Thick">
+            <Label componentType="div" labelStyle={labelStyle} text="Thick">
               Big and colorful, full of metadata and a seek bar
             </Label>
           ),
           slim: () => (
-            <Label componentType="div" text="Slim">
+            <Label componentType="div" labelStyle={labelStyle} text="Slim">
               Compact and efficient, only the absolute necessities
             </Label>
           ),
