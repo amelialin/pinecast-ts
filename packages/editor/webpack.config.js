@@ -72,6 +72,11 @@ module.exports = env => {
       contentBase: __dirname,
       port: 8001,
       publicPath: '/build/',
+
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET',
+      },
     },
     externals: require('../../webpack.externals'),
   };
