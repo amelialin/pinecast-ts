@@ -140,11 +140,14 @@ export default class SchemaOrderedSet extends React.PureComponent {
       return;
     }
     let overBuffer: number | null = null;
-    const tempOverBuffer = Math.max(
-      0,
-      Math.round(
-        (e.pageY - this.startY + dragging * ELEMENT_HEIGHT + BUFFER_SIZE) /
-          ELEMENT_HEIGHT,
+    const tempOverBuffer = Math.min(
+      this.props.value.length,
+      Math.max(
+        0,
+        Math.round(
+          (e.pageY - this.startY + dragging * ELEMENT_HEIGHT + BUFFER_SIZE) /
+            ELEMENT_HEIGHT,
+        ),
       ),
     );
     if (tempOverBuffer !== dragging && tempOverBuffer !== dragging + 1) {
@@ -196,10 +199,6 @@ export default class SchemaOrderedSet extends React.PureComponent {
     }
 
     const rawOffset = currentY - this.startY;
-    const containerHeight = getContainerHeight(
-      this.props.value.length,
-      this.state.dragging !== null,
-    );
     const elemPositionStart = dragging * ELEMENT_HEIGHT;
     if (dragging === 0) {
       if (rawOffset < 0) {
@@ -215,8 +214,12 @@ export default class SchemaOrderedSet extends React.PureComponent {
         return 0;
       }
     } else {
-      if (elemPositionStart + rawOffset > containerHeight - BUFFER_SIZE) {
-        return containerHeight - elemPositionStart - BUFFER_SIZE;
+      const containerHeight = getContainerHeight(
+        this.props.value.length,
+        this.state.dragging !== null,
+      );
+      if (elemPositionStart + rawOffset + ELEMENT_HEIGHT > containerHeight) {
+        return containerHeight - elemPositionStart - ELEMENT_HEIGHT;
       }
     }
 
