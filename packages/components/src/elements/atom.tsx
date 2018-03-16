@@ -158,7 +158,7 @@ export default (elem: string, style?: Object, baseProps?: Object) =>
             styleProp,
           ),
           ctx,
-        ),
+        ) || {},
       );
       return (
         <Component {...baseProps} {...prepareProps(item, rest, ctx)}>

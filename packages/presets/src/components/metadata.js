@@ -21,7 +21,7 @@ export default {
       },
       col1Items: {
         name: 'Column 1 contents',
-        type: 'set',
+        type: 'orderedSet',
         options: [
           {name: 'Site links', value: 'siteLinks'},
           {name: 'Pages', value: 'pages'},
@@ -34,7 +34,7 @@ export default {
       },
       col1Items: {
         name: 'Column 2 contents',
-        type: 'set',
+        type: 'orderedSet',
         options: [
           {name: 'Site links', value: 'siteLinks'},
           {name: 'Pages', value: 'pages'},
@@ -84,9 +84,9 @@ export default {
     func: linksLinkBar,
 
     schema: {
-      col1Items: {
+      includes: {
         name: 'Contents',
-        type: 'set',
+        type: 'orderedSet',
         options: [
           {name: 'Site links', value: 'links'},
           {name: 'Pages', value: 'pages'},

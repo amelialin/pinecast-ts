@@ -103,7 +103,7 @@ const Label = ({
           : null
       }
     >
-      <Text $oneLine={$oneLine} style={!subText && labelStyle}>
+      <Text $oneLine={$oneLine} style={(!subText && labelStyle) || undefined}>
         {text}
       </Text>
       {subText && <SubText style={labelStyle}>{subText}</SubText>}

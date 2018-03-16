@@ -65,7 +65,7 @@ const ToolbarButton = ({
   switchPage: (page: ReducerType['page']) => void;
 }) => (
   <ToolbarOption
-    aria-selected={id === currentPage ? 'true' : null}
+    aria-selected={id === currentPage}
     onClick={e => {
       e.preventDefault();
       switchPage(id);

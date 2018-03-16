@@ -3,13 +3,10 @@ import * as React from 'react';
 import styled from '@pinecast/sb-styles';
 
 import Button, {ButtonGroup} from '../../common/Button';
-import Checkbox from '../../common/Checkbox';
 import Collapser from '../../common/Collapser';
-import Label from '../../common/Label';
 import {MetadataType} from './types';
 import {primitives} from '@pinecast/sb-components';
-import Select from '../../common/Select';
-import TextInput from '../../common/TextInput';
+import * as SchemaFields from './schemaFields';
 
 const Wrapper = styled('div', {
   marginBottom: -12,
@@ -19,69 +16,6 @@ const ButtonWrapper = styled('div', {
   display: 'flex',
   paddingBottom: 12,
 });
-
-type SchemaProps = {
-  name: string;
-  field: string;
-  onChange: (field: string, newValue: any) => void;
-  open: boolean;
-  value: any;
-};
-
-class SchemaText extends React.PureComponent {
-  props: SchemaProps;
-
-  handleChange = (newValue: string) => {
-    this.props.onChange(this.props.field, newValue);
-  };
-  render() {
-    return (
-      <Label text={this.props.name}>
-        <TextInput
-          onChange={this.handleChange}
-          tabIndex={this.props.open ? 0 : -1}
-          value={this.props.value}
-        />
-      </Label>
-    );
-  }
-}
-class SchemaEnum extends React.PureComponent {
-  props: SchemaProps & {options: {[value: string]: string}};
-
-  handleChange = (newValue: string) => {
-    this.props.onChange(this.props.field, newValue);
-  };
-  render() {
-    return (
-      <Label text={this.props.name}>
-        <Select
-          onChange={this.handleChange}
-          options={this.props.options}
-          tabIndex={this.props.open ? 0 : -1}
-          value={this.props.value}
-        />
-      </Label>
-    );
-  }
-}
-class SchemaBool extends React.PureComponent {
-  props: SchemaProps;
-
-  handleChange = (newValue: boolean) => {
-    this.props.onChange(this.props.field, newValue);
-  };
-  render() {
-    return (
-      <Checkbox
-        checked={this.props.value}
-        onChange={this.handleChange}
-        tabIndex={this.props.open ? 0 : -1}
-        text={this.props.name}
-      />
-    );
-  }
-}
 
 export default class ModuleOptions extends React.PureComponent {
   props: {
@@ -124,35 +58,46 @@ export default class ModuleOptions extends React.PureComponent {
     let Component: React.ComponentType;
     switch (option.type) {
       case 'bool':
-        Component = SchemaBool;
+        Component = SchemaFields.SchemaBool;
         break;
       case 'enum':
-        Component = SchemaEnum;
+        Component = SchemaFields.SchemaEnum;
+        break;
+      case 'orderedSet':
+        Component = SchemaFields.SchemaOrderedSet;
         break;
       case 'text':
-        Component = SchemaText;
+        Component = SchemaFields.SchemaText;
         break;
       default:
         console.error(`No schema input for ${option.type}`);
         return null;
     }
 
-    const props: SchemaProps = {
+    const props: SchemaFields.SchemaProps = {
       field: key,
       name: option.name,
       onChange: this.handleChange,
       open: this.state.open,
       value: layout.tagOptions[key],
     };
+
+    function setOptions() {
+      (props as any).options =
+        (option.options &&
+          option.options.reduce((acc, cur) => {
+            acc[cur.key || cur.value] = cur.name;
+            return acc;
+          }, {})) ||
+        [];
+    }
+
     switch (option.type) {
+      case 'orderedSet':
+        setOptions();
+        break;
       case 'enum':
-        (props as any).options =
-          (option.options &&
-            option.options.reduce((acc, cur) => {
-              acc[cur.key || cur.value] = cur.name;
-              return acc;
-            }, {})) ||
-          [];
+        setOptions();
         if (option.options) {
           const selOpt = option.options.find(x => {
             if (

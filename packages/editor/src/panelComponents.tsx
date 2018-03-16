@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import styled from '@pinecast/sb-styles';
 
+import ContextMenu from './common/ContextMenu';
 import {DEFAULT_FONT} from './common/constants';
 
 export const PanelWrapper = styled('section', {
@@ -138,63 +139,11 @@ export class PageSelector extends React.PureComponent {
     options: Array<{name: string; value: string}>;
     selected: string;
   };
-  state: {
-    open: boolean;
-    selectionIndex: number;
-  } = {open: false, selectionIndex: 0};
+  state: {open: boolean} = {open: false};
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown);
-    document.body.addEventListener('click', this.handleOutsideClick);
-  }
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown);
-    document.body.removeEventListener('click', this.handleOutsideClick);
-  }
-
-  handleKeyDown = (e: KeyboardEvent) => {
-    if (!this.state.open) {
-      return;
-    }
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (e.keyCode === 27) {
-      // ESC
-      this.setState({open: false});
-    } else if (e.keyCode === 38) {
-      // up arrow
-      const index = this.state.selectionIndex - 1;
-      this.setState({
-        selectionIndex: index < 0 ? this.props.options.length - 1 : index,
-      });
-    } else if (e.keyCode === 40) {
-      // down arrow
-      const index = this.state.selectionIndex + 1;
-      this.setState({
-        selectionIndex: index === this.props.options.length ? 0 : index,
-      });
-    } else if (e.keyCode === 13) {
-      // enter
-      this.props.onChange(this.props.options[this.state.selectionIndex].value);
-      this.setState({open: false});
-    }
+  handleClose = () => {
+    this.setState({open: false});
   };
-
-  handleOutsideClick = (e: MouseEvent) => {
-    if (!this.state.open) {
-      return;
-    }
-    let target = e.target as HTMLElement;
-    while (!target.classList.contains('pageSelector-root')) {
-      target = target.parentNode as HTMLElement;
-      if (target === document.body || !target) {
-        this.setState({open: false});
-        return;
-      }
-    }
-  };
-
   handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     this.setState({
       open: !this.state.open,
@@ -208,37 +157,23 @@ export class PageSelector extends React.PureComponent {
     this.props.onChange(e.target.value);
   };
 
-  renderOption = ({name, value}: {name: string; value: string}, i: number) => {
-    return (
-      <PageSelectorOption
-        aria-selected={this.state.selectionIndex === i}
-        key={value}
-        onClick={e => {
-          e.preventDefault();
-          this.props.onChange(value);
-          this.setState({open: false});
-        }}
-        onMouseEnter={() => {
-          this.setState({selectionIndex: i});
-        }}
-        tabIndex={this.state.open ? 0 : -1}
-      >
-        {name}
-      </PageSelectorOption>
-    );
-  };
-
   render() {
-    const {options, selected} = this.props;
+    const {onChange, options, selected} = this.props;
     const {open} = this.state;
     return (
       <PageSelectorWrapper className="pageSelector-root">
         <PageSelection onClick={this.handleClick}>
           {(options.find(x => x.value === selected) || {name: null}).name}
         </PageSelection>
-        <PageSelectorInner aria-hidden={!open}>
-          {options.map(this.renderOption)}
-        </PageSelectorInner>
+        <ContextMenu
+          onClose={this.handleClose}
+          onSelect={onChange}
+          open={open}
+          options={options.map(x => ({name: x.name, slug: x.value}))}
+          toSelect={selected}
+          x={12}
+          y={88}
+        />
       </PageSelectorWrapper>
     );
   }

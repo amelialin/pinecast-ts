@@ -114,7 +114,9 @@ const Checkbox = ({
       <InvisibleCheckbox
         checked={checked}
         disabled={disabled}
-        onChange={e => onChange(e.target.checked)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange(e.target.checked)
+        }
         tabIndex={tabIndex}
       />
       <Text $disabled={disabled}>{text}</Text>

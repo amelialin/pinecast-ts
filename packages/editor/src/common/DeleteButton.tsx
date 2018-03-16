@@ -3,7 +3,7 @@ import styled from '@pinecast/sb-styles';
 const DeleteButton = styled(
   'button',
   {
-    background: 'transparent',
+    backgroundColor: 'transparent',
     border: 0,
     borderRadius: 0,
     cursor: 'pointer',
@@ -43,7 +43,7 @@ const DeleteButton = styled(
       backgroundColor: '#b00',
     },
   },
-  {'aria-label': 'Delete link'},
+  {'aria-label': 'Delete'},
 );
 
 export default DeleteButton;

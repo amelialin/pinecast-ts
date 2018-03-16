@@ -202,7 +202,7 @@ export default class FontSelect extends React.PureComponent {
     return (
       <Item
         aria-label={family}
-        id={this.props.value === family ? 'font-select-selected' : null}
+        id={this.props.value === family ? 'font-select-selected' : undefined}
         key={key}
         title={family}
         onClick={() => {
@@ -232,7 +232,7 @@ export default class FontSelect extends React.PureComponent {
   }
 
   handleFilter(value: State['filter']) {
-    return (e: MouseEvent) => {
+    return (e: React.MouseEvent<any>) => {
       e.preventDefault();
       this.setState({filter: this.state.filter === value ? null : value});
     };
@@ -259,7 +259,9 @@ export default class FontSelect extends React.PureComponent {
         </SelectBox>
         <InnerWrapper
           $isOpen={showingPicker}
-          aria-activedescendant={showingPicker ? 'font-select-selected' : null}
+          aria-activedescendant={
+            showingPicker ? 'font-select-selected' : undefined
+          }
           aria-hidden={!showingPicker}
           role="listbox"
         >

@@ -10,7 +10,7 @@ const Body = styled('body');
 
 const BodyComponent = getsContext(
   ({children}: {children?: any}, {ctx}: {ctx: ComponentContext}) => (
-    <Body style={prepareStyle(ctx.styling.page, ctx)}>
+    <Body style={prepareStyle(ctx.styling.page, ctx) || undefined}>
       {block(ctx.layout.header)}
       {children}
       {block(ctx.layout.footer)}

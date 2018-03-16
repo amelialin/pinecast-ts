@@ -3,6 +3,8 @@ import * as ReactDOM from 'react-dom';
 
 import styled from '@pinecast/sb-styles';
 
+import Layer, {ClosableLayer} from './Layer';
+
 const Wash = styled('div', {
   alignItems: 'center',
   backgroundColor: 'rgba(0, 0, 0, 0.6)',
@@ -33,60 +35,31 @@ export default class ModalLayer extends React.PureComponent {
     open: boolean;
     onClose: () => void;
   } & SharedProps;
-  portal: HTMLDivElement;
 
   static defaultProps = {
     canEscape: true,
   };
 
-  constructor(props) {
-    super(props);
-    const portal = document.createElement('div');
-    this.portal = portal;
-    document.body.appendChild(portal);
-  }
-
-  escListener = (e: KeyboardEvent) => {
-    if (!this.props.open) {
-      return;
-    }
-    if (e.keyCode !== 27) {
-      // ESC
-      return;
-    }
-    this.handleClose();
-  };
   handleClose = () => {
     if (!this.props.canEscape) {
       return;
     }
-
     this.props.onClose();
   };
-
-  componentDidMount() {
-    window.addEventListener('keyup', this.escListener);
-  }
-  componentWillUnmount() {
-    window.removeEventListener('keyup', this.escListener);
-    document.body.removeChild(this.portal);
-  }
-
-  handleContentClick = (e: MouseEvent) => {
-    e.stopPropagation();
-  };
-
   render() {
     const {children, open} = this.props;
     if (!open) {
       return null;
     }
-    return ReactDOM.createPortal(
+    const inner = (
       <Wash onClick={this.handleClose}>
-        <Container onClick={this.handleContentClick}>{children}</Container>
-      </Wash>,
-      this.portal,
+        <Container>{children}</Container>
+      </Wash>
     );
+    if (this.props.canEscape) {
+      return <ClosableLayer onClose={this.handleClose}>{inner}</ClosableLayer>;
+    }
+    return <Layer>{inner}</Layer>;
   }
 }
 

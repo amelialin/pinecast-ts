@@ -29,6 +29,7 @@ const NativeButton = styled(
     boxShadow:
       '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15), 0 0 0 transparent inset',
     color: $isPrimary ? '#fff' : '#000',
+    cursor: 'pointer',
     display: $isBlock ? 'flex' : 'inline-flex',
     fontFamily: DEFAULT_FONT,
     fontSize: $size === 'normal' ? 13 : $size === 'small' ? 12 : 16,
@@ -65,6 +66,14 @@ const NativeButton = styled(
   {className: 'Button-nativeButton'},
 );
 
+const keyboardShortcutStyles: React.CSSProperties = {
+  alignSelf: 'flex-end',
+  fontWeight: 400,
+  marginBottom: 1,
+  marginLeft: 4,
+  opacity: 0.5,
+};
+
 const Button = ({
   children,
   className,
@@ -79,6 +88,7 @@ const Button = ({
   disabled?: boolean;
   $isBlock?: boolean;
   $isPrimary?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   pending?: boolean;
   shortcut?: ShortcutKey;
   size?: 'normal' | 'small' | 'large';
@@ -95,16 +105,7 @@ const Button = ({
   >
     {pending ? <Spinner type="subtle" /> : children}
     {shortcut ? (
-      <KeyboardShortcut
-        {...shortcut}
-        style={{
-          alignSelf: 'flex-end',
-          fontWeight: 400,
-          marginBottom: 1,
-          marginLeft: 4,
-          opacity: 0.5,
-        }}
-      />
+      <KeyboardShortcut {...shortcut} style={keyboardShortcutStyles} />
     ) : null}
   </NativeButton>
 );

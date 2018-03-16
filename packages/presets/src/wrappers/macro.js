@@ -13,5 +13,7 @@ export default ({
       styles: style,
     },
   ],
-  tag_name: tagName,
+  tagName,
+  tag: 'page.wrapper',
+  tagMetadata: {},
 });

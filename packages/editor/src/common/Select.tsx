@@ -81,7 +81,9 @@ const Select = ({
 }) => (
   <Wrapper style={style}>
     <Select_
-      onChange={e => onChange(e.target.value)}
+      onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+        onChange(e.target.value)
+      }
       tabIndex={tabIndex}
       value={value}
     >

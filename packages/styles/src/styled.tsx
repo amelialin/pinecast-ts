@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 
+import {CSS, CSSProperties} from './types';
+
 declare function require(name: string);
 const su = require('styletron-utils');
 
@@ -14,29 +16,45 @@ function wrapCtx(
 
 const styleIdentity = ({$style}) => $style;
 
-type HTMLProps = React.HTMLProps<any> & {
-  'aria-haspopup'?: string;
-  'aria-label'?: string;
-};
+type HTMLProps = React.AllHTMLAttributes<any>;
+type StyledProps = {
+  className?: string;
+  style?: CSS;
+} & HTMLProps & {[key: string]: any};
 
-export default function(
+function styled(elemType: string): React.ComponentType<StyledProps>;
+function styled(
   elemType: string,
-  props?: React.CSSProperties | ((props: Object) => React.CSSProperties) | null,
+  props: CSSProperties, // FIXME: This should be CSS, but Typescript doesn't like it
   defaultProps?: HTMLProps,
-): React.ComponentType<any> {
+): React.ComponentType<StyledProps>;
+function styled<T>(
+  elemType: string,
+  props: (props: T) => CSS,
+  defaultProps?: HTMLProps,
+): React.ComponentType<T & StyledProps>;
+
+function styled<T>(
+  elemType: string,
+  props?: CSS | ((props: T) => CSS),
+  defaultProps?: HTMLProps,
+): React.ComponentType<T & StyledProps> {
   // Basic validation
-  if (elemType.toLowerCase() !== elemType) {
-    throw new Error(
-      `You aren't using lowercase letters for your element name. ${elemType.toLowerCase()} != ${elemType}`,
-    );
+  if (process.env.NODE_ENV !== 'production') {
+    if (elemType.toLowerCase() !== elemType) {
+      throw new Error(
+        `You aren't using lowercase letters for your element name. ${elemType.toLowerCase()} != ${elemType}`,
+      );
+    }
+    if (elemType.includes('-')) {
+      throw new Error(
+        `You used a hyphen in your element name. No web components: ${elemType}`,
+      );
+    }
   }
 
-  return class StyledElement extends React.PureComponent {
-    props: {
-      className?: string;
-      style?: React.CSSProperties;
-      [key: string]: any;
-    };
+  return (class StyledElement extends React.PureComponent {
+    props: T & StyledProps;
 
     static contextTypes = {
       styletron: PropTypes.object,
@@ -45,10 +63,10 @@ export default function(
     static displayName = `Styled(${elemType})`;
 
     render() {
-      const {className, style, ...ownProps} = this.props;
+      const {className, style, ...ownProps} = this.props as StyledProps;
       const styleResult = {};
       if (typeof props === 'function') {
-        Object.assign(styleResult, props(ownProps), style);
+        Object.assign(styleResult, props(ownProps as T), style);
       } else if (!props) {
         if (style) {
           Object.assign(styleResult, style);
@@ -68,11 +86,13 @@ export default function(
         styleResult,
       );
       if (className) {
-        ownProps.className = `${styletronClassNames} ${className}`;
+        (ownProps as any).className = `${styletronClassNames} ${className}`;
       } else {
-        ownProps.className = styletronClassNames;
+        (ownProps as any).className = styletronClassNames;
       }
       return React.createElement(elemType, ownProps);
     }
-  };
+  } as any) as React.ComponentType<T & StyledProps>;
 }
+
+export default styled;
