@@ -170,6 +170,7 @@ class SettingsPanel extends React.PureComponent {
               <Label text="Apple Podcasts URL">
                 <TextInput
                   disabled={pending}
+                  maxLength={500}
                   onChange={this.handleChangeApplePodcastsURL}
                   pattern="https://itunes\\.apple\\.com/\\w{2,3}/podcast/[^/]+/.+"
                   placeholder="https://itunes.apple.com/us/podcast/almost-better-than-dragons/id981540916?mt=2"
@@ -186,6 +187,7 @@ class SettingsPanel extends React.PureComponent {
               <Label text="Google Play URL">
                 <TextInput
                   disabled={pending}
+                  maxLength={500}
                   onChange={this.handleChangeGooglePlayURL}
                   pattern="https://play\\.google\\.com/music/(listen\\?|m/).+"
                   placeholder="https://play.google.com/music/listen?u=0#/ps/Iuscgum4gmep6isira64kdeskjm"
@@ -196,6 +198,7 @@ class SettingsPanel extends React.PureComponent {
               <Label text="Stitcher Radio URL">
                 <TextInput
                   disabled={pending}
+                  maxLength={500}
                   onChange={this.handleChangeStitcherRadioURL}
                   pattern="https?://www\\.stitcher\\.com/podcast/.+"
                   placeholder="https://www.stitcher.com/podcast/this-american-life"

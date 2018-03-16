@@ -46,6 +46,10 @@ export default class ModalLayer extends React.PureComponent {
     }
     this.props.onClose();
   };
+  eatClick = (e: React.MouseEvent<any>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
   render() {
     const {children, open} = this.props;
     if (!open) {
@@ -53,7 +57,7 @@ export default class ModalLayer extends React.PureComponent {
     }
     const inner = (
       <Wash onClick={this.handleClose}>
-        <Container>{children}</Container>
+        <Container onClick={this.eatClick}>{children}</Container>
       </Wash>
     );
     if (this.props.canEscape) {

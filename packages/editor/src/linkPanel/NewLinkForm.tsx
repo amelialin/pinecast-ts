@@ -36,15 +36,19 @@ export default class NewLinkForm extends React.PureComponent {
       <Form onSubmit={this.handleCreateSubmit}>
         <Label text="Link title">
           <TextInput
+            maxLength={250}
             onChange={this.handleTitleChange}
             placeholder="Text your visitor will see"
+            required
             value={this.state.title}
           />
         </Label>
         <Label text="Link URL">
           <TextInput
+            maxLength={500}
             onChange={this.handleURLChange}
             placeholder="https://"
+            required
             value={this.state.url}
           />
         </Label>
