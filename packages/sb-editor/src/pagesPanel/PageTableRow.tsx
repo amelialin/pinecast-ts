@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import Button, {ButtonGroup} from '../common/Button';
-import DeleteButton from '../common/DeleteButton';
+import Button, {ButtonGroup} from '@pinecast/common/Button';
+import DeleteButton from '@pinecast/common/DeleteButton';
 import {Page} from './types';
-import {TableBodyCell} from '../common/Table';
+import {TableBodyCell} from '@pinecast/common/Table';
 
 const PageTableRow = ({
   onDelete,

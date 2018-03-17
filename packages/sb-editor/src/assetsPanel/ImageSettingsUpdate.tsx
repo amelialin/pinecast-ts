@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import Callout from '../common/Callout';
-import LoadingState from '../common/LoadingState';
-import xhr from '../data/xhr';
+import Callout from '@pinecast/common/Callout';
+import LoadingState from '@pinecast/common/LoadingState';
+import xhr from '@pinecast/xhr';
 
 export default class ImageSettingsUpdate extends React.PureComponent {
   props: {

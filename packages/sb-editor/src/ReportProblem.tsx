@@ -1,13 +1,13 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
-import Button, {ButtonGroup} from './common/Button';
-import Dialog from './common/Dialog';
-import Label from './common/Label';
-import ModalLayer from './common/ModalLayer';
+import Button, {ButtonGroup} from '@pinecast/common/Button';
+import Dialog from '@pinecast/common/Dialog';
+import Label from '@pinecast/common/Label';
+import ModalLayer from '@pinecast/common/ModalLayer';
 import {ReducerType} from './reducer';
-import TextArea from './common/TextArea';
-import TextInput from './common/TextInput';
+import TextArea from '@pinecast/common/TextArea';
+import TextInput from '@pinecast/common/TextInput';
 
 declare var Rollbar;
 

@@ -1,17 +1,17 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
-import {primitives} from '@pinecast/sb-components';
+import Label from '@pinecast/common/Label';
 import * as presets from '@pinecast/sb-presets';
+import {primitives} from '@pinecast/sb-components';
+import RadioList from '@pinecast/common/RadioList';
+import Range from '@pinecast/common/Range';
+import TextInput from '@pinecast/common/TextInput';
+import Tabs, {Tab} from '@pinecast/common/Tabs';
 
 import {changePageOptions, changePageStyle} from '../actions/theme';
-import Label from '../common/Label';
 import {PanelDivider, PanelWrapper} from '../panelComponents';
-import RadioList from '../common/RadioList';
-import Range from '../common/Range';
 import {ReducerType} from '../reducer';
-import TextInput from '../common/TextInput';
-import Tabs, {Tab} from '../common/Tabs';
 
 const labelStyle = {fontSize: 16};
 

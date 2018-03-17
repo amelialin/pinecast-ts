@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-import {Check, Cross} from '../common/icons';
+import {Check, Cross} from '@pinecast/common/icons';
 import TextInput, {Props} from './TextInput';
 
 const StatusWrapper = styled('span', ({$type}: {$type?: string}) => ({

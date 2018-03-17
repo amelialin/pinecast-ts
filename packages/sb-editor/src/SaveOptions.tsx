@@ -4,12 +4,12 @@ import * as React from 'react';
 import styled from '@pinecast/styles';
 
 import {Action} from './actions';
-import Button, {ButtonGroup} from './common/Button';
-import Dialog from './common/Dialog';
+import Button, {ButtonGroup} from '@pinecast/common/Button';
+import Dialog from '@pinecast/common/Dialog';
 import {doSave} from './actions/save';
-import ErrorState from './common/ErrorState';
-import LoadingState from './common/LoadingState';
-import ModalLayer from './common/ModalLayer';
+import ErrorState from '@pinecast/common/ErrorState';
+import LoadingState from '@pinecast/common/LoadingState';
+import ModalLayer from '@pinecast/common/ModalLayer';
 import {ReducerType} from './reducer';
 import {ReducerType as SaveReducerType} from './reducers/save';
 

@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-import Button, {ButtonGroup} from '../../common/Button';
-import Collapser from '../../common/Collapser';
+import Button, {ButtonGroup} from '@pinecast/common/Button';
+import Collapser from '@pinecast/common/Collapser';
 import {MetadataType} from './types';
 import {primitives} from '@pinecast/sb-components';
 import * as SchemaFields from './schemaFields';

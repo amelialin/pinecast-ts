@@ -12,7 +12,14 @@ export interface ComponentLayout {
 
 export interface ComponentLayoutOption {
   name: string;
-  type: 'text' | 'longText' | 'enum' | 'orderedSet' | 'bool' | 'css';
+  type:
+    | 'text'
+    | 'longText'
+    | 'enum'
+    | 'orderedSet'
+    | 'bool'
+    | 'css'
+    | 'rootComponent.fixedWidth';
 
   // Used for 'enum' and 'set'
   options?: Array<{name: string; key?: string; value: any}>;

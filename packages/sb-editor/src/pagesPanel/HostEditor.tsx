@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-import Button, {ButtonGroup} from '../common/Button';
-import Label from '../common/Label';
-import TextInput from '../common/TextInput';
+import Button, {ButtonGroup} from '@pinecast/common/Button';
+import Label from '@pinecast/common/Label';
+import TextInput from '@pinecast/common/TextInput';
 import {Host} from './types';
 
 const MiniToolbar = styled('div', {

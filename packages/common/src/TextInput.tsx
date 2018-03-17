@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-import {DEFAULT_FONT} from '../common/constants';
+import {DEFAULT_FONT} from '@pinecast/common/constants';
 
 const InputWrapper = styled('div', ({$disabled}: {$disabled: boolean}) => ({
   alignItems: 'center',

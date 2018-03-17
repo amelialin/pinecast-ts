@@ -9,7 +9,7 @@ import {
 } from 'react-mde';
 import * as sanitizeHTML from 'sanitize-html';
 
-import * as RichTextIcons from '../common/icons/richText';
+import * as RichTextIcons from '@pinecast/common/icons/richText';
 
 class SaferPreview extends ReactMdePreview {
   origMakeHTML: ReactMdePreview['converter']['makeHtml'];

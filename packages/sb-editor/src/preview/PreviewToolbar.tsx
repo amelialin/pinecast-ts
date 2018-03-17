@@ -3,7 +3,7 @@ import * as React from 'react';
 import styled from '@pinecast/styles';
 
 import FullScreenButton from './FullScreenButton';
-import Select from '../common/Select';
+import Select from '@pinecast/common/Select';
 
 const Toolbar = styled('div', {
   alignItems: 'center',

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import Label from '../common/Label';
-import TextInput from '../common/TextInput';
+import Label from '@pinecast/common/Label';
+import TextInput from '@pinecast/common/TextInput';
 import {ContactBody} from './types';
 
 export default class ContactFields extends React.PureComponent {

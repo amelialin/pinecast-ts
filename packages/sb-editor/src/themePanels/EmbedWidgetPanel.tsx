@@ -1,12 +1,12 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
+import Label from '@pinecast/common/Label';
 import * as presets from '@pinecast/sb-presets';
+import RadioList from '@pinecast/common/RadioList';
 
 import {changeEmbedWidget} from '../actions/theme';
-import Label from '../common/Label';
 import {PanelDescription, PanelDivider, PanelWrapper} from '../panelComponents';
-import RadioList from '../common/RadioList';
 import {ReducerType} from '../reducer';
 
 const labelStyle = {fontSize: 16};

@@ -1,4 +1,4 @@
-import xhr from './xhr';
+import xhr from '@pinecast/xhr';
 
 const existingRequests = new Map<string, Promise<string>>();
 

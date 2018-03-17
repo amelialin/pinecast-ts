@@ -1,12 +1,12 @@
 import * as React from 'react';
 
 import {componentsMetadata} from '@pinecast/sb-presets';
+import EmptyState from '@pinecast/common/EmptyState';
+import {ModalOpener} from '@pinecast/common/ModalLayer';
 import {primitives} from '@pinecast/sb-components';
 import styled from '@pinecast/styles';
 
-import EmptyState from '../../common/EmptyState';
 import {MetadataType} from './types';
-import {ModalOpener} from '../../common/ModalLayer';
 import ModuleCard from './ModuleCard';
 import ModuleInsertionPoint from './ModuleInsertionPoint';
 import ModuleInsertionModal from './ModuleInsertionModal';

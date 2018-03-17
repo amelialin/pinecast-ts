@@ -1,8 +1,9 @@
 import * as React from 'react';
 
-import Label from '../../../common/Label';
+import Label from '@pinecast/common/Label';
+import TextInput from '@pinecast/common/TextInput';
+
 import {SchemaProps} from './types';
-import TextInput from '../../../common/TextInput';
 
 export default class SchemaText extends React.PureComponent {
   props: SchemaProps;

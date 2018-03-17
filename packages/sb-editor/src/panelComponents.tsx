@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-import ContextMenu from './common/ContextMenu';
-import {DEFAULT_FONT} from './common/constants';
+import ContextMenu from '@pinecast/common/ContextMenu';
+import {DEFAULT_FONT} from '@pinecast/common/constants';
 
 export const PanelWrapper = styled('section', {
   padding: 16,

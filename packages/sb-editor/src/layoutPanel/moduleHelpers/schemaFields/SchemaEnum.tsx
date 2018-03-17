@@ -1,8 +1,9 @@
 import * as React from 'react';
 
-import Label from '../../../common/Label';
+import Label from '@pinecast/common/Label';
+import Select from '@pinecast/common/Select';
+
 import {SchemaProps} from './types';
-import Select from '../../../common/Select';
 
 export default class SchemaEnum extends React.PureComponent {
   props: SchemaProps & {options: {[value: string]: string}};

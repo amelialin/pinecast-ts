@@ -6,7 +6,7 @@ import styled from '@pinecast/styles';
 
 import ButtonPresetList from './ButtonPresetList';
 import ButtonPreview from './ButtonPreview';
-import Card from '../../common/Card';
+import Card from '@pinecast/common/Card';
 import {changeColor} from '../../actions/theme';
 import ColorPicker from '../ColorPicker';
 import {PanelDescription, PanelWrapper} from '../../panelComponents';

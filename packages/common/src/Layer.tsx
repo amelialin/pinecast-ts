@@ -12,6 +12,9 @@ export default class Layer extends React.PureComponent {
   constructor(props) {
     super(props);
     const portal = document.createElement('div');
+    portal.style.position = 'absolute';
+    portal.style.left = '0';
+    portal.style.top = '0';
     this.portal = portal;
     document.body.appendChild(portal);
   }

@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
+import * as StickyHeader from '@pinecast/common/StickyHeader';
 import styled from '@pinecast/styles';
 
 import {changeThemePage} from '../actions/chrome';
@@ -12,7 +13,6 @@ import {PageSelector} from '../panelComponents';
 import PresetsPanel from './presetsPanel';
 import {ReducerType} from '../reducer';
 import SaveOptions from '../SaveOptions';
-import * as StickyHeader from '../common/StickyHeader';
 import TypographyPanel from './typographyPanel';
 
 const pageOptions = [

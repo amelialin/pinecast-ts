@@ -3,9 +3,9 @@ import * as React from 'react';
 import styled from '@pinecast/styles';
 
 import AsyncFontPreview from './AsyncFontPreview';
-import {DEFAULT_FONT} from '../../common/constants';
+import {DEFAULT_FONT} from '@pinecast/common/constants';
 import {fontKeyNames} from '../../constants';
-import Label from '../../common/Label';
+import Label from '@pinecast/common/Label';
 
 const Wrapper = styled(
   'button',

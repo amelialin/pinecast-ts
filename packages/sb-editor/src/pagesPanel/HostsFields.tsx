@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-import Button from '../common/Button';
+import Button from '@pinecast/common/Button';
 import HostEditor from './HostEditor';
 import {Host, HostsBody} from './types';
 

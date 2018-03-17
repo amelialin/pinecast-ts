@@ -5,7 +5,7 @@ import * as presets from '@pinecast/sb-presets';
 
 import {changeColor} from '../../actions/theme';
 import ColorPicker from '../ColorPicker';
-import HelpText from '../../common/HelpText';
+import HelpText from '@pinecast/common/HelpText';
 import {
   PanelDescription,
   PanelDivider,
@@ -14,7 +14,7 @@ import {
 import {ReducerType} from '../../reducer';
 import Swatch from './Swatch';
 import swatches from './swatches';
-import Tabs, {Tab} from '../../common/Tabs';
+import Tabs, {Tab} from '@pinecast/common/Tabs';
 
 function renderSwatch(
   slug: string,

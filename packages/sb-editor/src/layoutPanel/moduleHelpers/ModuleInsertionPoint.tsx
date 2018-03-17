@@ -1,15 +1,15 @@
 import * as React from 'react';
 
+import Button, {ButtonGroup} from '@pinecast/common/Button';
 import {componentsMetadata} from '@pinecast/sb-presets';
+import Dialog from '@pinecast/common/Dialog';
+import Label from '@pinecast/common/Label';
+import ModalLayer from '@pinecast/common/ModalLayer';
+import Select from '@pinecast/common/Select';
 import styled from '@pinecast/styles';
 
-import Button, {ButtonGroup} from '../../common/Button';
-import Dialog from '../../common/Dialog';
-import Label from '../../common/Label';
 import {MetadataType} from './types';
-import ModalLayer from '../../common/ModalLayer';
 import ModuleInsertionModal from './ModuleInsertionModal';
-import Select from '../../common/Select';
 
 const Wrapper = styled(
   'aside',

@@ -4,14 +4,14 @@ import * as React from 'react';
 import * as presets from '@pinecast/sb-presets';
 import styled from '@pinecast/styles';
 
-import Button from '../../common/Button';
+import Button from '@pinecast/common/Button';
 import {changeFont} from '../../actions/theme';
 import {FontHashType, PartialFontHashType} from '../../reducers/theme';
 import {fontKeyNames} from '../../constants';
 import FontPreset from './FontPreset';
 import FontSelect from './FontSelect';
-import HelpText from '../../common/HelpText';
-import Label from '../../common/Label';
+import HelpText from '@pinecast/common/HelpText';
+import Label from '@pinecast/common/Label';
 import pairings from './pairings';
 import {
   PanelDescription,
@@ -19,7 +19,7 @@ import {
   PanelWrapper,
 } from '../../panelComponents';
 import {ReducerType} from '../../reducer';
-import Tabs, {Tab} from '../../common/Tabs';
+import Tabs, {Tab} from '@pinecast/common/Tabs';
 
 const BottomMenu = styled('div', {
   borderTop: '1px solid #eee',

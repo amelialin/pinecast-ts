@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ReactMdeTypes} from 'react-mde';
 
-import LoadingState from '../common/LoadingState';
+import LoadingState from '@pinecast/common/LoadingState';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
 

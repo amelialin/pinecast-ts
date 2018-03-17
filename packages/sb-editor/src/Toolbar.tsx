@@ -4,8 +4,8 @@ import * as React from 'react';
 import styled from '@pinecast/styles';
 
 import {changeChromePage} from './actions/chrome';
-import {DEFAULT_FONT} from './common/constants';
-import {Pinecast} from './common/icons';
+import {DEFAULT_FONT} from '@pinecast/common/constants';
+import {Pinecast} from '@pinecast/common/icons';
 import {ReducerType} from './reducer';
 import ReportProblem from './ReportProblem';
 

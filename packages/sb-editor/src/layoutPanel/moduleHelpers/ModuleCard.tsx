@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import {primitives} from '@pinecast/sb-components';
+import Button from '@pinecast/common/Button';
 import {componentsMetadata} from '@pinecast/sb-presets';
+import {Delete, Down, Up} from '@pinecast/common/icons';
+import {primitives} from '@pinecast/sb-components';
 import styled, {CSS} from '@pinecast/styles';
 
-import Button from '../../common/Button';
-import {Delete, Down, Up} from '../../common/icons';
 import {MetadataType} from './types';
 import ModuleOptions from './ModuleOptions';
 

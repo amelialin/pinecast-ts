@@ -1,12 +1,12 @@
 import * as React from 'react';
 
+import Button from '@pinecast/common/Button';
+import ContextMenu from '@pinecast/common/ContextMenu';
+import IconButton from '@pinecast/common/IconButton';
+import DeleteIcon from '@pinecast/common/icons/Delete';
+import Label from '@pinecast/common/Label';
 import styled from '@pinecast/styles';
 
-import Button from '../../../common/Button';
-import ContextMenu from '../../../common/ContextMenu';
-import IconButton from '../../../common/IconButton';
-import DeleteIcon from '../../../common/icons/Delete';
-import Label from '../../../common/Label';
 import {SchemaProps} from './types';
 
 const ELEMENT_HEIGHT = 32;

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-import Label from '../../common/Label';
+import Label from '@pinecast/common/Label';
 
 const Wrapper = styled('div');
 

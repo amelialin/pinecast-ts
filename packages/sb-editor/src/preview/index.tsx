@@ -9,7 +9,7 @@ import {fetcher} from '../data/dataAPI';
 import FullScreenWrapper from './FullScreenWrapper';
 import PreviewToolbar, {FrameType, OrientationType} from './PreviewToolbar';
 import {ReducerType} from '../reducer';
-import {DEFAULT_FONT} from '../common/constants';
+import {DEFAULT_FONT} from '@pinecast/common/constants';
 
 const UTIL_PAGE_HEAD = `
 <head>

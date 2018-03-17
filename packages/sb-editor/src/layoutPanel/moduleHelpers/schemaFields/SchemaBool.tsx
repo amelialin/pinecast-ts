@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import Checkbox from '../../../common/Checkbox';
-import Label from '../../../common/Label';
+import Checkbox from '@pinecast/common/Checkbox';
+import Label from '@pinecast/common/Label';
+
 import {SchemaProps} from './types';
 
 export default class SchemaBool extends React.PureComponent {

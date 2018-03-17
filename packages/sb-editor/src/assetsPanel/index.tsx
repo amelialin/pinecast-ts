@@ -1,15 +1,15 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
+import ErrorState from '@pinecast/common/ErrorState';
+import ImageSettingsUpdate from './ImageSettingsUpdate';
+import ImageUpload from '@pinecast/common/ImageUpload';
+import LoadingState from '@pinecast/common/LoadingState';
+import ProBadge from '@pinecast/common/ProBadge';
+import ProGuard from '@pinecast/common/ProGuard';
 import styled from '@pinecast/styles';
 
-import ErrorState from '../common/ErrorState';
-import ImageSettingsUpdate from './ImageSettingsUpdate';
-import ImageUpload from '../common/ImageUpload';
-import LoadingState from '../common/LoadingState';
 import {PageHeading, PanelDescription, PanelWrapper} from '../panelComponents';
-import ProBadge from '../common/ProBadge';
-import ProGuard from '../common/ProGuard';
 import {ReducerType} from '../reducer';
 import {refresh} from '../actions/preview';
 import request, {clearCache} from '../data/requests';

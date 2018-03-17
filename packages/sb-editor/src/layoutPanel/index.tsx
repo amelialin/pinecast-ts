@@ -6,7 +6,7 @@ import ModulesPanel from './modulesPanel';
 import {PageSelector} from '../panelComponents';
 import {ReducerType} from '../reducer';
 import SaveOptions from '../SaveOptions';
-import * as StickyHeader from '../common/StickyHeader';
+import * as StickyHeader from '@pinecast/common/StickyHeader';
 
 const pageOptions = [
   {value: 'modules', name: 'Modules'},

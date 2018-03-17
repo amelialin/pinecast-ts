@@ -1,14 +1,15 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
-import Button, {ButtonGroup} from '../common/Button';
-import Dialog from '../common/Dialog';
-import Label from '../common/Label';
+import Button, {ButtonGroup} from '@pinecast/common/Button';
+import Dialog from '@pinecast/common/Dialog';
+import Label from '@pinecast/common/Label';
+import SlugInput, {Status as SlugStatus} from '@pinecast/common/SlugInput';
+import TextInput from '@pinecast/common/TextInput';
+import xhr from '@pinecast/xhr';
+
 import {Page} from './types';
 import {ReducerType} from '../reducer';
-import SlugInput, {Status as SlugStatus} from '../common/SlugInput';
-import TextInput from '../common/TextInput';
-import xhr from '../data/xhr';
 
 class PageEditorModal extends React.PureComponent {
   props: {

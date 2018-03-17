@@ -6,7 +6,7 @@ import {SketchPicker} from 'react-color';
 import styled from '@pinecast/styles';
 
 import {colorKeyNames} from '../constants';
-import {DEFAULT_FONT} from '../common/constants';
+import {DEFAULT_FONT} from '@pinecast/common/constants';
 
 const Wrapper = styled('div', {
   alignItems: 'center',

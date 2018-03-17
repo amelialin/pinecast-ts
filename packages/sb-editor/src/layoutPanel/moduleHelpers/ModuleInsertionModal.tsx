@@ -1,13 +1,13 @@
 import * as React from 'react';
 
+import Button, {ButtonGroup} from '@pinecast/common/Button';
 import {componentsMetadata} from '@pinecast/sb-presets';
+import Dialog from '@pinecast/common/Dialog';
+import Label from '@pinecast/common/Label';
+import Select from '@pinecast/common/Select';
 import styled from '@pinecast/styles';
 
-import Button, {ButtonGroup} from '../../common/Button';
-import Dialog from '../../common/Dialog';
-import Label from '../../common/Label';
 import {MetadataType} from './types';
-import Select from '../../common/Select';
 
 export default class ModuleInsertionModal extends React.Component {
   props: {

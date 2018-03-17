@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import Button from '../common/Button';
-import Form from '../common/Form';
-import Label from '../common/Label';
-import TextInput from '../common/TextInput';
+import Button from '@pinecast/common/Button';
+import Form from '@pinecast/common/Form';
+import Label from '@pinecast/common/Label';
+import TextInput from '@pinecast/common/TextInput';
 
 export default class NewLinkForm extends React.PureComponent {
   props: {

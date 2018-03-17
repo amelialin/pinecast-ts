@@ -1,15 +1,19 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
+import Button from '@pinecast/common/Button';
+import Checkbox from '@pinecast/common/Checkbox';
+import ErrorState from '@pinecast/common/ErrorState';
+import Form from '@pinecast/common/Form';
+import Label from '@pinecast/common/Label';
+import Link from '@pinecast/common/Link';
+import LoadingState from '@pinecast/common/LoadingState';
 import styled from '@pinecast/styles';
+import Tabs, {Tab} from '@pinecast/common/Tabs';
+import TextInput from '@pinecast/common/TextInput';
+import {TextPill} from '@pinecast/common/Text';
+import xhr from '@pinecast/xhr';
 
-import Button from '../common/Button';
-import Checkbox from '../common/Checkbox';
-import ErrorState from '../common/ErrorState';
-import Form from '../common/Form';
-import Label from '../common/Label';
-import Link from '../common/Link';
-import LoadingState from '../common/LoadingState';
 import {
   PageHeading,
   PanelDescription,
@@ -19,10 +23,6 @@ import {
 import {ReducerType} from '../reducer';
 import {refresh} from '../actions/preview';
 import request, {clearCache} from '../data/requests';
-import Tabs, {Tab} from '../common/Tabs';
-import TextInput from '../common/TextInput';
-import {TextPill} from '../common/Text';
-import xhr from '../data/xhr';
 
 const HeaderWrapper = styled('div', {
   alignItems: 'center',
