@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 const TextAreaInput = styled('textarea', {
   appearance: 'none',
@@ -25,8 +25,14 @@ const TextAreaInput = styled('textarea', {
 
 export default class TextArea extends React.PureComponent {
   props: {
+    disabled?: boolean;
+    maxLength?: number;
+    minlength?: number;
     onChange: (value: string) => void;
+    placeholder?: string;
+    required?: boolean;
     style?: React.CSSProperties;
+    tabIndex?: number;
     value: string;
   };
 

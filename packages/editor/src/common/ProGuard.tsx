@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 const Guard = styled('div', {
   opacity: 0.25,

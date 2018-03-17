@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 import Button, {ButtonGroup} from '../common/Button';
 import {changePath, refresh} from '../actions/preview';

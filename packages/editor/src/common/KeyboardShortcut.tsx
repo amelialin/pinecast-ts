@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 export interface ShortcutKey {
   letter: string;
@@ -32,7 +32,7 @@ function renderOption() {
 
 const KeyboardShortcut = ({
   style,
-  ...shortcut,
+  ...shortcut
 }: ShortcutKey & {style?: React.CSSProperties}) => {
   if (isMobile) {
     return <span />;

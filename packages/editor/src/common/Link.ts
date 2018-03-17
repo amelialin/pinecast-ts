@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 const Link = styled('a', {
   color: '#4e7287',

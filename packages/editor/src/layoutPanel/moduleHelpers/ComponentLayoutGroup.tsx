@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import {componentsMetadata} from '@pinecast/sb-presets';
 import {primitives} from '@pinecast/sb-components';
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 import EmptyState from '../../common/EmptyState';
 import {MetadataType} from './types';

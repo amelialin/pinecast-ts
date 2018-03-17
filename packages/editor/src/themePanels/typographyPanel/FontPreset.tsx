@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 import AsyncFontPreview from './AsyncFontPreview';
 import {DEFAULT_FONT} from '../../common/constants';

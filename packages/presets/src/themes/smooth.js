@@ -117,9 +117,7 @@ export default {
             alignX: 'left',
           },
         },
-        style: {
-          textAlign: 'left',
-        },
+        textAlign: 'left',
       }),
       headerPageLinkList({
         fixed: true,

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import ReactList from 'react-list';
 
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 const OuterWrapper = styled('div', {
   position: 'relative',

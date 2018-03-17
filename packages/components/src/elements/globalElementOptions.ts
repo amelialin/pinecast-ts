@@ -1,4 +1,4 @@
-import {CSS} from '@pinecast/sb-styles';
+import {CSS} from '@pinecast/styles';
 
 export type PositionObject = {
   bottom?: number;

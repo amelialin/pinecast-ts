@@ -2,10 +2,10 @@ import * as React from 'react';
 
 import Label from '../../../common/Label';
 import {SchemaProps} from './types';
-import Select from '../../../common/Select';
+import TextArea from '../../../common/TextArea';
 
-export default class SchemaEnum extends React.PureComponent {
-  props: SchemaProps & {options: {[value: string]: string}};
+export default class SchemaText extends React.PureComponent {
+  props: SchemaProps;
 
   handleChange = (newValue: string) => {
     this.props.onChange(this.props.field, newValue);
@@ -13,10 +13,8 @@ export default class SchemaEnum extends React.PureComponent {
   render() {
     return (
       <Label text={this.props.name}>
-        <Select
+        <TextArea
           onChange={this.handleChange}
-          options={this.props.options}
-          style={{display: 'inline-flex'}}
           tabIndex={this.props.open ? 0 : -1}
           value={this.props.value}
         />

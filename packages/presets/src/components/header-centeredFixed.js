@@ -1,61 +1,71 @@
-export default data => ({
-  type: 'abstract',
-  template: {
-    elements: [
-      {
-        type: 'layout.fixedWrapper',
-        elementOptions: {
-          maxWidth: 'var(--fixedWidthMax)',
-          ...data.elementOptions,
-        },
-        children: [
-          {
-            type: 'block.link',
-            elementOptions: {underlineOnHover: true},
-            props: {
-              href: {name: 'home'},
-            },
-            extendsStyles: ['textStyles', 'logo'],
-            styles: {},
+export default data => {
+  const {
+    elementOptions: {imageElementOptions, imageStyles, ...elementOptions} = {},
+    showSubtitle,
+    style,
+    textAlign,
+  } = data;
 
-            children: [
-              {
-                type: 'block.logo',
-                elementOptions: {
-                  imageElementOptions: {
-                    alignX: 'center',
-                    ...(data.elementOptions || {}).imageElementOptions,
-                  },
-                  imageStyles: {
-                    ...(data.elementOptions || {}).imageStyles,
+  return {
+    type: 'abstract',
+    template: {
+      elements: [
+        {
+          type: 'layout.fixedWrapper',
+          elementOptions: {
+            maxWidth: 'var(--fixedWidthMax)',
+            ...elementOptions,
+          },
+          children: [
+            {
+              type: 'block.link',
+              elementOptions: {underlineOnHover: true},
+              props: {
+                href: {name: 'home'},
+              },
+              extendsStyles: ['textStyles', 'logo'],
+              styles: {},
+
+              children: [
+                {
+                  type: 'block.logo',
+                  elementOptions: {
+                    imageElementOptions: {
+                      alignX: 'center',
+                      ...imageElementOptions,
+                    },
+                    imageStyles: {
+                      ...imageStyles,
+                    },
                   },
                 },
-              },
-            ],
-          },
-          data.showSubtitle && {
-            type: 'block.text',
-            textContent: ['podcast', 'subtitle'],
-            extendsStyles: ['textStyles', 'subtitle'],
-            styles: {
-              marginTop: 25,
+              ],
             },
+            showSubtitle && {
+              type: 'block.text',
+              textContent: ['podcast', 'subtitle'],
+              extendsStyles: ['textStyles', 'subtitle'],
+              styles: {
+                marginTop: 24,
+              },
+            },
+          ],
+          styles: {
+            textAlign: textAlign || 'center',
+
+            ...style,
           },
-        ],
-        styles: {
-          textAlign: 'center',
-
-          ...data.style,
         },
-      },
-    ],
-    tagName: 'header',
-  },
+      ],
+      tagName: 'header',
+    },
 
-  tag: 'header.centeredFixed',
-  tagOptions: {
-    elementOptions: {},
-    showSubtitle: false,
-    ...data,
-  },
-});
+    tag: 'header.centeredFixed',
+    tagOptions: {
+      elementOptions: {},
+      showSubtitle: false,
+      textAlign: 'center',
+      ...data,
+    },
+  };
+};

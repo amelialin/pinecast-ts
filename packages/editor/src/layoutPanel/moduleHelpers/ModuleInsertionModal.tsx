@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {componentsMetadata} from '@pinecast/sb-presets';
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 import Button, {ButtonGroup} from '../../common/Button';
 import Dialog from '../../common/Dialog';

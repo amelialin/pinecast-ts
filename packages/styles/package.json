@@ -1,5 +1,5 @@
 {
-  "name": "@pinecast/sb-styles",
+  "name": "@pinecast/styles",
   "version": "1.0.0",
   "main": "src/",
   "ts:main": "src/index.ts",

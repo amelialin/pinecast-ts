@@ -4,7 +4,7 @@
   "main": "src/",
   "ts:main": "src/index.ts",
   "dependencies": {
-    "@pinecast/sb-styles": "^1.0.0",
+    "@pinecast/styles": "^1.0.0",
     "@pinecast/sb-presets": "^1.0.0",
     "markdown-it": "^8.2.1",
     "md5": "^2.2.1",

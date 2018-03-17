@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types';
 
-import {CSS} from '@pinecast/sb-styles';
+import {CSS} from '@pinecast/styles';
 
 import * as primitives from './primitives';
 

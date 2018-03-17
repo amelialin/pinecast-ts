@@ -2,7 +2,7 @@ import {Provider as ReduxProvider} from 'react-redux';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
-import {ClientStyletron, StyletronProvider, styled} from '@pinecast/sb-styles';
+import {ClientStyletron, StyletronProvider, styled} from '@pinecast/styles';
 
 import OptionsPanel from './OptionsPanel';
 import Preview from './preview';

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 import Layer, {ClosableLayer} from './Layer';
 

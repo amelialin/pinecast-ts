@@ -11,7 +11,7 @@
   "dependencies": {
     "@pinecast/sb-components": "^1.0.0",
     "@pinecast/sb-presets": "^1.0.0",
-    "@pinecast/sb-styles": "^1.0.0",
+    "@pinecast/styles": "^1.0.0",
     "@types/koa": "^2.0.44",
     "@types/koa-router": "^7.0.27",
     "babel-loader": "^7.1.4",

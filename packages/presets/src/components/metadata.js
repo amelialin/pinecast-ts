@@ -56,6 +56,15 @@ export default {
         name: 'Show subtitle?',
         type: 'bool',
       },
+      textAlign: {
+        name: 'Text alignment',
+        type: 'enum',
+        options: [
+          {name: 'Left', value: 'left'},
+          {name: 'Center', value: 'center'},
+          {name: 'Right', value: 'right'},
+        ],
+      },
     },
   },
 

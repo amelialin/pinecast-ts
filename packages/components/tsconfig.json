@@ -20,7 +20,7 @@
             "@pinecast/sb-presets": ["../presets/src/index.js"],
             "@pinecast/sb-renderer": ["../renderer/src/index.ts"],
             "@pinecast/sb-resources": ["../resources/src/index.ts"],
-            "@pinecast/sb-styles": ["../styles/src/index.ts"]
+            "@pinecast/styles": ["../styles/src/index.ts"]
         },
         "target": "es6",
         "jsx": "react"

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Tooltip from 'rc-tooltip';
 
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 import {colorKeyNames} from '../../constants';
 

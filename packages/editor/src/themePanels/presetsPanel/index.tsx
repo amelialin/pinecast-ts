@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import * as React from 'react';
 
 import * as presets from '@pinecast/sb-presets';
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 import {changePreset} from '../../actions/theme';
 import {PanelDescription, PanelWrapper} from '../../panelComponents';

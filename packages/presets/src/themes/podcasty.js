@@ -38,6 +38,11 @@ export default {
       fontFamily: 'logo',
       fontSize: 36,
     },
+    subtitle: {
+      color: 'foreground',
+      fontFamily: 'headings',
+      fontSize: 28,
+    },
     pageHeading: {
       fontSize: 36,
       fontWeight: 'bold',
@@ -101,9 +106,7 @@ export default {
           lineHeight: '60px',
           outerPadding: '0 15px',
         },
-        style: {
-          textAlign: 'left',
-        },
+        textAlign: 'left',
       }),
     ],
     footer: [

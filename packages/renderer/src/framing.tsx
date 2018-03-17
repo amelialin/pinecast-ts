@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/server';
 
 import {ComponentContext} from '@pinecast/sb-components';
-import {ServerStyletron, StyletronProvider} from '@pinecast/sb-styles';
+import {ServerStyletron, StyletronProvider} from '@pinecast/styles';
 
 import {Context} from 'koa';
 import editorIntegration from './editorIntegration';
@@ -92,10 +92,9 @@ export default async function frame(
           *, *:before, *:after {box-sizing: border-box;}
           html, body {color: ${escapeHTML(
             context.colors.text,
-          )}; font-family: ${escapeHTML(context.fonts.body)}; ${context.options
-    .rootFlexibleHeight
-    ? ''
-    : 'height: 100%;'}font-size: ${escapeHTML(
+          )}; font-family: ${escapeHTML(context.fonts.body)}; ${
+    context.options.rootFlexibleHeight ? '' : 'height: 100%;'
+  }font-size: ${escapeHTML(
     ((context.styling && context.styling.page) || {}).fontSize,
   )}px;margin: 0; padding: 0}
           a {color: ${escapeHTML(context.colors.links)}}
@@ -105,11 +104,13 @@ export default async function frame(
           (siteData.features.favicon && siteData.site.favicon_url) ||
             DEFAULT_FAVICON,
         )}">
-        ${siteData.site.itunes_banner
-          ? `<meta name="apple-itunes-app" content="app-id=${escapeHTML(
-              siteData.site.itunes_banner,
-            )}">`
-          : ''}
+        ${
+          siteData.site.itunes_banner
+            ? `<meta name="apple-itunes-app" content="app-id=${escapeHTML(
+                siteData.site.itunes_banner,
+              )}">`
+            : ''
+        }
         <link rel="alternate" type="application/rss+xml" title="Podcast Feed" href="https://pinecast.com/feed/${escapeHTML(
           encodeURIComponent(siteData.podcast.slug),
         )}">

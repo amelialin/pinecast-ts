@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled, {CSS} from '@pinecast/sb-styles';
+import styled, {CSS} from '@pinecast/styles';
 
 import Button from '../Button';
 import Card from '../Card';

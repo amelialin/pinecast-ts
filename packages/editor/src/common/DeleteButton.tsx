@@ -1,4 +1,4 @@
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 const DeleteButton = styled(
   'button',

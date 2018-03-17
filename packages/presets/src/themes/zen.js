@@ -1,7 +1,7 @@
 import baseTheme from './_base';
 import episodePageLayout from '../wrappers/episodePageLayout';
 import gridItem from '../itemLayouts/grid/minimalGridItem';
-import headerCentered from '../components/header-centeredFixed';
+import headerC from '../components/header-centeredFixed';
 import linksLinkBar from '../components/links-linkBar';
 import pagesTemplate from '../wrappers/pagesTemplate';
 import paginationForwardBack from '../components/pagination-forwardBack-fixed';
@@ -60,7 +60,7 @@ export default {
 
   layout: {
     header: [
-      headerCentered({
+      header({
         content: 'text',
         elementOptions: {
           bgColor: 'accent',

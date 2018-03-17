@@ -1,4 +1,4 @@
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 export const TextPill = styled('span', {
   background: '#fff',

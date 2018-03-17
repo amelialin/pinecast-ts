@@ -113,8 +113,8 @@ export default {
         },
         style: {
           marginBottom: 50,
-          textAlign: 'left',
         },
+        textAlign: 'left',
       }),
     ],
     footer: [

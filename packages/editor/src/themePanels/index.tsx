@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 import {changeThemePage} from '../actions/chrome';
 import ColorsPanel from './colorsPanel';

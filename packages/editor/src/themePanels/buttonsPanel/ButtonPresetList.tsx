@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import * as presets from '@pinecast/sb-presets';
 import {primitives} from '@pinecast/sb-components';
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 import {ReducerType} from '../../reducer';
 import buttonPresets from './buttonPresets';

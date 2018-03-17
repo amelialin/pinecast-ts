@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import {primitives} from '@pinecast/sb-components';
 import {componentsMetadata} from '@pinecast/sb-presets';
-import styled, {CSS} from '@pinecast/sb-styles';
+import styled, {CSS} from '@pinecast/styles';
 
 import Button from '../../common/Button';
 import {Delete, Down, Up} from '../../common/icons';

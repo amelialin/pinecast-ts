@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 import Button, {ButtonGroup} from '../../common/Button';
 import Collapser from '../../common/Collapser';
@@ -62,6 +62,9 @@ export default class ModuleOptions extends React.PureComponent {
         break;
       case 'enum':
         Component = SchemaFields.SchemaEnum;
+        break;
+      case 'longText':
+        Component = SchemaFields.SchemaLongText;
         break;
       case 'orderedSet':
         Component = SchemaFields.SchemaOrderedSet;

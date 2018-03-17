@@ -1,7 +1,7 @@
 import * as md5 from 'md5';
 import * as React from 'react';
 
-import {CSS} from '@pinecast/sb-styles';
+import {CSS} from '@pinecast/styles';
 
 import atom from './atom';
 import {Element} from '../primitives';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/sb-styles';
+import styled from '@pinecast/styles';
 
 const Form_ = styled(
   'form',
@@ -14,7 +14,7 @@ const Form_ = styled(
 const Form = ({
   children,
   onSubmit,
-  ...rest,
+  ...rest
 }: {
   children: JSX.Element | string | Array<JSX.Element | Array<JSX.Element>>;
   onSubmit: () => void;
