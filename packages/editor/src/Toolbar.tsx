@@ -5,6 +5,7 @@ import styled from '@pinecast/sb-styles';
 
 import {changeChromePage} from './actions/chrome';
 import {DEFAULT_FONT} from './common/constants';
+import {Pinecast} from './common/icons';
 import {ReducerType} from './reducer';
 import ReportProblem from './ReportProblem';
 
@@ -21,7 +22,7 @@ const ToolbarOption = styled(
   ({'aria-selected': isSelected}: {'aria-selected': boolean}) => ({
     background: 'transparent',
     border: 0,
-    color: isSelected ? '#8d52d1' : '#444',
+    color: isSelected ? '#8d52d1' : '#616669',
     cursor: isSelected ? null : 'pointer',
     display: 'inline-block',
     fontFamily: DEFAULT_FONT,
@@ -82,6 +83,7 @@ const ConnectedToolbarButton = connect(
 
 const Toolbar = () => (
   <Toolbar_>
+    <Pinecast color="#616669" height={20} style={{marginRight: 12}} />
     <ConnectedToolbarButton id="theme">Theme</ConnectedToolbarButton>
     <ConnectedToolbarButton id="layout">Layout</ConnectedToolbarButton>
     <ConnectedToolbarButton id="links">Links</ConnectedToolbarButton>

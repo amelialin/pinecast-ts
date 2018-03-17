@@ -172,7 +172,7 @@ export class PageSelector extends React.PureComponent {
           options={options.map(x => ({name: x.name, slug: x.value}))}
           toSelect={selected}
           x={12}
-          y={88}
+          y={100}
         />
       </PageSelectorWrapper>
     );

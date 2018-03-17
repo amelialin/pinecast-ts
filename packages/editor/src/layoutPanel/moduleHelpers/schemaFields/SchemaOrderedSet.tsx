@@ -12,6 +12,10 @@ import {SchemaProps} from './types';
 const ELEMENT_HEIGHT = 32;
 const BUFFER_SIZE = ELEMENT_HEIGHT / 2;
 
+const labelStyle = {
+  marginBottom: 16,
+};
+
 function getContainerHeight(count: number, isDragging: boolean): number {
   return (
     // Element heights
@@ -25,14 +29,17 @@ function getContainerHeight(count: number, isDragging: boolean): number {
   );
 }
 
-const Container = styled(
+const OuterContainer = styled('div', {
+  marginBottom: 16,
+});
+const ElementWrapper = styled(
   'div',
   ({$count, $dragging}: {$count: number; $dragging: boolean}) => ({
     background: '#eeefea',
     border: '1px solid #dee1df',
     borderRadius: 3,
     height: getContainerHeight($count, $dragging),
-    marginBottom: 16,
+    marginBottom: 4,
     padding: 3, // +1 for border width
     position: 'relative',
     transition: 'height 0.2s',
@@ -277,7 +284,7 @@ export default class SchemaOrderedSet extends React.PureComponent {
     return (
       <div style={{display: 'flex', justifyContent: 'flex-end'}}>
         <Button size="small" onClick={this.handleOpenMenu}>
-          Add
+          Add an item
         </Button>
         <ContextMenu
           onClose={this.handleCloseMenu}
@@ -298,11 +305,11 @@ export default class SchemaOrderedSet extends React.PureComponent {
     const {name, value = []} = this.props;
     const {overBuffer} = this.state;
     return (
-      <Label componentType="div" text={name}>
-        <Container $count={value.length} $dragging={overBuffer !== null}>
+      <Label componentType="div" style={labelStyle} text={name}>
+        <ElementWrapper $count={value.length} $dragging={overBuffer !== null}>
           {value.map((element, i) => this.renderElement(element, i))}
           <Buffer $open={overBuffer === value.length} />
-        </Container>
+        </ElementWrapper>
         {this.renderFooter()}
       </Label>
     );

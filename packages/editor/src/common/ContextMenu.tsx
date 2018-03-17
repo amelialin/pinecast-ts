@@ -5,28 +5,42 @@ import styled from '@pinecast/sb-styles';
 import {ClosableLayer} from './Layer';
 import {DEFAULT_FONT} from './constants';
 
+const SIZE_BUFFER = 32;
+
+const wrapperStyle = {
+  display: 'inline-flex',
+};
+
 const MenuWrapper = styled(
   'menu',
   ({
     'aria-hidden': ariaHidden,
+    $alignX,
+    $alignY,
     $x,
     $y,
   }: {
     'aria-hidden': boolean;
+    $alignX: 'leftEdge' | 'rightEdge';
+    $alignY: 'topEdge' | 'bottomEdge';
     $x: number;
     $y: number;
   }) => ({
+    bottom: $alignY === 'bottomEdge' ? `calc(100% - ${$y}px)` : undefined,
+    left: $alignX === 'leftEdge' ? $x : undefined,
+    right: $alignX === 'rightEdge' ? `calc(100% - ${$x}px)` : undefined,
+    top: $alignY === 'topEdge' ? $y : undefined,
+
     background: '#fff',
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.125)',
     display: 'flex',
     flexDirection: 'column',
-    left: $x,
+    margin: 0,
     minWidth: 200,
     opacity: ariaHidden ? 0 : 1,
     padding: '4px 0',
     pointerEvents: ariaHidden ? 'none' : null,
     position: 'absolute',
-    top: $y,
     transform: ariaHidden ? 'scale(0.9)' : 'scale(1)',
     transformOrigin: '20% top',
     transition: 'opacity 0.2s, transform 0.2s',
@@ -56,7 +70,7 @@ export type MenuOption = {
   slug: string;
 };
 
-export default class ContextMenu extends React.Component {
+export default class ContextMenu extends React.PureComponent {
   props: {
     options: Array<MenuOption>;
     open: boolean;
@@ -66,7 +80,13 @@ export default class ContextMenu extends React.Component {
     x: number;
     y: number;
   };
-  state: {selectionIndex: number} = {selectionIndex: 0};
+  state: {
+    alignX: 'leftEdge' | 'rightEdge';
+    alignY: 'topEdge' | 'bottomEdge';
+    selectionIndex: number;
+  } = {alignX: 'leftEdge', alignY: 'topEdge', selectionIndex: 0};
+
+  wrapper: HTMLElement | null = null;
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
@@ -85,8 +105,16 @@ export default class ContextMenu extends React.Component {
       this.setState({
         selectionIndex: found === -1 ? 0 : found,
       });
+      this.reposition();
     }
   }
+
+  handleRef = (el: HTMLElement | null) => {
+    this.wrapper = el;
+    if (el) {
+      this.reposition();
+    }
+  };
 
   handleKeyDown = (e: KeyboardEvent) => {
     if (!this.props.open) {
@@ -114,7 +142,7 @@ export default class ContextMenu extends React.Component {
     } else if (e.keyCode === 13) {
       // enter
       this.props.onSelect(this.props.options[this.state.selectionIndex].slug);
-      this.setState({open: false});
+      this.props.onClose();
     }
   };
 
@@ -125,25 +153,24 @@ export default class ContextMenu extends React.Component {
     this.props.onClose();
   };
 
-  // startEl: HTMLDivElement | null = null;
-  // endEl: HTMLDivElement | null = null;
+  reposition() {
+    if (!this.wrapper) {
+      return;
+    }
+    const {clientHeight: height, clientWidth: width} = this.wrapper;
+    const {x, y} = this.props;
 
-  // handleStartRef = (el: HTMLDivElement | null) => {
-  //   this.startEl = el;
-  // };
-  // handleEndRef = (el: HTMLDivElement | null) => {
-  //   this.endEl = el;
-  // };
-  // handleStartFocus = () => {
-  //   if (this.endEl && this.endEl.previousSibling) {
-  //     (this.endEl.previousSibling as HTMLElement).focus();
-  //   }
-  // };
-  // handleEndFocus = () => {
-  //   if (this.startEl && this.startEl.previousSibling) {
-  //     (this.startEl.nextSibling as HTMLElement).focus();
-  //   }
-  // };
+    this.setState({
+      alignX:
+        x + width >= document.body.clientWidth - SIZE_BUFFER
+          ? 'rightEdge'
+          : 'leftEdge',
+      alignY:
+        y + height >= document.body.clientHeight - SIZE_BUFFER
+          ? 'bottomEdge'
+          : 'topEdge',
+    });
+  }
 
   renderOption = ({name, slug}: MenuOption, i: number) => {
     return (
@@ -167,13 +194,20 @@ export default class ContextMenu extends React.Component {
 
   render() {
     const {onClose, open, options, x, y} = this.props;
+    const {alignX, alignY} = this.state;
     return (
       <ClosableLayer onClose={onClose}>
-        <MenuWrapper aria-hidden={!open} $x={x} $y={y}>
-          {/*<div onFocus={this.handleStartFocus} ref={this.handleStartRef} />*/}
-          {options.map(this.renderOption)}
-          {/*<div onFocus={this.handleEndFocus} ref={this.handleEndRef} />*/}
-        </MenuWrapper>
+        <div ref={this.handleRef} style={wrapperStyle}>
+          <MenuWrapper
+            aria-hidden={!open}
+            $alignX={alignX}
+            $alignY={alignY}
+            $x={x}
+            $y={y}
+          >
+            {options.map(this.renderOption)}
+          </MenuWrapper>
+        </div>
       </ClosableLayer>
     );
   }
