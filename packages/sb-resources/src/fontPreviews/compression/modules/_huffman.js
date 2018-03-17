@@ -49,7 +49,9 @@ exports.Tree = class Tree {
   encode(symbols) {
     for (const sym of symbols) {
       if (!this.symbolCache.hasOwnProperty(sym)) {
-        throw new TypeError(`Not all symbols are registered in Huffman tree. Missing '${sym}', type ${typeof sym}`);
+        throw new TypeError(
+          `Not all symbols are registered in Huffman tree. Missing '${sym}', type ${typeof sym}`,
+        );
       }
     }
     let bits = 0;
@@ -89,7 +91,10 @@ exports.TreeNode = class TreeNode {
 exports.HuffmanArray = class HuffmanArray {
   constructor(tree, dataOrByteLength) {
     this.tree = tree;
-    this.data = typeof dataOrByteLength === 'number' ? new Uint8Array(dataOrByteLength) : dataOrByteLength;
+    this.data =
+      typeof dataOrByteLength === 'number'
+        ? new Uint8Array(dataOrByteLength)
+        : dataOrByteLength;
   }
 
   get byteLength() {

@@ -1,7 +1,11 @@
 const base85 = require('base85');
 const parseSVG = require('parse-svg-path');
 
-const {buildTree, HuffmanArray, Tree: HuffmanTree} = require('./_huffmanComposite');
+const {
+  buildTree,
+  HuffmanArray,
+  Tree: HuffmanTree,
+} = require('./_huffmanComposite');
 const {lengths} = require('./_svg');
 const {getBase, pack, unpack} = require('./_packCodes');
 
@@ -70,17 +74,15 @@ exports.encode = function encode(pathMap) {
 
   const rawHuffmanTrees = Object.entries(codeFrequencies)
     .filter(([, frequencies]) => Object.keys(frequencies).length)
-    .map(([code, frequencies]) => [code, buildTree(frequencies)])
-  const rawHuffmanTreeMap = rawHuffmanTrees
-    .reduce((acc, [code, tree]) => {
-      acc[code] = tree;
-      return acc;
-    }, {});
-  const huffmanTrees = rawHuffmanTrees
-    .reduce((acc, [code, tree]) => {
-      acc[code] = new HuffmanTree(tree);
-      return acc;
-    }, {});
+    .map(([code, frequencies]) => [code, buildTree(frequencies)]);
+  const rawHuffmanTreeMap = rawHuffmanTrees.reduce((acc, [code, tree]) => {
+    acc[code] = tree;
+    return acc;
+  }, {});
+  const huffmanTrees = rawHuffmanTrees.reduce((acc, [code, tree]) => {
+    acc[code] = new HuffmanTree(tree);
+    return acc;
+  }, {});
 
   function encode(parsed) {
     const codemapBuffer = pack(parsed.map(x => x[0]), usedCodes);
@@ -120,7 +122,7 @@ exports.encode = function encode(pathMap) {
     return base85.encode(new Buffer(merged.buffer), 'ascii85');
   }
 
-  console.log(usedCodes)
+  console.log(usedCodes);
 
   return parsedArr.reduce(
     (acc, [k, parsed]) => {
@@ -164,4 +166,4 @@ function decode(encodedPath, {usedCodes, tree}) {
       return code + args.join(' ');
     })
     .join('');
-};
+}

@@ -11,7 +11,8 @@ function getBase(numUsedCodes) {
 }
 exports.getBase = getBase;
 
-exports.pack = function pack(elements, useCodes = codes) { // elements should be an array of chars
+exports.pack = function pack(elements, useCodes = codes) {
+  // elements should be an array of chars
   const n = getBase(useCodes.length);
   const arr = new UintNArray(n, elements.length);
   elements.forEach((code, i) => {

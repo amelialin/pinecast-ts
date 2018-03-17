@@ -1,12 +1,10 @@
-export default (
-  {
-    imageHeight = 250,
-    maxLinesOfSummary = 10,
-    ordering = ['date', 'title', 'subtitle', 'image'],
-    style,
-    textStyleType = 'item',
-  } = {},
-) => {
+export default ({
+  imageHeight = 250,
+  maxLinesOfSummary = 10,
+  ordering = ['date', 'title', 'subtitle', 'image'],
+  style,
+  textStyleType = 'item',
+} = {}) => {
   const results = {
     date: {
       type: 'block.text',

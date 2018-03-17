@@ -46,7 +46,9 @@ export default getsItemSource(function<T>(
         }}
       >
         {renderN(config.consumeCount, itemSource, (item: T, i: number) => {
-          const basis = `calc(${widthBasis} / ${config.maxItemsAcross} + ${config.itemSpacing}px)`;
+          const basis = `calc(${widthBasis} / ${config.maxItemsAcross} + ${
+            config.itemSpacing
+          }px)`;
           return childRenderer(i, item, {
             display: 'flex',
             flex: `0 1`,

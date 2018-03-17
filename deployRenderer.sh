@@ -1,6 +1,6 @@
 lerna bootstrap
 
-pushd packages/renderer
+pushd packages/sb-renderer
 
 echo "Building…"
 npm run build_prod

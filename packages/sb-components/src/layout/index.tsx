@@ -24,7 +24,8 @@ export default function<T>(layouts: Array<LayoutConfig>): Array<JSX.Element> {
     return (
       <Component key={i} config={layout}>
         {(i, item, style) =>
-          renderElementLayout(i, item, layout.elementLayout, style)}
+          renderElementLayout(i, item, layout.elementLayout, style)
+        }
       </Component>
     );
   });

@@ -44,7 +44,7 @@ export default ({
         </Td>
         <Td style={cellStyles}>
           {(Array.isArray(item[key])
-            ? item[key] as Array<string>
+            ? (item[key] as Array<string>)
             : [item[key] as string]
           )
             .map((value, i) => {

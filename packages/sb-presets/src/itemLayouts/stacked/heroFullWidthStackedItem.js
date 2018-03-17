@@ -1,10 +1,8 @@
-export default (
-  {
-    position = 'center top',
-    source = 'coverart',
-    textStyleType = 'heroItem',
-  } = {},
-) => ({
+export default ({
+  position = 'center top',
+  source = 'coverart',
+  textStyleType = 'heroItem',
+} = {}) => ({
   elements: [
     {
       type: 'image.background',

@@ -30,18 +30,17 @@ exports.encode = function encode(pathMap) {
     });
   });
 
-  const rawHuffmanTrees = Object.entries(codeFrequencies)
-    .map(([code, frequencies]) => [code, buildTree(frequencies)])
-  const rawHuffmanTreeMap = rawHuffmanTrees
-    .reduce((acc, [code, tree]) => {
-      acc[code] = tree;
-      return acc;
-    }, {});
-  const huffmanTrees = rawHuffmanTrees
-    .reduce((acc, [code, tree]) => {
-      acc[code] = new HuffmanTree(tree);
-      return acc;
-    }, {});
+  const rawHuffmanTrees = Object.entries(codeFrequencies).map(
+    ([code, frequencies]) => [code, buildTree(frequencies)],
+  );
+  const rawHuffmanTreeMap = rawHuffmanTrees.reduce((acc, [code, tree]) => {
+    acc[code] = tree;
+    return acc;
+  }, {});
+  const huffmanTrees = rawHuffmanTrees.reduce((acc, [code, tree]) => {
+    acc[code] = new HuffmanTree(tree);
+    return acc;
+  }, {});
 
   function encode(parsed) {
     const codemapBuffer = pack(parsed.map(x => x[0]), usedCodes);
