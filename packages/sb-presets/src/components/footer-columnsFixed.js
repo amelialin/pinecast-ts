@@ -1,3 +1,18 @@
+const mounts = {
+  pageLinks: {
+    type: 'mount',
+    props: {mount: 'pageLinks'},
+  },
+  siteLinks: {
+    type: 'mount',
+    props: {mount: 'siteLinks'},
+  },
+  subLinks: {
+    type: 'mount',
+    props: {mount: 'subLinks'},
+  },
+};
+
 export default (data = {}) => ({
   type: 'links.linkMount',
   layout: {
@@ -33,14 +48,9 @@ export default (data = {}) => ({
                   marginBottom: 20,
                 },
               },
-              {
-                type: 'mount',
-                props: {mount: 'pageLinks'},
-              },
-              {
-                type: 'mount',
-                props: {mount: 'siteLinks'},
-              },
+              ...(data.col1Items || ['pageLinks', 'siteLinks']).map(
+                x => mounts[x],
+              ),
             ],
             styles: {
               flex: '1 1',
@@ -59,10 +69,7 @@ export default (data = {}) => ({
                   marginBottom: 20,
                 },
               },
-              {
-                type: 'mount',
-                props: {mount: 'subLinks'},
-              },
+              ...(data.col2Items || ['subLinks']).map(x => mounts[x]),
             ],
             styles: {
               flex: '1 1',
@@ -87,6 +94,10 @@ export default (data = {}) => ({
   },
   tag: 'footer.columnsFixed',
   tagOptions: {
+    col1Name: 'Menu',
+    col1Items: ['pageLinks', 'siteLinks'],
+    col2Name: 'Subscribe',
+    col2Items: ['subLinks'],
     elementOptions: {},
     linkStyle: null,
     ...data,

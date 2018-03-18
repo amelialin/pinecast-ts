@@ -108,12 +108,7 @@ export default {
         nextText: 'Back in time',
         previousText: 'Onward to the Future',
       }),
-      footerColumnsFixed({
-        col1Name: 'Menu',
-        col1Items: ['pages', 'siteLinks'],
-        col2Name: 'Subscribe',
-        col2Items: ['subscribeLinks'],
-      }),
+      footerColumnsFixed({}),
     ],
 
     body: {

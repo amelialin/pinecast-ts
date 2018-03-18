@@ -17,30 +17,26 @@ const MenuWrapper = styled(
     'aria-hidden': ariaHidden,
     $alignX,
     $alignY,
-    $x,
-    $y,
+    $height,
+    $width,
   }: {
     'aria-hidden': boolean;
     $alignX: 'leftEdge' | 'rightEdge';
     $alignY: 'topEdge' | 'bottomEdge';
-    $x: number;
-    $y: number;
+    $height: number;
+    $width: number;
   }) => ({
-    bottom: $alignY === 'bottomEdge' ? `calc(100% - ${$y}px)` : undefined,
-    left: $alignX === 'leftEdge' ? $x : undefined,
-    right: $alignX === 'rightEdge' ? `calc(100% - ${$x}px)` : undefined,
-    top: $alignY === 'topEdge' ? $y : undefined,
-
     background: '#fff',
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.125)',
     display: 'flex',
     flexDirection: 'column',
-    margin: 0,
+    marginTop: $alignY === 'bottomEdge' ? -1 * $height : 0,
+    marginLeft: $alignX === 'rightEdge' ? -1 * $width : 0,
+    marginBottom: 0,
     minWidth: 200,
     opacity: ariaHidden ? 0 : 1,
     padding: '4px 0',
     pointerEvents: ariaHidden ? 'none' : null,
-    position: 'absolute',
     transform: ariaHidden ? 'scale(0.9)' : 'scale(1)',
     transformOrigin: '20% top',
     transition: 'opacity 0.2s, transform 0.2s',
@@ -196,14 +192,14 @@ export default class ContextMenu extends React.PureComponent {
     const {onClose, open, options, x, y} = this.props;
     const {alignX, alignY} = this.state;
     return (
-      <ClosableLayer onClose={onClose}>
-        <div ref={this.handleRef} style={wrapperStyle}>
+      <ClosableLayer onClose={onClose} x={x} y={y}>
+        <div ref={this.handleRef}>
           <MenuWrapper
             aria-hidden={!open}
             $alignX={alignX}
             $alignY={alignY}
-            $x={x}
-            $y={y}
+            $height={this.wrapper ? this.wrapper.clientHeight : 0}
+            $width={this.wrapper ? this.wrapper.clientWidth : 0}
           >
             {options.map(this.renderOption)}
           </MenuWrapper>

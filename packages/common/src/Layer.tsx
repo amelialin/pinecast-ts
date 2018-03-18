@@ -3,6 +3,8 @@ import * as ReactDOM from 'react-dom';
 
 type Props = {
   children: JSX.Element | Array<JSX.Element>;
+  x?: number;
+  y?: number;
 };
 
 export default class Layer extends React.PureComponent {
@@ -13,10 +15,15 @@ export default class Layer extends React.PureComponent {
     super(props);
     const portal = document.createElement('div');
     portal.style.position = 'absolute';
-    portal.style.left = '0';
-    portal.style.top = '0';
+    portal.style.left = props.x ? `${props.x}px` : '0';
+    portal.style.top = props.y ? `${props.y}px` : '0';
+    portal.style.zIndex = '10';
     this.portal = portal;
     document.body.appendChild(portal);
+  }
+  componentWillReceiveProps(newProps) {
+    this.portal.style.left = newProps.x ? `${newProps.x}px` : '0';
+    this.portal.style.top = newProps.y ? `${newProps.y}px` : '0';
   }
   componentWillUnmount() {
     document.body.removeChild(this.portal);

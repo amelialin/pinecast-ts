@@ -42,21 +42,21 @@ export default {
         type: 'orderedSet',
         options: [
           {name: 'Site links', value: 'siteLinks'},
-          {name: 'Pages', value: 'pages'},
-          {name: 'Subscribe links', value: 'subscribeLinks'},
+          {name: 'Pages', value: 'pageLinks'},
+          {name: 'Subscribe links', value: 'subLinks'},
         ],
       },
       col2Name: {
         name: 'Column 2 heading',
         type: 'text',
       },
-      col1Items: {
+      col2Items: {
         name: 'Column 2 contents',
         type: 'orderedSet',
         options: [
           {name: 'Site links', value: 'siteLinks'},
-          {name: 'Pages', value: 'pages'},
-          {name: 'Subscribe links', value: 'subscribeLinks'},
+          {name: 'Pages', value: 'pageLinks'},
+          {name: 'Subscribe links', value: 'subLinks'},
         ],
       },
       ...fixedWidthTemplate,
