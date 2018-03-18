@@ -67,12 +67,14 @@ const Select_ = styled('select', {
 });
 
 const Select = ({
+  autoFocus,
   onChange,
   options,
   style,
   tabIndex,
   value,
 }: {
+  autoFocus?: boolean;
   onChange: (string) => void;
   options: {[key: string]: string};
   style?: React.CSSProperties;
@@ -81,6 +83,7 @@ const Select = ({
 }) => (
   <Wrapper style={style}>
     <Select_
+      autoFocus={autoFocus}
       onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
         onChange(e.target.value)
       }

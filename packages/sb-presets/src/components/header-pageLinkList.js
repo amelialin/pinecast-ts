@@ -1,13 +1,13 @@
-const mounts = [
-  {
+const mounts = {
+  siteLinks: {
     type: 'mount',
     props: {mount: 'siteLinks'},
   },
-  {
+  pageLinks: {
     type: 'mount',
     props: {mount: 'pageLinks'},
   },
-];
+};
 
 export default (data = {}) => ({
   type: 'links.linkMount',
@@ -22,21 +22,26 @@ export default (data = {}) => ({
     elements: [
       {
         type: 'layout.fixedWrapper',
-        children: mounts,
+        children: (data.includes || ['siteLinks', 'pageLinks'])
+          .filter(x => mounts[x])
+          .map(x => mounts[x]),
         elementOptions: data.elementOptions,
       },
     ],
     tagName: 'nav',
     styles: {
       margin: '30px 0',
+      textAlign: data.textAlign || 'left',
       ...data.style,
     },
   },
   tag: 'header.pageLinkList',
   tagOptions: {
     elementOptions: {},
-    openInNewWindow: false,
+    includes: ['siteLinks', 'pageLinks'],
     linkStyle: {},
+    openInNewWindow: false,
+    textAlign: 'left',
     ...data,
   },
 });

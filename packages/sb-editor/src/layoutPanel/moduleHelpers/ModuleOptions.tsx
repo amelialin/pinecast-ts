@@ -152,6 +152,18 @@ export default class ModuleOptions extends React.PureComponent {
         </ButtonWrapper>
         <Collapser open={this.state.open}>
           {keys
+            .sort((a, b) => {
+              if (a === b) {
+                return 1;
+              }
+              if (b === 'elementOptions') {
+                return -1;
+              }
+              if (a === 'elementOptions') {
+                return 1;
+              }
+              return 0;
+            })
             .map(this.renderSchemaElement)
             .filter(x => x)
             .map((x, i) => x && React.cloneElement(x, {key: i}))}

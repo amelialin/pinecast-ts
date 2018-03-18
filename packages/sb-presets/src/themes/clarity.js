@@ -110,9 +110,7 @@ export default {
           imageElementOptions: {
             alignX: 'left',
           },
-        },
-        style: {
-          marginBottom: 50,
+          outerPadding: '0 0 50px',
         },
         textAlign: 'left',
       }),

@@ -93,11 +93,11 @@ export default {
     header: [
       header({
         content: 'text',
-        showSubtitle: true,
-        style: {
-          backgroundColor: 'accent',
-          padding: '100px 0',
+        elementOptions: {
+          bgColor: 'accent',
+          innerPadding: '100px 0',
         },
+        showSubtitle: true,
       }),
     ],
     footer: [

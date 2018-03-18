@@ -6,6 +6,24 @@ import paginationForwardBack from './pagination-forwardBack-fixed';
 import subheaderSubscribeLinks from './subheader-subscribeLinks';
 import textWrappedText from './text-wrappedText';
 
+const fixedWidthTemplate = {
+  elementOptions: {
+    name: 'Fixed-width module options',
+    type: 'rootComponents.fixedWidth',
+  },
+};
+const textAlignTemplate = {
+  textAlign: {
+    name: 'Text alignment',
+    type: 'enum',
+    options: [
+      {name: 'Left', value: 'left'},
+      {name: 'Center', value: 'center'},
+      {name: 'Right', value: 'right'},
+    ],
+  },
+};
+
 export default {
   'footer.columnsFixed': {
     name: 'Footer columns',
@@ -41,10 +59,7 @@ export default {
           {name: 'Subscribe links', value: 'subscribeLinks'},
         ],
       },
-      elementOptions: {
-        name: 'Fixed-width module options',
-        type: 'rootComponents.fixedWidth',
-      },
+      ...fixedWidthTemplate,
     },
   },
 
@@ -60,19 +75,8 @@ export default {
         name: 'Show subtitle?',
         type: 'bool',
       },
-      textAlign: {
-        name: 'Text alignment',
-        type: 'enum',
-        options: [
-          {name: 'Left', value: 'left'},
-          {name: 'Center', value: 'center'},
-          {name: 'Right', value: 'right'},
-        ],
-      },
-      elementOptions: {
-        name: 'Fixed-width module options',
-        type: 'rootComponents.fixedWidth',
-      },
+      ...textAlignTemplate,
+      ...fixedWidthTemplate,
     },
   },
 
@@ -83,9 +87,15 @@ export default {
     func: headerPageLinkList,
 
     schema: {
-      elementOptions: {
-        name: 'Fixed-width module options',
-        type: 'rootComponents.fixedWidth',
+      ...fixedWidthTemplate,
+      ...textAlignTemplate,
+      includes: {
+        name: 'Included links',
+        type: 'orderedSet',
+        options: [
+          {name: 'Site links', value: 'siteLinks'},
+          {name: 'Pages', value: 'pageLinks'},
+        ],
       },
     },
   },
@@ -105,10 +115,7 @@ export default {
           {name: 'Pages', value: 'pages'},
         ],
       },
-      elementOptions: {
-        name: 'Fixed-width module options',
-        type: 'rootComponents.fixedWidth',
-      },
+      ...fixedWidthTemplate,
     },
   },
 
@@ -128,10 +135,7 @@ export default {
         name: '"Next" button text',
         type: 'text',
       },
-      elementOptions: {
-        name: 'Fixed-width module options',
-        type: 'rootComponents.fixedWidth',
-      },
+      ...fixedWidthTemplate,
     },
   },
 
@@ -147,10 +151,7 @@ export default {
         name: 'Subscribe text',
         type: 'text',
       },
-      elementOptions: {
-        name: 'Fixed-width module options',
-        type: 'rootComponents.fixedWidth',
-      },
+      ...fixedWidthTemplate,
     },
   },
 
@@ -180,10 +181,7 @@ export default {
           {name: 'Subtitle', value: ['podcast', 'subtitle'], key: 'subtitle'},
         ],
       },
-      elementOptions: {
-        name: 'Fixed-width module options',
-        type: 'rootComponents.fixedWidth',
-      },
+      ...fixedWidthTemplate,
     },
   },
 };

@@ -17,7 +17,7 @@ import {SchemaProps} from '../types';
 
 const colorsOptionalKeys = {...colorKeyNames, '': '--'};
 
-class SchemaText extends React.PureComponent {
+class SchemaFixedWidth extends React.PureComponent {
   props: SchemaProps & {goToColors: () => void};
 
   handleElementOptionsChange(newEO: Object) {
@@ -52,7 +52,9 @@ class SchemaText extends React.PureComponent {
               tabIndex={open ? 0 : -1}
               value={value.bgColor || ''}
             />
-            <Button onClick={goToColors}>Change colors</Button>
+            <Button onClick={goToColors} tabIndex={open ? 0 : -1}>
+              Change colors
+            </Button>
           </Group>
         </Label>
         <Label text="Foreground color">
@@ -63,18 +65,22 @@ class SchemaText extends React.PureComponent {
               tabIndex={open ? 0 : -1}
               value={value.fgColor || ''}
             />
-            <Button onClick={goToColors}>Change colors</Button>
+            <Button onClick={goToColors} tabIndex={open ? 0 : -1}>
+              Change colors
+            </Button>
           </Group>
         </Label>
         <Label text="Outer padding">
           <PaddingInput
             onChange={this.handleOuterPaddingChange}
+            tabIndex={open ? 0 : -1}
             value={parsePadding(value.outerPadding)}
           />
         </Label>
         <Label text="Inner padding">
           <PaddingInput
             onChange={this.handleInnerPaddingChange}
+            tabIndex={open ? 0 : -1}
             value={parsePadding(value.innerPadding)}
           />
         </Label>
@@ -88,4 +94,4 @@ export default connect(null, dispatch => ({
     dispatch(chromeActions.changeChromePage('theme'));
     dispatch(chromeActions.changeThemePage('colors'));
   },
-}))(SchemaText) as React.ComponentType<SchemaProps>;
+}))(SchemaFixedWidth) as React.ComponentType<SchemaProps>;

@@ -44,6 +44,7 @@ export default class ModuleInsertionModal extends React.Component {
           subText="Different types of modules have different properties."
         >
           <Select
+            autoFocus
             onChange={this.handleChangeType}
             options={Object.entries(componentsMetadata as {
               [key: string]: MetadataType;

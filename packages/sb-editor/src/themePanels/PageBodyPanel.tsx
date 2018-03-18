@@ -2,10 +2,14 @@ import {connect} from 'react-redux';
 import * as React from 'react';
 
 import Label from '@pinecast/common/Label';
+import PaddingInput, {
+  formatPadding,
+  parsePadding,
+} from '@pinecast/common/PaddingInput';
 import * as presets from '@pinecast/sb-presets';
 import {primitives} from '@pinecast/sb-components';
-import RadioList from '@pinecast/common/RadioList';
 import Range from '@pinecast/common/Range';
+import RadioList from '@pinecast/common/RadioList';
 import TextInput from '@pinecast/common/TextInput';
 import Tabs, {Tab} from '@pinecast/common/Tabs';
 
@@ -19,31 +23,6 @@ const units = {
   px: 'pixels',
   '%': 'percent',
 };
-function parsePadding(value: string): {amount: number; unit: string} {
-  if (value === '0') {
-    return {amount: 0, unit: 'px'};
-  }
-  const match = /([0-9]+)(px|%)/.exec(value);
-  if (!match) {
-    return {amount: 0, unit: 'px'};
-  }
-  const amount = Number(match[1]),
-    unit = match[2];
-  return {amount, unit};
-}
-function formatPadding(
-  horizAmount: number,
-  horizUnit: string,
-  vertAmount: number,
-  vertUnit: string,
-): string {
-  const horiz = `${horizAmount}${horizUnit}`;
-  const vert = `${vertAmount}${vertUnit}`;
-  if (horiz === vert) {
-    return horiz;
-  }
-  return `${vert} ${horiz}`;
-}
 
 const PageBodyPanel = ({
   changePageOptions,
@@ -57,43 +36,20 @@ const PageBodyPanel = ({
   const paddingValue = String(
     (theme.styling.page && theme.styling.page.padding) || '0 0',
   );
-  const [verticalPadding, horizontalPadding] = paddingValue.split(' ', 2);
-
-  const {amount: vertAmount, unit: vertUnit} = parsePadding(verticalPadding);
-  const {amount: horizAmount, unit: horizUnit} = parsePadding(
-    horizontalPadding || verticalPadding,
-  );
+  const unit = paddingValue.includes('%') ? '%' : 'px';
 
   return (
     <PanelWrapper>
       <Label
-        text={`Horizontal padding (${units[horizUnit]})`}
+        text={`Padding (${units[unit]})`}
         subText="The space between the left and right edges of the window and the page content"
       >
-        <Range
-          min={0}
-          max={101}
+        <PaddingInput
           onChange={value => {
-            changePageStyle({
-              padding: formatPadding(value, horizUnit, vertAmount, vertUnit),
-            });
+            changePageStyle({padding: formatPadding(value, unit)});
           }}
-          value={horizAmount}
-        />
-      </Label>
-      <Label
-        text={`Vertical padding (${units[vertUnit]})`}
-        subText="The space between the top and bottom of the inside of the window and the page content"
-      >
-        <Range
-          min={0}
-          max={101}
-          onChange={value => {
-            changePageStyle({
-              padding: formatPadding(horizAmount, horizUnit, value, vertUnit),
-            });
-          }}
-          value={vertAmount}
+          unit={unit}
+          value={parsePadding(paddingValue)}
         />
       </Label>
       <Label

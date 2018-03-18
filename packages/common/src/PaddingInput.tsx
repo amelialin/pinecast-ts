@@ -4,6 +4,8 @@ import styled from '@pinecast/styles';
 
 import TextInput from './TextInput';
 
+export type Unit = '%' | 'px';
+
 const Row = styled('div', {
   alignItems: 'center',
   display: 'flex',
@@ -42,8 +44,11 @@ export type StructuredValue = {
 
 export default class PaddingInput extends React.PureComponent {
   props: {
+    disabled?: boolean;
     onChange: (value: StructuredValue) => void;
+    tabIndex?: number;
     value: StructuredValue;
+    unit?: Unit;
   };
 
   handleLeftChange = (left: string) => {
@@ -72,16 +77,24 @@ export default class PaddingInput extends React.PureComponent {
   };
 
   render() {
-    const {value: {top, right, bottom, left}} = this.props;
+    const {
+      disabled,
+      tabIndex,
+      unit,
+      value: {top, right, bottom, left},
+    } = this.props;
+
     return (
       <Row style={{marginBottom: 16}}>
         <WrapperLabel>
           <WrapperLabelText>Left</WrapperLabelText>
           <TextInput
+            disabled={disabled}
             inputStyle={textInputInputStyles}
             onChange={this.handleLeftChange}
             style={textInputStyles}
-            suffix="px"
+            suffix={unit}
+            tabIndex={tabIndex}
             value={left.toString()}
           />
         </WrapperLabel>
@@ -89,20 +102,24 @@ export default class PaddingInput extends React.PureComponent {
           <WrapperLabel style={{marginBottom: 8}}>
             <WrapperLabelText>Top</WrapperLabelText>
             <TextInput
+              disabled={disabled}
               inputStyle={textInputInputStyles}
               onChange={this.handleTopChange}
               style={textInputStyles}
-              suffix="px"
+              suffix={unit}
+              tabIndex={tabIndex}
               value={top.toString()}
             />
           </WrapperLabel>
           <WrapperLabel>
             <WrapperLabelText>Bottom</WrapperLabelText>
             <TextInput
+              disabled={disabled}
               inputStyle={textInputInputStyles}
               onChange={this.handleBottomChange}
               style={textInputStyles}
-              suffix="px"
+              suffix={unit}
+              tabIndex={tabIndex}
               value={bottom.toString()}
             />
           </WrapperLabel>
@@ -110,10 +127,12 @@ export default class PaddingInput extends React.PureComponent {
         <WrapperLabel>
           <WrapperLabelText>Right</WrapperLabelText>
           <TextInput
+            disabled={disabled}
             inputStyle={textInputInputStyles}
             onChange={this.handleRightChange}
             style={textInputStyles}
-            suffix="px"
+            suffix={unit}
+            tabIndex={tabIndex}
             value={right.toString()}
           />
         </WrapperLabel>
@@ -136,6 +155,9 @@ function ununit(united: string): number {
   if (united.endsWith('px')) {
     return Number(united.substr(0, united.length - 2));
   }
+  if (united.endsWith('%')) {
+    return Number(united.substr(0, united.length - 1));
+  }
   return Number(united);
 }
 export function parsePadding(
@@ -157,26 +179,28 @@ export function parsePadding(
 
 // Code to convert from a structured value to a string
 
-function unitify(value: number): string {
-  return value ? `${value}px` : '0';
+function unitify(value: number, unit: Unit): string {
+  return value ? `${value}${unit}` : '0';
 }
-export function formatPadding({
-  top,
-  right,
-  bottom,
-  left,
-}: StructuredValue): string {
+export function formatPadding(
+  {top, right, bottom, left}: StructuredValue,
+  unit: Unit = 'px',
+): string {
   if (top === bottom && right === left) {
     if (top === right) {
-      return unitify(top);
+      return unitify(top, unit);
     }
-    return `${unitify(top)} ${unitify(right)}`;
+    return `${unitify(top, unit)} ${unitify(right, unit)}`;
   }
-  if (top === bottom) {
-    return `${unitify(top)} ${unitify(right)} ${unitify(bottom)}`;
+  if (right === left) {
+    return `${unitify(top, unit)} ${unitify(right, unit)} ${unitify(
+      bottom,
+      unit,
+    )}`;
   }
 
-  return `${unitify(top)} ${unitify(right)} ${unitify(bottom)} ${unitify(
-    left,
-  )}`;
+  return `${unitify(top, unit)} ${unitify(right, unit)} ${unitify(
+    bottom,
+    unit,
+  )} ${unitify(left, unit)}`;
 }

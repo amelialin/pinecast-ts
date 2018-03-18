@@ -19,11 +19,11 @@ const labelStyle = {
 function getContainerHeight(count: number, isDragging: boolean): number {
   return (
     // Element heights
-    count * ELEMENT_HEIGHT +
+    Math.max(1, count) * ELEMENT_HEIGHT +
     // Drag buffer heights
     (isDragging ? ELEMENT_HEIGHT / 2 : 0) +
     // One pixel for the border between each item
-    (count - 1) +
+    (Math.max(1, count) - 1) +
     // 4px padding at the top and bottom; border + padding
     8
   );
@@ -40,6 +40,7 @@ const ElementWrapper = styled(
     borderRadius: 3,
     height: getContainerHeight($count, $dragging),
     marginBottom: 4,
+    overflow: 'hidden',
     padding: 3, // +1 for border width
     position: 'relative',
     transition: 'height 0.2s',
@@ -104,6 +105,22 @@ const Element = styled(
       width: 20,
     },
   }),
+);
+
+const Placeholder = styled(
+  'div',
+  {
+    alignItems: 'center',
+    background: '#fff',
+    borderRadius: 2,
+    color: '#c6caca',
+    display: 'flex',
+    height: ELEMENT_HEIGHT,
+    justifyContent: 'center',
+    textAlign: 'center',
+    userSelect: 'none',
+  },
+  {children: 'None selected'},
 );
 
 const Buffer = styled('aside', ({$open}: {$open: boolean}) => ({
@@ -307,8 +324,14 @@ export default class SchemaOrderedSet extends React.PureComponent {
     return (
       <Label componentType="div" style={labelStyle} text={name}>
         <ElementWrapper $count={value.length} $dragging={overBuffer !== null}>
-          {value.map((element, i) => this.renderElement(element, i))}
-          <Buffer $open={overBuffer === value.length} />
+          {value.length ? (
+            <React.Fragment>
+              {value.map((element, i) => this.renderElement(element, i))}
+              <Buffer $open={overBuffer === value.length} />
+            </React.Fragment>
+          ) : (
+            <Placeholder />
+          )}
         </ElementWrapper>
         {this.renderFooter()}
       </Label>
