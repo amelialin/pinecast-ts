@@ -55,7 +55,7 @@ export default class ModuleOptions extends React.PureComponent {
       return;
     }
     const option = metadata.schema[key];
-    let Component: React.ComponentType;
+    let Component: React.ComponentType<SchemaFields.SchemaProps>;
     switch (option.type) {
       case 'bool':
         Component = SchemaFields.SchemaBool;
@@ -68,6 +68,9 @@ export default class ModuleOptions extends React.PureComponent {
         break;
       case 'orderedSet':
         Component = SchemaFields.SchemaOrderedSet;
+        break;
+      case 'rootComponents.fixedWidth':
+        Component = SchemaFields.rootComponents.SchemaFixedWidth;
         break;
       case 'text':
         Component = SchemaFields.SchemaText;

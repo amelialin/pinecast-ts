@@ -1,4 +1,4 @@
-export const colorKeyNames = {
+export default {
   background: 'Background',
   secondaryBackground: 'Secondary background',
   foreground: 'Foreground',
@@ -10,10 +10,4 @@ export const colorKeyNames = {
   text: 'Text',
 
   pageBackground: 'Page background',
-};
-
-export const fontKeyNames = {
-  logo: 'Logo typeface',
-  headings: 'Heading typeface',
-  body: 'Text typeface',
 };

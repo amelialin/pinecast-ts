@@ -120,7 +120,6 @@ export default {
         textAlign: 'left',
       }),
       headerPageLinkList({
-        fixed: true,
         style: {
           margin: '30px 0 60px',
         },
@@ -131,8 +130,8 @@ export default {
         nextText: 'Older',
         previousText: 'Newer',
 
-        styles: {
-          padding: '0 0 40px',
+        elementOptions: {
+          innerPadding: '0 0 40px',
         },
       }),
     ],

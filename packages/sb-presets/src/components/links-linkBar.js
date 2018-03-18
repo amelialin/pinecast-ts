@@ -18,10 +18,7 @@ export default (data = {}) => ({
             props: {mount: 'links'},
           },
         ],
-        elementOptions: {
-          maxWidth: 'var(--fixedWidthMax)',
-          ...data.elementOptions,
-        },
+        elementOptions: data.elementOptions,
         styles: {textAlign: 'left', ...data.style},
       },
     ],
@@ -32,7 +29,6 @@ export default (data = {}) => ({
     includes: ['links', 'pages'],
     elementOptions: {},
     layout: null,
-    openInNewWindow: false,
     ...data,
   },
 });

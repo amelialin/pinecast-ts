@@ -9,11 +9,6 @@ import {MountProvider} from '../mounts';
 import renderElements from '../../elements';
 import TextRenderer from '../../common/text';
 
-const newWindowProps = {
-  target: '_blank',
-  rel: 'noopener noreferrer',
-};
-
 export default getsContext(
   (
     {
@@ -23,7 +18,6 @@ export default getsContext(
       layout: {
         linkStyle: CSS;
         linkHoverStyle: CSS;
-        openInNewWindow?: boolean;
       };
       template: ElementLayout;
     },
@@ -47,7 +41,6 @@ export default getsContext(
                 href={link.url}
                 key={`link:${i}`}
                 style={linkStyles}
-                {...(layout.openInNewWindow ? newWindowProps : {})}
               />
             ),
           ),
@@ -61,7 +54,6 @@ export default getsContext(
                 href={ctx.url('page', {slug: page.slug})}
                 key={`page:${page.slug}`}
                 style={linkStyles}
-                {...(layout.openInNewWindow ? newWindowProps : {})}
               />
             ),
           ),

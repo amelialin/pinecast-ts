@@ -12,10 +12,7 @@ export default data => {
       elements: [
         {
           type: 'layout.fixedWrapper',
-          elementOptions: {
-            maxWidth: 'var(--fixedWidthMax)',
-            ...elementOptions,
-          },
+          elementOptions: elementOptions,
           children: [
             {
               type: 'block.link',

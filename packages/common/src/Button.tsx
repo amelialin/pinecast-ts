@@ -3,6 +3,7 @@ import * as React from 'react';
 import styled, {CSS} from '@pinecast/styles';
 
 import {DEFAULT_FONT} from './constants';
+import Group, {Children as GroupChildren} from './Group';
 import KeyboardShortcut, {ShortcutKey} from './KeyboardShortcut';
 import Spinner from './Spinner';
 
@@ -114,39 +115,10 @@ const Button = ({
 
 export default Button;
 
-type Children = Array<
-  Array<JSX.Element | false | null> | JSX.Element | false | null
->;
-function collapseChildren(
-  children: Children,
-  style: CSS | undefined,
-  offset: number,
-) {
-  return React.Children.map(children.filter(x => x), (child: any, i) => {
-    if (i + offset === 0) {
-      if (style) {
-        return React.cloneElement(child, {style});
-      } else {
-        return child;
-      }
-    }
-    if (child.type === React.Fragment) {
-      return collapseChildren(child.props.children, style, i);
-    }
-    return React.cloneElement(child, {
-      style: {
-        ...style,
-        ...child.props.style,
-        marginLeft: 8,
-      },
-    });
-  });
-}
-
 export const ButtonGroup = ({
   children,
   style,
 }: {
-  children: Children;
+  children: GroupChildren;
   style?: React.CSSProperties;
-}) => collapseChildren(children, style, 0);
+}) => <Group spacing={8}>{children}</Group>;

@@ -1,3 +1,6 @@
+import * as RootComponents from './rootComponents';
+export {RootComponents as rootComponents};
+
 export {default as SchemaBool} from './SchemaBool';
 export {default as SchemaEnum} from './SchemaEnum';
 export {default as SchemaLongText} from './SchemaLongText';

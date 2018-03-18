@@ -1,6 +1,6 @@
 export default ({
   contents,
-  elementOptions = {maxWidth: 'var(--fixedWidthMax)'},
+  elementOptions = {},
   style = {},
   tagName = 'article',
   type = 'layout.fixedWrapper',

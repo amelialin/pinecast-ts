@@ -19,7 +19,7 @@ export interface ComponentLayoutOption {
     | 'orderedSet'
     | 'bool'
     | 'css'
-    | 'rootComponent.fixedWidth';
+    | 'rootComponents.fixedWidth';
 
   // Used for 'enum' and 'set'
   options?: Array<{name: string; key?: string; value: any}>;

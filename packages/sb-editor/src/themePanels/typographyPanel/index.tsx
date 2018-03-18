@@ -7,7 +7,7 @@ import styled from '@pinecast/styles';
 import Button from '@pinecast/common/Button';
 import {changeFont} from '../../actions/theme';
 import {FontHashType, PartialFontHashType} from '../../reducers/theme';
-import {fontKeyNames} from '../../constants';
+import fontKeyNames from '../../shared/fontNames';
 import FontPreset from './FontPreset';
 import FontSelect from './FontSelect';
 import HelpText from '@pinecast/common/HelpText';

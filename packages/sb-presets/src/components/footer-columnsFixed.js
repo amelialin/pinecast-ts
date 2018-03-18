@@ -19,9 +19,7 @@ export default (data = {}) => ({
     elements: [
       {
         type: 'layout.fixedWrapper',
-        elementOptions: {
-          maxWidth: 'var(--fixedWidthMax)',
-        },
+        elementOptions: data.elementOptions || {},
         children: [
           {
             type: 'layout.column',
@@ -89,6 +87,7 @@ export default (data = {}) => ({
   },
   tag: 'footer.columnsFixed',
   tagOptions: {
+    elementOptions: {},
     linkStyle: null,
     ...data,
   },

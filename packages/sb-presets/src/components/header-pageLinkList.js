@@ -17,17 +17,15 @@ export default (data = {}) => ({
       whiteSpace: 'nowrap',
       ...data.linkStyle,
     },
-    openInNewWindow: data.openInNewWindow || false,
   },
   template: {
-    elements: data.fixed
-      ? [
-          {
-            type: 'layout.fixedWrapper',
-            children: mounts,
-          },
-        ]
-      : mounts,
+    elements: [
+      {
+        type: 'layout.fixedWrapper',
+        children: mounts,
+        elementOptions: data.elementOptions,
+      },
+    ],
     tagName: 'nav',
     styles: {
       margin: '30px 0',
@@ -35,5 +33,10 @@ export default (data = {}) => ({
     },
   },
   tag: 'header.pageLinkList',
-  tagOptions: {fixed: false, openInNewWindow: false, linkStyle: {}, ...data},
+  tagOptions: {
+    elementOptions: {},
+    openInNewWindow: false,
+    linkStyle: {},
+    ...data,
+  },
 });

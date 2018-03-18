@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/styles';
+import styled, {CSS} from '@pinecast/styles';
 
 import {DEFAULT_FONT} from '@pinecast/common/constants';
 
@@ -10,11 +10,10 @@ const InputWrapper = styled('div', ({$disabled}: {$disabled: boolean}) => ({
   border: $disabled ? '1px solid #eee' : '1px solid #ccc',
   borderRadius: 4,
   display: 'flex',
-  height: 35,
+  height: 32,
   margin: '8px 0 20px',
 }));
 const Input = styled('input', {
-  appearance: 'none',
   background: 'transparent',
   border: 0,
   borderRadius: 4,
@@ -25,6 +24,7 @@ const Input = styled('input', {
   height: '100%',
   padding: '0 10px',
   transition: 'box-shadow 0.2s',
+  width: '100%',
 
   ':focus': {
     boxShadow: '0 0 0 3px #c9d9e0',
@@ -51,7 +51,7 @@ const Prefix = styled('span', {
   color: '#333',
   flex: '0 0',
   height: '100%',
-  lineHeight: '35px',
+  lineHeight: '32px',
   padding: '0 8px',
 });
 const Suffix = styled('span', {
@@ -60,12 +60,13 @@ const Suffix = styled('span', {
   color: '#333',
   flex: '0 0',
   height: '100%',
-  lineHeight: '35px',
+  lineHeight: '32px',
   padding: '0 8px',
 });
 
 export interface Props {
   disabled?: boolean;
+  inputStyle?: CSS;
   maxLength?: number;
   minlength?: number;
   onChange: (value: string) => void;
@@ -98,11 +99,24 @@ export default class TextInput extends React.PureComponent {
   };
 
   render() {
-    const {onChange: _, prefix, style, suffix, value, ...rest} = this.props;
+    const {
+      inputStyle,
+      onChange,
+      prefix,
+      style,
+      suffix,
+      value,
+      ...rest
+    } = this.props;
     return (
       <InputWrapper $disabled={rest.disabled} style={style}>
         {prefix && <Prefix>{prefix}</Prefix>}
-        <Input {...rest} onChange={this.handleChange} value={value} />
+        <Input
+          style={inputStyle}
+          {...rest}
+          onChange={this.handleChange}
+          value={value}
+        />
         {suffix && <Suffix>{suffix}</Suffix>}
       </InputWrapper>
     );

@@ -1,35 +1,45 @@
-export default data => ({
-  type: 'abstract',
-  template: {
-    elements: [
-      {
-        type: 'layout.fixedWrapper',
-        children: [
-          {
-            type: 'block.text',
-            textContent: data.text,
+export default data => {
+  const {
+    elementOptions = {
+      bgColor: 'accent',
+      fgColor: 'accent',
+      innerPadding: '20px 0',
+    },
+    style,
+    text = ['podcast', 'copyright'],
+  } = data;
+  return {
+    type: 'abstract',
+    template: {
+      elements: [
+        {
+          type: 'layout.fixedWrapper',
+          children: [
+            {
+              type: 'block.text',
+              textContent: text,
+            },
+          ],
+          elementOptions: {
+            bgColor: 'accent',
+            fgColor: 'accent',
+            innerPadding: '20px 0',
+            ...elementOptions,
           },
-        ],
-        elementOptions: {
-          bgColor: 'accent',
-          fgColor: 'accent',
-          innerPadding: '20px 0',
-          maxWidth: 'var(--fixedWidthMax)',
-          ...data.elementOptions,
+          styles: {
+            color: 'foreground',
+            textAlign: 'left',
+            ...style,
+          },
         },
-        styles: {
-          color: 'foreground',
-          textAlign: 'left',
-          ...data.style,
-        },
-      },
-    ],
-  },
+      ],
+    },
 
-  tag: 'text.wrappedText',
-  tagOptions: {
-    elementOptions: {},
-    text: ['podcast', 'copyright'],
-    ...data,
-  },
-});
+    tag: 'text.wrappedText',
+    tagOptions: {
+      elementOptions,
+      text,
+      ...data,
+    },
+  };
+};

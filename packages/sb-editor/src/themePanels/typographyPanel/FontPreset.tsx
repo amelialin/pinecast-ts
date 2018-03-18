@@ -4,7 +4,7 @@ import styled from '@pinecast/styles';
 
 import AsyncFontPreview from './AsyncFontPreview';
 import {DEFAULT_FONT} from '@pinecast/common/constants';
-import {fontKeyNames} from '../../constants';
+import fontKeyNames from '../../shared/fontNames';
 import Label from '@pinecast/common/Label';
 
 const Wrapper = styled(

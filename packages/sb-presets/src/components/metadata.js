@@ -41,6 +41,10 @@ export default {
           {name: 'Subscribe links', value: 'subscribeLinks'},
         ],
       },
+      elementOptions: {
+        name: 'Fixed-width module options',
+        type: 'rootComponents.fixedWidth',
+      },
     },
   },
 
@@ -65,6 +69,10 @@ export default {
           {name: 'Right', value: 'right'},
         ],
       },
+      elementOptions: {
+        name: 'Fixed-width module options',
+        type: 'rootComponents.fixedWidth',
+      },
     },
   },
 
@@ -75,13 +83,9 @@ export default {
     func: headerPageLinkList,
 
     schema: {
-      fixed: {
-        name: 'Fixed width',
-        type: 'bool',
-      },
-      openInNewWindow: {
-        name: 'Open links in new tab',
-        type: 'bool',
+      elementOptions: {
+        name: 'Fixed-width module options',
+        type: 'rootComponents.fixedWidth',
       },
     },
   },
@@ -101,9 +105,9 @@ export default {
           {name: 'Pages', value: 'pages'},
         ],
       },
-      openInNewWindow: {
-        name: 'Open links in new tab',
-        type: 'bool',
+      elementOptions: {
+        name: 'Fixed-width module options',
+        type: 'rootComponents.fixedWidth',
       },
     },
   },
@@ -124,6 +128,10 @@ export default {
         name: '"Next" button text',
         type: 'text',
       },
+      elementOptions: {
+        name: 'Fixed-width module options',
+        type: 'rootComponents.fixedWidth',
+      },
     },
   },
 
@@ -138,6 +146,10 @@ export default {
       subscribeText: {
         name: 'Subscribe text',
         type: 'text',
+      },
+      elementOptions: {
+        name: 'Fixed-width module options',
+        type: 'rootComponents.fixedWidth',
       },
     },
   },
@@ -167,6 +179,10 @@ export default {
           {name: 'Podcast name', value: ['podcast', 'name'], key: 'name'},
           {name: 'Subtitle', value: ['podcast', 'subtitle'], key: 'subtitle'},
         ],
+      },
+      elementOptions: {
+        name: 'Fixed-width module options',
+        type: 'rootComponents.fixedWidth',
       },
     },
   },

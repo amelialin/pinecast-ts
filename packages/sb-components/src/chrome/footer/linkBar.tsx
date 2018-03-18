@@ -14,10 +14,6 @@ const Divider = atom('span', {
   marginRight: 15,
 });
 
-const newWindowProps = {
-  target: '_blank',
-  rel: 'noopener noreferrer',
-};
 const linkStyle = {
   marginRight: 15,
 };
@@ -40,7 +36,6 @@ export default getsContext(
       layout: {
         divider?: dividerStyle;
         includes: includedTypes;
-        openInNewWindow?: boolean;
       };
       template: ElementLayout;
     },
@@ -63,7 +58,6 @@ export default getsContext(
                     href={link.url}
                     key={`link:${i}`}
                     style={linkStyle}
-                    {...(layout.openInNewWindow ? newWindowProps : {})}
                   />
                 ),
               );
@@ -78,7 +72,6 @@ export default getsContext(
                     href={ctx.url('page', {slug: page.slug})}
                     key={`page:${page.slug}`}
                     style={linkStyle}
-                    {...(layout.openInNewWindow ? newWindowProps : {})}
                   />
                 ),
               );

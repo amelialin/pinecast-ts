@@ -11,11 +11,7 @@ export default data => ({
     elements: [
       {
         type: 'layout.fixedWrapper',
-        elementOptions: {
-          bgColor: data.bgColor,
-          fgColor: data.fgColor,
-          maxWidth: 'var(--fixedWidthMax)',
-        },
+        elementOptions: data.elementOptions || {},
         children: [...buttons],
         styles: {padding: '40px 0', ...baseStyles, ...data.styles},
       },

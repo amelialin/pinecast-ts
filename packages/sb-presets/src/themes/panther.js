@@ -102,7 +102,9 @@ export default {
     ],
     footer: [
       paginationForwardBackFixed({
-        fgColor: 'secondaryBackground',
+        elementOptions: {
+          fgColor: 'secondaryBackground',
+        },
         nextText: 'Back in time',
         previousText: 'Onward to the Future',
       }),

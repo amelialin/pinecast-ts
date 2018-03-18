@@ -3,7 +3,7 @@ import Tooltip from 'rc-tooltip';
 
 import styled from '@pinecast/styles';
 
-import {colorKeyNames} from '../../constants';
+import colorKeyNames from '../../shared/colorNames';
 
 import './rc-tooltip.css';
 

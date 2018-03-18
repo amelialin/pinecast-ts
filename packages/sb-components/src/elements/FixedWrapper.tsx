@@ -36,7 +36,7 @@ export default ({
       style={{
         backgroundColor: getEO(element, 'fgColor'),
         margin: '0 auto',
-        maxWidth: getEO(element, 'maxWidth', 'var(--fixedWidthMax)'),
+        maxWidth: 'var(--fixedWidthMax)',
         padding: getEO(element, 'innerPadding'),
         ...element.styles,
       }}

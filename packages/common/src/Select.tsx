@@ -12,7 +12,7 @@ const Wrapper = styled('div', {
     '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
   display: 'flex',
   fontSize: 14,
-  height: '1.75em',
+  height: 30,
   marginBottom: 20,
   opacity: 1,
   position: 'relative',
