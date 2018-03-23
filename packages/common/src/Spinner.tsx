@@ -7,7 +7,7 @@ import './Spinner.css';
 const typeStyles = {
   default: null,
   focus: {
-    backgroundColor: '#8d52d1',
+    backgroundColor: '#708d9e',
   },
   subtle: {
     backgroundColor: '#fff',

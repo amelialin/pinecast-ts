@@ -300,7 +300,7 @@ export default class SchemaOrderedSet extends React.PureComponent {
     }
     return (
       <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-        <Button size="small" onClick={this.handleOpenMenu}>
+        <Button size="small" onMouseDown={this.handleOpenMenu}>
           Add an item
         </Button>
         <ContextMenu

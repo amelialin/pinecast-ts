@@ -29,7 +29,7 @@ type SharedProps = {
   canEscape?: boolean;
 };
 
-export default class ModalLayer extends React.PureComponent {
+export default class ModalLayer extends React.Component {
   props: {
     children: JSX.Element | Array<JSX.Element>;
     open: boolean;

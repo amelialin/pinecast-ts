@@ -14,6 +14,8 @@ const Badge = styled('span', {
   padding: '2px 5px 3px',
 });
 
-const ProBadge = () => <Badge>Pro</Badge>;
+const ProBadge = ({style}: {style?: React.CSSProperties}) => (
+  <Badge style={style}>Pro</Badge>
+);
 
 export default ProBadge;

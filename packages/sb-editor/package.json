@@ -19,9 +19,6 @@
     "@pinecast/xhr": "^1.0.0",
     "@types/redux-thunk": "^2.1.0",
     "@types/showdown": "^1.7.3",
-    "babel-loader": "^7.1.4",
-    "babel-minify-webpack-plugin": "^0.3.0",
-    "babel-preset-stage-3": "^6.24.1",
     "rc-tooltip": "^3.7.0",
     "react-color": "^2.14.0",
     "react-list": "^0.8.8",
@@ -31,7 +28,6 @@
     "redux-thunk": "^2.2.0",
     "resize-observer-polyfill": "^1.5.0",
     "sanitize-html": "^1.18.2",
-    "showdown": "^1.8.6",
-    "webpack-dev-server": "^3.1.1"
+    "showdown": "^1.8.6"
   }
 }

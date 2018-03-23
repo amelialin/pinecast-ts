@@ -1,12 +1,10 @@
 {
-  "name": "@pinecast/sb-components",
+  "name": "@pinecast/db-upgrade",
   "version": "1.0.0",
   "main": "src/",
   "ts:main": "src/index.ts",
   "dependencies": {
     "@pinecast/styles": "^1.0.0",
-    "@pinecast/sb-presets": "^1.0.0",
-    "markdown-it": "^8.2.1",
-    "md5": "^2.2.1"
+    "@pinecast/xhr": "^1.0.0"
   }
 }

@@ -1,13 +1,27 @@
+let CSRF_TOKEN = '';
+if (typeof document !== 'undefined') {
+  const csrfMeta = document.querySelector('meta[name=csrf]');
+  if (csrfMeta) {
+    const csrfToken = csrfMeta.getAttribute('content');
+    if (csrfToken) {
+      CSRF_TOKEN = csrfToken;
+    }
+  }
+}
+
 export interface Options {
   body?: string | FormData | null;
   headers?: {[name: string]: string};
   method?: 'GET' | 'POST' | 'PUT' | 'HEAD' | 'DELETE';
   url: string;
 
+  noCSRFToken?: boolean;
   abortPromise?: Promise<void> | null;
   onProgress?: (percent: number) => void;
 }
-export default function(args: Options | string): Promise<string> {
+export default function(
+  args: Options | string,
+): Promise<string> & {xhr: XMLHttpRequest} {
   let url;
   let headers: Options['headers'] = {};
   let method = 'GET';
@@ -30,10 +44,13 @@ export default function(args: Options | string): Promise<string> {
     if (args.onProgress) {
       onProgress = args.onProgress || null;
     }
+    if (!args.noCSRFToken) {
+      headers['X-CSRFToken'] = CSRF_TOKEN;
+    }
   }
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
 
+  const xhr = new XMLHttpRequest();
+  const out = new Promise<string>((resolve, reject) => {
     if (onProgress) {
       xhr.upload.addEventListener(
         'progress',
@@ -78,4 +95,7 @@ export default function(args: Options | string): Promise<string> {
       reject();
     });
   });
+
+  (out as any).xhr = xhr;
+  return out as any;
 }

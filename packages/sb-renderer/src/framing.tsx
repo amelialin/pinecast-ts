@@ -28,7 +28,7 @@ function fontMapper(fontFamily): string | null {
 
   return `<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=${escapeHTML(
     encodeURIComponent(fontFamily),
-  )}:400,500,600">`;
+  )}:400,500">`;
 }
 
 export default async function frame(

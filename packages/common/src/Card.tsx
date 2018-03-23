@@ -4,31 +4,19 @@ import styled from '@pinecast/styles';
 
 import {DEFAULT_FONT} from './constants';
 
-function boxShadow(shadow: boolean, hairline: boolean, canFocus: boolean) {
-  const focusPlaceholder = canFocus ? ', 0 0 0 transparent' : '';
-  if (shadow && hairline) {
-    return `0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)${focusPlaceholder}`;
-  }
-  if (shadow) {
-    return `0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05)${focusPlaceholder}`;
-  }
-  if (hairline) {
-    return `0 0 0 0.5px rgba(0, 0, 0, .15)${focusPlaceholder}`;
-  }
-}
-
 const style = ({
-  $canFocus,
   $shadow,
-  $hairline,
+  $whiteBack,
 }: {
-  $canFocus: boolean;
   $shadow: boolean;
-  $hairline: boolean;
+  $whiteBack: boolean;
 }) => ({
+  backgroundColor: $whiteBack ? '#fff' : undefined,
   border: 0,
   borderRadius: 2,
-  boxShadow: boxShadow($shadow, $hairline, $canFocus),
+  boxShadow: $shadow
+    ? '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05)'
+    : undefined,
   display: 'flex',
   flexDirection: 'column',
   fontFamily: DEFAULT_FONT,
@@ -54,28 +42,26 @@ function getCard(type: string): React.ComponentType<{[key: string]: any}> {
 }
 
 const Card = ({
-  canFocus,
   children,
-  hairline = true,
   shadow = true,
   tabindex = null,
   type = 'div',
+  whiteBack = false,
   ...rest
 }: {
-  canFocus?: boolean;
   children: any;
   hairline?: boolean;
   shadow?: boolean;
   tabindex?: number | null;
   type?: string;
+  whiteBack?: boolean;
   [key: string]: any;
 }) => {
   const Card_ = getCard(type);
   return (
     <Card_
-      $canFocus={tabindex !== -1 || canFocus}
-      $hairline={hairline}
       $shadow={shadow}
+      $whiteBack={whiteBack}
       tabIndex={tabindex}
       {...rest}
     >

@@ -2,38 +2,43 @@ import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/styles';
 
+import {Children} from './types';
+
 const Wrapper = styled('div', {
   display: 'inline-flex',
 });
 
-export type Children = Array<
-  Array<JSX.Element | false | null> | JSX.Element | false | null
->;
 function collapseChildren(
   spacing: number,
   children: Children,
   style: CSS | undefined,
   offset: number,
 ) {
-  return React.Children.map(children.filter(x => x), (child: any, i) => {
-    if (i + offset === 0) {
-      if (style) {
-        return React.cloneElement(child, {style});
-      } else {
-        return child;
+  if (!children) {
+    return children;
+  }
+  return React.Children.map(
+    Array.isArray(children) ? children.filter(x => x) : children,
+    (child: any, i) => {
+      if (i + offset === 0) {
+        if (style) {
+          return React.cloneElement(child, {style});
+        } else {
+          return child;
+        }
       }
-    }
-    if (child.type === React.Fragment) {
-      return collapseChildren(spacing, child.props.children, style, i);
-    }
-    return React.cloneElement(child, {
-      style: {
-        ...style,
-        ...child.props.style,
-        marginLeft: spacing,
-      },
-    });
-  });
+      if (child.type === React.Fragment) {
+        return collapseChildren(spacing, child.props.children, style, i);
+      }
+      return React.cloneElement(child, {
+        style: {
+          ...style,
+          ...child.props.style,
+          marginLeft: spacing,
+        },
+      });
+    },
+  );
 }
 
 const Group = ({

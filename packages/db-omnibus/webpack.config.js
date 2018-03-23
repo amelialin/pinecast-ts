@@ -23,15 +23,15 @@ module.exports = env => {
             blacklist: ['Buffer'],
           },
         },
-        // {sourceMap: 'source-maps'},
+        {sourceMap: 'source-maps'},
       ),
     );
   }
 
   return {
-    devtool: 'source-maps',
+    devtool: env === 'prod' ? false : 'source-maps',
     entry: {
-      index: './src/index.ts',
+      index: './src/index.tsx',
     },
     resolve: {
       alias: require('../../webpack.aliases'),
@@ -42,8 +42,8 @@ module.exports = env => {
     output: {
       path: path.resolve(__dirname, 'build'),
       publicPath: '/',
-      filename: 'index.js',
-      chunkFilename: '[name].chunk.js',
+      filename: 'db-omnibus.js',
+      chunkFilename: 'db-omnibus.[name].chunk.js',
     },
     plugins,
     mode: env === 'prod' ? 'production' : 'development',
@@ -77,7 +77,7 @@ module.exports = env => {
     },
     devServer: {
       contentBase: __dirname,
-      port: 8001,
+      port: 8002,
       publicPath: '/build/',
 
       headers: {

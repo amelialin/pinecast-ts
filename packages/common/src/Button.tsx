@@ -2,10 +2,20 @@ import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/styles';
 
+import {Children} from './types';
 import {DEFAULT_FONT} from './constants';
-import Group, {Children as GroupChildren} from './Group';
+import Group from './Group';
 import KeyboardShortcut, {ShortcutKey} from './KeyboardShortcut';
 import Spinner from './Spinner';
+
+const spinnerStyle: React.CSSProperties = {
+  bottom: 0,
+  left: 0,
+  margin: 'auto',
+  position: 'absolute',
+  right: 0,
+  top: 0,
+};
 
 const NativeButton = styled(
   'button',
@@ -27,7 +37,7 @@ const NativeButton = styled(
     borderRadius: 3,
     boxShadow:
       '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15), 0 0 0 transparent inset',
-    color: $isPrimary ? '#fff' : '#000',
+    color: $pending ? 'transparent' : $isPrimary ? '#fff' : '#000',
     cursor: 'pointer',
     display: $isBlock ? 'flex' : 'inline-flex',
     fontFamily: DEFAULT_FONT,
@@ -39,7 +49,8 @@ const NativeButton = styled(
     padding:
       $size === 'normal' ? '0 16px' : $size === 'small' ? '0 12px' : '0 20px',
     pointerEvents: $pending || disabled ? 'none' : null,
-    transition: 'box-shadow 0.2s, opacity 0.2s',
+    position: 'relative',
+    transition: 'box-shadow 0.2s, color 0.2s, opacity 0.2s',
     userSelect: 'none',
 
     ':hover': {
@@ -77,48 +88,92 @@ const keyboardShortcutStyles: React.CSSProperties = {
   opacity: 0.5,
 };
 
-const Button = ({
-  children,
-  className,
-  pending,
-  shortcut,
-  size = 'normal',
-  style,
-  ...rest
-}: {
-  children: JSX.Element | string | Array<JSX.Element | Array<JSX.Element>>;
-  className?: string;
-  disabled?: boolean;
-  $isBlock?: boolean;
-  $isPrimary?: boolean;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  pending?: boolean;
-  shortcut?: ShortcutKey;
-  size?: 'normal' | 'small' | 'large';
-  style?: CSS;
-  [key: string]: any;
-}) => (
-  <NativeButton
-    className={className}
-    $pending={pending}
-    $size={size}
-    {...rest}
-    style={style}
-    type={rest.type || 'button'}
-  >
-    {pending ? <Spinner type="subtle" /> : children}
-    {shortcut ? (
-      <KeyboardShortcut {...shortcut} style={keyboardShortcutStyles} />
-    ) : null}
-  </NativeButton>
-);
+export default class Button extends React.PureComponent {
+  props: {
+    autoFocus?: boolean;
+    children: JSX.Element | string | Array<JSX.Element | Array<JSX.Element>>;
+    className?: string;
+    disabled?: boolean;
+    href?: string;
+    $isBlock?: boolean;
+    $isPrimary?: boolean;
+    onClick?: () => void;
+    onMouseDown?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onMouseUp?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    pending?: boolean;
+    shortcut?: ShortcutKey;
+    size?: 'normal' | 'small' | 'large';
+    style?: CSS;
+    tabIndex?: number;
+    title?: string;
+    type?: 'submit' | 'button';
+  };
 
-export default Button;
+  static defaultProps = {size: 'normal', type: 'button'};
+
+  handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (this.props.href) {
+      window.location.href = this.props.href;
+    }
+    if (this.props.onClick) {
+      this.props.onClick();
+    }
+  };
+
+  render() {
+    const {
+      $isBlock,
+      $isPrimary,
+      autoFocus,
+      children,
+      className,
+      onMouseDown,
+      onMouseUp,
+      pending,
+      shortcut,
+      size,
+      style,
+      tabIndex,
+      title,
+      type,
+    } = this.props;
+
+    return (
+      <NativeButton
+        $isPrimary={$isPrimary}
+        $isBlock={$isBlock}
+        autoFocus={autoFocus}
+        className={className}
+        $pending={pending}
+        $size={size}
+        onClick={this.handleClick}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        style={style}
+        tabIndex={tabIndex}
+        title={title}
+        type={type}
+      >
+        {pending && (
+          <Spinner
+            style={spinnerStyle}
+            type={$isPrimary ? 'subtle' : 'focus'}
+          />
+        )}
+        {children}
+        {shortcut ? (
+          <KeyboardShortcut {...shortcut} style={keyboardShortcutStyles} />
+        ) : null}
+      </NativeButton>
+    );
+  }
+}
 
 export const ButtonGroup = ({
   children,
   style,
 }: {
-  children: GroupChildren;
+  children: Children;
   style?: React.CSSProperties;
 }) => <Group spacing={8}>{children}</Group>;
