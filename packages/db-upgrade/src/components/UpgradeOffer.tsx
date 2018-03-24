@@ -5,8 +5,6 @@ import styled from '@pinecast/styles';
 import xhr from '@pinecast/xhr';
 
 import CouponModal from './CouponModal';
-import OfferStarter from './offers/OfferStarter';
-import OfferPro from './offers/OfferPro';
 import {Plan} from '../types';
 
 const ErrorMessage = styled('span', {
@@ -47,6 +45,7 @@ export default class UpgradeOffer extends React.PureComponent {
     canUseCoupon: boolean;
     currentPlan: Plan;
     onUpgrade: (newPlan: Plan) => void;
+    stripeKey: string;
     toPlan: Plan;
   };
   state: {
@@ -139,11 +138,10 @@ export default class UpgradeOffer extends React.PureComponent {
     const {props: {currentPlan, toPlan}, state: {error, pending}} = this;
 
     const errorMessage = error ? <ErrorMessage>{error}</ErrorMessage> : null;
-    const warning = <Warning>Upgrading takes effect immediately.</Warning>;
 
     if (toPlan === 'starter') {
       return (
-        <OfferStarter>
+        <React.Fragment>
           {errorMessage}
           <FauxButtonGroup>
             <Button
@@ -155,11 +153,11 @@ export default class UpgradeOffer extends React.PureComponent {
             </Button>
           </FauxButtonGroup>
           {this.renderCouponStuff()}
-        </OfferStarter>
+        </React.Fragment>
       );
     } else if (toPlan === 'pro') {
       return (
-        <OfferPro>
+        <React.Fragment>
           {errorMessage}
           <FauxButtonGroup>
             <Button
@@ -171,7 +169,7 @@ export default class UpgradeOffer extends React.PureComponent {
             </Button>
           </FauxButtonGroup>
           {this.renderCouponStuff()}
-        </OfferPro>
+        </React.Fragment>
       );
     }
 

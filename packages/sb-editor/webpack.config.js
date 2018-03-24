@@ -35,6 +35,7 @@ module.exports = env => {
     },
     resolve: {
       alias: require('../../webpack.aliases'),
+      aliasFields: ['es2017', 'es2015', 'browser'],
       extensions: ['.ts', '.tsx', '.js', '.json'],
       mainFields: ['ts:main', 'jsnext:main', 'module', 'main'],
       modules: ['node_modules'],

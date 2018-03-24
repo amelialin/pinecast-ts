@@ -91,7 +91,7 @@ const keyboardShortcutStyles: React.CSSProperties = {
 export default class Button extends React.PureComponent {
   props: {
     autoFocus?: boolean;
-    children: JSX.Element | string | Array<JSX.Element | Array<JSX.Element>>;
+    children: Children;
     className?: string;
     disabled?: boolean;
     href?: string;

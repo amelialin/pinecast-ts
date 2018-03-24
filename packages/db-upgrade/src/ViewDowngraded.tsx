@@ -5,6 +5,7 @@ import styled from '@pinecast/styles';
 import Headline from './components/Headline';
 import DowngradeOffer from './components/DowngradeOffer';
 import {Plan} from './types';
+import State from './State';
 
 const Copy = styled('p', {
   fontSize: 16,
@@ -14,26 +15,24 @@ const Copy = styled('p', {
   textAlign: 'left',
 });
 
-const ViewDowngraded = ({
-  currentPlan,
-  onDowngrade,
-}: {
-  currentPlan: Plan;
-  onDowngrade: (newPlan: Plan) => void;
-}) => (
-  <div style={{paddingBottom: 150}}>
-    <Headline>Your subscription has been updated.</Headline>
-    <Copy>
-      We've updated your subscription to the Starter plan, as you've requested.
-      Any unused credit from your previous subscription has been applied as
-      prorated credit to your Starter subscription.
-    </Copy>
-    <Copy>
-      If there's anything we can help you to adjust to the changes, please don't
-      hesitate to let us know.
-    </Copy>
-    <DowngradeOffer currentPlan={currentPlan} onDowngrade={onDowngrade} />
-  </div>
+const ViewDowngraded = ({currentPlan}: {currentPlan: Plan}) => (
+  <State>
+    {({onDowngraded}) => (
+      <div style={{paddingBottom: 150}}>
+        <Headline>Your subscription has been updated.</Headline>
+        <Copy>
+          We've updated your subscription to the Starter plan, as you've
+          requested. Any unused credit from your previous subscription has been
+          applied as prorated credit to your Starter subscription.
+        </Copy>
+        <Copy>
+          If there's anything we can help you to adjust to the changes, please
+          don't hesitate to let us know.
+        </Copy>
+        <DowngradeOffer currentPlan={currentPlan} onDowngrade={onDowngraded} />
+      </div>
+    )}
+  </State>
 );
 
 export default ViewDowngraded;

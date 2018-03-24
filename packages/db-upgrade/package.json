@@ -5,6 +5,8 @@
   "ts:main": "src/index.ts",
   "dependencies": {
     "@pinecast/styles": "^1.0.0",
-    "@pinecast/xhr": "^1.0.0"
+    "@pinecast/xhr": "^1.0.0",
+    "create-react-context": "^0.2.1",
+    "react-dom-confetti": "^0.0.8"
   }
 }
