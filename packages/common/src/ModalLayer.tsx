@@ -22,7 +22,8 @@ const Container = styled('div', {
   flex: '0 0 100%',
   maxHeight: '100%',
   overflowY: 'auto',
-  padding: 20,
+  padding: '15vh 20px',
+  width: '100%',
 });
 
 type SharedProps = {

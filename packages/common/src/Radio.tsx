@@ -10,13 +10,13 @@ const WrapperLabel = styled(
     display: 'flex',
     padding: '0 0 20px',
 
-    ':not(:empty) + .Checkbox--WrapperLabel': {
+    ':not(:empty) + .Radio--WrapperLabel': {
       marginTop: -12,
     },
   },
-  {className: 'Checkbox--WrapperLabel'},
+  {className: 'Radio--WrapperLabel'},
 );
-const InvisibleCheckbox = styled(
+const InvisibleRadio = styled(
   'input',
   {
     border: 0,
@@ -28,24 +28,34 @@ const InvisibleCheckbox = styled(
     padding: 0,
     width: 0,
 
-    ':checked + .checkBox-text::after': {
-      opacity: 1,
-      transform: 'scale(1)',
-    },
-
     ':focus': {
       outline: 'none',
     },
-    ':focus + .checkBox-text::before': {
-      boxShadow: '0 0 0 2px #c9d9e0',
+    ':focus + .Radio-text::before': {
+      boxShadow:
+        'inset 0 0 0 1px #b0b5b5, inset 0 0 0 0 #708d9e, 0 0 0 2px #c9d9e0',
+    },
+    ':checked + .Radio-text::before': {
+      boxShadow:
+        'inset 0 0 0 0 #b0b5b5, inset 0 0 0 5px #708d9e, 0 0 0 0 #c9d9e0',
+    },
+    ':checked:focus + .Radio-text::before': {
+      boxShadow:
+        'inset 0 0 0 0 #b0b5b5, inset 0 0 0 5px #708d9e, 0 0 0 2px #c9d9e0',
     },
   },
-  {type: 'checkbox'},
+  {type: 'radio'},
 );
 
 const Text = styled(
   'div',
-  ({$disabled}: {$disabled: boolean}) => ({
+  ({
+    $alignInput,
+    $disabled,
+  }: {
+    $alignInput: 'top' | 'center';
+    $disabled: boolean;
+  }) => ({
     display: 'flex',
     fontFamily: DEFAULT_FONT,
     fontSize: 14,
@@ -58,52 +68,38 @@ const Text = styled(
 
     '::before': {
       background: '#fff',
-      border: '1px solid #b0b5b5',
-      borderRadius: 3,
+      borderRadius: '100%',
       bottom: 0,
-      boxShadow: '0 0 0 transparent',
+      boxShadow:
+        'inset 0 0 0 1px #b0b5b5, inset 0 0 0 0 #708d9e, 0 0 0 0 #c9d9e0',
       content: '""',
       height: 16,
       left: 0,
-      margin: 'auto',
+      margin: $alignInput === 'top' ? '0 auto auto' : 'auto',
       position: 'absolute',
       top: 0,
       transition: 'box-shadow 0.2s',
       width: 16,
       zIndex: 1,
     },
-    '::after': {
-      backgroundImage:
-        "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3e%3cpath fill='%2332586e' d='M0 11.522l1.578-1.626 7.734 4.619 13.335-12.526 1.353 1.354-14 18.646z'/%3e%3c/svg%3e\")",
-      backgroundSize: 'contain',
-      bottom: 0,
-      content: '""',
-      filter: 'drop-shadow(0 2px 2px rgba(0, 0, 0, 0.15))',
-      height: 18,
-      left: -1,
-      margin: 'auto',
-      opacity: 0,
-      position: 'absolute',
-      top: 0,
-      transform: 'scale(0.75)',
-      transition: 'transform 0.2s, opacity 0.2s',
-      width: 18,
-      zIndex: 2,
-    },
   }),
-  {className: 'checkBox-text'},
+  {className: 'Radio-text'},
 );
 
-const Checkbox = ({
+const Radio = ({
+  alignInput = 'center',
   checked,
   disabled,
+  name,
   onChange,
   style,
   tabIndex,
   text,
 }: {
+  alignInput?: 'top' | 'center';
   checked: boolean;
   disabled?: boolean;
+  name: string;
   onChange: (checkedValue: boolean) => void;
   style?: React.CSSProperties;
   tabIndex?: number;
@@ -111,17 +107,20 @@ const Checkbox = ({
 }) => {
   return (
     <WrapperLabel style={style}>
-      <InvisibleCheckbox
+      <InvisibleRadio
         checked={checked}
         disabled={disabled}
+        name={name}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           onChange(e.target.checked)
         }
         tabIndex={tabIndex}
       />
-      <Text $disabled={disabled}>{text}</Text>
+      <Text $alignInput={alignInput} $disabled={disabled}>
+        {text}
+      </Text>
     </WrapperLabel>
   );
 };
 
-export default Checkbox;
+export default Radio;

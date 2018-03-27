@@ -1,7 +1,10 @@
 import * as React from 'react';
 
-export default ({color = '#58595B'}: {color?: string}) => (
-  <svg width="21" height="24" xmlns="http://www.w3.org/2000/svg">
+export default ({
+  color = '#58595B',
+  ...rest
+}: {color?: string} & React.SVGAttributes<SVGSVGElement>) => (
+  <svg width="21" height="24" xmlns="http://www.w3.org/2000/svg" {...rest}>
     <g
       stroke={color}
       fill="none"

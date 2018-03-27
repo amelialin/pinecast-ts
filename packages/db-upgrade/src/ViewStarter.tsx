@@ -8,21 +8,21 @@ import Headline from './components/Headline';
 import OfferPro from './components/offers/OfferPro';
 import {Plan} from './types';
 import State from './State';
-import UpgradeOffer from './components/UpgradeOffer';
+import {UpgradeOfferWithModal} from './components/UpgradeOffer';
 
-const ViewPro = () => (
+const ViewStarter = () => (
   <State>
-    {({onDowngraded, onUpgraded, stripeKey}) => (
+    {({onDowngraded, onUpgraded}) => (
       <div style={{paddingBottom: 150}}>
         <Headline>
           Ready to go <ProBadge style={{fontSize: '1em', paddingRight: 7}} />?
         </Headline>
         <OfferPro>
-          <UpgradeOffer
+          <UpgradeOfferWithModal
             canUseCoupon={false}
+            chargeCard={false}
             currentPlan="starter"
             onUpgrade={onUpgraded}
-            stripeKey={stripeKey}
             toPlan="pro"
           />
         </OfferPro>
@@ -32,4 +32,4 @@ const ViewPro = () => (
   </State>
 );
 
-export default ViewPro;
+export default ViewStarter;

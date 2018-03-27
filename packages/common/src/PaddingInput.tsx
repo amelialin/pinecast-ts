@@ -80,7 +80,7 @@ export default class PaddingInput extends React.PureComponent {
     const {
       disabled,
       tabIndex,
-      unit,
+      unit = 'px',
       value: {top, right, bottom, left},
     } = this.props;
 

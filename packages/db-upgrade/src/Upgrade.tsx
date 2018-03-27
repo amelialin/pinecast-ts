@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {StripeProvider} from 'react-stripe-elements';
 
 import {Plan} from './types';
 import {Provider} from './State';
@@ -22,6 +23,7 @@ export default class Upgrade extends React.Component {
 
   props: {
     currentPlan: Plan;
+    email: string;
     hasCustomer: boolean;
     stripeKey: string;
   };
@@ -47,6 +49,7 @@ export default class Upgrade extends React.Component {
     this.setState({downgraded: newPlan, upgraded: null});
   };
   handlePlanUpgraded = (newPlan: Plan) => {
+    window.scrollTo(0, 0);
     this.setState({downgraded: null, upgraded: newPlan});
   };
 
@@ -92,6 +95,10 @@ export default class Upgrade extends React.Component {
   }
 
   render() {
-    return <Provider value={this.getValue()}>{this.renderInner()}</Provider>;
+    return (
+      <StripeProvider apiKey={this.props.stripeKey}>
+        <Provider value={this.getValue()}>{this.renderInner()}</Provider>
+      </StripeProvider>
+    );
   }
 }

@@ -17,7 +17,7 @@ export default class Layer extends React.PureComponent {
     portal.style.position = 'absolute';
     portal.style.left = props.x ? `${props.x}px` : '0';
     portal.style.top = props.y ? `${props.y}px` : '0';
-    portal.style.zIndex = '10';
+    portal.style.zIndex = '100';
     this.portal = portal;
     document.body.appendChild(portal);
   }

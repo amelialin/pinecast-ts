@@ -7,7 +7,7 @@ import {DEFAULT_FONT} from '@pinecast/common/constants';
 const InputWrapper = styled('div', ({$disabled}: {$disabled: boolean}) => ({
   alignItems: 'center',
   backgroundColor: '#fff',
-  border: $disabled ? '1px solid #eee' : '1px solid #ccc',
+  border: $disabled ? '1px solid #dee1df' : '1px solid #b0b5b5',
   borderRadius: 4,
   display: 'flex',
   height: 32,
@@ -17,7 +17,8 @@ const Input = styled('input', {
   background: 'transparent',
   border: 0,
   borderRadius: 4,
-  boxShadow: '0 0 0 0 #c9d9e0',
+  boxShadow: '0 0 0 0 #c6caca, 0 0 0 0 #c9d9e0',
+  color: '#44484d',
   flex: '1 1',
   fontFamily: DEFAULT_FONT,
   fontSize: 14,
@@ -27,7 +28,7 @@ const Input = styled('input', {
   width: '100%',
 
   ':focus': {
-    boxShadow: '0 0 0 3px #c9d9e0',
+    boxShadow: '0 0 0 1px #c6caca, 0 0 0 3px #c9d9e0',
     outline: 'none',
   },
 
@@ -43,6 +44,9 @@ const Input = styled('input', {
   ':disabled': {
     opacity: 0.5,
   },
+
+  '::placeholder': {color: '#c6caca'},
+  '::-webkit-placeholder': {color: '#c6caca'},
 });
 
 const Prefix = styled('span', {
@@ -51,7 +55,7 @@ const Prefix = styled('span', {
   color: '#333',
   flex: '0 0',
   height: '100%',
-  lineHeight: '32px',
+  lineHeight: '30px',
   padding: '0 8px',
 });
 const Suffix = styled('span', {
@@ -60,7 +64,7 @@ const Suffix = styled('span', {
   color: '#333',
   flex: '0 0',
   height: '100%',
-  lineHeight: '32px',
+  lineHeight: '30px',
   padding: '0 8px',
 });
 

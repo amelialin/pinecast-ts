@@ -2,6 +2,8 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
+import {DEFAULT_FONT} from './constants';
+
 const Wrapper = styled(
   'div',
   ({$size}: {$size: 'small' | 'medium' | 'large'}) => ({
@@ -11,10 +13,13 @@ const Wrapper = styled(
       'rgba(0, 0, 0, 0.2) 0px 3px 12px, rgba(0, 0, 0, 0.2) 0px 10px 20px',
     display: 'flex',
     flexDirection: 'column',
+    fontFamily: DEFAULT_FONT,
+    margin: '0 auto',
     maxWidth: $size === 'small' ? 400 : $size === 'medium' ? 625 : 850,
-    minWidth: $size === 'small' ? 350 : $size === 'medium' ? 550 : 650,
+    // minWidth: $size === 'small' ? 350 : $size === 'medium' ? 550 : 650,
     overflow: 'hidden',
     textAlign: 'left',
+    width: '100%',
   }),
 );
 const Header = styled('header', {

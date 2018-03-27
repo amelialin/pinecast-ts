@@ -1,10 +1,15 @@
+import {injectStripe} from 'react-stripe-elements';
 import * as React from 'react';
 
 import Button from '@pinecast/common/Button';
+import Dialog from '@pinecast/common/Dialog';
+import ModalLayer from '@pinecast/common/ModalLayer';
 import styled from '@pinecast/styles';
 import xhr from '@pinecast/xhr';
 
 import CouponModal from './CouponModal';
+import CreditCardForm from './CreditCardForm';
+import Elements from './Elements';
 import {Plan} from '../types';
 
 const ErrorMessage = styled('span', {
@@ -40,14 +45,23 @@ const FauxButtonGroup = styled('div', {
   },
 });
 
-export default class UpgradeOffer extends React.PureComponent {
-  props: {
-    canUseCoupon: boolean;
-    currentPlan: Plan;
-    onUpgrade: (newPlan: Plan) => void;
-    stripeKey: string;
-    toPlan: Plan;
-  };
+type SharedProps = {
+  canUseCoupon: boolean;
+  chargeCard: boolean;
+  currentPlan: Plan;
+  onUpgrade: (newPlan: Plan) => void;
+  toPlan: Plan;
+};
+
+type RawProps = {
+  onRequestPayment: (reason: 'badCard' | 'noCard') => Promise<void>;
+};
+
+class UpgradeOffer_ extends React.PureComponent {
+  props: SharedProps &
+    RawProps & {
+      stripe: {createToken: () => Promise<{token: {id: string}}>};
+    };
   state: {
     coupon: string | null;
     error: JSX.Element | string | null;
@@ -69,6 +83,18 @@ export default class UpgradeOffer extends React.PureComponent {
     if (this.state.coupon) {
       data.append('coupon', this.state.coupon);
     }
+
+    if (this.props.chargeCard) {
+      try {
+        const {token: {id}} = await this.props.stripe.createToken();
+        data.append('token', id);
+      } catch (e) {
+        console.error(e);
+        this.setError('We could not contact our payments provider.');
+        return;
+      }
+    }
+
     try {
       const req = xhr({
         method: 'POST',
@@ -81,10 +107,17 @@ export default class UpgradeOffer extends React.PureComponent {
 
       if (response.error) {
         switch (response.error) {
-          case 'card_error':
-            this.setError(
-              'We were unable to charge the card associated with your account.',
-            );
+          case 'card':
+            this.setState({error: null, pending: false});
+            try {
+              await this.props.onRequestPayment('badCard');
+              return this.doUpgrade(toPlan);
+            } catch (e) {
+              console.error(e);
+              this.setError(
+                `There was a problem processing your payment: ${e}`,
+              );
+            }
             return;
           case 'coupon':
             this.setError(
@@ -92,6 +125,7 @@ export default class UpgradeOffer extends React.PureComponent {
             );
             return;
           default:
+            console.error(response.error);
             this.setError('There was a problem while processing your request.');
             return;
         }
@@ -178,3 +212,129 @@ export default class UpgradeOffer extends React.PureComponent {
     );
   }
 }
+
+const UpgradeOffer = injectStripe(UpgradeOffer_) as React.ComponentType<
+  SharedProps & RawProps
+>;
+export default UpgradeOffer;
+
+const ErrorWrapper = styled('div', {
+  color: '#BF1D1D',
+  fontSize: 12,
+  margin: '12px auto',
+  textAlign: 'center',
+});
+
+class UpgradeOfferWithModal_ extends React.Component {
+  props: SharedProps;
+  state: {
+    cardProvided: boolean;
+    cardResolver: (() => void) | null;
+    error: string | null;
+    runningCard: boolean;
+    showingCardModal: boolean;
+  } = {
+    cardProvided: false,
+    cardResolver: null,
+    error: null,
+    runningCard: false,
+    showingCardModal: false,
+  };
+
+  renderError() {
+    if (!this.state.error) {
+      return null;
+    }
+    return <ErrorWrapper>{this.state.error}</ErrorWrapper>;
+  }
+
+  handleCardReadyChange = (ready: boolean) => {
+    this.setState({cardProvided: ready});
+  };
+  handleModalClose = () => {};
+  handleRunCard = () => {
+    this.setState({error: null, runningCard: true});
+    if (this.state.cardResolver) {
+      this.state.cardResolver();
+    }
+  };
+  renderCardModal() {
+    return (
+      <ModalLayer
+        canEscape={false}
+        onClose={this.handleModalClose}
+        open={this.state.showingCardModal}
+      >
+        <Dialog
+          actions={
+            <Button
+              $isPrimary
+              disabled={!this.state.cardProvided}
+              onClick={this.handleRunCard}
+              pending={this.state.runningCard}
+            >
+              Run card
+            </Button>
+          }
+          size="small"
+          title="We need an up-to-date credit card"
+        >
+          {this.renderError()}
+          <CreditCardForm onReadyChange={this.handleCardReadyChange} />
+        </Dialog>
+      </ModalLayer>
+    );
+  }
+
+  getError(reason: 'badCard' | 'noCard'): string {
+    switch (reason) {
+      case 'badCard':
+        return 'Your bank declined our charge to your card.';
+      case 'noCard':
+        return "We don't hae an up-to-date card for your account.";
+      default:
+        return 'Something went wrong.';
+    }
+  }
+
+  handleRequestPayment = (reason: 'badCard' | 'noCard'): Promise<void> => {
+    return new Promise(resolve =>
+      this.setState({
+        cardResolver: resolve,
+        error: this.getError(reason),
+        runningCard: false,
+        showingCardModal: true,
+      }),
+    );
+  };
+  handleUpgrade = (toPlan: Plan) => {
+    this.setState({error: null, showingCardModal: false});
+    this.props.onUpgrade(toPlan);
+  };
+
+  render() {
+    const {error, showingCardModal} = this.state;
+    return (
+      <React.Fragment>
+        {this.renderError()}
+        {this.renderCardModal()}
+        <UpgradeOffer
+          {...this.props}
+          chargeCard={this.props.chargeCard || showingCardModal}
+          onRequestPayment={this.handleRequestPayment}
+          onUpgrade={this.handleUpgrade}
+        />
+      </React.Fragment>
+    );
+  }
+}
+
+const UpgradeOfferWithModalStripe = injectStripe(
+  UpgradeOfferWithModal_,
+) as React.ComponentType<SharedProps>;
+
+export const UpgradeOfferWithModal = (props: SharedProps) => (
+  <Elements>
+    <UpgradeOfferWithModalStripe {...props} />
+  </Elements>
+);
