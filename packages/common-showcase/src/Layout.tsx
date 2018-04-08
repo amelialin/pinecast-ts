@@ -69,7 +69,10 @@ export default class Layout extends React.Component {
           </Sidebar>
           <Rendering>
             {this.state.component && (
-              <Renderer selected={this.state.component} />
+              <Renderer
+                key={this.state.component}
+                selected={this.state.component}
+              />
             )}
           </Rendering>
         </BodyWrapper>

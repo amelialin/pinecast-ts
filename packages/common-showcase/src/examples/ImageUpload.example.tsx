@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {default as ImageUpload} from '@pinecast/common/ImageUpload';
+import ImageUpload from '@pinecast/common/ImageUpload';
 
 export default {
   name: 'Image upload',

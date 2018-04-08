@@ -32,8 +32,31 @@ const Code = styled('code', {
   overflowX: 'scroll',
   padding: 12,
   whiteSpace: 'pre',
-  width: 700,
+  width: '100%',
 });
+
+function getCode(func: Function): string {
+  const raw = func.toString();
+  const replaced = raw
+    .replace(
+      /react__WEBPACK_IMPORTED_MODULE_\d+__\["createElement"\]/g,
+      'React.createElement',
+    )
+    .replace(
+      /_helpers_Toggler__WEBPACK_IMPORTED_MODULE_\d+__\["default"\]/g,
+      'Toggler',
+    )
+    .replace(/react__WEBPACK_IMPORTED_MODULE_\d+__/g, 'React')
+    .replace(
+      /_pinecast_common_(\w+)__WEBPACK_IMPORTED_MODULE_\d+__\["([^"]+)"\]/g,
+      (_, x, y) => (y === 'default' ? x : y),
+    )
+    .replace(
+      /_pinecast_common_(\w+)__WEBPACK_IMPORTED_MODULE_\d+__\[[^\]]+\]/g,
+      (_, x) => x,
+    );
+  return replaced;
+}
 
 export default class Example extends React.Component {
   props: {children: () => JSX.Element; dark?: boolean; title: string};
@@ -51,9 +74,7 @@ export default class Example extends React.Component {
         <Button onClick={this.handleToggleCode} size="small">
           {this.state.showingCode ? 'Hide code' : 'Show code'}
         </Button>
-        {this.state.showingCode && (
-          <Code>{this.props.children.toString()}</Code>
-        )}
+        {this.state.showingCode && <Code>{getCode(this.props.children)}</Code>}
       </Card>
     );
   }

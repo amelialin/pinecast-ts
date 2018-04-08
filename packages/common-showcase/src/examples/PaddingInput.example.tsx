@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {default as PaddingInput} from '@pinecast/common/PaddingInput';
+import PaddingInput from '@pinecast/common/PaddingInput';
 
 export default {
   name: 'Padding input',

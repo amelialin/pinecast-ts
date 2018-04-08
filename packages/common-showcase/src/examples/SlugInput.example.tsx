@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Label from '@pinecast/common/Label';
-import {default as SlugInput, ProviderType} from '@pinecast/common/SlugInput';
+import SlugInput, {ProviderType} from '@pinecast/common/SlugInput';
 import TextInput from '@pinecast/common/TextInput';
 
 class SlugHost extends React.Component {

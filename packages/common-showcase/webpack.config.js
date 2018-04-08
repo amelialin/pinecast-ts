@@ -47,7 +47,7 @@ module.exports = env => {
       chunkFilename: '[name].chunk.js',
     },
     plugins,
-    // mode: env === 'prod' ? 'production' : 'development',
+    mode: env === 'prod' ? 'production' : 'development',
     module: {
       rules: [
         {
@@ -68,6 +68,10 @@ module.exports = env => {
           use: ['style-loader', 'css-loader'],
         },
       ],
+    },
+    optimization: {
+      minimizer: [],
+      splitChunks: false,
     },
     performance: {
       maxAssetSize: 4000000,

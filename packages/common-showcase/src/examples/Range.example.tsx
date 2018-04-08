@@ -5,6 +5,10 @@ import Range from '@pinecast/common/Range';
 
 export default {
   name: 'Range',
+  callout: [
+    {type: 'negative', value: 'No appropriate focus states'},
+    {type: 'negative', value: 'Style guidelines not followed'},
+  ],
   examples: [
     {
       title: 'Basic use',

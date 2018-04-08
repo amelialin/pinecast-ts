@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import {default as Button} from '@pinecast/common/Button';
-import {default as ContextMenu} from '@pinecast/common/ContextMenu';
+import Button from '@pinecast/common/Button';
+import ContextMenu from '@pinecast/common/ContextMenu';
 
 import Toggler from '../helpers/Toggler';
 

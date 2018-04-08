@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {default as LoadingState} from '@pinecast/common/LoadingState';
+import LoadingState from '@pinecast/common/LoadingState';
 
 export default {
   name: 'Loading state',

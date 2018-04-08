@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {Check} from '@pinecast/common/icons';
-import {default as IconButton} from '@pinecast/common/IconButton';
+import IconButton from '@pinecast/common/IconButton';
 
 export default {
   name: 'Icon button',

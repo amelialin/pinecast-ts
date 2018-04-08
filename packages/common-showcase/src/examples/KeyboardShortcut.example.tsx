@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {default as KeyboardShortcut} from '@pinecast/common/KeyboardShortcut';
+import KeyboardShortcut from '@pinecast/common/KeyboardShortcut';
 
 export default {
   name: 'Keyboard shortcut',

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import {default as Radio} from '@pinecast/common/Radio';
-import {default as Label} from '@pinecast/common/Label';
+import Radio from '@pinecast/common/Radio';
+import Label from '@pinecast/common/Label';
 import {InlineCode} from '@pinecast/common/Text';
 
 export default {

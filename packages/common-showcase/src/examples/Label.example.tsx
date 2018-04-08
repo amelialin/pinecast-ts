@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import {default as Label} from '@pinecast/common/Label';
-import {default as TextInput} from '@pinecast/common/TextInput';
+import Label from '@pinecast/common/Label';
+import TextInput from '@pinecast/common/TextInput';
 
 export default {
   name: 'Label',

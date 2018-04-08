@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {default as Spinner} from '@pinecast/common/Spinner';
+import Spinner from '@pinecast/common/Spinner';
 
 export default {
   name: 'Spinner',

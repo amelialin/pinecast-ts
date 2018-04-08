@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import {default as Button} from '@pinecast/common/Button';
-import {default as Collapser} from '@pinecast/common/Collapser';
+import Button from '@pinecast/common/Button';
+import Collapser from '@pinecast/common/Collapser';
 
 import Toggler from '../helpers/Toggler';
 

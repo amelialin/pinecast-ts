@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {default as ErrorState} from '@pinecast/common/ErrorState';
+import ErrorState from '@pinecast/common/ErrorState';
 
 export default {
   name: 'Error state',

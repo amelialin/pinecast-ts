@@ -7,6 +7,8 @@ module.exports = [
         return callback(null, 'null');
       case 'tty':
         return callback(null, '{isatty:function() {}}');
+      case 'module':
+        return callback(null, '{builtinModules:[]}');
 
       case 'bluebird':
       case 'any-promise':

@@ -1,19 +1,9 @@
 import * as React from 'react';
 
-import {default as Callout} from '@pinecast/common/Callout';
+import Callout from '@pinecast/common/Callout';
 
 export default {
   name: 'Callout',
-  callout: [
-    {
-      type: 'negative',
-      value: 'Low contrast on negative',
-    },
-    {
-      type: 'negative',
-      value: 'Low contrast on positive',
-    },
-  ],
   examples: [
     {
       title: 'Info',

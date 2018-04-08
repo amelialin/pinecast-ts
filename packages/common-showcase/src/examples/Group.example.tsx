@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {Check} from '@pinecast/common/icons';
-import {default as Group} from '@pinecast/common/Group';
+import Group from '@pinecast/common/Group';
 
 export default {
   name: 'Group',

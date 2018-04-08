@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {default as Checkbox} from '@pinecast/common/Checkbox';
+import Checkbox from '@pinecast/common/Checkbox';
 
 export default {
   name: 'Checkbox',

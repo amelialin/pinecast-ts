@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {default as EmptyState} from '@pinecast/common/EmptyState';
+import EmptyState from '@pinecast/common/EmptyState';
 
 export default {
   name: 'Empty state',

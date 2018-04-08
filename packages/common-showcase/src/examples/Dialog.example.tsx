@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import {ButtonGroup, default as Button} from '@pinecast/common/Button';
-import {default as Dialog} from '@pinecast/common/Dialog';
-import {default as ModalLayer} from '@pinecast/common/ModalLayer';
+import Dialog from '@pinecast/common/Dialog';
+import ModalLayer from '@pinecast/common/ModalLayer';
 import styled from '@pinecast/styles';
 
 import Toggler from '../helpers/Toggler';

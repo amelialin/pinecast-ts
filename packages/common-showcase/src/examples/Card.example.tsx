@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {default as Card} from '@pinecast/common/Card';
+import Card from '@pinecast/common/Card';
 
 export default {
   name: 'Card',
