@@ -3,6 +3,7 @@ import Callout from './examples/Callout.example';
 import Card from './examples/Card.example';
 import Checkbox from './examples/Checkbox.example';
 import Collapser from './examples/Collapser.example';
+import colors from './examples/colors.example';
 import ContextMenu from './examples/ContextMenu.example';
 import DeleteButton from './examples/DeleteButton.example';
 import Dialog from './examples/Dialog.example';
@@ -52,6 +53,7 @@ export default {
   Card,
   Checkbox,
   Collapser,
+  colors,
   ContextMenu,
   DeleteButton,
   Dialog,
