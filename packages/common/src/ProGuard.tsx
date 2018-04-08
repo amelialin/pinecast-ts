@@ -1,4 +1,3 @@
-import {connect} from 'react-redux';
 import * as React from 'react';
 
 import styled from '@pinecast/styles';
@@ -13,7 +12,7 @@ const ProGuard = ({children, isPro}: {children: any; isPro: boolean}) => {
     return React.Children.only(children);
   }
 
-  return <Guard>{children}</Guard>;
+  return <Guard>{React.Children.only(children)}</Guard>;
 };
 
-export default connect(state => ({isPro: state.isPro}))(ProGuard);
+export default ProGuard;

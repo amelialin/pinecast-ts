@@ -34,5 +34,25 @@ export default {
         />
       ),
     },
+    {
+      title: 'Invalid (all)',
+      render: () => (
+        <PaddingInput
+          invalid
+          onChange={() => {}}
+          value={{top: 0, right: 0, bottom: 0, left: 0}}
+        />
+      ),
+    },
+    {
+      title: 'Invalid (some)',
+      render: () => (
+        <PaddingInput
+          invalid={{top: false, right: false, bottom: true, left: true}}
+          onChange={() => {}}
+          value={{top: 0, right: 0, bottom: 0, left: 0}}
+        />
+      ),
+    },
   ],
 };

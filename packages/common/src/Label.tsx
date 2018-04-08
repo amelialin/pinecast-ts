@@ -35,7 +35,7 @@ const OneLineInputWrap = styled('div', {
 
 const ErrorWrap = styled('div', {
   alignItems: 'center',
-  color: '#EF6B6B',
+  color: '#d24242',
   display: 'flex',
   padding: '4px 0',
 });
@@ -46,7 +46,7 @@ function renderError(error: JSX.Element | string | null): JSX.Element | null {
   }
   return (
     <ErrorWrap>
-      <ErrorFlag color="#EF6B6B" height={20} style={{marginRight: 8}} />
+      <ErrorFlag color="#d24242" height={20} style={{marginRight: 8}} />
       {error}
     </ErrorWrap>
   );

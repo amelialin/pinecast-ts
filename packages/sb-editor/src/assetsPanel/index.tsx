@@ -28,6 +28,7 @@ interface Assets {
 class AssetsPanel extends React.PureComponent {
   props: {
     csrf: string;
+    isPro: boolean;
     slug: string;
 
     onRefresh: () => void;
@@ -65,7 +66,7 @@ class AssetsPanel extends React.PureComponent {
   };
 
   renderInputs() {
-    const {csrf, slug} = this.props;
+    const {csrf, isPro, slug} = this.props;
     const {data} = this.state;
     if (!data) {
       return null;
@@ -86,7 +87,7 @@ class AssetsPanel extends React.PureComponent {
             value={data.site_logo}
           />
         </ImageSettingsUpdate>
-        <ProGuard>
+        <ProGuard isPro={isPro}>
           <ImageSettingsUpdate
             csrf={csrf}
             onFileUpdate={this.handleGotNewFavicon}
@@ -140,6 +141,7 @@ class AssetsPanel extends React.PureComponent {
 export default connect(
   (state: ReducerType) => ({
     csrf: state.csrf,
+    isPro: state.isPro,
     slug: state.slug,
   }),
   {onRefresh: refresh},

@@ -22,7 +22,8 @@ const WrapperLabel = styled('label', {
 });
 const WrapperLabelText = styled(
   'span',
-  ({$disabled}: {$disabled?: boolean}) => ({
+  ({$disabled, $invalid}: {$disabled?: boolean; $invalid?: boolean}) => ({
+    color: $invalid ? '#BF1D1D' : '#000',
     flex: '1 1',
     marginRight: 8,
     opacity: $disabled ? 0.5 : 1,
@@ -50,6 +51,7 @@ export type StructuredValue = {
 export default class PaddingInput extends React.PureComponent {
   props: {
     disabled?: boolean;
+    invalid?: boolean | {[key in keyof StructuredValue]: boolean};
     onChange: (value: StructuredValue) => void;
     tabIndex?: number;
     value: StructuredValue;
@@ -84,6 +86,7 @@ export default class PaddingInput extends React.PureComponent {
   render() {
     const {
       disabled,
+      invalid,
       tabIndex,
       unit = 'px',
       value: {top, right, bottom, left},
@@ -92,10 +95,16 @@ export default class PaddingInput extends React.PureComponent {
     return (
       <Row style={{marginBottom: 16}}>
         <WrapperLabel>
-          <WrapperLabelText $disabled={disabled}>Left</WrapperLabelText>
+          <WrapperLabelText
+            $disabled={disabled}
+            $invalid={invalid === true || (invalid && invalid.left)}
+          >
+            Left
+          </WrapperLabelText>
           <TextInput
             disabled={disabled}
             inputStyle={textInputInputStyles}
+            invalid={invalid === true || (invalid && invalid.left)}
             onChange={this.handleLeftChange}
             style={textInputStyles}
             suffix={unit}
@@ -105,10 +114,16 @@ export default class PaddingInput extends React.PureComponent {
         </WrapperLabel>
         <Col style={{margin: '0 12px'}}>
           <WrapperLabel style={{marginBottom: 8}}>
-            <WrapperLabelText $disabled={disabled}>Top</WrapperLabelText>
+            <WrapperLabelText
+              $disabled={disabled}
+              $invalid={invalid === true || (invalid && invalid.top)}
+            >
+              Top
+            </WrapperLabelText>
             <TextInput
               disabled={disabled}
               inputStyle={textInputInputStyles}
+              invalid={invalid === true || (invalid && invalid.top)}
               onChange={this.handleTopChange}
               style={textInputStyles}
               suffix={unit}
@@ -117,10 +132,16 @@ export default class PaddingInput extends React.PureComponent {
             />
           </WrapperLabel>
           <WrapperLabel>
-            <WrapperLabelText $disabled={disabled}>Bottom</WrapperLabelText>
+            <WrapperLabelText
+              $disabled={disabled}
+              $invalid={invalid === true || (invalid && invalid.bottom)}
+            >
+              Bottom
+            </WrapperLabelText>
             <TextInput
               disabled={disabled}
               inputStyle={textInputInputStyles}
+              invalid={invalid === true || (invalid && invalid.bottom)}
               onChange={this.handleBottomChange}
               style={textInputStyles}
               suffix={unit}
@@ -130,10 +151,16 @@ export default class PaddingInput extends React.PureComponent {
           </WrapperLabel>
         </Col>
         <WrapperLabel>
-          <WrapperLabelText $disabled={disabled}>Right</WrapperLabelText>
+          <WrapperLabelText
+            $disabled={disabled}
+            $invalid={invalid === true || (invalid && invalid.right)}
+          >
+            Right
+          </WrapperLabelText>
           <TextInput
             disabled={disabled}
             inputStyle={textInputInputStyles}
+            invalid={invalid === true || (invalid && invalid.right)}
             onChange={this.handleRightChange}
             style={textInputStyles}
             suffix={unit}
