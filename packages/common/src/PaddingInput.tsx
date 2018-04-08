@@ -20,11 +20,16 @@ const WrapperLabel = styled('label', {
   alignItems: 'center',
   display: 'inline-flex',
 });
-const WrapperLabelText = styled('span', {
-  flex: '1 1',
-  marginRight: 8,
-  textAlign: 'right',
-});
+const WrapperLabelText = styled(
+  'span',
+  ({$disabled}: {$disabled?: boolean}) => ({
+    flex: '1 1',
+    marginRight: 8,
+    opacity: $disabled ? 0.5 : 1,
+    textAlign: 'right',
+    transition: 'opacity 0.2s',
+  }),
+);
 
 const textInputStyles: React.CSSProperties = {
   height: 32,
@@ -87,7 +92,7 @@ export default class PaddingInput extends React.PureComponent {
     return (
       <Row style={{marginBottom: 16}}>
         <WrapperLabel>
-          <WrapperLabelText>Left</WrapperLabelText>
+          <WrapperLabelText $disabled={disabled}>Left</WrapperLabelText>
           <TextInput
             disabled={disabled}
             inputStyle={textInputInputStyles}
@@ -100,7 +105,7 @@ export default class PaddingInput extends React.PureComponent {
         </WrapperLabel>
         <Col style={{margin: '0 12px'}}>
           <WrapperLabel style={{marginBottom: 8}}>
-            <WrapperLabelText>Top</WrapperLabelText>
+            <WrapperLabelText $disabled={disabled}>Top</WrapperLabelText>
             <TextInput
               disabled={disabled}
               inputStyle={textInputInputStyles}
@@ -112,7 +117,7 @@ export default class PaddingInput extends React.PureComponent {
             />
           </WrapperLabel>
           <WrapperLabel>
-            <WrapperLabelText>Bottom</WrapperLabelText>
+            <WrapperLabelText $disabled={disabled}>Bottom</WrapperLabelText>
             <TextInput
               disabled={disabled}
               inputStyle={textInputInputStyles}
@@ -125,7 +130,7 @@ export default class PaddingInput extends React.PureComponent {
           </WrapperLabel>
         </Col>
         <WrapperLabel>
-          <WrapperLabelText>Right</WrapperLabelText>
+          <WrapperLabelText $disabled={disabled}>Right</WrapperLabelText>
           <TextInput
             disabled={disabled}
             inputStyle={textInputInputStyles}
