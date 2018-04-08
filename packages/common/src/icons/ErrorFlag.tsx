@@ -2,12 +2,22 @@ import * as React from 'react';
 
 export default ({
   color = '#58595B',
+  height = 24,
   style,
+  width,
 }: {
   color?: string;
+  height?: number;
   style?: React.CSSProperties;
+  width?: number;
 }) => (
-  <svg width="19" height="24" style={style} xmlns="http://www.w3.org/2000/svg">
+  <svg
+    height={height}
+    style={style}
+    viewBox="0 0 19 24"
+    width={width}
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <g
       stroke={color}
       fill="none"

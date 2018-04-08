@@ -17,12 +17,12 @@ export default class FullScreenWrapper extends React.PureComponent {
     left: number;
     position: 'absolute' | 'fixed';
     top: number;
-    transition: string | null;
+    transition: string | undefined;
   } = {
     left: 0,
     position: 'absolute',
     top: 0,
-    transition: null,
+    transition: undefined,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -33,7 +33,7 @@ export default class FullScreenWrapper extends React.PureComponent {
           position: 'fixed',
           left,
           top,
-          transition: null,
+          transition: undefined,
         },
         () => {
           setTimeout(() => {
@@ -47,7 +47,7 @@ export default class FullScreenWrapper extends React.PureComponent {
           position: 'absolute',
           left: `-${left}px`,
           top: `-${top}px`,
-          transition: null,
+          transition: undefined,
         },
         () => {
           setTimeout(() => {

@@ -72,6 +72,10 @@ export function prepareStyle(
     return null;
   }
   const out = Object.keys(style).reduce((acc, cur) => {
+    if (!style[cur] && style[cur] !== 0) {
+      throw new Error('unreachable');
+    }
+
     if (cur[0] === ':' || cur[0] === '@') {
       const restyled = prepareStyle(style[cur], ctx);
       if (cur === '@mobile') {
@@ -84,9 +88,10 @@ export function prepareStyle(
     switch (cur) {
       case 'boxShadow':
       case 'background':
-      case 'backgroundImage':
-        acc[cur] = formatInlineColor(style[cur], ctx);
+      case 'backgroundImage': {
+        acc[cur] = formatInlineColor(String(style[cur]), ctx);
         break;
+      }
       case 'backgroundColor':
       case 'borderColor':
       case 'borderBottomColor':
@@ -97,14 +102,18 @@ export function prepareStyle(
         acc[cur] = formatColor(style[cur], ctx);
         break;
       case 'backgroundImage':
-        if (style[cur] in ctx.resources) {
-          acc[cur] = `url(${ctx.resources[style[cur]]})`;
+        if (ctx.resources && String(style[cur]) in ctx.resources) {
+          acc[cur] = `url(${ctx.resources[style[cur] || '']})`;
         } else {
           acc[cur] = style[cur];
         }
         break;
       case 'fontFamily':
-        acc[cur] = ctx.fonts[style[cur]] || style[cur];
+        if (ctx.fonts && String(style[cur]) in ctx.fonts) {
+          acc[cur] = ctx.fonts[String(style[cur])] || style[cur];
+        } else {
+          acc[cur] = style[cur];
+        }
         break;
       case 'fontSize':
         if (style[cur] === 'var(--pageFontSize)') {
@@ -121,6 +130,7 @@ export function prepareStyle(
           break;
         }
         acc[cur] = style[cur];
+        break;
     }
     return acc;
   }, {});

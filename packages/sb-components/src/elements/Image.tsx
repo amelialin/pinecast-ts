@@ -49,11 +49,11 @@ export default ({
     const hash = md5(
       typeof email === 'string' ? email : extractPath(item, email),
     );
-    props.src = `https://www.gravatar.com/avatar/${hash}?s=${parseFloat(
-      styles.width,
-    ) ||
-      parseFloat(styles.height) ||
-      256}`;
+    const size =
+      parseFloat(styles.width as string) ||
+      parseFloat(styles.height as string) ||
+      256;
+    props.src = `https://www.gravatar.com/avatar/${hash}?s=${size}`;
   } else {
     const [
       ,
@@ -62,12 +62,15 @@ export default ({
       props.src || '',
     ) || [null, null];
     if (key && (styles.height || styles.width)) {
-      let height = styles.height || styles.width;
-      let width = styles.width || styles.height;
+      let height = styles.height || styles.width || 0;
+      let width = styles.width || styles.height || 0;
       if (typeof height === 'string') {
         height = width;
       } else if (typeof width === 'string') {
         width = height;
+      }
+      if (typeof width !== 'number' || typeof height !== 'number') {
+        throw new Error('Cannot provide double non-pixel dimensions');
       }
       if (eo.square) {
         height = width = Math.min(height, width);
@@ -75,9 +78,9 @@ export default ({
       height *= 2;
       width *= 2;
       props.src = `https://thumb.service.pinecast.com/resize?h=${encodeURIComponent(
-        height,
-      )}&w=${encodeURIComponent(width)}&key=${encodeURIComponent(
-        key,
+        String(height),
+      )}&w=${encodeURIComponent(String(width))}&key=${encodeURIComponent(
+        key as string,
       )}&format=jpeg`;
     }
   }

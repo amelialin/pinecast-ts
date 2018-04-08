@@ -10,7 +10,7 @@ import {FontHashType, PartialFontHashType} from '../../reducers/theme';
 import fontKeyNames from '../../shared/fontNames';
 import FontPreset from './FontPreset';
 import FontSelect from './FontSelect';
-import HelpText from '@pinecast/common/HelpText';
+import {HelpText} from '@pinecast/common/Text';
 import Label from '@pinecast/common/Label';
 import pairings from './pairings';
 import {

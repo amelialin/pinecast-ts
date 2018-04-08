@@ -4,4 +4,5 @@ export {default as Delete} from './Delete';
 export {default as Down} from './Down';
 export {default as ErrorFlag} from './ErrorFlag';
 export {default as Pinecast} from './Pinecast';
+export {default as Spotify} from './Spotify';
 export {default as Up} from './Up';

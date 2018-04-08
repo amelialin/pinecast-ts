@@ -2,6 +2,8 @@ import * as React from 'react';
 import {render} from 'react-dom';
 
 import {ClientStyletron, StyletronProvider, styled} from '@pinecast/styles';
+import ImportTool from '@pinecast/db-import-tool';
+import Spotify from '@pinecast/db-spotify';
 import Upgrade from '@pinecast/db-upgrade';
 
 const styletron = new ClientStyletron();
@@ -11,7 +13,11 @@ type Mountable<T> = React.ComponentType<T> & {
   propExtraction: {[P in keyof T]: (el: HTMLElement) => T[P]};
 };
 
-const components: Array<Mountable<{[key: string]: any}>> = [Upgrade];
+const components: Array<Mountable<{[key: string]: any}>> = [
+  ImportTool,
+  Spotify,
+  Upgrade,
+];
 
 components.forEach(component => {
   const elements = document.querySelectorAll(component.selector);

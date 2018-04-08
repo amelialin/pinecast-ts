@@ -1,1 +1,1 @@
-export const DEFAULT_FONT = 'Ubuntu';
+export const DEFAULT_FONT = 'Nort';

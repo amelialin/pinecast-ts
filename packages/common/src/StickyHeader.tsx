@@ -2,17 +2,21 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-const HEADER_HEIGHT = 60;
-
 type ScrolledFlag = {top: number; right: number; left: number} | false;
 
 export const Header = styled(
   'div',
-  ({$scrolled}: {$scrolled: ScrolledFlag}) => ({
+  ({
+    $headerHeight,
+    $scrolled,
+  }: {
+    $headerHeight: number;
+    $scrolled: ScrolledFlag;
+  }) => ({
     alignItems: 'center',
     backgroundColor: '#fff',
     display: 'flex',
-    height: HEADER_HEIGHT,
+    height: $headerHeight,
     left: $scrolled ? $scrolled.left : 0,
     justifyContent: 'space-between',
     padding: '0 16px',
@@ -41,15 +45,23 @@ export const Header = styled(
 const headerWrapperStyle: React.CSSProperties = {
   height: '100%',
   overflowY: 'auto',
-  paddingTop: HEADER_HEIGHT + 20,
   position: 'relative',
 };
 
 export class Wrapper extends React.Component {
-  props: {children: any; header: JSX.Element; keyScrollOn?: any};
+  props: {
+    children: any;
+    header: JSX.Element;
+    headerHeight?: number;
+    keyScrollOn?: any;
+  };
   state: {scrolled: boolean} = {scrolled: false};
 
   ref_: HTMLDivElement | null = null;
+
+  static defaultProps = {
+    headerHeight: 60,
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.keyScrollOn !== this.props.keyScrollOn && this.ref_) {
@@ -84,8 +96,15 @@ export class Wrapper extends React.Component {
 
   render() {
     return (
-      <div ref={this.handleRef} style={headerWrapperStyle}>
+      <div
+        ref={this.handleRef}
+        style={{
+          ...headerWrapperStyle,
+          paddingTop: (this.props.headerHeight || 0) + 20,
+        }}
+      >
         {React.cloneElement(this.props.header, {
+          $headerHeight: this.props.headerHeight,
           $scrolled: this.state.scrolled,
         })}
         {this.props.children}

@@ -1,0 +1,10 @@
+{
+  "name": "@pinecast/db-spotify",
+  "version": "1.0.0",
+  "main": "src/",
+  "ts:main": "src/index.ts",
+  "dependencies": {
+    "@pinecast/styles": "^1.0.0",
+    "@pinecast/xhr": "^1.0.0"
+  }
+}

@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
+import {Children} from './types';
 import {DEFAULT_FONT} from './constants';
 import {ErrorFlag} from './icons';
 
@@ -34,7 +35,7 @@ const OneLineInputWrap = styled('div', {
 
 const ErrorWrap = styled('div', {
   alignItems: 'center',
-  color: '#bf1d1d',
+  color: '#EF6B6B',
   display: 'flex',
   padding: '4px 0',
 });
@@ -45,7 +46,7 @@ function renderError(error: JSX.Element | string | null): JSX.Element | null {
   }
   return (
     <ErrorWrap>
-      <ErrorFlag color="#EF6B6B" style={{marginRight: 8}} />
+      <ErrorFlag color="#EF6B6B" height={20} style={{marginRight: 8}} />
       {error}
     </ErrorWrap>
   );
@@ -66,10 +67,7 @@ const Label = ({
   text,
 }: {
   $oneLine?: boolean;
-  children:
-    | JSX.Element
-    | string
-    | Array<JSX.Element | Array<JSX.Element> | string | false | null>;
+  children: Children;
   componentType?: string;
   error?: JSX.Element | string | null;
   labelStyle?: React.CSSProperties;

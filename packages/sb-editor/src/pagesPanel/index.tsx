@@ -137,7 +137,7 @@ class PagesPanel extends React.PureComponent {
     }
 
     return (
-      <Table>
+      <Table style={{marginTop: 12}}>
         <thead>
           <tr>
             <TableHeaderCell $wrapAt={150}>Title</TableHeaderCell>

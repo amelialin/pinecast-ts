@@ -205,7 +205,7 @@ class PreviewRenderer extends React.Component {
       console.log(`\`srcdoc\` applied with ${content.length} bytes`);
     } else {
       console.warn('`srcdoc` not detected; falling back on data URI');
-      this.iframe.src = `data:text/html,${content}`;
+      (this.iframe as any).src = `data:text/html,${content}`;
       console.log(`\`src\` applied with ${content.length + 15} bytes`);
     }
   }

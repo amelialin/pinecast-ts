@@ -36,7 +36,7 @@ const MenuWrapper = styled(
     minWidth: 200,
     opacity: ariaHidden ? 0 : 1,
     padding: '4px 0',
-    pointerEvents: ariaHidden ? 'none' : null,
+    pointerEvents: ariaHidden ? 'none' : 'auto',
     transform: ariaHidden ? 'scale(0.9)' : 'scale(1)',
     transformOrigin: '20% top',
     transition: 'opacity 0.2s, transform 0.2s',
@@ -48,12 +48,12 @@ const MenuOptionRow = styled(
   'button',
   ({'aria-selected': selected}: {'aria-selected': boolean}) => ({
     WebkitAppearance: 'none',
-    background: selected ? '#eee' : 'none',
+    background: selected ? '#eeefea' : 'none',
     border: 0,
     borderRadius: 2,
     cursor: 'pointer',
     fontFamily: DEFAULT_FONT,
-    fontSize: 16,
+    fontSize: 14,
     margin: '0 4px',
     padding: 8,
     textAlign: 'left',
@@ -192,8 +192,8 @@ export default class ContextMenu extends React.PureComponent {
     const {onClose, open, options, x, y} = this.props;
     const {alignX, alignY} = this.state;
     return (
-      <ClosableLayer onClose={onClose} x={x} y={y}>
-        <div ref={this.handleRef}>
+      <ClosableLayer onClose={onClose} pointerEvents={open} x={x} y={y}>
+        <div ref={this.handleRef} style={{pointerEvents: 'none'}}>
           <MenuWrapper
             aria-hidden={!open}
             $alignX={alignX}

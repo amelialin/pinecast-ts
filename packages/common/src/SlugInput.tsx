@@ -137,14 +137,14 @@ export default class SlugInput extends React.PureComponent {
       case 'available':
         return (
           <StatusWrapper $type="positive">
-            <Check color="#51D197" />
+            <Check color="#51D197" height={20} />
             Slug is available
           </StatusWrapper>
         );
       case 'unavailable':
         return (
           <StatusWrapper $type="negative">
-            <Cross color="#EF6B6B" />
+            <Cross color="#EF6B6B" height={20} />
             Slug is not available
           </StatusWrapper>
         );

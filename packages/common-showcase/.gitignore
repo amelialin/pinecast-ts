@@ -1,0 +1,4 @@
+*.map
+dist/
+build/
+stat.json

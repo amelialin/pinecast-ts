@@ -2,6 +2,8 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
+import {Children} from './types';
+
 const Form_ = styled(
   'form',
   {
@@ -16,11 +18,9 @@ const Form = ({
   onSubmit,
   ...rest
 }: {
-  children: JSX.Element | string | Array<JSX.Element | Array<JSX.Element>>;
+  children: Children;
   onSubmit: () => void;
-  style?: React.CSSProperties;
-  [key: string]: any;
-}) => {
+} & React.HTMLProps<HTMLFormElement>) => {
   return (
     <Form_
       {...rest}

@@ -22,7 +22,7 @@ export const TableHeaderCell = styled('th', {
 });
 export const TableBodyCell = styled('td', ({$wrapAt}: {$wrapAt?: number}) => ({
   borderBottom: '1px solid #ccc',
-  fontSize: 16,
+  fontSize: 14,
   maxWidth: $wrapAt,
   overflow: 'hidden',
   padding: '0 8px',

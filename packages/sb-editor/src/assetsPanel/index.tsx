@@ -80,6 +80,9 @@ class AssetsPanel extends React.PureComponent {
           <ImageUpload
             imageType="site_logo"
             labelText="Logo"
+            onCleared={() => {}} // This is overridden
+            onNewFile={async () => {}} // This is overridden
+            slug={slug}
             value={data.site_logo}
           />
         </ImageSettingsUpdate>
@@ -97,6 +100,9 @@ class AssetsPanel extends React.PureComponent {
                   Favicon
                 </React.Fragment>
               }
+              onCleared={() => {}} // This is overridden
+              onNewFile={async () => {}} // This is overridden
+              slug={slug}
               value={data.site_favicon}
             />
           </ImageSettingsUpdate>

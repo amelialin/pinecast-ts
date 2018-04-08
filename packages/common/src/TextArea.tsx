@@ -2,32 +2,41 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-const TextAreaInput = styled('textarea', {
-  appearance: 'none',
-  backgroundColor: '#fff',
-  border: '1px solid #ccc',
-  borderRadius: 4,
-  boxShadow: '0 0 0 0 #c9d9e0',
-  display: 'flex',
-  flex: '0 0 100%',
-  fontSize: 14,
-  height: 150,
-  margin: '8px 0 20px',
-  padding: '8px',
-  transition: 'box-shadow 0.2s',
-  width: '100%',
+const TextAreaInput = styled(
+  'textarea',
+  ({$invalid, disabled}: {$invalid?: boolean; disabled?: boolean}) => ({
+    appearance: 'none',
+    backgroundColor: '#fff',
+    boxShadow: $invalid
+      ? '0 0 0 1px #EF6B6B, 0 0 0 0 #c9d9e0'
+      : '0 0 0 1px #c6caca, 0 0 0 0 #c9d9e0',
+    border: 0,
+    borderRadius: 4,
+    display: 'flex',
+    flex: '0 0 100%',
+    fontSize: 14,
+    height: 150,
+    margin: '8px 0 20px',
+    opacity: disabled ? 0.5 : 1,
+    padding: '8px',
+    transition: 'box-shadow 0.2s, opacity 0.2s',
+    width: '100%',
 
-  ':focus': {
-    boxShadow: '0 0 0 3px #c9d9e0',
-    outline: 'none',
-  },
-});
+    ':focus': {
+      boxShadow: $invalid
+        ? '0 0 0 1px #EF6B6B, 0 0 0 4px #FEDEDE'
+        : '0 0 0 1px #9eb4c0, 0 0 0 4px #c9d9e0',
+      outline: 'none',
+    },
+  }),
+);
 
 export default class TextArea extends React.PureComponent {
   props: {
     disabled?: boolean;
+    invalid?: boolean;
     maxLength?: number;
-    minlength?: number;
+    minLength?: number;
     onChange: (value: string) => void;
     placeholder?: string;
     required?: boolean;
@@ -43,9 +52,16 @@ export default class TextArea extends React.PureComponent {
   };
 
   render() {
-    const {onChange: _, value, ...rest} = this.props;
+    const {invalid, onChange, value, ...rest} = this.props;
+    void onChange;
+
     return (
-      <TextAreaInput {...rest} onChange={this.handleChange} value={value} />
+      <TextAreaInput
+        $invalid={invalid}
+        {...rest}
+        onChange={this.handleChange}
+        value={value}
+      />
     );
   }
 }

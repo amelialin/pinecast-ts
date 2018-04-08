@@ -63,7 +63,7 @@ export interface Image {
 
 export interface BackgroundImage {
   resourceId: string;
-  repeat: 'none' | 'repeat';
+  repeat: 'no-repeat' | 'repeat';
   sizing:
     | 'center'
     | 'cover'

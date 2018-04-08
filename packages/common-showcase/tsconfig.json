@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "lib": ["dom", "dom.iterable", "es5", "ES2015", "ES2016", "ES2017"],
+        "module": "esnext",
+        "moduleResolution": "Node",
+        "noImplicitAny": false,
+        "outDir": "./dist/",
+        "paths": {
+            "@pinecast/styles": ["../styles/src/index.ts"],
+            "@pinecast/common/*": ["../common/src/*"],
+            "@pinecast/common": ["../common/src/index.ts"]
+        },
+        "sourceMap": true,
+        "strictNullChecks": true,
+        "target": "es6",
+        "jsx": "react"
+    },
+    "include": ["./src/**/*"]
+}

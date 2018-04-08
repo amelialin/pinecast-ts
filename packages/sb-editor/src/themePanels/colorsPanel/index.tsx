@@ -5,7 +5,7 @@ import * as presets from '@pinecast/sb-presets';
 
 import {changeColor} from '../../actions/theme';
 import ColorPicker from '../ColorPicker';
-import HelpText from '@pinecast/common/HelpText';
+import {HelpText} from '@pinecast/common/Text';
 import {
   PanelDescription,
   PanelDivider,

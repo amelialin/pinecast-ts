@@ -7,7 +7,8 @@
         "noImplicitAny": false,
         "outDir": "./dist/",
         "paths": {
-            "@pinecast/styles": ["../styles/src/index.ts"]
+            "@pinecast/styles": ["../styles/src/index.ts"],
+            "@pinecast/xhr": ["../xhr/src/index.ts"]
         },
         "sourceMap": true,
         "strictNullChecks": true,

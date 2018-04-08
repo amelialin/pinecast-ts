@@ -50,13 +50,11 @@ const Card = ({
   ...rest
 }: {
   children: any;
-  hairline?: boolean;
   shadow?: boolean;
   tabindex?: number | null;
   type?: string;
   whiteBack?: boolean;
-  [key: string]: any;
-}) => {
+} & React.HTMLProps<HTMLDivElement>) => {
   const Card_ = getCard(type);
   return (
     <Card_

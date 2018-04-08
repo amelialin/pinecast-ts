@@ -35,7 +35,7 @@ const Spinner = ({
   type = 'default',
 }: {
   style?: React.CSSProperties;
-  type: 'default' | 'focus' | 'subtle';
+  type?: 'default' | 'focus' | 'subtle';
 }) => (
   <Container style={style}>
     <Dot style={{...typeStyles[type], animationDelay: '0s'}} />

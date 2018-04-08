@@ -1,4 +1,3 @@
-import {connect} from 'react-redux';
 import * as React from 'react';
 
 import styled from '@pinecast/styles';
@@ -18,12 +17,12 @@ interface Upload {
   destinationURL: string;
 }
 
-class ImageUpload extends React.PureComponent {
+export default class ImageUpload extends React.PureComponent {
   ongoingUpload: {file: Blob; abort: () => Promise<void>} | null = null;
   ongoingRequest: number = 0;
 
   props: {
-    imageType: 'site_logo' | 'site_favicon';
+    imageType: string;
     labelText: JSX.Element | string;
     maxHeight?: number;
     maxWidth?: number;
@@ -32,7 +31,6 @@ class ImageUpload extends React.PureComponent {
     value: string | null;
 
     slug: string;
-    csrf: string;
   };
   state: {
     error: JSX.Element | string | null;
@@ -314,7 +312,3 @@ class ImageUpload extends React.PureComponent {
     return this.renderPreview();
   }
 }
-
-export default connect(state => ({csrf: state.csrf, slug: state.slug}))(
-  ImageUpload,
-);

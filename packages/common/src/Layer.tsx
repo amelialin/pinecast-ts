@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 
 type Props = {
   children: JSX.Element | Array<JSX.Element>;
+  pointerEvents?: boolean;
   x?: number;
   y?: number;
 };
@@ -11,9 +12,14 @@ export default class Layer extends React.PureComponent {
   props: Props;
   portal: HTMLDivElement;
 
+  static defaultProps = {
+    pointerEvents: true,
+  };
+
   constructor(props) {
     super(props);
     const portal = document.createElement('div');
+    portal.style.pointerEvents = props.pointerEvents ? 'auto' : 'none';
     portal.style.position = 'absolute';
     portal.style.left = props.x ? `${props.x}px` : '0';
     portal.style.top = props.y ? `${props.y}px` : '0';
@@ -22,6 +28,7 @@ export default class Layer extends React.PureComponent {
     document.body.appendChild(portal);
   }
   componentWillReceiveProps(newProps) {
+    this.portal.style.pointerEvents = newProps.pointerEvents ? 'auto' : 'none';
     this.portal.style.left = newProps.x ? `${newProps.x}px` : '0';
     this.portal.style.top = newProps.y ? `${newProps.y}px` : '0';
   }

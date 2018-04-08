@@ -22,7 +22,9 @@ function collapseChildren(
     (child: any, i) => {
       if (i + offset === 0) {
         if (style) {
-          return React.cloneElement(child, {style});
+          return React.cloneElement(child, {
+            style: {...style, ...child.props.style},
+          });
         } else {
           return child;
         }

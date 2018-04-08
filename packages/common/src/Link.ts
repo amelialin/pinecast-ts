@@ -14,6 +14,6 @@ const Link = styled('a', {
   ':hover:visited': {
     color: '#9eb4c0',
   },
-}) as React.ComponentType<{href: string}>;
+}) as React.ComponentType<{href: string; rel?: string; target?: '_blank'}>;
 
 export default Link;

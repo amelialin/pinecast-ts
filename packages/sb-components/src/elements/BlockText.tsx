@@ -110,7 +110,7 @@ function styleOptions(
             left: 0,
             position: 'absolute',
             right: 0,
-            top: acc.maxHeight - maxLineFade.height,
+            top: (acc.maxHeight as number) - maxLineFade.height,
             transition: 'top 0.2s',
           });
           if (options.maxLinesOnHover) {

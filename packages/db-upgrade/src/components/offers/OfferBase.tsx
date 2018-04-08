@@ -31,7 +31,7 @@ const OfferBase = ({
   period?: 'month' | 'year';
   price: number;
 }) => (
-  <Card style={cardStyles} $whiteBack>
+  <Card style={cardStyles} whiteBack>
     <Name>{planName}</Name>
     <Price
       amount={price}

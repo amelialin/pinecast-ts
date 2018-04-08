@@ -5,10 +5,15 @@ export default class Collapser extends React.Component {
   props: {
     children: any;
     open: boolean;
+    shave?: number;
   };
   outerEl: HTMLElement | null = null;
   innerEl: HTMLElement | null = null;
   ro: ResizeObserver | null = null;
+
+  static defaultProps = {
+    shave: 8,
+  };
 
   componentWillUnmount() {
     if (this.ro) {
@@ -21,7 +26,9 @@ export default class Collapser extends React.Component {
   };
 
   getSize() {
-    return this.props.open && this.innerEl ? this.innerEl.clientHeight - 8 : 0;
+    return this.props.open && this.innerEl
+      ? this.innerEl.clientHeight - (this.props.shave || 0)
+      : 0;
   }
 
   handleInnerRef = (el: HTMLElement | null) => {
@@ -45,7 +52,9 @@ export default class Collapser extends React.Component {
         ref={this.handleOuterRef}
         style={{
           height:
-            this.props.open && this.innerEl ? this.innerEl.clientHeight - 8 : 0,
+            this.props.open && this.innerEl
+              ? this.innerEl.clientHeight - (this.props.shave || 0)
+              : 0,
           margin: '0 -4px',
           overflowY: 'hidden',
           padding: '0 4px',

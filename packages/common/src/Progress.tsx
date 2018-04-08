@@ -12,7 +12,7 @@ const Wrapper = styled('div', ({$percent}: {$percent: number}) => ({
   overflow: 'hidden',
 
   ':before': {
-    backgroundColor: '#52d1c7',
+    backgroundColor: '#1fd2c4',
     backgroundImage:
       'linear-gradient(180deg, rgba(0, 0, 0, 0.1), transparent 8%, transparent)',
     content: '""',

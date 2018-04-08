@@ -1,0 +1,11 @@
+{
+  "name": "@pinecast/db-import-tool",
+  "version": "1.0.0",
+  "main": "src/",
+  "ts:main": "src/index.ts",
+  "dependencies": {
+    "@pinecast/styles": "^1.0.0",
+    "@pinecast/xhr": "^1.0.0",
+    "react-stripe-elements": "^1.6.0"
+  }
+}

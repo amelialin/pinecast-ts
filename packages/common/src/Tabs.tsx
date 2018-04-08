@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
+import {Children} from './types';
 import {DEFAULT_FONT} from './constants';
 
 const TabWrapper = styled('div', {
@@ -10,7 +11,7 @@ const TabWrapper = styled('div', {
 
 export class Tab extends React.PureComponent {
   props: {
-    children?: Array<JSX.Element | Array<JSX.Element>> | JSX.Element | string;
+    children?: Children;
     name: string;
   };
 

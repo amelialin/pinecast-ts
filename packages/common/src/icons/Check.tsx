@@ -2,9 +2,19 @@ import * as React from 'react';
 
 export default ({
   color = '#58595B',
+  height = 24,
+  width,
   ...rest
-}: {color?: string} & React.SVGAttributes<SVGSVGElement>) => (
-  <svg width="21" height="24" xmlns="http://www.w3.org/2000/svg" {...rest}>
+}: {color?: string; height?: number; width?: number} & React.SVGAttributes<
+  SVGSVGElement
+>) => (
+  <svg
+    height={height}
+    viewBox="0 0 21 24"
+    width={width}
+    xmlns="http://www.w3.org/2000/svg"
+    {...rest}
+  >
     <g
       stroke={color}
       fill="none"
