@@ -8,17 +8,11 @@ export default {
     {
       title: 'Sizes',
       render: () => (
-        <React.Fragment>
-          <div>
-            <Button size="small">Small</Button>
-          </div>
-          <div>
-            <Button size="normal">Normal</Button>
-          </div>
-          <div>
-            <Button size="large">Large</Button>
-          </div>
-        </React.Fragment>
+        <ButtonGroup>
+          <Button size="small">Small</Button>
+          <Button size="normal">Normal</Button>
+          <Button size="large">Large</Button>
+        </ButtonGroup>
       ),
     },
     {
