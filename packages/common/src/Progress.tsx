@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-// TODO: Make this use <progress>
 const Wrapper = styled('div', ({$percent}: {$percent: number}) => ({
   backgroundColor: '#dee1df',
   borderRadius: 3,
@@ -28,6 +27,15 @@ const Progress = ({
 }: {
   percent: number;
   style?: React.CSSProperties;
-}) => <Wrapper $percent={percent} style={style} />;
+}) => (
+  <Wrapper
+    $percent={percent}
+    aria-valuemax={100}
+    aria-valuemin={0}
+    aria-valuenow={percent}
+    role="progressbar"
+    style={style}
+  />
+);
 
 export default Progress;

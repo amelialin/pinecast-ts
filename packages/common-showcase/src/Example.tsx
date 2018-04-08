@@ -5,9 +5,10 @@ import Card from '@pinecast/common/Card';
 import styled from '@pinecast/styles';
 
 const ExampleTitle = styled('h2', {
-  fontSize: 24,
+  fontSize: 20,
   fontWeight: 400,
-  margin: '0 0 20px',
+  lineHeight: '1em',
+  margin: '-2px 0 12px',
 });
 
 const Surface = styled('div', ({$dark}: {$dark: boolean}) => ({
@@ -68,7 +69,7 @@ export default class Example extends React.Component {
 
   render() {
     return (
-      <Card style={{alignItems: 'flex-start', marginTop: 12}} whiteBack>
+      <Card style={{alignItems: 'flex-start', marginBottom: 12}} whiteBack>
         <ExampleTitle>{this.props.title}</ExampleTitle>
         <Surface $dark={this.props.dark}>{this.props.children()}</Surface>
         <Button onClick={this.handleToggleCode} size="small">

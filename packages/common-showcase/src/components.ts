@@ -18,6 +18,7 @@ import Link from './examples/Link.example';
 import LoadingState from './examples/LoadingState.example';
 import PaddingInput from './examples/PaddingInput.example';
 import ProBadge from './examples/ProBadge.example';
+import Progress from './examples/Progress.example';
 import Radio from './examples/Radio.example';
 import RadioList from './examples/RadioList.example';
 import Range from './examples/Range.example';
@@ -66,6 +67,7 @@ export default {
   LoadingState,
   PaddingInput,
   ProBadge,
+  Progress,
   Radio,
   RadioList,
   Range,

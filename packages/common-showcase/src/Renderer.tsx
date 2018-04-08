@@ -3,15 +3,12 @@ import * as React from 'react';
 import Callout from '@pinecast/common/Callout';
 import styled from '@pinecast/styles';
 
+import components from './components';
 import Example from './Example';
 
-import components from './components';
-
-const Surface = styled('div', {
-  backgroundColor: '#f5f5f5',
-  height: '100%',
-  overflow: 'auto',
-  padding: 20,
+const Title = styled('h1', {
+  fontSize: 24,
+  margin: '0 0 20px',
 });
 
 export default class Renderer extends React.Component {
@@ -20,7 +17,8 @@ export default class Renderer extends React.Component {
   render() {
     const inst = components[this.props.selected];
     return (
-      <Surface>
+      <React.Fragment>
+        <Title>{inst.name}</Title>
         {inst.callout &&
           inst.callout.map((callout, i) => (
             <Callout key={i} type={callout.type}>
@@ -32,7 +30,7 @@ export default class Renderer extends React.Component {
             {render}
           </Example>
         ))}
-      </Surface>
+      </React.Fragment>
     );
   }
 }

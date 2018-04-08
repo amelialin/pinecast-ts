@@ -35,8 +35,11 @@ const Sidebar = styled('aside', {
   padding: 12,
 });
 const Rendering = styled('section', {
+  backgroundColor: '#f5f5f5',
   flex: '1 1',
+  height: '100%',
   overflowY: 'auto',
+  padding: 20,
 });
 
 const Logo = styled('span', {fontWeight: 500});
