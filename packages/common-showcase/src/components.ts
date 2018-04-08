@@ -19,6 +19,7 @@ import LoadingState from './examples/LoadingState.example';
 import PaddingInput from './examples/PaddingInput.example';
 import ProBadge from './examples/ProBadge.example';
 import Radio from './examples/Radio.example';
+import RadioList from './examples/RadioList.example';
 import Range from './examples/Range.example';
 import Select from './examples/Select.example';
 import SlugInput from './examples/SlugInput.example';
@@ -33,6 +34,10 @@ import TextInput from './examples/TextInput.example';
 
 export interface Component {
   name: string;
+  callout?: Array<{
+    type: 'info' | 'negative' | 'positive';
+    value: string;
+  }>;
   examples: Array<{
     dark?: boolean;
     title: string;
@@ -62,6 +67,7 @@ export default {
   PaddingInput,
   ProBadge,
   Radio,
+  RadioList,
   Range,
   Select,
   SlugInput,

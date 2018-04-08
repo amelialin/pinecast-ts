@@ -8,10 +8,7 @@ import ComponentList from './ComponentList';
 import Renderer from './Renderer';
 
 const Body = styled('main', {
-  display: 'grid',
   height: '100%',
-  gridTemplateRows: 60,
-  gridTemplateColumns: 300,
 });
 
 const Header = styled('header', {
@@ -21,18 +18,25 @@ const Header = styled('header', {
   color: '',
   display: 'flex',
   height: 60,
-  gridColumn: '1 / 3',
-  gridRow: '1 / 2',
   padding: '0 20px',
 });
-
+const BodyWrapper = styled('div', {
+  display: 'flex',
+  height: 'calc(100% - 60px)',
+});
 const Sidebar = styled('aside', {
-  gridColumn: '1 / 2',
-  gridRow: '2 / 3',
+  borderRight: '1px solid #eeefea',
+  display: 'flex',
+  flex: '0 0 300px',
+  flexDirection: 'column',
+  height: '100%',
+  overflowY: 'auto',
+  overflow: 'auto',
+  padding: 12,
 });
 const Rendering = styled('section', {
-  gridColumn: '2 / 3',
-  gridRow: '2 / 3',
+  flex: '1 1',
+  overflowY: 'auto',
 });
 
 const Logo = styled('span', {fontWeight: 500});
@@ -56,15 +60,19 @@ export default class Layout extends React.Component {
             <Logo>Common</Logo>
           </Group>
         </Header>
-        <Sidebar>
-          <ComponentList
-            onSet={this.handleSet}
-            selected={this.state.component || ''}
-          />
-        </Sidebar>
-        <Rendering>
-          {this.state.component && <Renderer selected={this.state.component} />}
-        </Rendering>
+        <BodyWrapper>
+          <Sidebar>
+            <ComponentList
+              onSet={this.handleSet}
+              selected={this.state.component || ''}
+            />
+          </Sidebar>
+          <Rendering>
+            {this.state.component && (
+              <Renderer selected={this.state.component} />
+            )}
+          </Rendering>
+        </BodyWrapper>
       </Body>
     );
   }

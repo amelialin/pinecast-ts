@@ -5,15 +5,6 @@ import styled from '@pinecast/styles';
 
 import components from './components';
 
-const Body = styled('main', {
-  borderRight: '1px solid #eeefea',
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100%',
-  overflow: 'auto',
-  padding: 12,
-});
-
 const Option = styled(
   'button',
   ({$isSelected}: {$isSelected: boolean}) => ({
@@ -22,9 +13,11 @@ const Option = styled(
     border: 0,
     borderRadius: 3,
     boxShadow: '0 0 0 0 transparent',
+    flex: '0 0 36px',
     fontFamily: DEFAULT_FONT,
     fontSize: 14,
     fontWeight: $isSelected ? 500 : 400,
+    lineHeight: 20,
     marginBottom: 4,
     padding: '8px 12px',
     textAlign: 'left',
@@ -47,14 +40,13 @@ const Option = styled(
 
 const componentPairs = Object.entries(components);
 
-const ComponentList = ({
-  onSet,
-  selected,
-}: {
+type Props = {
   onSet: (component: string) => void;
   selected: string;
-}) => (
-  <Body>
+};
+
+const ComponentList = ({onSet, selected}: Props) => (
+  <React.Fragment>
     {componentPairs
       .sort(([, a], [, b]) => a.name.localeCompare(b.name))
       .map(([key, {name}]) => (
@@ -69,7 +61,7 @@ const ComponentList = ({
           {name}
         </Option>
       ))}
-  </Body>
+  </React.Fragment>
 );
 
 export default ComponentList;

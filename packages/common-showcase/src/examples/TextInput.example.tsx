@@ -52,5 +52,24 @@ export default {
         </Label>
       ),
     },
+    {
+      title: 'With prefix',
+      render: () => <TextInput onChange={() => {}} prefix="$" value="20.00" />,
+    },
+    {
+      title: 'With suffix',
+      render: () => <TextInput onChange={() => {}} suffix="px" value="32" />,
+    },
+    {
+      title: 'With prefix and suffix',
+      render: () => (
+        <TextInput
+          onChange={() => {}}
+          prefix="$"
+          suffix="USD"
+          value="1,000.00"
+        />
+      ),
+    },
   ],
 };

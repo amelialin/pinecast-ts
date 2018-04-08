@@ -32,11 +32,15 @@ const Header = styled('header', {
   height: 46,
   padding: '0 15px',
 });
-const Body = styled('section', {
-  backgroundColor: '#f5f5f5',
-  fontSize: 13,
-  padding: 15,
-});
+const Body = styled(
+  'section',
+  ({$size}: {$size: 'small' | 'medium' | 'large'}) => ({
+    backgroundColor: '#f5f5f5',
+    fontSize: 13,
+    minHeight: $size === 'small' ? 80 : $size === 'medium' ? 120 : 240,
+    padding: 15,
+  }),
+);
 const Footer = styled('footer', {
   alignItems: 'center',
   backgroundColor: '#fff',
@@ -52,7 +56,7 @@ export default class Dialog extends React.PureComponent {
     actions?: Children;
     children: Children;
     size?: 'small' | 'medium' | 'large';
-    title: string;
+    title: JSX.Element | string;
   };
 
   render() {
@@ -70,7 +74,7 @@ export default class Dialog extends React.PureComponent {
     return (
       <Wrapper role="dialog" $size={size || 'medium'}>
         <Header>{title}</Header>
-        <Body>{children}</Body>
+        <Body $size={size || 'medium'}>{children}</Body>
         {actionWrapper}
       </Wrapper>
     );

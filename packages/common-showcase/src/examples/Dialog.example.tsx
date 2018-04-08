@@ -3,8 +3,11 @@ import * as React from 'react';
 import {ButtonGroup, default as Button} from '@pinecast/common/Button';
 import {default as Dialog} from '@pinecast/common/Dialog';
 import {default as ModalLayer} from '@pinecast/common/ModalLayer';
+import styled from '@pinecast/styles';
 
 import Toggler from '../helpers/Toggler';
+
+const Buffer = styled('div', {marginBottom: 20});
 
 export default {
   name: 'Dialog',
@@ -20,17 +23,23 @@ export default {
     {
       title: 'Widths',
       render: () => (
-        <div>
-          <Dialog size="small" title="Dialog title">
-            Small
-          </Dialog>
-          <Dialog size="medium" title="Dialog title">
-            Medium
-          </Dialog>
-          <Dialog size="large" title="Dialog title">
-            Large
-          </Dialog>
-        </div>
+        <React.Fragment>
+          <Buffer>
+            <Dialog size="small" title="Dialog title">
+              Small
+            </Dialog>
+          </Buffer>
+          <Buffer>
+            <Dialog size="medium" title="Dialog title">
+              Medium
+            </Dialog>
+          </Buffer>
+          <Buffer>
+            <Dialog size="large" title="Dialog title">
+              Large
+            </Dialog>
+          </Buffer>
+        </React.Fragment>
       ),
     },
     {

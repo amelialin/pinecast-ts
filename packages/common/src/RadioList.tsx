@@ -11,6 +11,7 @@ const Radio = styled(
   'div',
   {
     alignItems: 'center',
+    backgroundColor: '#fff',
     borderRadius: 30,
     boxShadow:
       '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
