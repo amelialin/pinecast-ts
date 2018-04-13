@@ -49,6 +49,7 @@ const ColorInput = styled(
       (e.target as HTMLInputElement).select();
       document.execCommand('copy');
     },
+    readOnly: true,
   },
 );
 
@@ -65,7 +66,6 @@ export default {
       title: 'Grays',
       render: () => (
         <Card style={cardStyles}>
-          <Color color="#000" invert />
           <Color color="#44484d" invert />
           <Color color="#616669" invert />
           <Color color="#7f8486" />

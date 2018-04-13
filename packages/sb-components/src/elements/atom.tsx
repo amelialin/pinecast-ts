@@ -73,7 +73,7 @@ export function prepareStyle(
   }
   const out = Object.keys(style).reduce((acc, cur) => {
     if (!style[cur] && style[cur] !== 0) {
-      throw new Error('unreachable');
+      return acc;
     }
 
     if (cur[0] === ':' || cur[0] === '@') {

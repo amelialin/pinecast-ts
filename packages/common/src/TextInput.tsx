@@ -4,64 +4,81 @@ import styled, {CSS} from '@pinecast/styles';
 
 import {DEFAULT_FONT} from './constants';
 
-const InputWrapper = styled('div', ({$disabled}: {$disabled: boolean}) => ({
-  alignItems: 'center',
-  backgroundColor: '#fff',
-  borderRadius: 4,
-  display: 'flex',
-  height: 32,
-  margin: '8px 0 20px',
-}));
-const Input = styled('input', ({$invalid}: {$invalid: boolean}) => ({
-  background: 'transparent',
-  border: 0,
-  borderRadius: 4,
-  boxShadow: $invalid
-    ? '0 0 0 1px #EF6B6B, 0 0 0 0 #c9d9e0'
-    : '0 0 0 1px #c6caca, 0 0 0 0 #c9d9e0',
-  color: '#44484d',
-  flex: '1 1',
-  fontFamily: DEFAULT_FONT,
-  fontSize: 14,
-  height: '100%',
-  padding: '0 10px',
-  transition: 'box-shadow 0.2s, opacity 0.2s',
-  width: '100%',
+export type Sizes = 'normal' | 'large';
 
-  ':focus': {
+const InputWrapper = styled(
+  'div',
+  ({$disabled, $size}: {$disabled: boolean; $size: Sizes}) => ({
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 4,
+    display: 'flex',
+    height: $size === 'normal' ? 32 : 40,
+    margin: 0,
+  }),
+);
+const Input = styled(
+  'input',
+  ({$invalid, $size}: {$invalid: boolean; $size: Sizes}) => ({
+    background: 'transparent',
+    border: 0,
+    borderRadius: 4,
     boxShadow: $invalid
-      ? '0 0 0 1px #EF6B6B, 0 0 0 4px #FEDEDE'
-      : '0 0 0 1px #9eb4c0, 0 0 0 4px #c9d9e0',
-    outline: 'none',
-  },
+      ? '0 0 0 1px #EF6B6B, 0 0 0 0 #c9d9e0'
+      : '0 0 0 1px #c6caca, 0 0 0 0 #c9d9e0',
+    color: '#44484d',
+    flex: '1 1',
+    fontFamily: DEFAULT_FONT,
+    fontSize: $size === 'normal' ? 14 : 20,
+    height: '100%',
+    padding: '0 10px',
+    transition: 'box-shadow 0.2s, opacity 0.2s',
+    width: '100%',
 
-  ':nth-child(2)': {
-    borderBottomLeftRadius: '0',
-    borderTopLeftRadius: '0',
-  },
-  ':not(:last-child)': {
-    borderBottomRightRadius: '0',
-    borderTopRightRadius: '0',
-  },
+    ':focus': {
+      boxShadow: $invalid
+        ? '0 0 0 1px #EF6B6B, 0 0 0 4px #FEDEDE'
+        : '0 0 0 1px #9eb4c0, 0 0 0 4px #c9d9e0',
+      outline: 'none',
+    },
 
-  ':disabled': {
-    opacity: 0.5,
-  },
+    ':nth-child(2)': {
+      borderBottomLeftRadius: '0',
+      borderTopLeftRadius: '0',
+    },
+    ':not(:last-child)': {
+      borderBottomRightRadius: '0',
+      borderTopRightRadius: '0',
+    },
 
-  '::placeholder': {color: '#c6caca'},
-  '::-webkit-placeholder': {color: '#c6caca'},
-}));
+    ':disabled': {
+      opacity: 0.5,
+    },
+
+    '::placeholder': {color: '#c6caca'},
+    '::-webkit-placeholder': {color: '#c6caca'},
+  }),
+  {className: 'TextInput'},
+);
 
 const Prefix = styled(
   'span',
-  ({$disabled, $invalid}: {$disabled: boolean; $invalid: boolean}) => ({
+  ({
+    $disabled,
+    $invalid,
+    $size,
+  }: {
+    $disabled: boolean;
+    $invalid: boolean;
+    $size: Sizes;
+  }) => ({
     background: 'transparent',
     borderBottomLeftRadius: 4,
     borderTopLeftRadius: 4,
     boxShadow: $invalid ? '0 0 0 1px #EF6B6B' : '0 0 0 1px #c6caca',
     color: '#333',
     flex: '0 0',
-    fontSize: 14,
+    fontSize: $size === 'normal' ? 14 : 20,
     height: '100%',
     lineHeight: '32px',
     marginRight: 1,
@@ -73,14 +90,22 @@ const Prefix = styled(
 );
 const Suffix = styled(
   'span',
-  ({$disabled, $invalid}: {$disabled: boolean; $invalid: boolean}) => ({
+  ({
+    $disabled,
+    $invalid,
+    $size,
+  }: {
+    $disabled: boolean;
+    $invalid: boolean;
+    $size: Sizes;
+  }) => ({
     background: 'transparent',
     borderBottomRightRadius: 4,
     borderTopRightRadius: 4,
     boxShadow: $invalid ? '0 0 0 1px #EF6B6B' : '0 0 0 1px #c6caca',
     color: '#333',
     flex: '0 0',
-    fontSize: 14,
+    fontSize: $size === 'normal' ? 14 : 20,
     height: '100%',
     lineHeight: '32px',
     marginLeft: 1,
@@ -91,6 +116,7 @@ const Suffix = styled(
 );
 
 export interface Props {
+  autoFocus?: boolean;
   disabled?: boolean;
   inputStyle?: CSS;
   invalid?: boolean;
@@ -101,6 +127,7 @@ export interface Props {
   placeholder?: string;
   prefix?: JSX.Element | string;
   required?: boolean;
+  size?: Sizes;
   style?: React.CSSProperties;
   suffix?: JSX.Element | string;
   tabIndex?: number;
@@ -112,6 +139,7 @@ export default class TextInput extends React.PureComponent {
   props: Props;
 
   static defaultProps = {
+    size: 'normal',
     type: 'text',
   };
 
@@ -131,27 +159,29 @@ export default class TextInput extends React.PureComponent {
       invalid,
       onChange,
       prefix,
+      size,
       style,
       suffix,
       value,
       ...rest
     } = this.props;
     return (
-      <InputWrapper $disabled={rest.disabled} style={style}>
+      <InputWrapper $disabled={rest.disabled} $size={size} style={style}>
         {prefix && (
-          <Prefix $disabled={rest.disabled} $invalid={invalid}>
+          <Prefix $disabled={rest.disabled} $invalid={invalid} $size={size}>
             {prefix}
           </Prefix>
         )}
         <Input
           $invalid={invalid || false}
+          $size={size}
           style={inputStyle}
           {...rest}
           onChange={this.handleChange}
           value={value}
         />
         {suffix && (
-          <Suffix $disabled={rest.disabled} $invalid={invalid}>
+          <Suffix $disabled={rest.disabled} $invalid={invalid} $size={size}>
             {suffix}
           </Suffix>
         )}

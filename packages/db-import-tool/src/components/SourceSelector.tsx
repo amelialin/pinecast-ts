@@ -9,6 +9,10 @@ import styled, {CSS} from '@pinecast/styles';
 const cardStyles: CSS = {
   margin: '0 auto',
   maxWidth: 400,
+
+  '@media (max-width: 800px)': {
+    maxWidth: 'auto',
+  },
 };
 
 const Row = styled('div', {

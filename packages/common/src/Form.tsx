@@ -2,31 +2,22 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-import {Children} from './types';
+import {Children, Omit} from './types';
 
-const Form_ = styled(
-  'form',
-  {
-    display: 'block',
-    marginBottom: 20,
-  },
-  {method: 'post'},
-);
-
-const Form = ({
-  children,
-  onSubmit,
-  ...rest
-}: {
+interface Props extends Omit<React.HTMLProps<HTMLFormElement>, 'onSubmit'> {
   children: Children;
-  onSubmit: () => void;
-} & React.HTMLProps<HTMLFormElement>) => {
+  onSubmit: (isValid: boolean) => void;
+}
+
+const Form_ = styled('form', {display: 'block'}, {method: 'post'});
+
+const Form = ({children, onSubmit, ...rest}: Props) => {
   return (
     <Form_
       {...rest}
-      onSubmit={e => {
+      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        onSubmit();
+        onSubmit((e.target as HTMLFormElement).checkValidity());
       }}
     >
       {children}

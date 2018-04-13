@@ -144,6 +144,7 @@ class PageEditorModal extends React.PureComponent {
         <form onSubmit={this.handleSubmit}>
           <Label $oneLine error={titleError} text="Page Title">
             <TextInput
+              invalid={Boolean(titleError)}
               onChange={this.handleTitleChange}
               required
               value={title}

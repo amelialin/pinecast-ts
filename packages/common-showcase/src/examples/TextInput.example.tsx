@@ -27,6 +27,19 @@ export default {
       ),
     },
     {
+      title: 'With sizes',
+      render: () => (
+        <React.Fragment>
+          <Label text="Text input field">
+            <TextInput onChange={() => {}} size="normal" value="Normal size" />
+          </Label>
+          <Label text="Text input field">
+            <TextInput onChange={() => {}} size="large" value="Large size" />
+          </Label>
+        </React.Fragment>
+      ),
+    },
+    {
       title: 'Disabled',
       render: () => (
         <Label text="Text input field">

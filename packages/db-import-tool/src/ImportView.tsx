@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import {Feed} from './types';
 import FeedFetch from './components/FeedFetch';
+import FeedReview from './components/FeedReview';
 import PleaseUpgrade from './components/PleaseUpgrade';
 
 export default class ImportView extends React.PureComponent {
@@ -21,6 +22,10 @@ export default class ImportView extends React.PureComponent {
     this.setState({feed, step: 'review'});
   };
 
+  handleFeedReviewed = (feed: Feed) => {
+    this.setState({feed, step: 'importing'});
+  };
+
   render() {
     if (!this.props.isPaid) {
       return <PleaseUpgrade />;
@@ -34,6 +39,15 @@ export default class ImportView extends React.PureComponent {
           />
         );
       case 'review':
+        if (!this.state.feed) {
+          throw new Error('unreachable');
+        }
+        return (
+          <FeedReview
+            feed={this.state.feed}
+            onFeedReviewed={this.handleFeedReviewed}
+          />
+        );
     }
   }
 }

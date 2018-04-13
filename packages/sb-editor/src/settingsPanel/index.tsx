@@ -159,7 +159,7 @@ class SettingsPanel extends React.PureComponent {
           don't involve the look and feel of your Pinecast site.
         </PanelDescription>
 
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} style={{marginBottom: 20}}>
           <Tabs>
             <Tab name="Subscribe links">
               <PanelSectionDescription>

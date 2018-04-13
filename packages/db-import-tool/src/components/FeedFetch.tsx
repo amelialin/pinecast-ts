@@ -4,6 +4,7 @@ import Button from '@pinecast/common/Button';
 import Callout from '@pinecast/common/Callout';
 import Card from '@pinecast/common/Card';
 import {CSS} from '@pinecast/styles';
+import Form from '@pinecast/common/Form';
 import Label from '@pinecast/common/Label';
 import {DashboardTitle, P} from '@pinecast/common/Text';
 import TextInput from '@pinecast/common/TextInput';
@@ -12,7 +13,7 @@ import xhr from '@pinecast/xhr';
 import {Feed} from '../types';
 
 const cardStyles: CSS = {
-  margin: '20px auto',
+  margin: '20px auto 100px',
   maxWidth: 600,
 };
 
@@ -30,25 +31,19 @@ export default class FeedFetch extends React.PureComponent {
     requiresFeed: boolean;
   } = {error: null, feedURL: '', fetching: false, requiresFeed: false};
 
-  form: HTMLFormElement | null = null;
-
   handleFeedURLChange = (newFeedURL: string) => {
     this.setState({feedURL: newFeedURL, requiresFeed: !newFeedURL});
   };
 
-  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  handleSubmit = (isValid: boolean) => {
+    if (!isValid) {
+      this.setState({requiresFeed: true});
+      return;
+    }
     this.submit();
   };
 
   submit = async () => {
-    if (!this.form) {
-      return;
-    }
-    if (!this.form.checkValidity()) {
-      this.setState({requiresFeed: true});
-      return;
-    }
     this.setState({error: null, fetching: true});
 
     let token: string;
@@ -107,6 +102,7 @@ export default class FeedFetch extends React.PureComponent {
           default:
             error =
               'We encountered an unexpected error while trying to extract information from your feed. Please contact Pinecast support.';
+            break;
         }
         this.setState({error, fetching: false});
         return;
@@ -123,18 +119,15 @@ export default class FeedFetch extends React.PureComponent {
     }
   };
 
-  handleRef = (el: HTMLFormElement | null) => {
-    this.form = el;
-  };
-
   render() {
     return (
       <Card style={cardStyles} whiteBack>
-        <form onSubmit={this.handleSubmit} ref={this.handleRef}>
+        <Form onSubmit={this.handleSubmit}>
           <DashboardTitle>Where are we importing from?</DashboardTitle>
           <P>You can import from an RSS feed URL or an iTunes listing URL.</P>
           <Label text="Feed URL or iTunes listing URL">
             <TextInput
+              autoFocus
               disabled={this.state.fetching}
               invalid={this.state.requiresFeed}
               onChange={this.handleFeedURLChange}
@@ -151,7 +144,7 @@ export default class FeedFetch extends React.PureComponent {
           >
             Begin import
           </Button>
-        </form>
+        </Form>
       </Card>
     );
   }

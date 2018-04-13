@@ -32,6 +32,13 @@ export type Status =
   | 'available'
   | 'unavailable';
 
+export function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/gi, '-')
+    .replace(/--+$/, '-');
+}
+
 export default class SlugInput extends React.PureComponent {
   props: Props & {
     onStatusChanged: (status: Status) => void;
@@ -55,12 +62,12 @@ export default class SlugInput extends React.PureComponent {
       sourceValue !== this.props.sourceValue &&
       // and our current tentative slug is based on the previous source value
       // or is empty
-      (this.clean(this.props.sourceValue) === this.state.tentativeSlug ||
+      (slugify(this.props.sourceValue) === this.state.tentativeSlug ||
         this.state.tentativeSlug === '')
     ) {
       // The previous input was the one we were showing
       // replace the value that's there
-      const cleaned = this.clean(sourceValue);
+      const cleaned = slugify(sourceValue);
       if (cleaned !== this.state.tentativeSlug) {
         this.setState({tentativeSlug: cleaned});
         this.props.onChange(cleaned);
@@ -74,24 +81,17 @@ export default class SlugInput extends React.PureComponent {
       // and the new value doesn't reflect the tentative value
       value !== this.state.tentativeSlug
     ) {
-      const cleaned = this.clean(value);
+      const cleaned = slugify(value);
       this.setState({tentativeSlug: cleaned});
       this.triggerLookup(cleaned);
     }
   }
-
-  clean(input: string): string {
-    return input
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/gi, '-')
-      .replace(/--+$/, '-');
-  }
   display(value: string) {
-    this.setState({tentativeSlug: this.clean(value)});
+    this.setState({tentativeSlug: slugify(value)});
   }
 
   handleChange = (newSlug: string) => {
-    const filteredSlug = this.clean(newSlug);
+    const filteredSlug = slugify(newSlug);
     this.setState({tentativeSlug: filteredSlug});
     this.props.onChange(filteredSlug);
     this.triggerLookup(filteredSlug);
@@ -137,14 +137,14 @@ export default class SlugInput extends React.PureComponent {
       case 'available':
         return (
           <StatusWrapper $type="positive">
-            <Check color="#51D197" height={20} />
+            <Check color="#259461" height={20} />
             Slug is available
           </StatusWrapper>
         );
       case 'unavailable':
         return (
           <StatusWrapper $type="negative">
-            <Cross color="#EF6B6B" height={20} />
+            <Cross color="#bf1d1d" height={20} />
             Slug is not available
           </StatusWrapper>
         );

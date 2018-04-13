@@ -25,7 +25,7 @@ const Wrapper = styled(
 );
 const Header = styled('header', {
   alignItems: 'center',
-  borderBottom: '1px solid #eee',
+  borderBottom: '1px solid #eeefea',
   display: 'flex',
   fontSize: 15,
   fontWeight: 500,

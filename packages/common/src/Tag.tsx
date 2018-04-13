@@ -3,7 +3,7 @@ import * as React from 'react';
 import styled from '@pinecast/styles';
 
 type Props = {
-  $color?: 'gray' | 'green' | 'blue' | 'yellow' | 'red';
+  $color?: 'gray' | 'green' | 'blue' | 'red';
 };
 
 const Tag = styled('span', ({$color = 'gray'}: Props) => {
@@ -18,6 +18,11 @@ const Tag = styled('span', ({$color = 'gray'}: Props) => {
   };
   switch ($color) {
     case 'gray':
+      break;
+
+    case 'blue':
+      out.backgroundColor = '#c9d9e0';
+      out.color = '#32586e';
       break;
     case 'green':
       out.backgroundColor = '#8aeabf';

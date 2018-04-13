@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/styles';
+import styled, {CSS} from '@pinecast/styles';
 
 import {Children} from './types';
 import {DEFAULT_FONT} from './constants';
@@ -15,7 +15,7 @@ const Text = styled('span', ({$oneLine}: {$oneLine: boolean}) => ({
   fontSize: 14,
   fontWeight: 500,
   justifyContent: $oneLine ? 'flex-end' : 'flex-start',
-  paddingBottom: $oneLine ? 0 : 4,
+  paddingBottom: $oneLine ? 0 : 8,
   paddingRight: 8,
   maxHeight: $oneLine ? 35 : null,
   textAlign: $oneLine ? 'right' : null,
@@ -24,7 +24,8 @@ const SubText = styled('span', {
   display: 'block',
   fontFamily: DEFAULT_FONT,
   fontWeight: 400,
-  marginBottom: 4,
+  marginBottom: 8,
+  marginTop: -4,
 });
 
 const OneLineInputWrap = styled('div', {
@@ -52,9 +53,15 @@ function renderError(error: JSX.Element | string | null): JSX.Element | null {
   );
 }
 
+const nativeLabelStyles: CSS = {
+  display: 'block',
+  fontSize: 14,
+  marginBottom: 20,
+};
+
 const nativeLabelMap = new Map<string, React.ComponentType<any>>();
-nativeLabelMap.set('label', styled('label', {display: 'block', fontSize: 14}));
-nativeLabelMap.set('div', styled('div', {display: 'block', fontSize: 14}));
+nativeLabelMap.set('label', styled('label', nativeLabelStyles));
+nativeLabelMap.set('div', styled('div', nativeLabelStyles));
 
 const Label = ({
   $oneLine,
@@ -94,9 +101,7 @@ const Label = ({
         style || $oneLine
           ? {
               ...style,
-              ...($oneLine
-                ? {alignItems: 'center', display: 'flex', paddingBottom: 20}
-                : null),
+              ...($oneLine ? {alignItems: 'center', display: 'flex'} : null),
             }
           : null
       }

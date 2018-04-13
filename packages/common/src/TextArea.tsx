@@ -16,7 +16,6 @@ const TextAreaInput = styled(
     flex: '0 0 100%',
     fontSize: 14,
     height: 150,
-    margin: '8px 0 20px',
     opacity: disabled ? 0.5 : 1,
     padding: '8px',
     transition: 'box-shadow 0.2s, opacity 0.2s',
@@ -29,6 +28,7 @@ const TextAreaInput = styled(
       outline: 'none',
     },
   }),
+  {className: 'TextArea'},
 );
 
 export default class TextArea extends React.PureComponent {

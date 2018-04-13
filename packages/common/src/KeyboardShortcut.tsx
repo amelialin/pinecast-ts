@@ -8,7 +8,7 @@ export interface ShortcutKey {
   optionKey?: boolean;
 }
 
-const Wrapper = styled('span', {fontSize: '0.6em'});
+const Wrapper = styled('span', {display: 'inline-block', fontSize: '0.6em'});
 const Spacer = styled('span', {margin: '0 0.25em'});
 
 const userAgent = navigator.userAgent.toLowerCase();
@@ -30,10 +30,28 @@ function renderOption() {
   return 'alt';
 }
 
+type AvailableStyles = {
+  alignSelf?: React.CSSProperties['alignSelf'];
+  color?: React.CSSProperties['color'];
+  fontSize?: React.CSSProperties['fontSize'];
+  fontWeight?: React.CSSProperties['fontWeight'];
+  justifySelf?: React.CSSProperties['justifySelf'];
+  letterSpacing?: React.CSSProperties['letterSpacing'];
+  margin?: React.CSSProperties['margin'];
+  marginBottom?: React.CSSProperties['marginBottom'];
+  marginLeft?: React.CSSProperties['marginLeft'];
+  marginRight?: React.CSSProperties['marginRight'];
+  marginTop?: React.CSSProperties['marginTop'];
+  opacity?: React.CSSProperties['opacity'];
+  textDecoration?: React.CSSProperties['textDecoration'];
+  textShadow?: React.CSSProperties['textShadow'];
+  textTransform?: React.CSSProperties['textTransform'];
+};
+
 const KeyboardShortcut = ({
   style,
   ...shortcut
-}: ShortcutKey & {style?: React.CSSProperties}) => {
+}: ShortcutKey & {style?: AvailableStyles}) => {
   if (isMobile) {
     return <span />;
   }

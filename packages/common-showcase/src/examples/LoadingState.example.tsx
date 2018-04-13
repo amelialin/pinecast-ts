@@ -7,9 +7,7 @@ export default {
   examples: [
     {
       title: 'Basic use',
-      render: () => (
-        <LoadingState title="There was a problem doing the thing you asked to do." />
-      ),
+      render: () => <LoadingState title="Hold on, just a minute." />,
     },
   ],
 };

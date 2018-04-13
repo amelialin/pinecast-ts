@@ -12,8 +12,7 @@ export default {
         <Group spacing={12}>
           <Tag $color="gray">Gray</Tag>
           <Tag $color="green">Green</Tag>
-          {/*<Tag $color="blue">Blue</Tag>*/}
-          {/*<Tag $color="yellow">Yellow</Tag>*/}
+          <Tag $color="blue">Blue</Tag>
           <Tag $color="red">Red</Tag>
         </Group>
       ),

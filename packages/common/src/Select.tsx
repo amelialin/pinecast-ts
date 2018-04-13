@@ -13,7 +13,6 @@ const Wrapper = styled('div', {
   display: 'flex',
   fontSize: 14,
   height: 30,
-  marginBottom: 20,
   opacity: 1,
   position: 'relative',
   transition: 'box-shadow 0.2s, opacity 0.2s',
