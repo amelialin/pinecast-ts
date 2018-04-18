@@ -7,7 +7,7 @@ const HorizontalRule = styled('hr', {
   border: 0,
   display: 'block',
   height: 1,
-  margin: '16px 0',
+  margin: '20px 0',
   width: '100%',
 });
 

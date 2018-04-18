@@ -33,10 +33,12 @@ export type Status =
   | 'unavailable';
 
 export function slugify(input: string): string {
-  return input
+  const out = input
     .toLowerCase()
     .replace(/[^a-z0-9]+/gi, '-')
-    .replace(/--+$/, '-');
+    .replace(/--+$/, '-')
+    .replace(/^-+/, '');
+  return out;
 }
 
 export default class SlugInput extends React.PureComponent {
@@ -56,6 +58,12 @@ export default class SlugInput extends React.PureComponent {
   pendingRequest: any | null = null;
   ongoingRequest: ProviderResponse | null = null;
 
+  componentDidMount() {
+    const cleanedSoruce = slugify(this.props.sourceValue);
+    if (cleanedSoruce === this.props.value) {
+      this.triggerLookup(cleanedSoruce);
+    }
+  }
   componentWillReceiveProps({sourceValue, value}) {
     if (
       // The source value has changed

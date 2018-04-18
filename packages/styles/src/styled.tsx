@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 
-import {CSS, CSSProperties} from './types';
+import {CSS, Omit} from './types';
 
 declare function require(name: string);
 const su = require('styletron-utils');
@@ -16,16 +16,18 @@ function wrapCtx(
 
 const styleIdentity = ({$style}) => $style;
 
-type HTMLProps = React.AllHTMLAttributes<any>;
-type StyledProps = {
+declare var process: {env: {[key: string]: string}};
+
+export type HTMLProps = Omit<React.AllHTMLAttributes<any>, 'style'>;
+export type StyledProps = {
   className?: string;
   style?: CSS;
 } & HTMLProps & {[key: string]: any};
 
 function styled(elemType: string): React.ComponentType<StyledProps>;
-function styled(
+function styled<T>(
   elemType: string,
-  props: CSSProperties, // FIXME: This should be CSS, but Typescript doesn't like it
+  props: CSS | {[key: string]: string | number | CSS | undefined},
   defaultProps?: HTMLProps,
 ): React.ComponentType<StyledProps>;
 function styled<T>(
@@ -36,7 +38,7 @@ function styled<T>(
 
 function styled<T>(
   elemType: string,
-  props?: CSS | ((props: T) => CSS),
+  props?: CSS | {[key in keyof CSS]: CSS[key] | CSS} | ((props: T) => CSS),
   defaultProps?: HTMLProps,
 ): React.ComponentType<T & StyledProps> {
   // Basic validation

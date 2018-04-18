@@ -23,7 +23,7 @@ const LayoutPanel = ({
 }) => (
   <StickyHeader.Wrapper
     header={
-      <StickyHeader.Header>
+      <StickyHeader.Header $headerHeight={60}>
         <PageSelector
           onChange={changeLayoutPage}
           options={pageOptions}

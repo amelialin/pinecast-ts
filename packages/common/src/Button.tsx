@@ -24,13 +24,13 @@ const NativeButton = styled(
     $isBlock,
     $isPrimary,
     $pending,
-    $size,
+    $size = 'normal',
   }: {
     disabled?: boolean;
     $isBlock?: boolean;
     $isPrimary?: boolean;
     $pending?: boolean;
-    $size: 'normal' | 'large' | 'small';
+    $size?: 'normal' | 'large' | 'small';
   }) => ({
     backgroundColor: $isPrimary ? '#8d52d1' : '#fff',
     border: 0,
@@ -48,7 +48,7 @@ const NativeButton = styled(
     opacity: $pending || disabled ? 0.5 : 1,
     padding:
       $size === 'normal' ? '0 16px' : $size === 'small' ? '0 12px' : '0 20px',
-    pointerEvents: $pending || disabled ? 'none' : null,
+    pointerEvents: $pending || disabled ? 'none' : undefined,
     position: 'relative',
     transition: 'box-shadow 0.2s, color 0.2s, opacity 0.2s',
     userSelect: 'none',
@@ -142,11 +142,11 @@ export default class Button extends React.PureComponent {
 
     return (
       <NativeButton
-        $isPrimary={$isPrimary}
-        $isBlock={$isBlock}
+        $isPrimary={$isPrimary || false}
+        $isBlock={$isBlock || false}
         autoFocus={autoFocus}
         className={className}
-        disabled={disabled}
+        disabled={disabled || false}
         $pending={pending}
         $size={size}
         onClick={this.handleClick}

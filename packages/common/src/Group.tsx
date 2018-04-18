@@ -5,6 +5,7 @@ import styled, {CSS} from '@pinecast/styles';
 import {Children} from './types';
 
 const Wrapper = styled('div', {
+  alignItems: 'inherit',
   display: 'inline-flex',
 });
 

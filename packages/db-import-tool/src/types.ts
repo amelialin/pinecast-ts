@@ -8,7 +8,7 @@ export interface Feed {
   author_name: string;
   subtitle: string;
   is_explicit: boolean;
-  cover_image: string;
+  cover_art: string;
   categories: Array<string>;
 
   episode_release_type: 'serial' | 'episodic' | null;
@@ -17,7 +17,7 @@ export interface Feed {
   readonly __ignored_items: number;
 }
 
-interface FeedItem {
+export interface FeedItem {
   title: string;
   guid: string;
   description: string;

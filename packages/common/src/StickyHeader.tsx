@@ -11,7 +11,7 @@ export const Header = styled(
     $scrolled,
   }: {
     $headerHeight: number;
-    $scrolled: ScrolledFlag;
+    $scrolled?: ScrolledFlag;
   }) => ({
     alignItems: 'center',
     backgroundColor: '#fff',

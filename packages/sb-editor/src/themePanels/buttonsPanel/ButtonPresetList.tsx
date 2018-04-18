@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import * as presets from '@pinecast/sb-presets';
 import {primitives} from '@pinecast/sb-components';
-import styled from '@pinecast/styles';
+import styled, {CSS} from '@pinecast/styles';
 
 import {ReducerType} from '../../reducer';
 import buttonPresets from './buttonPresets';
@@ -20,7 +20,7 @@ const ButtonPresetList = ({
   changeButtonStyle,
 }: {
   theme: Object;
-  changeButtonStyle: ((payload: React.CSSProperties) => void);
+  changeButtonStyle: ((payload: CSS) => void);
 }) => (
   <Wrapper>
     {buttonPresets.map((preset, i) => (

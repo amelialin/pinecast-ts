@@ -35,7 +35,7 @@ const Option = styled('button', ({$selected}: {$selected: boolean}) => ({
   fontSize: 14,
   margin: '0 4px',
   padding: 12,
-  transition: 'box-shadow 0.2s',
+  transition: 'background-color 0.1s, box-shadow 0.2s',
 
   ':not(:empty) > svg': {
     marginBottom: 12,

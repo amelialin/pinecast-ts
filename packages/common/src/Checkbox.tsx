@@ -112,14 +112,14 @@ const Checkbox = ({
   return (
     <WrapperLabel style={style}>
       <InvisibleCheckbox
-        checked={checked}
-        disabled={disabled}
+        checked={checked || false}
+        disabled={disabled || false}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           onChange(e.target.checked)
         }
         tabIndex={tabIndex}
       />
-      <Text $disabled={disabled}>{text}</Text>
+      <Text $disabled={disabled || false}>{text}</Text>
     </WrapperLabel>
   );
 };

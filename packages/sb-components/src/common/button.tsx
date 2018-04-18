@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import {CSS} from '@pinecast/styles';
+
 import atom from '../elements/atom';
 import {ComponentContext, getsContext} from '../componentContext';
 
@@ -17,7 +19,7 @@ export default getsContext(
       href: string;
       children?: any;
       rel?: string;
-      style?: Object;
+      style?: CSS;
       target?: '_blank';
     },
     {ctx}: {ctx: ComponentContext},

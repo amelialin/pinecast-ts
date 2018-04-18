@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import {CSS} from '@pinecast/styles';
+
 import atom from '../atom';
 import {Element} from '../../primitives';
 import expandElementStyles from '../globalElementOptions';
@@ -17,7 +19,7 @@ export default ({
 }: {
   element: Element;
   item: BodyType;
-  style: Object;
+  style: CSS;
 }) => {
   const cellStyles = element.elementOptions
     ? element.elementOptions.cellStyles

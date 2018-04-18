@@ -8,7 +8,7 @@ export type Sizes = 'normal' | 'large';
 
 const InputWrapper = styled(
   'div',
-  ({$disabled, $size}: {$disabled: boolean; $size: Sizes}) => ({
+  ({$disabled, $size = 'normal'}: {$disabled: boolean; $size?: Sizes}) => ({
     alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius: 4,
@@ -19,7 +19,7 @@ const InputWrapper = styled(
 );
 const Input = styled(
   'input',
-  ({$invalid, $size}: {$invalid: boolean; $size: Sizes}) => ({
+  ({$invalid, $size = 'normal'}: {$invalid: boolean; $size?: Sizes}) => ({
     background: 'transparent',
     border: 0,
     borderRadius: 4,
@@ -166,9 +166,17 @@ export default class TextInput extends React.PureComponent {
       ...rest
     } = this.props;
     return (
-      <InputWrapper $disabled={rest.disabled} $size={size} style={style}>
+      <InputWrapper
+        $disabled={rest.disabled || false}
+        $size={size}
+        style={style}
+      >
         {prefix && (
-          <Prefix $disabled={rest.disabled} $invalid={invalid} $size={size}>
+          <Prefix
+            $disabled={rest.disabled || false}
+            $invalid={invalid || false}
+            $size={size || 'normal'}
+          >
             {prefix}
           </Prefix>
         )}
@@ -181,7 +189,11 @@ export default class TextInput extends React.PureComponent {
           value={value}
         />
         {suffix && (
-          <Suffix $disabled={rest.disabled} $invalid={invalid} $size={size}>
+          <Suffix
+            $disabled={rest.disabled || false}
+            $invalid={invalid || false}
+            $size={size || 'normal'}
+          >
             {suffix}
           </Suffix>
         )}

@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import Completed from './components/Completed';
+import DoImport from './components/DoImport';
 import {Feed} from './types';
 import FeedFetch from './components/FeedFetch';
 import FeedReview from './components/FeedReview';
@@ -12,19 +14,23 @@ export default class ImportView extends React.PureComponent {
   };
   state: {
     feed: Feed | null;
+    feedURL: string | null;
     step: 'fetchFeed' | 'review' | 'importing' | 'complete';
   } = {
     feed: null,
+    feedURL: null,
     step: 'fetchFeed',
   };
 
-  handleGotFeed = (feed: Feed) => {
-    this.setState({feed, step: 'review'});
+  handleGotFeed = (feedURL: string, feed: Feed) => {
+    this.setState({feedURL, feed, step: 'review'});
   };
 
   handleFeedReviewed = (feed: Feed) => {
     this.setState({feed, step: 'importing'});
   };
+
+  handleComplete = () => {};
 
   render() {
     if (!this.props.isPaid) {
@@ -48,6 +54,18 @@ export default class ImportView extends React.PureComponent {
             onFeedReviewed={this.handleFeedReviewed}
           />
         );
+      case 'importing':
+        if (!this.state.feed) {
+          throw new Error('unreachable');
+        }
+        return (
+          <DoImport feed={this.state.feed} onComplete={this.handleComplete} />
+        );
+      case 'complete':
+        if (!this.state.feedURL) {
+          throw new Error('unreachable');
+        }
+        return <Completed feedURL={this.state.feedURL} />;
     }
   }
 }

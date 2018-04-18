@@ -33,7 +33,7 @@ const ThemePanel = ({
 }) => (
   <StickyHeader.Wrapper
     header={
-      <StickyHeader.Header>
+      <StickyHeader.Header $headerHeight={60}>
         <PageSelector
           onChange={changeThemePage}
           options={pageOptions}

@@ -1,6 +1,8 @@
 import * as React from 'react';
 
+import Group from '@pinecast/common/Group';
 import styled, {CSS} from '@pinecast/styles';
+import Tag from '@pinecast/common/Tag';
 
 import {Children} from './types';
 import {DEFAULT_FONT} from './constants';
@@ -8,17 +10,17 @@ import {ErrorFlag} from './icons';
 
 const Text = styled('span', ({$oneLine}: {$oneLine: boolean}) => ({
   alignItems: 'center',
-  alignSelf: $oneLine ? 'stretch' : null,
+  alignSelf: $oneLine ? 'stretch' : undefined,
   display: 'flex',
-  flex: $oneLine ? '0 0 20%' : null,
+  flex: $oneLine ? '0 0 20%' : undefined,
   fontFamily: DEFAULT_FONT,
   fontSize: 14,
   fontWeight: 500,
   justifyContent: $oneLine ? 'flex-end' : 'flex-start',
   paddingBottom: $oneLine ? 0 : 8,
   paddingRight: 8,
-  maxHeight: $oneLine ? 35 : null,
-  textAlign: $oneLine ? 'right' : null,
+  maxHeight: $oneLine ? 35 : undefined,
+  textAlign: $oneLine ? 'right' : undefined,
 }));
 const SubText = styled('span', {
   display: 'block',
@@ -69,6 +71,7 @@ const Label = ({
   componentType = 'label',
   error,
   labelStyle,
+  optional,
   style,
   subText,
   text,
@@ -78,6 +81,7 @@ const Label = ({
   componentType?: string;
   error?: JSX.Element | string | null;
   labelStyle?: React.CSSProperties;
+  optional?: boolean;
   style?: React.CSSProperties;
   subText?: JSX.Element | string;
   text: JSX.Element | string;
@@ -95,6 +99,14 @@ const Label = ({
   if ($oneLine && subText) {
     throw new Error('Cannot have both subText and $oneLine');
   }
+  const contents = optional ? (
+    <Group spacing={8}>
+      {text}
+      <Tag>Optional</Tag>
+    </Group>
+  ) : (
+    text
+  );
   return (
     <NativeLabel
       style={
@@ -106,8 +118,11 @@ const Label = ({
           : null
       }
     >
-      <Text $oneLine={$oneLine} style={(!subText && labelStyle) || undefined}>
-        {text}
+      <Text
+        $oneLine={$oneLine || false}
+        style={(!subText && labelStyle) || undefined}
+      >
+        {contents}
       </Text>
       {subText && <SubText style={labelStyle}>{subText}</SubText>}
       {$oneLine ? (

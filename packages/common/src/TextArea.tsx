@@ -16,6 +16,7 @@ const TextAreaInput = styled(
     flex: '0 0 100%',
     fontSize: 14,
     height: 150,
+    lineHeight: '20px',
     opacity: disabled ? 0.5 : 1,
     padding: '8px',
     transition: 'box-shadow 0.2s, opacity 0.2s',

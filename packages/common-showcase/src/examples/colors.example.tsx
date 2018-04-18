@@ -55,7 +55,7 @@ const ColorInput = styled(
 
 const Color = ({color, invert}: {color: string; invert?: boolean}) => (
   <ColorPanel $color={color} onClick={() => {}}>
-    <ColorInput $invert={invert} value={color.toLowerCase()} />
+    <ColorInput $invert={invert || false} value={color.toLowerCase()} />
   </ColorPanel>
 );
 

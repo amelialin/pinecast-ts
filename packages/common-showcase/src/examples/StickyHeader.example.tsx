@@ -19,6 +19,7 @@ export default {
           <StickyHeader.Wrapper
             header={
               <StickyHeader.Header
+                $headerHeight={60}
                 style={{
                   borderTopLeftRadius: 2,
                   borderTopRightRadius: 2,
@@ -75,6 +76,7 @@ export default {
                 <StickyHeader.Wrapper
                   header={
                     <StickyHeader.Header
+                      $headerHeight={60}
                       style={{
                         borderTopLeftRadius: 2,
                         borderTopRightRadius: 2,

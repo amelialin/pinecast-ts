@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/styles';
+import styled, {CSS} from '@pinecast/styles';
 
 import {ClosableLayer} from './Layer';
 import {DEFAULT_FONT} from './constants';
@@ -46,7 +46,7 @@ const MenuWrapper = styled(
 
 const MenuOptionRow = styled(
   'button',
-  ({'aria-selected': selected}: {'aria-selected': boolean}) => ({
+  ({'aria-selected': selected}: {'aria-selected': boolean}): CSS => ({
     WebkitAppearance: 'none',
     background: selected ? '#eeefea' : 'none',
     border: 0,

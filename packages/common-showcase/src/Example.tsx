@@ -71,7 +71,9 @@ export default class Example extends React.Component {
     return (
       <Card style={{alignItems: 'flex-start', marginBottom: 12}} whiteBack>
         <ExampleTitle>{this.props.title}</ExampleTitle>
-        <Surface $dark={this.props.dark}>{this.props.children()}</Surface>
+        <Surface $dark={this.props.dark || false}>
+          {this.props.children()}
+        </Surface>
         <Button onClick={this.handleToggleCode} size="small">
           {this.state.showingCode ? 'Hide code' : 'Show code'}
         </Button>

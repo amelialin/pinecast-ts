@@ -99,7 +99,7 @@ export function prepareStyle(
       case 'borderRightColor':
       case 'borderTopColor':
       case 'color':
-        acc[cur] = formatColor(style[cur], ctx);
+        acc[cur] = formatColor(String(style[cur]), ctx);
         break;
       case 'backgroundImage':
         if (ctx.resources && String(style[cur]) in ctx.resources) {

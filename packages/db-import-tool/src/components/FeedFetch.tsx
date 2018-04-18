@@ -11,6 +11,7 @@ import TextInput from '@pinecast/common/TextInput';
 import xhr from '@pinecast/xhr';
 
 import {Feed} from '../types';
+import * as feedParser from './feedParser';
 
 const cardStyles: CSS = {
   margin: '20px auto 100px',
@@ -22,7 +23,7 @@ declare var Rollbar: any;
 export default class FeedFetch extends React.PureComponent {
   props: {
     feedFetchURL: string;
-    onGotFeed: (feed: Feed) => void;
+    onGotFeed: (feedURL: string, feed: Feed) => void;
   };
   state: {
     error: string | null;
@@ -77,45 +78,20 @@ export default class FeedFetch extends React.PureComponent {
       return;
     }
 
-    // TODO: replace this with something that runs on the client
     try {
-      const body = new FormData();
-      body.append('feed', feedContent);
-      const feed = JSON.parse(
-        await xhr({method: 'POST', body, url: '/dashboard/import/feed'}),
-      );
-
-      if (feed.error) {
-        let error: string;
-        switch (feed.error) {
-          case 'invalid encoding':
-            error =
-              'We downloaded your RSS feed, but it was not encoded in a format that we could understand. Please contact Pinecast support.';
-            break;
-          case 'invalid xml':
-            error =
-              'We downloaded your RSS feed, but it was not a valid RSS feed that we could import. Please contact Pinecast support.';
-            break;
-          case 'invalid format':
-            error = feed.details;
-            break;
-          default:
-            error =
-              'We encountered an unexpected error while trying to extract information from your feed. Please contact Pinecast support.';
-            break;
-        }
-        this.setState({error, fetching: false});
+      const feed = feedParser.parseFeed(feedContent);
+      this.props.onGotFeed(this.state.feedURL, feed);
+    } catch (e) {
+      if (e instanceof feedParser.FormatError) {
+        this.setState({error: e.message, fetching: false});
         return;
       }
-
-      this.props.onGotFeed(feed);
-    } catch (e) {
-      Rollbar.error('Problem parsing feed during import', {error: e});
       this.setState({
-        error: 'There was a problem parsing your feed.',
+        error:
+          'We were unable to parse the feed that you provided. Pleaes contact support.',
         fetching: false,
       });
-      return;
+      Rollbar.error('Problem parsing feed during import', {error: e});
     }
   };
 

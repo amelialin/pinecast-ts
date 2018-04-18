@@ -1,8 +1,9 @@
 import * as React from 'react';
 
-import styled from '@pinecast/styles';
+import styled, {CSS} from '@pinecast/styles';
 
 import {DEFAULT_FONT} from './constants';
+import {Omit} from './types';
 
 const style = ({
   $shadow,
@@ -51,10 +52,11 @@ const Card = ({
 }: {
   children: any;
   shadow?: boolean;
+  style?: CSS;
   tabindex?: number | null;
   type?: string;
   whiteBack?: boolean;
-} & React.HTMLProps<HTMLDivElement>) => {
+} & Omit<React.HTMLProps<HTMLDivElement>, 'style'>) => {
   const Card_ = getCard(type);
   return (
     <Card_

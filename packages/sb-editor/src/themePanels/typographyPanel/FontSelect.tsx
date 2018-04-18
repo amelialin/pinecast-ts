@@ -54,7 +54,7 @@ const InnerWrapper = styled('div', ({$isOpen}: {$isOpen: boolean}) => ({
   left: 0,
   height: 300,
   opacity: $isOpen ? 1 : 0,
-  pointerEvents: $isOpen ? null : 'none',
+  pointerEvents: $isOpen ? undefined : 'none',
   position: 'absolute',
   top: '100%',
   transform: $isOpen ? 'translateY(1px)' : 'translateY(6px)',

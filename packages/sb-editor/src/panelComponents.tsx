@@ -104,7 +104,7 @@ const PageSelectorInner = styled(
     minWidth: 200,
     opacity: hidden ? 0 : 1,
     padding: '4px 0',
-    pointerEvents: hidden ? 'none' : null,
+    pointerEvents: hidden ? 'none' : undefined,
     position: 'absolute',
     top: '100%',
     transform: hidden ? 'scale(0.9)' : 'scale(1)',

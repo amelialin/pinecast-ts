@@ -257,9 +257,10 @@ export default class SchemaOrderedSet extends React.PureComponent {
         <Buffer $open={overBuffer === index} />
         <Element
           $bufferAdjustment={
-            dragging === index &&
-            overBuffer !== null &&
-            (overBuffer < dragging ? 1 : -1)
+            (dragging === index &&
+              overBuffer !== null &&
+              (overBuffer < dragging ? 1 : -1)) ||
+            0
           }
           $dragging={dragging === index}
           $isOnly={this.props.value.length === 1}

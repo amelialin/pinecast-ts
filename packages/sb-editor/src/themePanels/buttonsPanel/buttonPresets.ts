@@ -1,8 +1,10 @@
 import * as React from 'react';
 
+import {CSS} from '@pinecast/styles';
+
 export interface Preset {
   name: string;
-  style: React.CSSProperties;
+  style: CSS;
 }
 
 const presets: Array<Preset> = [

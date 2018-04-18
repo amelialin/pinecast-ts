@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import {CSS} from '@pinecast/styles';
+
 import atom from './atom';
 import {Element, ElementLayout, InlineElement} from '../primitives';
 
@@ -85,7 +87,7 @@ export default function(
   key: any,
   item: Object,
   elementLayout: ElementLayout,
-  style?: Object,
+  style?: CSS,
 ): JSX.Element {
   const Wrapper = atom(elementLayout.tagName || 'div');
   return (

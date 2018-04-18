@@ -51,8 +51,7 @@ export default getsContext(
                 href={ctx.url('home') + `?page=${ctx.pagination.page + 1}`}
                 style={{
                   marginBottom: '0.5em',
-                  marginLeft: ctx.pagination.has_previous ? '0.5em' : null,
-                  // marginRight: ctx.pagination.has_previous ? '0.5em' : null,
+                  marginLeft: ctx.pagination.has_previous ? '0.5em' : undefined,
                 }}
               >
                 {layout.nextText}

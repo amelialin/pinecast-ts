@@ -7,7 +7,7 @@ import {DashboardTitle, P} from '@pinecast/common/Text';
 import Form from '@pinecast/common/Form';
 import Label from '@pinecast/common/Label';
 import {memoize} from '@pinecast/common/helpers';
-import styled, {CSS} from '@pinecast/styles';
+import styled from '@pinecast/styles';
 import SlugInput, {
   slugify,
   Status as SlugStatus,
@@ -16,19 +16,9 @@ import TextArea from '@pinecast/common/TextArea';
 import TextInput from '@pinecast/common/TextInput';
 import xhr from '@pinecast/xhr';
 
+import {cardStyle, pageBreak} from './cardStyle';
 import EpisodeStatus from './EpisodeStatus';
 import {Feed} from '../types';
-
-const pageBreak = '@media (max-width: 550px)';
-
-const cardStyle: CSS = {
-  margin: '40px 50px 100px',
-  maxWidth: 1024,
-
-  [pageBreak]: {
-    margin: '40px 0 100px',
-  },
-};
 
 const Wrapper = styled('div', {
   display: 'flex',
@@ -62,7 +52,7 @@ const CoverImage = styled('img', {
 });
 
 const SubmitWrapper = styled('div', {
-  marginTop: 16,
+  marginTop: 8,
 });
 
 const fieldRequiredError = 'This field is required';
@@ -151,17 +141,14 @@ export default class FeedReview extends React.Component {
 
     return (
       <Card style={cardStyle} whiteBack>
-        <DashboardTitle>Perfect, let's review your feed.</DashboardTitle>
+        <DashboardTitle>Let's review your feed.</DashboardTitle>
         <P>
           We've collected all of the data we need about your show. Give it a
           look over and make sure we've got everything right.
         </P>
         <Form onSubmit={this.handleSubmit}>
           <Wrapper>
-            <CoverImage
-              alt="Your podcast's cover image"
-              src={feed.cover_image}
-            />
+            <CoverImage alt="Your podcast's cover image" src={feed.cover_art} />
             <FormColumn>
               <Label error={errors && errors.name} text="Podcast name">
                 <TextInput
@@ -184,7 +171,7 @@ export default class FeedReview extends React.Component {
                   value={feed.slug || ''}
                 />
               </Label>
-              <Label text="Subtitle">
+              <Label optional text="Subtitle">
                 <TextInput
                   onChange={this.handleChange('subtitle')}
                   value={feed.subtitle}
@@ -202,7 +189,11 @@ export default class FeedReview extends React.Component {
                   value={feed.description}
                 />
               </Label>
-              <Label error={errors && errors.homepage} text="Homepage">
+              <Label
+                error={errors && errors.homepage}
+                subText="If you do not have a website, consider using your social media URLs."
+                text="Homepage"
+              >
                 <TextInput
                   invalid={Boolean(errors && errors.homepage)}
                   onChange={this.handleChange('homepage')}
@@ -217,7 +208,7 @@ export default class FeedReview extends React.Component {
                   value={feed.author_name}
                 />
               </Label>
-              <Label text="Copyright">
+              <Label optional text="Copyright">
                 <TextInput
                   onChange={this.handleChange('copyright')}
                   value={feed.copyright}
@@ -234,6 +225,7 @@ export default class FeedReview extends React.Component {
               $isPrimary
               disabled={!this.canSubmit()}
               onClick={this.handleSubmit}
+              size="large"
             >
               Continue
             </Button>

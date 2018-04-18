@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/styles';
+import styled, {CSS} from '@pinecast/styles';
 
 import {DEFAULT_FONT} from './constants';
 
@@ -101,7 +101,7 @@ const Radio = ({
   disabled?: boolean;
   name: string;
   onChange: (checkedValue: boolean) => void;
-  style?: React.CSSProperties;
+  style?: CSS;
   tabIndex?: number;
   text: JSX.Element | string;
 }) => {
@@ -116,7 +116,7 @@ const Radio = ({
         }
         tabIndex={tabIndex}
       />
-      <Text $alignInput={alignInput} $disabled={disabled}>
+      <Text $alignInput={alignInput} $disabled={disabled || false}>
         {text}
       </Text>
     </WrapperLabel>

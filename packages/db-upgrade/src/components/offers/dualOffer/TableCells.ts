@@ -1,15 +1,17 @@
 import styled, {CSS} from '@pinecast/styles';
 
 const styles: CSS = {
-  borderBottom: '1px solid #dee1df',
-  lineHeight: '36px',
-  textAlign: 'center',
-  width: 120,
+  ...({
+    borderBottom: '1px solid #dee1df',
+    lineHeight: '36px',
+    textAlign: 'center',
+    width: 120,
+  } as CSS),
   '@media (max-width: 600px)': {
     width: 'auto',
     minWidth: 60,
-  },
-};
+  } as CSS,
+} as any;
 
 const rowLabelStyles: CSS = {
   borderBottom: '1px solid #dee1df',

@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import {CSS} from '@pinecast/styles';
+
 import atom from '../atom';
 import {Element} from '../../primitives';
 import expandElementStyles from '../globalElementOptions';
@@ -44,7 +46,7 @@ export default ({
 }: {
   element: Element;
   item: Page;
-  style: Object;
+  style: CSS;
 }) => {
   const Container = atom(element.tagName || 'div');
   const {container: containerStyles, item: itemStyles} = getStyles(element);

@@ -17,7 +17,7 @@ const NativeButton = styled(
     disabled?: boolean;
     $isBlock?: boolean;
     $size: 'normal' | 'large' | 'small';
-    $style: React.CSSProperties;
+    $style?: CSS;
   }) => ({
     backgroundColor: 'transparent',
     border: 0,
@@ -29,7 +29,7 @@ const NativeButton = styled(
     margin: $isBlock ? '0 0 20px' : 0,
     opacity: disabled ? 0.5 : 1,
     padding: '0 4px',
-    pointerEvents: disabled ? 'none' : null,
+    pointerEvents: disabled ? 'none' : undefined,
     transition: 'background-color 0.2s, box-shadow 0.2s, opacity 0.2s',
 
     ...$style,

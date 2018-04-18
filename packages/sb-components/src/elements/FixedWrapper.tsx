@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import {CSS} from '@pinecast/styles';
+
 import atom from './atom';
 import {blockChildren} from './children';
 import {Element} from '../primitives';
@@ -24,7 +26,7 @@ export default ({
 }: {
   element: Element;
   item: Object;
-  style: Object;
+  style: CSS;
 }) => {
   if (element.extendsStyles) {
     throw new Error('Cannot extend styles on fixed wrappers');

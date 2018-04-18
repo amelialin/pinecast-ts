@@ -23,6 +23,14 @@ export default {
       ),
     },
     {
+      title: 'Optional',
+      render: () => (
+        <Label optional text="Label with a text input">
+          <TextInput onChange={() => {}} value="" />
+        </Label>
+      ),
+    },
+    {
       title: 'One line',
       render: () => (
         <Label $oneLine text="Label with a text input">
