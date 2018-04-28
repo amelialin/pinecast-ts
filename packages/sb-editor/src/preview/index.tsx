@@ -9,14 +9,15 @@ import {fetcher} from '../data/dataAPI';
 import FullScreenWrapper from './FullScreenWrapper';
 import PreviewToolbar, {FrameType, OrientationType} from './PreviewToolbar';
 import {ReducerType} from '../reducer';
-import {DEFAULT_FONT} from '@pinecast/common/constants';
+import {
+  DEFAULT_FONT,
+  DEFAULT_FONT_CSS_IMPORT,
+} from '@pinecast/common/constants';
 
 const UTIL_PAGE_HEAD = `
 <head>
-  <link href="https://fonts.googleapis.com/css?family=${encodeURIComponent(
-    DEFAULT_FONT,
-  )}:400,500" rel="stylesheet">
   <style>
+    ${DEFAULT_FONT_CSS_IMPORT}
     body, html {
       align-items: center;
       display: flex;

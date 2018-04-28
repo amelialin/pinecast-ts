@@ -1,4 +1,4 @@
-import styled from '@pinecast/styles';
+import styled, {CSS} from '@pinecast/styles';
 
 const DeleteButton = styled(
   'button',
@@ -46,4 +46,7 @@ const DeleteButton = styled(
   {'aria-label': 'Delete'},
 );
 
-export default DeleteButton;
+export default DeleteButton as React.ComponentType<{
+  onClick: () => void;
+  style?: CSS;
+}>;

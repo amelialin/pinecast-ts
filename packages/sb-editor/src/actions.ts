@@ -3,12 +3,36 @@ export interface Action<T> {
   payload: T;
 }
 
+export function arrayReducer<T>(
+  listenForType: string,
+): ((state: Array<T>, action: Action<[number, T]>) => Array<T>) {
+  return (state: Array<T>, action: Action<[number, T]>) => {
+    if (action.type === listenForType) {
+      const updated = [...(state || [])];
+      updated[action.payload[0]] = action.payload[1];
+      return updated;
+    }
+    return state;
+  };
+}
 export function overrideReducer<T>(
   listenForType: string,
 ): ((state: T, action: Action<any>) => T) {
   return (state: T, action: Action<any>) => {
     if (action.type === listenForType) {
       return action.payload;
+    }
+    return state;
+  };
+}
+export function deleteArrayItem<T>(
+  listenForType: string,
+): ((state: Array<T>, action: Action<any>) => Array<T>) {
+  return (state: Array<T>, action: Action<any>) => {
+    if (action.type === listenForType) {
+      const copy = [...(state || [])];
+      copy.splice(action.payload, 1);
+      return copy;
     }
     return state;
   };

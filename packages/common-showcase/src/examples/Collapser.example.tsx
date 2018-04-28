@@ -2,8 +2,7 @@ import * as React from 'react';
 
 import Button from '@pinecast/common/Button';
 import Collapser from '@pinecast/common/Collapser';
-
-import Toggler from '../helpers/Toggler';
+import Toggler from '@pinecast/common/Toggler';
 
 export default {
   name: 'Collapser',

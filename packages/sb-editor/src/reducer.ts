@@ -45,7 +45,7 @@ const initialState: ReducerType = {
 
   page: 'layout',
   themePage: 'presets',
-  layoutPage: 'modules',
+  layoutPage: 'episodeItems',
   preview: previewInitialState,
   save: saveInitialState,
   theme: themeInitialState,

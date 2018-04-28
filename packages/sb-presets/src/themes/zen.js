@@ -97,12 +97,11 @@ export default {
         segments: [
           {
             type: 'grid',
-            consumeCount: -1,
+            consumeCount: 10,
 
             alignment: 'center',
             itemSpacing: 30,
             maxItemsAcross: 3,
-            padding: 0,
 
             elementLayout: gridItem({}),
           },

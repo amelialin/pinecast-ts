@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/styles';
+import styled, {CSS} from '@pinecast/styles';
 
 import Button, {ButtonGroup} from '@pinecast/common/Button';
 import Collapser from '@pinecast/common/Collapser';
@@ -12,9 +12,14 @@ const Wrapper = styled('div', {
   marginBottom: -12,
   marginTop: 12,
 });
-const ButtonWrapper = styled('div', {
+const buttonWrapperStyle: CSS = {
   display: 'flex',
   paddingBottom: 12,
+};
+
+const ShowOptionsWrap = styled('div', {
+  display: 'flex',
+  flex: '1 1',
 });
 
 export default class ModuleOptions extends React.PureComponent {
@@ -140,16 +145,16 @@ export default class ModuleOptions extends React.PureComponent {
 
     return (
       <Wrapper>
-        <ButtonWrapper>
-          <ButtonGroup>
-            {Boolean(keys.length) && (
+        <ButtonGroup wrapperStyle={buttonWrapperStyle}>
+          {Boolean(keys.length) && (
+            <ShowOptionsWrap>
               <Button onClick={this.handleToggle}>
                 {this.state.open ? 'Hide options' : 'Show options'}
               </Button>
-            )}
-            {this.props.moreButtons}
-          </ButtonGroup>
-        </ButtonWrapper>
+            </ShowOptionsWrap>
+          )}
+          {this.props.moreButtons}
+        </ButtonGroup>
         <Collapser open={this.state.open}>
           {keys
             .sort((a, b) => {

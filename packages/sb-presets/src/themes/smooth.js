@@ -143,6 +143,7 @@ export default {
             type: 'stacked',
             consumeCount: 1,
 
+            bgColor: 'background',
             alignment: 'center',
             width: 'var(--fixedWidthMax)',
 
@@ -168,7 +169,6 @@ export default {
 
             itemSpacing: 40,
             maxItemsAcross: 10,
-            padding: 0,
 
             alignment: 'center',
 

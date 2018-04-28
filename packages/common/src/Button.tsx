@@ -112,11 +112,12 @@ export default class Button extends React.PureComponent {
   static defaultProps = {size: 'normal', type: 'button'};
 
   handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
     if (this.props.href) {
+      e.preventDefault();
       window.location.href = this.props.href;
     }
     if (this.props.onClick) {
+      e.preventDefault();
       this.props.onClick();
     }
   };
@@ -175,7 +176,13 @@ export default class Button extends React.PureComponent {
 export const ButtonGroup = ({
   children,
   style,
+  wrapperStyle,
 }: {
   children: Children;
-  style?: React.CSSProperties;
-}) => <Group spacing={8}>{children}</Group>;
+  style?: CSS;
+  wrapperStyle?: CSS;
+}) => (
+  <Group spacing={8} style={style} wrapperStyle={wrapperStyle}>
+    {children}
+  </Group>
+);

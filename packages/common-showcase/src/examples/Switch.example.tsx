@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Switch from '@pinecast/common/Switch';
 
-import Toggler from '../helpers/Toggler';
+import Toggler from '@pinecast/common/Toggler';
 
 export default {
   name: 'Switch',

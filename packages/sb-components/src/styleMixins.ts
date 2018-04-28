@@ -33,5 +33,5 @@ export function alignment(
     return {marginLeft: 'auto', marginRight: 'auto'};
   }
 
-  return null;
+  throw new Error(`Unrecognized alignment ${alignment}`);
 }

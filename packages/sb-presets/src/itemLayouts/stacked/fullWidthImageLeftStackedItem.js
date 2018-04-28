@@ -106,7 +106,7 @@ export default ({
     styles: {
       backgroundColor: 'secondaryBackground',
       display: 'flex',
-      marginBottom: 40,
+      margin: '20px 0',
       ...style,
 
       ':last-child': {

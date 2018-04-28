@@ -153,8 +153,9 @@ export default {
         segments: [
           {
             type: 'stacked',
-            consumeCount: -1,
+            consumeCount: 10,
 
+            bgColor: 'background',
             alignment: 'center',
 
             elementLayout: noImageStackedItem(),

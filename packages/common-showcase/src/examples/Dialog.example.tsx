@@ -5,7 +5,7 @@ import Dialog from '@pinecast/common/Dialog';
 import ModalLayer from '@pinecast/common/ModalLayer';
 import styled from '@pinecast/styles';
 
-import Toggler from '../helpers/Toggler';
+import Toggler from '@pinecast/common/Toggler';
 
 const Buffer = styled('div', {marginBottom: 20});
 

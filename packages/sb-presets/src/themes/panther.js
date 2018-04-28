@@ -117,11 +117,10 @@ export default {
         segments: [
           {
             type: 'stacked',
-            consumeCount: -1,
+            consumeCount: 10,
 
             alignment: 'center',
             fgColor: 'secondaryBackground',
-            width: 'var(--fixedWidthMax)',
 
             elementLayout: fullWidthImageCenterStackedItem({
               showBorder: true,

@@ -48,10 +48,16 @@ const Group = ({
   children,
   spacing,
   style,
+  wrapperStyle,
 }: {
   children: Children;
   spacing: number;
-  style?: React.CSSProperties;
-}) => <Wrapper>{collapseChildren(spacing, children, style, 0)}</Wrapper>;
+  style?: CSS;
+  wrapperStyle?: CSS;
+}) => (
+  <Wrapper style={wrapperStyle}>
+    {collapseChildren(spacing, children, style, 0)}
+  </Wrapper>
+);
 
 export default Group;

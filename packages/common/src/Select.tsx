@@ -8,26 +8,12 @@ const Wrapper = styled('div', {
   alignItems: 'center',
   background: '#fff',
   borderRadius: 3,
-  boxShadow:
-    '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
   display: 'flex',
   fontSize: 14,
   height: 30,
   opacity: 1,
   position: 'relative',
   transition: 'box-shadow 0.2s, opacity 0.2s',
-
-  ':hover': {
-    boxShadow:
-      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
-  },
-  ':active': {
-    boxShadow:
-      '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
-  },
-  ':disabled': {
-    opacity: 0.5,
-  },
 
   ':before': {
     border: '2px solid #222',
@@ -48,25 +34,48 @@ const Select_ = styled('select', {
   WebkitAppearance: 'none',
   background: 'transparent',
   border: 0,
+  boxShadow:
+    '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), inset 0 0 0 0.5px rgba(0, 0, 0, .15), rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
   borderRadius: 3,
-  boxShadow: 'rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
   fontFamily: DEFAULT_FONT,
   fontSize: 14,
   height: '100%',
   lineHeight: '100%',
   margin: 0,
   padding: '0 25px 0 10px',
-  transition: 'box-shadow 0.2s',
+  transition: 'box-shadow 0.2s, opacity 0.2s',
   width: '100%',
 
+  ':hover': {
+    boxShadow:
+      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px rgba(0, 0, 0, .15), rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
+  },
+  ':active': {
+    boxShadow:
+      '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px rgba(0, 0, 0, .15), rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
+  },
+  ':disabled': {
+    opacity: 0.5,
+  },
+
   ':focus': {
-    boxShadow: 'rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
+    boxShadow:
+      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), inset 0 0 0 0.5px #9eb4c0, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
     outline: 'none',
+  },
+  ':focus:hover': {
+    boxShadow:
+      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px #9eb4c0, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
+  },
+  ':focus:active': {
+    boxShadow:
+      '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px #9eb4c0, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
   },
 });
 
 const Select = ({
   autoFocus,
+  disabled,
   onChange,
   options,
   style,
@@ -74,6 +83,7 @@ const Select = ({
   value,
 }: {
   autoFocus?: boolean;
+  disabled?: boolean;
   onChange: (string) => void;
   options: {[key: string]: string};
   style?: React.CSSProperties;
@@ -83,6 +93,7 @@ const Select = ({
   <Wrapper style={style}>
     <Select_
       autoFocus={autoFocus}
+      disabled={disabled}
       onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
         onChange(e.target.value)
       }

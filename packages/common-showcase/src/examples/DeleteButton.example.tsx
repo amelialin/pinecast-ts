@@ -13,7 +13,7 @@ export default {
   examples: [
     {
       title: 'Basic use',
-      render: () => <DeleteButton />,
+      render: () => <DeleteButton onClick={() => {}} />,
     },
   ],
 };

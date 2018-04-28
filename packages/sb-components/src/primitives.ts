@@ -131,11 +131,10 @@ export interface LayoutConfig {
   alignment: Alignment;
   bgColor?: string;
   fgColor?: string;
-  padding?: string | number;
-  itemSpacing: number;
-  maxItemsAcross: number;
+  itemSpacing?: number;
+  maxItemsAcross?: number;
 
-  width: 'full' | number;
+  width: 'full' | 'default';
 }
 
 export interface Episode {

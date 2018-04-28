@@ -27,6 +27,7 @@ const MenuWrapper = styled(
     $width: number;
   }) => ({
     background: '#fff',
+    borderRadius: 2,
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.125)',
     display: 'flex',
     flexDirection: 'column',

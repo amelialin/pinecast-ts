@@ -1,24 +1,17 @@
-import {connect} from 'react-redux';
 import * as React from 'react';
 
-import Button from '@pinecast/common/Button';
-import Group from '@pinecast/common/Group';
 import Label from '@pinecast/common/Label';
 import PaddingInput, {
   formatPadding,
   parsePadding,
   StructuredValue as Padding,
 } from '@pinecast/common/PaddingInput';
-import Select from '@pinecast/common/Select';
 
-import * as chromeActions from '../../../../actions/chrome';
-import colorKeyNames from '../../../../shared/colorNames';
+import ElementColorSelector from '../../../ElementColorSelector';
 import {SchemaProps} from '../types';
 
-const colorsOptionalKeys = {...colorKeyNames, '': '--'};
-
-class SchemaFixedWidth extends React.PureComponent {
-  props: SchemaProps & {goToColors: () => void};
+export default class SchemaFixedWidth extends React.PureComponent {
+  props: SchemaProps;
 
   handleElementOptionsChange(newEO: Object) {
     this.props.onChange(this.props.field, {...this.props.value, ...newEO});
@@ -41,35 +34,19 @@ class SchemaFixedWidth extends React.PureComponent {
     });
   };
   render() {
-    const {goToColors, open, value = {}} = this.props;
+    const {open, value = {}} = this.props;
     return (
       <React.Fragment>
-        <Label text="Background color">
-          <Group spacing={8}>
-            <Select
-              onChange={this.handleBGChange}
-              options={colorsOptionalKeys}
-              tabIndex={open ? 0 : -1}
-              value={value.bgColor || ''}
-            />
-            <Button onClick={goToColors} tabIndex={open ? 0 : -1}>
-              Change colors
-            </Button>
-          </Group>
-        </Label>
-        <Label text="Foreground color">
-          <Group spacing={8}>
-            <Select
-              onChange={this.handleFGChange}
-              options={colorsOptionalKeys}
-              tabIndex={open ? 0 : -1}
-              value={value.fgColor || ''}
-            />
-            <Button onClick={goToColors} tabIndex={open ? 0 : -1}>
-              Change colors
-            </Button>
-          </Group>
-        </Label>
+        <ElementColorSelector
+          onChange={this.handleBGChange}
+          type="background"
+          value={value.bgColor || ''}
+        />
+        <ElementColorSelector
+          onChange={this.handleFGChange}
+          type="foreground"
+          value={value.fgColor || ''}
+        />
         <Label text="Outer padding">
           <PaddingInput
             onChange={this.handleOuterPaddingChange}
@@ -88,10 +65,3 @@ class SchemaFixedWidth extends React.PureComponent {
     );
   }
 }
-
-export default connect(null, dispatch => ({
-  goToColors: () => {
-    dispatch(chromeActions.changeChromePage('theme'));
-    dispatch(chromeActions.changeThemePage('colors'));
-  },
-}))(SchemaFixedWidth) as React.ComponentType<SchemaProps>;

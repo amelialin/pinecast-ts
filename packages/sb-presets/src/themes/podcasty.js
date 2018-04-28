@@ -161,16 +161,13 @@ export default {
             elementLayout: heroFullWidthStackedItem(),
           },
         ],
-        firstPageAfterPrefix: [
-          subheaderSubscribeLinks({style: {margin: '-50px 0 -30px'}}),
-        ],
+        firstPageAfterPrefix: [subheaderSubscribeLinks()],
         segments: [
           {
             type: 'stacked',
-            consumeCount: -1,
+            consumeCount: 10,
 
             alignment: 'center',
-            padding: '30px 15px 0',
             width: 'var(--fixedWidthMax)',
 
             elementLayout: fullWidthImageLeftStackedItem({

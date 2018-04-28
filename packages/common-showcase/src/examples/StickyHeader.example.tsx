@@ -5,7 +5,7 @@ import Card from '@pinecast/common/Card';
 import * as StickyHeader from '@pinecast/common/StickyHeader';
 import styled from '@pinecast/styles';
 
-import Toggler from '../helpers/Toggler';
+import Toggler from '@pinecast/common/Toggler';
 
 const Padding = styled('div', {padding: '0 20px 20px'});
 

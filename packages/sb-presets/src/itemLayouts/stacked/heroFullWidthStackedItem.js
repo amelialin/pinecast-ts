@@ -68,7 +68,4 @@ export default ({
     },
   ],
   tagName: 'article',
-  styles: {
-    marginBottom: 50,
-  },
 });

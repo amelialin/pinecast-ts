@@ -15,8 +15,8 @@ const Wrapper = styled(
   'aside',
   {
     display: 'flex',
-    justifyContent: 'flex-end',
-    margin: '-12px -4px -10px 0',
+    justifyContent: 'center',
+    margin: '-12px 0 -10px',
     position: 'relative',
     zIndex: 2,
 
@@ -52,7 +52,7 @@ export default class ModuleInsertionPoint extends React.Component {
     return (
       <Wrapper>
         <Button onClick={this.handleClick} size="small">
-          Add
+          Add module
         </Button>
         <ModalLayer
           canEscape

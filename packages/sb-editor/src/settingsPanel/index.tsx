@@ -172,7 +172,7 @@ class SettingsPanel extends React.PureComponent {
                   disabled={pending}
                   maxLength={500}
                   onChange={this.handleChangeApplePodcastsURL}
-                  pattern="https://itunes\\.apple\\.com/\\w{2,3}/podcast/[^/]+/.+"
+                  pattern="https://itunes\.apple\.com/\w{2,3}/podcast/[^/]+/.+"
                   placeholder="https://itunes.apple.com/us/podcast/almost-better-than-dragons/id981540916?mt=2"
                   value={updatedData.itunes_url || ''}
                 />
@@ -184,12 +184,15 @@ class SettingsPanel extends React.PureComponent {
                 text="Show iTunes directory banner on iOS Safari"
               />
 
-              <Label text="Google Play URL">
+              <Label
+                text="Google Play URL"
+                subText="In Google Play, click Share, then copy the link to your clipboard."
+              >
                 <TextInput
                   disabled={pending}
                   maxLength={500}
                   onChange={this.handleChangeGooglePlayURL}
-                  pattern="https://play\\.google\\.com/music/(listen\\?|m/).+"
+                  pattern="https://play\.google\.com/music/(listen\?|m/).+"
                   placeholder="https://play.google.com/music/listen?u=0#/ps/Iuscgum4gmep6isira64kdeskjm"
                   value={updatedData.google_play_url || ''}
                 />
@@ -200,7 +203,7 @@ class SettingsPanel extends React.PureComponent {
                   disabled={pending}
                   maxLength={500}
                   onChange={this.handleChangeStitcherRadioURL}
-                  pattern="https?://www\\.stitcher\\.com/podcast/.+"
+                  pattern="https?://www\.stitcher\.com/podcast/.+"
                   placeholder="https://www.stitcher.com/podcast/this-american-life"
                   value={updatedData.stitcher_url || ''}
                 />
@@ -236,7 +239,7 @@ class SettingsPanel extends React.PureComponent {
                 <TextInput
                   disabled={pending}
                   onChange={this.handleChangeCustomDomain}
-                  pattern="([\\w-]+\\.)+[a-z]+"
+                  pattern="([\w-]+\.)+[a-z]+"
                   placeholder="your-domain.com"
                   prefix="http://"
                   value={updatedData.custom_cname || ''}
@@ -255,7 +258,7 @@ class SettingsPanel extends React.PureComponent {
                 <TextInput
                   disabled={pending}
                   onChange={this.handleChangeAnalyticsID}
-                  pattern="[\\w-]+"
+                  pattern="[\w-]+"
                   placeholder="UA-123456"
                   value={updatedData.analytics_id || ''}
                 />

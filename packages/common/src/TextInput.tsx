@@ -32,8 +32,10 @@ const Input = styled(
     fontSize: $size === 'normal' ? 14 : 20,
     height: '100%',
     padding: '0 10px',
+    position: 'relative',
     transition: 'box-shadow 0.2s, opacity 0.2s',
     width: '100%',
+    zIndex: 2,
 
     ':focus': {
       boxShadow: $invalid
@@ -122,6 +124,7 @@ export interface Props {
   invalid?: boolean;
   maxLength?: number;
   minlength?: number;
+  name?: string;
   onChange: (value: string) => void;
   pattern?: string;
   placeholder?: string;

@@ -1,12 +1,14 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
+import EpisodeItemPanel from './episodeItemPanel';
 import {changeLayoutPage} from '../actions/chrome';
 import ModulesPanel from './modulesPanel';
 import {PageSelector} from '../panelComponents';
 import {ReducerType} from '../reducer';
 import SaveOptions from '../SaveOptions';
 import * as StickyHeader from '@pinecast/common/StickyHeader';
+import WrappersPanel from './wrappersPanel';
 
 const pageOptions = [
   {value: 'modules', name: 'Modules'},
@@ -34,6 +36,8 @@ const LayoutPanel = ({
     }
   >
     {layoutPage === 'modules' && <ModulesPanel />}
+    {layoutPage === 'episodeItems' && <EpisodeItemPanel />}
+    {layoutPage === 'wrappers' && <WrappersPanel />}
   </StickyHeader.Wrapper>
 );
 

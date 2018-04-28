@@ -4,32 +4,12 @@ import Button from '@pinecast/common/Button';
 import {componentsMetadata} from '@pinecast/sb-presets';
 import {Delete, Down, Up} from '@pinecast/common/icons';
 import {primitives} from '@pinecast/sb-components';
+import StackedSection from '@pinecast/common/StackedSection';
 import styled, {CSS} from '@pinecast/styles';
 
 import {MetadataType} from './types';
 import ModuleOptions from './ModuleOptions';
 
-const OuterWrapper = styled(
-  'div',
-  {
-    border: '1px solid #dee1df',
-    borderRadius: 4,
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: 2,
-    padding: 12,
-
-    ':not(:empty) ~ .ModuleCard--outerWrapper': {
-      borderTopLeftRadius: 0,
-      borderTopRightRadius: 0,
-    },
-    ':not(:last-of-type)': {
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
-    },
-  },
-  {className: 'ModuleCard--outerWrapper'},
-);
 const ComponentName = styled('b', {
   display: 'block',
   fontSize: 16,
@@ -88,7 +68,7 @@ export default class ModuleCard extends React.Component {
     const {canDelete, isFirst, isLast, layout} = this.props;
     const metadata = this.getMetadata();
     return (
-      <OuterWrapper>
+      <StackedSection>
         <ComponentName>{metadata.name}</ComponentName>
         <ComponentDescription>{metadata.description}</ComponentDescription>
         <ModuleOptions
@@ -105,15 +85,6 @@ export default class ModuleCard extends React.Component {
                   <Up />
                 </Button>
               )}
-              {canDelete && (
-                <Button
-                  className="ModuleCard--ToolButton"
-                  onClick={this.handleDelete}
-                  style={buttonStyle}
-                >
-                  <Delete style={{transform: 'translateX(-0.5px)'}} />
-                </Button>
-              )}
               {!isLast && (
                 <Button
                   className="ModuleCard--ToolButton"
@@ -123,11 +94,20 @@ export default class ModuleCard extends React.Component {
                   <Down />
                 </Button>
               )}
+              {canDelete && (
+                <Button
+                  className="ModuleCard--ToolButton"
+                  onClick={this.handleDelete}
+                  style={buttonStyle}
+                >
+                  <Delete style={{transform: 'translateX(-0.5px)'}} />
+                </Button>
+              )}
             </React.Fragment>
           }
           onUpdate={this.handleUpdate}
         />
-      </OuterWrapper>
+      </StackedSection>
     );
   }
 }

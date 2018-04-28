@@ -33,10 +33,11 @@ export default class NewLinkForm extends React.PureComponent {
 
   render() {
     return (
-      <Form onSubmit={this.handleCreateSubmit} style={{marginBottom: 20}}>
+      <form onSubmit={this.handleCreateSubmit} style={{marginBottom: 20}}>
         <Label text="Link title">
           <TextInput
             maxLength={250}
+            name="title"
             onChange={this.handleTitleChange}
             placeholder="Text your visitor will see"
             required
@@ -46,6 +47,7 @@ export default class NewLinkForm extends React.PureComponent {
         <Label text="Link URL">
           <TextInput
             maxLength={500}
+            name="url"
             onChange={this.handleURLChange}
             placeholder="https://"
             required
@@ -55,7 +57,7 @@ export default class NewLinkForm extends React.PureComponent {
         <Button $isBlock $isPrimary type="submit">
           Create
         </Button>
-      </Form>
+      </form>
     );
   }
 }

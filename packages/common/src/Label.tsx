@@ -12,7 +12,7 @@ const Text = styled('span', ({$oneLine}: {$oneLine: boolean}) => ({
   alignItems: 'center',
   alignSelf: $oneLine ? 'stretch' : undefined,
   display: 'flex',
-  flex: $oneLine ? '0 0 20%' : undefined,
+  flex: $oneLine ? '0 0 30%' : undefined,
   fontFamily: DEFAULT_FONT,
   fontSize: 14,
   fontWeight: 500,

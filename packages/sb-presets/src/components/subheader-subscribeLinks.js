@@ -1,7 +1,7 @@
 export default (data = {}) => {
   const {
-    elementOptions = {innerPadding: '40px 0', outerPadding: '0 15px'},
-    subscribeText,
+    elementOptions = {innerPadding: '40px 0 20px', outerPadding: '0 15px'},
+    subscribeText = 'Subscribe with',
     style,
   } = data;
 
@@ -53,7 +53,8 @@ export default (data = {}) => {
 
     tag: 'subheader.subscribeLinks',
     tagOptions: {
-      subscribeText: 'Subscribe with',
+      elementOptions,
+      subscribeText,
       ...data,
     },
   };

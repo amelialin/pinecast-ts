@@ -21,13 +21,21 @@ const ModulesPanel = ({onFooterUpdate, onHeaderUpdate, theme}: Props) => (
       Adding and removing modules lets you add or remove features from your
       podcast website.
     </PanelDescription>
-    <Label componentType="div" text="Header">
+    <Label
+      componentType="div"
+      subText="Header modules appear at the top of every page."
+      text="Header"
+    >
       <ComponentLayoutGroup
         layouts={theme.layout.header}
         onUpdated={onHeaderUpdate}
       />
     </Label>
-    <Label componentType="div" text="Footer">
+    <Label
+      componentType="div"
+      subText="Footer modules appear at the bottom of every page."
+      text="Footer"
+    >
       <ComponentLayoutGroup
         layouts={theme.layout.footer}
         onUpdated={onFooterUpdate}

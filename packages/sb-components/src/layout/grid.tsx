@@ -20,43 +20,29 @@ export default getsItemSource(function<T>(
   },
   {itemSource}: {itemSource: ItemSourceContext<T>},
 ) {
-  const widthBasis =
-    config.width === 'full'
-      ? 'var(--fixedWidthMax)'
-      : config.width || 'var(--fixedWidthMax)';
   return (
-    <Wrapper
-      style={{
-        backgroundColor: config.bgColor,
-      }}
-    >
+    <Wrapper style={{backgroundColor: config.bgColor}}>
       <WrapperInner
         style={{
-          ...alignment(config.alignment),
+          ...alignment(config.alignment || 'center'),
           backgroundColor: config.fgColor,
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'center',
-          margin: '0 auto',
-          maxWidth:
-            config.width === 'full'
-              ? '100%'
-              : config.width || 'var(--fixedWidthMax)',
-          padding: config.padding,
+          maxWidth: config.width === 'full' ? '100%' : 'var(--fixedWidthMax)',
         }}
       >
         {renderN(config.consumeCount, itemSource, (item: T, i: number) => {
-          const basis = `calc(${widthBasis} / ${config.maxItemsAcross} + ${
-            config.itemSpacing
-          }px)`;
+          const basis = `calc(var(--fixedWidthMax) / ${
+            config.maxItemsAcross
+          } + ${config.itemSpacing}px)`;
           return childRenderer(i, item, {
             display: 'flex',
             flex: `0 1`,
             flexBasis: basis,
             marginBottom: config.itemSpacing,
-            // maxWidth: basis,
-            paddingLeft: config.itemSpacing / 2,
-            paddingRight: config.itemSpacing / 2,
+            paddingLeft: (config.itemSpacing || 0) / 2,
+            paddingRight: (config.itemSpacing || 0) / 2,
           });
         })}
       </WrapperInner>

@@ -11,7 +11,7 @@ const cardStyles: CSS = {
   maxWidth: 400,
 
   '@media (max-width: 800px)': {
-    maxWidth: 'auto',
+    maxWidth: 'none',
   },
 };
 

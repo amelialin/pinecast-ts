@@ -20,24 +20,25 @@ export default getsItemSource(function<T>(
   },
   {itemSource}: {itemSource: ItemSourceContext<T>},
 ) {
+  const wrapperStyle = {
+    ...alignment(config.alignment || 'center'),
+    backgroundColor: config.fgColor,
+    maxWidth: config.width === 'full' ? '100%' : 'var(--fixedWidthMax)',
+  };
+  const inner = (
+    <WrapperInner style={wrapperStyle}>
+      {renderN(config.consumeCount, itemSource, (item: T, i: number) =>
+        childRenderer(i, item, null),
+      )}
+    </WrapperInner>
+  );
+
+  if (!config.bgColor) {
+    return <Wrapper style={wrapperStyle}>{inner}</Wrapper>;
+  }
   return (
-    <Wrapper
-      style={{
-        backgroundColor: config.bgColor,
-      }}
-    >
-      <WrapperInner
-        style={{
-          ...alignment(config.alignment),
-          backgroundColor: config.fgColor,
-          maxWidth: config.width === 'full' ? '100%' : config.width || 'auto',
-          padding: config.padding,
-        }}
-      >
-        {renderN(config.consumeCount, itemSource, (item: T, i: number) =>
-          childRenderer(i, item, null),
-        )}
-      </WrapperInner>
+    <Wrapper style={{backgroundColor: config.bgColor}}>
+      <WrapperInner style={wrapperStyle}>{inner}</WrapperInner>
     </Wrapper>
   );
 });

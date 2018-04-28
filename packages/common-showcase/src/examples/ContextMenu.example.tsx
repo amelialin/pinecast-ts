@@ -3,7 +3,7 @@ import * as React from 'react';
 import Button from '@pinecast/common/Button';
 import ContextMenu from '@pinecast/common/ContextMenu';
 
-import Toggler from '../helpers/Toggler';
+import Toggler from '@pinecast/common/Toggler';
 
 export default {
   name: 'Context menu',

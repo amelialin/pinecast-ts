@@ -56,6 +56,7 @@ const Text = styled(
     $alignInput: 'top' | 'center';
     $disabled: boolean;
   }) => ({
+    alignItems: 'center',
     display: 'flex',
     fontFamily: DEFAULT_FONT,
     fontSize: 14,
@@ -99,7 +100,7 @@ const Radio = ({
   alignInput?: 'top' | 'center';
   checked: boolean;
   disabled?: boolean;
-  name: string;
+  name?: string;
   onChange: (checkedValue: boolean) => void;
   style?: CSS;
   tabIndex?: number;

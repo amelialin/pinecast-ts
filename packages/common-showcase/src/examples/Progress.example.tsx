@@ -4,7 +4,7 @@ import Button from '@pinecast/common/Button';
 import Progress from '@pinecast/common/Progress';
 import styled from '@pinecast/styles';
 
-import Toggler from '../helpers/Toggler';
+import Toggler from '@pinecast/common/Toggler';
 
 const Wrap = styled('div', {
   display: 'flex',

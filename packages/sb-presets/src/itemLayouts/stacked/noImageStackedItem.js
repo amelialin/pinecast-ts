@@ -93,7 +93,6 @@ export default () => ({
   ],
   tagName: 'article',
   styles: {
-    backgroundColor: 'background',
     padding: '30px 0 50px',
   },
 });

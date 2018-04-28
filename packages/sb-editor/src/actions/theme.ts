@@ -33,3 +33,17 @@ export const setHeroLayouts = actionFactory<Array<primitives.ComponentLayout>>(
 export const setFooterLayouts = actionFactory<
   Array<primitives.ComponentLayout>
 >('theme.changeLayout.footer');
+
+export const setHomeSegments = actionFactory<Array<primitives.LayoutConfig>>(
+  'theme.changeLayout.home.segments',
+);
+export const deleteHomeSegment = actionFactory<number>(
+  'theme.changeLayout.home.segments.delete',
+);
+
+export const setFirstPagePrefixSegments = actionFactory<
+  Array<primitives.LayoutConfig>
+>('theme.changeLayout.home.firstPagePrefix');
+export const deleteFirstPagePrefixSegment = actionFactory<number>(
+  'theme.changeLayout.home.firstPagePrefix.delete',
+);

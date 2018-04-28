@@ -29,7 +29,7 @@ module.exports = env => {
   }
 
   return {
-    devtool: 'source-maps',
+    devtool: env === 'prod' ? false : 'source-maps',
     entry: {
       index: './src/index.ts',
     },
