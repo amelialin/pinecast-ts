@@ -1,9 +1,5 @@
 import * as React from 'react';
 
-import styled from '@pinecast/styles';
-
-const Div = styled('div');
-
 const TRANSITION = 'left 0.25s, top 0.25s';
 
 export default class FullScreenWrapper extends React.PureComponent {

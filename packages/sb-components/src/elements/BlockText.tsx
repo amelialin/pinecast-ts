@@ -40,10 +40,6 @@ function extendPseudo(
 
 type maxLineFadeType = {color: string; height: number};
 
-function getLineFadeHeight(options: {maxLineFade?: maxLineFadeType}): number {
-  return !options.maxLineFade ? 0 : options.maxLineFade.height;
-}
-
 const optionKeys = [
   'maxLines',
   'maxLinesOnHover',

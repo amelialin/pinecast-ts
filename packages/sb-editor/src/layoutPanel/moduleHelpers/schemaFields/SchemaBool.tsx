@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import Checkbox from '@pinecast/common/Checkbox';
-import Label from '@pinecast/common/Label';
 
 import {SchemaProps} from './types';
 

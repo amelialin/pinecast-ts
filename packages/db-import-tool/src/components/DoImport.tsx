@@ -3,7 +3,6 @@ import * as React from 'react';
 import Callout from '@pinecast/common/Callout';
 import Card from '@pinecast/common/Card';
 import {DashboardTitle, P} from '@pinecast/common/Text';
-import Hr from '@pinecast/common/HorizontalRule';
 import Progress from '@pinecast/common/Progress';
 import styled from '@pinecast/styles';
 import xhr from '@pinecast/xhr';

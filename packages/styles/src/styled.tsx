@@ -6,16 +6,6 @@ import {CSS, Omit} from './types';
 declare function require(name: string);
 const su = require('styletron-utils');
 
-function wrapCtx(
-  comp: React.StatelessComponent<any>,
-  from: React.StatelessComponent,
-) {
-  comp.contextTypes = from.contextTypes;
-  comp.displayName = `styledWrapper(${from.displayName})`;
-}
-
-const styleIdentity = ({$style}) => $style;
-
 declare var process: {env: {[key: string]: string}};
 
 export type HTMLProps = Omit<React.AllHTMLAttributes<any>, 'style'>;

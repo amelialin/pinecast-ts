@@ -2,7 +2,6 @@ import {connect} from 'react-redux';
 import * as React from 'react';
 
 import * as presets from '@pinecast/sb-presets';
-import styled from '@pinecast/styles';
 
 import ButtonPresetList from './ButtonPresetList';
 import ButtonPreview from './ButtonPreview';

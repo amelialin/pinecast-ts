@@ -2,8 +2,7 @@ import {ThunkAction} from 'redux-thunk';
 
 import req from '@pinecast/xhr';
 
-import {Action, actionFactory} from '../actions';
-import {ReducerType} from '../reducers/save';
+import {actionFactory} from '../actions';
 import {ReducerType as RootReducerType} from '../reducer';
 
 export type SaveActionPayload = {saving: boolean; error: string | null};

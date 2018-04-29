@@ -5,7 +5,6 @@ import {componentsMetadata} from '@pinecast/sb-presets';
 import Dialog from '@pinecast/common/Dialog';
 import Label from '@pinecast/common/Label';
 import Select from '@pinecast/common/Select';
-import styled from '@pinecast/styles';
 
 import {MetadataType} from './types';
 

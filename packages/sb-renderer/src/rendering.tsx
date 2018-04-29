@@ -17,11 +17,6 @@ import escapeHTML from './escapeHTML';
 import frame from './framing';
 import {route} from './routes';
 
-type URLResolver = (
-  route: string,
-  params?: {[param: string]: string},
-) => string;
-
 function render(
   data: ComponentContext,
   itemSource: ItemSourceContext<any> | null = null,

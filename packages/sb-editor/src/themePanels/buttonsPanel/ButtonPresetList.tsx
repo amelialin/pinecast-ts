@@ -2,7 +2,6 @@ import {connect} from 'react-redux';
 import * as React from 'react';
 
 import * as presets from '@pinecast/sb-presets';
-import {primitives} from '@pinecast/sb-components';
 import styled, {CSS} from '@pinecast/styles';
 
 import {ReducerType} from '../../reducer';

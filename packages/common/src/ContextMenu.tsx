@@ -7,10 +7,6 @@ import {DEFAULT_FONT} from './constants';
 
 const SIZE_BUFFER = 32;
 
-const wrapperStyle = {
-  display: 'inline-flex',
-};
-
 const MenuWrapper = styled(
   'menu',
   ({

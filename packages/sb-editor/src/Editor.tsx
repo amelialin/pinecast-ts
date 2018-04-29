@@ -1,5 +1,4 @@
 import {Provider as ReduxProvider} from 'react-redux';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 import {ClientStyletron, StyletronProvider, styled} from '@pinecast/styles';

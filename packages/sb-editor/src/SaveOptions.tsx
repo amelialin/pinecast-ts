@@ -1,9 +1,6 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
-import styled from '@pinecast/styles';
-
-import {Action} from './actions';
 import Button, {ButtonGroup} from '@pinecast/common/Button';
 import Dialog from '@pinecast/common/Dialog';
 import {doSave} from './actions/save';

@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import {Check, Cross} from '@pinecast/common/icons';
-import styled from '@pinecast/styles';
 
 import {Feature} from './topicData';
 import {Td} from './TableCells';

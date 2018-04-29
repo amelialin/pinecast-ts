@@ -1,10 +1,8 @@
 import * as React from 'react';
 
-import {backgroundImage} from '../../styleMixins';
 import {ElementLayout} from '../../primitives';
 import Button from '../../common/button';
 import {ComponentContext, getsContext} from '../../componentContext';
-import {formatColor} from '../../helpers';
 import {MountProvider} from '../mounts';
 import renderElements from '../../elements';
 

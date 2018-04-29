@@ -7,7 +7,6 @@ import Label from '@pinecast/common/Label';
 import ModalLayer from '@pinecast/common/ModalLayer';
 import {ReducerType} from './reducer';
 import TextArea from '@pinecast/common/TextArea';
-import TextInput from '@pinecast/common/TextInput';
 
 declare var Rollbar;
 

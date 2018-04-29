@@ -2,8 +2,7 @@ import * as React from 'react';
 
 import {alignment} from '../styleMixins';
 import atom from '../elements/atom';
-import {ComponentContext, getsContext} from '../componentContext';
-import {Episode, LayoutConfig} from '../primitives';
+import {LayoutConfig} from '../primitives';
 import {getsItemSource, ItemSourceContext} from '../itemSourceContext';
 import renderN from './util';
 

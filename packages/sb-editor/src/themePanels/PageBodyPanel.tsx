@@ -10,8 +10,6 @@ import * as presets from '@pinecast/sb-presets';
 import {primitives} from '@pinecast/sb-components';
 import Range from '@pinecast/common/Range';
 import RadioList from '@pinecast/common/RadioList';
-import TextInput from '@pinecast/common/TextInput';
-import Tabs, {Tab} from '@pinecast/common/Tabs';
 
 import {changePageOptions, changePageStyle} from '../actions/theme';
 import {PanelDivider, PanelWrapper} from '../panelComponents';

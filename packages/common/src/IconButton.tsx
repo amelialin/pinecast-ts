@@ -2,10 +2,6 @@ import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/styles';
 
-import {DEFAULT_FONT} from './constants';
-import KeyboardShortcut, {ShortcutKey} from './KeyboardShortcut';
-import Spinner from './Spinner';
-
 const NativeButton = styled(
   'button',
   ({

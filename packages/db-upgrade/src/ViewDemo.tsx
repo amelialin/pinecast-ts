@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import DualOffer from './components/offers/DualOffer';
 import Headline from './components/Headline';
-import {Plan} from './types';
 import State from './State';
 
 const ViewDemo = () => (

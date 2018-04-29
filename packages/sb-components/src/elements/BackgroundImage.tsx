@@ -5,7 +5,7 @@ import {CSS} from '@pinecast/styles';
 import atom from './atom';
 import {blockChildren} from './children';
 import {Element} from '../primitives';
-import {extractPath, extractProps} from './extractor';
+import {extractProps} from './extractor';
 import expandElementStyles from './globalElementOptions';
 
 export default ({

@@ -83,6 +83,7 @@ export default class Upgrade extends React.Component {
         return <ViewDemo />;
       }
     }
+    return null;
   }
 
   getValue() {

@@ -4,8 +4,6 @@ import * as React from 'react';
 import {DEFAULT_FONT} from '@pinecast/common/constants';
 import styled from '@pinecast/styles';
 
-import State from '../State';
-
 const cardStyles = {
   base: {
     color: '#44484d',

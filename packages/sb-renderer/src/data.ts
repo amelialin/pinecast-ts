@@ -1,7 +1,5 @@
 import * as http from 'http';
 
-import * as Koa from 'koa';
-
 import {JSONObject} from './jsonType';
 import {NotFoundError, RedirectException} from './errors';
 

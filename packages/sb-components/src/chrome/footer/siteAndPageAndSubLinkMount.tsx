@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import {CSS} from '@pinecast/styles';
 
-import atom from '../../elements/atom';
 import {ElementLayout, Link as LinkType, Page} from '../../primitives';
 import {ComponentContext, getsContext} from '../../componentContext';
 import {MountProvider} from '../mounts';

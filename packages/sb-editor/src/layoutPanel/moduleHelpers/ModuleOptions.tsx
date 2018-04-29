@@ -153,7 +153,7 @@ export default class ModuleOptions extends React.PureComponent {
               </Button>
             </ShowOptionsWrap>
           )}
-          {this.props.moreButtons}
+          {moreButtons}
         </ButtonGroup>
         <Collapser open={this.state.open}>
           {keys

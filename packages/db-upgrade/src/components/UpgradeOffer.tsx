@@ -19,12 +19,6 @@ const ErrorMessage = styled('span', {
   marginBottom: 20,
   textAlign: 'center',
 });
-const Warning = styled('span', {
-  color: '#b0b5b5',
-  display: 'flex',
-  fontSize: 12,
-  textAlign: 'center',
-});
 
 const FauxButtonGroup = styled('div', {
   display: 'flex',
@@ -313,14 +307,13 @@ class UpgradeOfferWithModal_ extends React.Component {
   };
 
   render() {
-    const {error, showingCardModal} = this.state;
     return (
       <React.Fragment>
         {this.renderError()}
         {this.renderCardModal()}
         <UpgradeOffer
           {...this.props}
-          chargeCard={this.props.chargeCard || showingCardModal}
+          chargeCard={this.props.chargeCard || this.state.showingCardModal}
           onRequestPayment={this.handleRequestPayment}
           onUpgrade={this.handleUpgrade}
         />

@@ -105,12 +105,13 @@ class PageEditorModal extends React.PureComponent {
   };
 
   slugProvider = (newSlug: string) => {
-    let abortResolve;
-    const abortPromise = new Promise(resolve => {
+    let abortResolve: () => void = () => {};
+    const abortPromise = new Promise<void>(resolve => {
       abortResolve = resolve;
     });
 
     const promise = xhr({
+      abortPromise,
       method: 'GET',
       url: `/dashboard/sites/options/${encodeURIComponent(
         this.props.slug,

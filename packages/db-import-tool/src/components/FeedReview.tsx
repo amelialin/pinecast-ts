@@ -79,12 +79,13 @@ export default class FeedReview extends React.Component {
   }
 
   slugProvider = (newSlug: string) => {
-    let abortResolve;
-    const abortPromise = new Promise(resolve => {
+    let abortResolve: () => void = () => {};
+    const abortPromise = new Promise<void>(resolve => {
       abortResolve = resolve;
     });
 
     const promise = xhr({
+      abortPromise,
       method: 'GET',
       url: `/dashboard/services/slug_available?slug=${encodeURIComponent(
         newSlug,

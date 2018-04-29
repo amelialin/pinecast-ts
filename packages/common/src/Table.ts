@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import styled from '@pinecast/styles';
 
 export const Table = styled('table', {

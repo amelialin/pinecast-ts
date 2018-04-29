@@ -1,7 +1,6 @@
 import {DataAPI, JSONObject} from '@pinecast/sb-renderer';
 
 import request from './requests';
-import {ReducerType} from '../reducer';
 
 async function parse(data: string): Promise<JSONObject> {
   return JSON.parse(data) as JSONObject;

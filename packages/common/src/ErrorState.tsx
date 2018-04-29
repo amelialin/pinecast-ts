@@ -3,7 +3,6 @@ import * as React from 'react';
 import styled from '@pinecast/styles';
 
 import ErrorIcon from './icons/ErrorIcon';
-import Spinner from './Spinner';
 
 const Wrapper = styled('div', {
   padding: '40px 0',

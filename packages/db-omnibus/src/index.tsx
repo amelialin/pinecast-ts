@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {render} from 'react-dom';
 
-import {ClientStyletron, StyletronProvider, styled} from '@pinecast/styles';
+import {ClientStyletron, StyletronProvider} from '@pinecast/styles';
 import ImportTool from '@pinecast/db-import-tool';
 import Spotify from '@pinecast/db-spotify';
 import Upgrade from '@pinecast/db-upgrade';

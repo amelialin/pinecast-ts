@@ -6,7 +6,6 @@ import atom from '../atom';
 import {Element} from '../../primitives';
 import expandElementStyles from '../globalElementOptions';
 import {extractProps} from '../extractor';
-import {Page} from '../../primitives';
 
 const Td = atom('td');
 const Container = atom('table');

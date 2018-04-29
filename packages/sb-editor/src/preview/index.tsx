@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
-import {matchRoute, routes} from '@pinecast/sb-renderer';
+import {matchRoute} from '@pinecast/sb-renderer';
 import styled from '@pinecast/styles';
 
 import {changePath} from '../actions/preview';

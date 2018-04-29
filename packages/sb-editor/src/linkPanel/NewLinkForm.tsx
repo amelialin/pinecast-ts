@@ -33,7 +33,7 @@ export default class NewLinkForm extends React.PureComponent {
 
   render() {
     return (
-      <form onSubmit={this.handleCreateSubmit} style={{marginBottom: 20}}>
+      <Form onSubmit={this.handleCreateSubmit} style={{marginBottom: 20}}>
         <Label text="Link title">
           <TextInput
             maxLength={250}
@@ -57,7 +57,7 @@ export default class NewLinkForm extends React.PureComponent {
         <Button $isBlock $isPrimary type="submit">
           Create
         </Button>
-      </form>
+      </Form>
     );
   }
 }

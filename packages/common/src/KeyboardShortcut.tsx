@@ -15,7 +15,7 @@ const userAgent = navigator.userAgent.toLowerCase();
 
 const isMobile = userAgent.includes('mobile') || userAgent.includes('tablet');
 const isMacOS = userAgent.includes('macintosh');
-const isWindows = userAgent.includes('windows');
+// const isWindows = userAgent.includes('windows');
 
 function renderMeta() {
   if (isMacOS) {

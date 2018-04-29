@@ -6,7 +6,7 @@ import * as presets from '@pinecast/sb-presets';
 import RadioList from '@pinecast/common/RadioList';
 
 import {changeEmbedWidget} from '../actions/theme';
-import {PanelDescription, PanelDivider, PanelWrapper} from '../panelComponents';
+import {PanelDescription, PanelWrapper} from '../panelComponents';
 import {ReducerType} from '../reducer';
 
 const labelStyle = {fontSize: 16};

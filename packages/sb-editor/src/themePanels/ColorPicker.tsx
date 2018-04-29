@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {findDOMNode} from 'react-dom';
 
 import {SketchPicker} from 'react-color';
 
@@ -113,10 +112,7 @@ export default class ColorPicker extends React.PureComponent {
   };
 
   render() {
-    const {
-      props: {colorKey, colorValue, onChange},
-      state: {showingPicker},
-    } = this;
+    const {props: {colorKey, colorValue}, state: {showingPicker}} = this;
     return (
       <Wrapper>
         <div

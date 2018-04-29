@@ -5,7 +5,6 @@ import {CSS} from '@pinecast/styles';
 import atom from './atom';
 import {blockChildren} from './children';
 import {Element} from '../primitives';
-import expandElementStyles from './globalElementOptions';
 import {extractProps} from './extractor';
 
 function getEO(el: Element, eo: string, def: any = null): any {

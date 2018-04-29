@@ -93,43 +93,6 @@ const PageSelection = styled(
     'aria-haspopup': 'listbox',
   },
 );
-const PageSelectorInner = styled(
-  'div',
-  ({'aria-hidden': hidden}: {'aria-hidden': boolean}) => ({
-    background: '#fff',
-    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.125)',
-    display: 'flex',
-    flexDirection: 'column',
-    left: 0,
-    minWidth: 200,
-    opacity: hidden ? 0 : 1,
-    padding: '4px 0',
-    pointerEvents: hidden ? 'none' : undefined,
-    position: 'absolute',
-    top: '100%',
-    transform: hidden ? 'scale(0.9)' : 'scale(1)',
-    transformOrigin: '20% top',
-    transition: 'opacity 0.2s, transform 0.2s',
-    zIndex: 11,
-  }),
-  {role: 'listbox', tabIndex: -1},
-);
-const PageSelectorOption = styled(
-  'button',
-  ({'aria-selected': selected}: {'aria-selected': boolean}) => ({
-    WebkitAppearance: 'none',
-    background: selected ? '#eee' : 'none',
-    border: 0,
-    borderRadius: 2,
-    cursor: 'pointer',
-    fontFamily: DEFAULT_FONT,
-    fontSize: 16,
-    margin: '0 4px',
-    padding: 8,
-    textAlign: 'left',
-  }),
-  {role: 'option'},
-);
 
 export class PageSelector extends React.PureComponent {
   _uniqueId: string = Math.random().toString();

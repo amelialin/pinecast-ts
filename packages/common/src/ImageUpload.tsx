@@ -1,10 +1,8 @@
 import * as React from 'react';
 
-import styled from '@pinecast/styles';
 import xhr from '@pinecast/xhr';
 
 import Callout from './Callout';
-import {dropZoneStyle} from './imageUploadHelpers/styles';
 import Label from './Label';
 import ImageUploadDropzone from './imageUploadHelpers/ImageUploadDropzone';
 import ImageUploadPreview from './imageUploadHelpers/ImageUploadPreview';

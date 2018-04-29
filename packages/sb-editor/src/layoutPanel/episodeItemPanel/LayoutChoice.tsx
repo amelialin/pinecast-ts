@@ -7,7 +7,6 @@ import Group from '@pinecast/common/Group';
 import Label from '@pinecast/common/Label';
 import {primitives} from '@pinecast/sb-components';
 import Select from '@pinecast/common/Select';
-import Radio from '@pinecast/common/Radio';
 import StackedSection from '@pinecast/common/StackedSection';
 import styled, {CSS} from '@pinecast/styles';
 import TextInput from '@pinecast/common/TextInput';

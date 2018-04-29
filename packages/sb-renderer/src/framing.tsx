@@ -4,7 +4,6 @@ import * as ReactDOM from 'react-dom/server';
 import {ComponentContext} from '@pinecast/sb-components';
 import {ServerStyletron, StyletronProvider} from '@pinecast/styles';
 
-import {Context} from 'koa';
 import editorIntegration from './editorIntegration';
 import escapeHTML from './escapeHTML';
 

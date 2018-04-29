@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import Headline from './components/Headline';
 import OfferStarter from './components/offers/OfferStarter';
-import {Plan} from './types';
 import Subheading from './components/Subheading';
 import State from './State';
 import {UpgradeOfferWithModal} from './components/UpgradeOffer';

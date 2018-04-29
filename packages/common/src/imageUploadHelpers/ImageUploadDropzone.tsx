@@ -3,8 +3,6 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-import {dropZoneStyle} from './styles';
-
 const BlockB = styled('b', {display: 'block', fontWeight: 500});
 const BlockSpan = styled('span', {display: 'block'});
 const U = styled('span', {color: '#4e7287', textDecoration: 'underline'});

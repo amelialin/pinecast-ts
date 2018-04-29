@@ -4,9 +4,6 @@ import ReactList from 'react-list';
 
 import styled from '@pinecast/styles';
 
-const OuterWrapper = styled('div', {
-  position: 'relative',
-});
 const SelectBox = styled('div', {
   alignItems: 'center',
   borderRadius: 3,

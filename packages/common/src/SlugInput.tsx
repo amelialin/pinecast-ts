@@ -161,6 +161,7 @@ export default class SlugInput extends React.PureComponent {
       case 'loading':
         return <StatusWrapper>Checking slug…</StatusWrapper>;
     }
+    return undefined;
   }
 
   render() {

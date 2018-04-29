@@ -1,10 +1,8 @@
 import * as React from 'react';
 
 import atom from '../../elements/atom';
-import {backgroundImage} from '../../styleMixins';
 import {ElementLayout, Link, Page} from '../../primitives';
 import {ComponentContext, getsContext} from '../../componentContext';
-import {formatColor} from '../../helpers';
 import {MountProvider} from '../mounts';
 import renderElements from '../../elements';
 import TextRenderer from '../../common/text';

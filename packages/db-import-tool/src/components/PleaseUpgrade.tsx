@@ -4,7 +4,7 @@ import Button from '@pinecast/common/Button';
 import Card from '@pinecast/common/Card';
 import {DashboardTitle, P} from '@pinecast/common/Text';
 import {MovingTruck} from '@pinecast/common/icons/medium';
-import styled, {CSS} from '@pinecast/styles';
+import {CSS} from '@pinecast/styles';
 
 const cardStyles: CSS = {
   margin: '40px auto',

@@ -4,10 +4,8 @@ import * as React from 'react';
 import EmptyState from '@pinecast/common/EmptyState';
 import Label from '@pinecast/common/Label';
 import Tabs, {Tab} from '@pinecast/common/Tabs';
-import TextInput from '@pinecast/common/TextInput';
 
 import {
-  changePageOptions,
   deleteHomeSegment,
   deleteFirstPagePrefixSegment,
   setHeroLayouts,
@@ -20,11 +18,6 @@ import {mergedTheme} from '../../reducers/selectors';
 import {PanelDescription, PanelWrapper} from '../../panelComponents';
 import {primitives} from '@pinecast/sb-components';
 import {ReducerType} from '../../reducer';
-
-const layoutTypeOptions = {
-  stacked: 'Stacked',
-  grid: 'Grid',
-};
 
 class EpisodeItemPanel extends React.Component {
   props: {

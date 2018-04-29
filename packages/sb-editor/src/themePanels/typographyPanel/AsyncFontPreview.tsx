@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-import Label from '@pinecast/common/Label';
-
 const Wrapper = styled('div');
 
 export default class AsyncFontPreview extends React.PureComponent {

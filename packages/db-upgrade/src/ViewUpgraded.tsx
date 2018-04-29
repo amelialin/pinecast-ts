@@ -1,7 +1,6 @@
 import Confetti from 'react-dom-confetti';
 import * as React from 'react';
 
-import Card from '@pinecast/common/Card';
 import Button from '@pinecast/common/Button';
 import {Click, MovingTruck, Network, Pay} from '@pinecast/common/icons/medium';
 import styled from '@pinecast/styles';

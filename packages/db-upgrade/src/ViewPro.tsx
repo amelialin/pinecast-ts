@@ -4,7 +4,6 @@ import CurrentPlan from './components/CurrentPlan';
 import DowngradeOffer from './components/DowngradeOffer';
 import Headline from './components/Headline';
 import State from './State';
-import {Plan} from './types';
 
 const ViewPro = () => (
   <State>

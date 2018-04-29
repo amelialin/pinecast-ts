@@ -29,9 +29,6 @@ function getContainerHeight(count: number, isDragging: boolean): number {
   );
 }
 
-const OuterContainer = styled('div', {
-  marginBottom: 16,
-});
 const ElementWrapper = styled(
   'div',
   ({$count, $dragging}: {$count: number; $dragging: boolean}) => ({
@@ -217,7 +214,7 @@ export default class SchemaOrderedSet extends React.PureComponent {
   }
 
   getYOffset(): number {
-    const {currentY, dragging, overBuffer} = this.state;
+    const {currentY, dragging} = this.state;
     if (dragging === null) {
       throw new Error('unreachable');
     }

@@ -73,7 +73,7 @@ export default class Range extends React.Component {
   noop = () => {};
 
   render() {
-    const {max, min, onChange, value} = this.props;
+    const {max, min} = this.props;
     return (
       <input
         className="RangeInput"

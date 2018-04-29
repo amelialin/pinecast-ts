@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import styled from '@pinecast/styles';
 
 const HorizontalRule = styled('hr', {

@@ -132,7 +132,7 @@ export function route(name: string, params: {[name: string]: string}): string {
 
 export function match(url: string): [Route, RequestURLParams] | null {
   const noQueryURL = url.includes('?') ? url.substr(0, url.indexOf('?')) : url;
-  for (const [name, route] of Object.entries(routes)) {
+  for (const [, route] of Object.entries(routes)) {
     const params = route.match(noQueryURL);
     if (!params) {
       continue;

@@ -1,8 +1,7 @@
 import * as React from 'react';
 
-import Card from '@pinecast/common/Card';
 import {DEFAULT_FONT} from '@pinecast/common/constants';
-import styled, {CSS} from '@pinecast/styles';
+import styled from '@pinecast/styles';
 
 import topicData, {Topics} from './topicData';
 

@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {ElementLayout} from '../primitives';
 import {ComponentContext, getsContext} from '../componentContext';
 
