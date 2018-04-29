@@ -84,7 +84,7 @@ const Select = ({
 }: {
   autoFocus?: boolean;
   disabled?: boolean;
-  onChange: (string) => void;
+  onChange: (newValue: string) => void;
   options: {[key: string]: string};
   style?: React.CSSProperties;
   tabIndex?: number;

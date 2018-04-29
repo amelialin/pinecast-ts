@@ -78,7 +78,7 @@ export default class RadioList extends React.PureComponent {
 
   name: string;
 
-  constructor(props) {
+  constructor(props: RadioList['props']) {
     super(props);
     this.state = {
       selectedValue: props.value || Object.keys(props.options)[0],
@@ -86,7 +86,7 @@ export default class RadioList extends React.PureComponent {
     this.name = `radio${Math.random()}`;
   }
 
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps(newProps: RadioList['props']) {
     if (newProps.value !== this.state.selectedValue) {
       this.setState({selectedValue: newProps.value});
     }

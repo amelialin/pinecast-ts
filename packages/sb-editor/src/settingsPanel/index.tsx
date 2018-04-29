@@ -40,7 +40,12 @@ interface Settings {
 }
 
 class SettingsPanel extends React.PureComponent {
-  props: {csrf: string; onRefresh: () => void; slug: string};
+  props: {
+    children?: any; // FIXME: required by react-redux
+    csrf: string;
+    onRefresh: () => any;
+    slug: string;
+  };
   state: {
     data: Settings | null;
     error: string | null;

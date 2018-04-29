@@ -3,7 +3,7 @@ import * as React from 'react';
 import styled from '@pinecast/styles';
 
 import {Check, Cross} from '@pinecast/common/icons';
-import TextInput, {Props} from './TextInput';
+import TextInput, {Props as TextInputProps} from './TextInput';
 
 const StatusWrapper = styled('span', ({$type}: {$type?: string}) => ({
   alignItems: 'center',
@@ -42,7 +42,7 @@ export function slugify(input: string): string {
 }
 
 export default class SlugInput extends React.PureComponent {
-  props: Props & {
+  props: TextInputProps & {
     onStatusChanged: (status: Status) => void;
     provider: ProviderType;
     sourceValue: string;
@@ -64,7 +64,7 @@ export default class SlugInput extends React.PureComponent {
       this.triggerLookup(cleanedSoruce);
     }
   }
-  componentWillReceiveProps({sourceValue, value}) {
+  componentWillReceiveProps({sourceValue, value}: SlugInput['props']) {
     if (
       // The source value has changed
       sourceValue !== this.props.sourceValue &&

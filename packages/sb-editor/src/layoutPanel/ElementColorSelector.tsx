@@ -1,4 +1,4 @@
-import {connect} from 'react-redux';
+import {connect, Dispatch} from 'react-redux';
 import * as React from 'react';
 
 import Button from '@pinecast/common/Button';
@@ -11,12 +11,15 @@ import * as chromeActions from '../actions/chrome';
 
 const colorsOptionalKeys = {...colorKeyNames, '': '--'};
 
+type Props = {
+  onChange: (newColor: string | undefined) => void;
+  type: 'background' | 'foreground';
+  value: string | null | undefined;
+};
+
 class ElementColorSelector extends React.PureComponent {
-  props: {
+  props: Props & {
     goToColors: () => void;
-    onChange: (newColor: string | undefined) => void;
-    type: 'background' | 'foreground';
-    value: string | null | undefined;
   };
 
   handleChange = (newValue: string) => {
@@ -42,9 +45,12 @@ class ElementColorSelector extends React.PureComponent {
     );
   }
 }
-export default connect(null, dispatch => ({
-  goToColors: () => {
-    dispatch(chromeActions.changeChromePage('theme'));
-    dispatch(chromeActions.changeThemePage('colors'));
-  },
-}))(ElementColorSelector);
+export default connect(
+  (_, ownProps: Props) => ownProps,
+  (dispatch: Dispatch<any>) => ({
+    goToColors: () => {
+      dispatch(chromeActions.changeChromePage('theme'));
+      dispatch(chromeActions.changeThemePage('colors'));
+    },
+  }),
+)(ElementColorSelector);

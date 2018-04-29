@@ -58,18 +58,18 @@ const ToolbarButton = ({
   children,
   id,
   page: currentPage,
-  switchPage,
+  changeChromePage,
 }: {
   children: any;
   id: ReducerType['page'];
   page: ReducerType['page'];
-  switchPage: (page: ReducerType['page']) => void;
+  changeChromePage: (page: ReducerType['page']) => any;
 }) => (
   <ToolbarOption
     aria-selected={id === currentPage}
     onClick={e => {
       e.preventDefault();
-      switchPage(id);
+      changeChromePage(id);
     }}
   >
     {children}
@@ -78,8 +78,11 @@ const ToolbarButton = ({
 
 const ConnectedToolbarButton = connect(
   (state: ReducerType) => ({page: state.page}),
-  dispatch => ({switchPage: name => dispatch(changeChromePage(name))}),
-)(ToolbarButton);
+  {changeChromePage},
+)(ToolbarButton) as React.ComponentType<{
+  children: string;
+  id: ReducerType['page'];
+}>;
 
 const Toolbar = () => (
   <Toolbar_>

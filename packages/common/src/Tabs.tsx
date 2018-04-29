@@ -52,7 +52,7 @@ export default class Tabs extends React.Component {
     selectedTab: number;
   };
 
-  constructor(props) {
+  constructor(props: Tabs['props']) {
     super(props);
     this.state = {selectedTab: 0};
   }

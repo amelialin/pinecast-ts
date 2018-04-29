@@ -28,7 +28,12 @@ const HeaderWrapper = styled('div', {
 });
 
 class LinkPanel extends React.PureComponent {
-  props: {csrf: string; onRefresh: () => void; slug: string};
+  props: {
+    children?: any; // FIXME: required by react-redux
+    csrf: string;
+    onRefresh: () => any;
+    slug: string;
+  };
   state: {
     data: Array<{title: string; url: string}> | null;
     error: string | null;
@@ -171,8 +176,8 @@ class LinkPanel extends React.PureComponent {
 
 export default connect(
   (state: ReducerType) => ({
-    csrf: state.csrf,
-    slug: state.slug,
+    csrf: state.csrf || '',
+    slug: state.slug || '',
   }),
   {onRefresh: refresh},
 )(LinkPanel);

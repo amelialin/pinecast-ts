@@ -5,10 +5,13 @@ export function extractProps(
   if (!props) {
     return null;
   }
-  return Object.entries(props).reduce((acc, [key, val]) => {
-    acc[key] = extractPath(item, val);
-    return acc;
-  }, {});
+  return Object.entries(props).reduce(
+    (acc, [key, val]) => {
+      acc[key] = extractPath(item, val);
+      return acc;
+    },
+    {} as {[key: string]: any},
+  );
 }
 
 export function extractPath(

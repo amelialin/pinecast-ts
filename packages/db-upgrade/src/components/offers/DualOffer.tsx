@@ -1,4 +1,4 @@
-import {injectStripe} from 'react-stripe-elements';
+import {injectStripe, ReactStripeElements} from 'react-stripe-elements';
 import * as React from 'react';
 
 import Card from '@pinecast/common/Card';
@@ -49,7 +49,7 @@ type Props = {
 };
 
 class DualOffer_ extends React.Component {
-  props: Props & {stripe: Object};
+  props: Props & ReactStripeElements.InjectedStripeProps;
   state: {
     cardError: false;
     cardProvided: boolean;

@@ -146,8 +146,8 @@ export default class TextInput extends React.PureComponent {
     type: 'text',
   };
 
-  handleChange = e => {
-    const value = e.target.value;
+  handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = (e.target as HTMLInputElement).value;
     const {maxLength} = this.props;
     if (maxLength && value.length > maxLength) {
       this.props.onChange(value.substr(0, maxLength));

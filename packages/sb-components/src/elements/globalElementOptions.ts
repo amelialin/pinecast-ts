@@ -1,4 +1,5 @@
 import {CSS} from '@pinecast/styles';
+import {Sub} from '@pinecast/common/types';
 
 export type PositionObject = {
   bottom?: number;
@@ -9,7 +10,7 @@ export type PositionObject = {
 };
 
 export default function(
-  acc: CSS | null,
+  acc: Sub<CSS> | null,
   elementOptions:
     | {[option: string]: string | number | PositionObject}
     | null
@@ -69,16 +70,16 @@ export default function(
         acc.left = 'left' in positioning ? positioning.left : acc.left;
         acc.right = 'right' in positioning ? positioning.right : acc.right;
         acc.top = 'top' in positioning ? positioning.top : acc.top;
-        if (positioning['@mobile']) {
-          const posMob = positioning['@mobile'];
-          const accMob = acc['@mobile'] || {};
+        if ((positioning as Sub<typeof positioning>)['@mobile']) {
+          const posMob = (positioning as Sub<typeof positioning>)['@mobile'];
+          const accMob: Sub<CSS> = acc['@mobile'] || {};
           acc['@mobile'] = {
             ...accMob,
             bottom: 'bottom' in posMob ? posMob.bottom : accMob.bottom,
             left: 'left' in posMob ? posMob.left : accMob.left,
             right: 'right' in posMob ? posMob.right : accMob.right,
             top: 'top' in posMob ? posMob.top : accMob.top,
-          };
+          } as any;
         }
         break;
       case 'underlineOnHover':

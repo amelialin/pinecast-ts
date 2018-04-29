@@ -46,10 +46,10 @@ export default class TextArea extends React.PureComponent {
     value: string;
   };
 
-  handleChange = e => {
+  handleChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
     e.stopPropagation();
     e.preventDefault();
-    this.props.onChange(e.target.value);
+    this.props.onChange((e.target as HTMLTextAreaElement).value);
   };
 
   render() {

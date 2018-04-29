@@ -43,5 +43,5 @@ const LayoutPanel = ({
 
 export default connect(
   (state: ReducerType) => ({layoutPage: state.layoutPage}),
-  dispatch => ({changeLayoutPage: name => dispatch(changeLayoutPage(name))}),
+  {changeLayoutPage},
 )(LayoutPanel);

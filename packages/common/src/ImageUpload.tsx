@@ -44,7 +44,7 @@ export default class ImageUpload extends React.PureComponent {
     this.ongoingRequest += 1;
   }
 
-  asyncSetState(newState) {
+  asyncSetState(newState: Partial<ImageUpload['state']>) {
     return new Promise(resolve => {
       this.setState(newState, resolve);
     });
@@ -74,7 +74,6 @@ export default class ImageUpload extends React.PureComponent {
     };
 
     await this.asyncSetState({
-      selectedFile: file,
       uploading: true,
       uploadProgress: 0,
     });
@@ -220,7 +219,7 @@ export default class ImageUpload extends React.PureComponent {
   }
 
   upload(file: Blob, upload: Upload): [(() => Promise<void>), Promise<void>] {
-    let resolver;
+    let resolver: () => void = () => {};
     const abortPromise = new Promise<void>(resolve => {
       resolver = resolve;
     });

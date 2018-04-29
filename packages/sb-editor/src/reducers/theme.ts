@@ -1,4 +1,5 @@
 import {primitives} from '@pinecast/sb-components';
+import {Sub} from '@pinecast/common/types';
 
 import {Action, actionReducer} from '../actions';
 import {actionHandler, reduceReducers} from './util';
@@ -83,8 +84,8 @@ export default reduceReducers(
         'theme.changeEmbedWidget',
         (state = undefined, {payload}: Action<EmbedWidgetThemes>) => {
           if (payload === 'minimal') {
-            const out = {...state};
-            delete out['embedTheme'];
+            const out: Sub<ReducerType['options']> = {...state};
+            delete (out as any)['embedTheme'];
             return out;
           } else {
             return {...state, embedTheme: payload};
@@ -100,7 +101,7 @@ export default reduceReducers(
       ),
     ),
   }),
-  (state: ReducerType) => {
+  (state: Sub<ReducerType>) => {
     Object.keys(state).forEach(key => {
       if (state[key] === undefined) {
         delete state[key];

@@ -50,7 +50,7 @@ interface Font {
 }
 export default class FontPreset extends React.PureComponent {
   props: {
-    onClick: (Font) => void;
+    onClick: (newFont: Font) => void;
     preset: Font & {name: string};
   };
 

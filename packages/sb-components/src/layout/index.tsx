@@ -5,11 +5,15 @@ import renderElementLayout from '../elements';
 import Grid from './grid';
 import Stacked from './stacked';
 
+import {CSS} from '@pinecast/styles';
 import {LayoutConfig} from '../primitives';
 
 export default function<T>(layouts: Array<LayoutConfig>): Array<JSX.Element> {
   return layouts.map((layout, i) => {
-    let Component;
+    let Component: React.ComponentType<{
+      children: (idx: number, item: Object, style: CSS) => JSX.Element;
+      config: LayoutConfig;
+    }>;
     switch (layout.type) {
       case 'stacked':
         Component = Stacked;

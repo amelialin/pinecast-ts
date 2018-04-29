@@ -85,13 +85,22 @@ function getQuery(url: string): {[key: string]: string} {
   return qs
     .split('&')
     .map(s => s.split('=', 2))
-    .reduce((acc, [k, v]) => {
-      acc[decodeURIComponent(k)] = decodeURIComponent(v);
-      return acc;
-    }, {});
+    .reduce(
+      (acc, [k, v]) => {
+        acc[decodeURIComponent(k)] = decodeURIComponent(v);
+        return acc;
+      },
+      {} as {[key: string]: string},
+    );
 }
 
-const frameStyles = {
+const frameStyles: {
+  [key: string]: {
+    height: React.CSSProperties['height'];
+    transform: React.CSSProperties['transform'];
+    width: React.CSSProperties['width'];
+  };
+} = {
   desktop: {height: '100%', transform: 'scale(1)', width: '100%'},
   phone: {height: 732, transform: 'scale(0.9)', width: 412},
   tablet: {height: 1024, transform: 'scale(0.85)', width: 768},
@@ -101,11 +110,12 @@ class PreviewRenderer extends React.Component {
   iframe: HTMLIFrameElement | null;
   reqId: number;
   props: {
-    changePath: (path: string) => void;
+    changePath: (path: string) => any;
+    children?: any; // FIXME: required by react-redux
     path: string;
     refreshIncrement: number;
     slug: string;
-    theme: Object;
+    theme: ReducerType['theme'];
   };
   state: {
     frame: null | 'mobile' | 'tablet';
@@ -113,7 +123,7 @@ class PreviewRenderer extends React.Component {
     orientation: null | 'portrait' | 'landscape';
   };
 
-  constructor(props) {
+  constructor(props: PreviewRenderer['props']) {
     super(props);
     this.reqId = 0;
 
@@ -132,7 +142,10 @@ class PreviewRenderer extends React.Component {
     }
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(
+    nextProps: PreviewRenderer['props'],
+    nextState: PreviewRenderer['state'],
+  ) {
     return (
       this.props.path !== nextProps.path ||
       this.props.theme !== nextProps.theme ||
@@ -143,7 +156,7 @@ class PreviewRenderer extends React.Component {
     );
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: PreviewRenderer['props']) {
     if (
       this.iframe &&
       (this.props.path !== prevProps.path ||
@@ -261,7 +274,7 @@ export default connect(
   (state: ReducerType) => ({
     path: state.preview.path,
     refreshIncrement: state.preview.refreshIncrement,
-    slug: state.slug,
+    slug: state.slug || '',
     theme: state.theme,
   }),
   {changePath},

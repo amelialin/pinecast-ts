@@ -47,7 +47,7 @@ export default ({
   element: Element;
   item: Page;
   style: CSS;
-}) => {
+}): JSX.Element => {
   const Container = atom(element.tagName || 'div');
   const {container: containerStyles, item: itemStyles} = getStyles(element);
   return (

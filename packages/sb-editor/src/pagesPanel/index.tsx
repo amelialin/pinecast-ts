@@ -29,9 +29,10 @@ const HeaderWrapper = styled('div', {
 
 class PagesPanel extends React.PureComponent {
   props: {
+    children?: any; // FIXME: required by react-redux
     csrf: string;
-    onNavigate: (path: string) => void;
-    onRefresh: () => void;
+    onNavigate: (path: string) => any;
+    onRefresh: () => any;
     path: string;
     slug: string;
   };
@@ -241,6 +242,8 @@ class PagesPanel extends React.PureComponent {
       case 'contact':
         innerType = ContactFields;
         break;
+      default:
+        throw new Error('unreachable');
     }
 
     return (
@@ -309,6 +312,8 @@ class PagesPanel extends React.PureComponent {
         innerType = ContactFields;
         initial = {};
         break;
+      default:
+        throw new Error('unreachable');
     }
     return (
       <ModalLayer canEscape={true} onClose={this.handleCloseNew} open>

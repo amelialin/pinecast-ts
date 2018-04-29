@@ -29,10 +29,13 @@ components.forEach(component => {
       <StyletronProvider styletron={styletron}>
         {React.createElement(
           component,
-          Object.keys(component.propExtraction).reduce((acc, cur) => {
-            acc[cur] = component.propExtraction[cur](elem);
-            return acc;
-          }, {}),
+          Object.keys(component.propExtraction).reduce(
+            (acc, cur) => {
+              acc[cur] = component.propExtraction[cur](elem);
+              return acc;
+            },
+            {} as {[key: string]: any},
+          ),
         )}
       </StyletronProvider>,
       elem,

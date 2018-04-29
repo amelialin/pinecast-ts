@@ -1,7 +1,7 @@
 import {applyMiddleware, compose, createStore} from 'redux';
 import thunk from 'redux-thunk';
 
-import {actionReducer} from './actions';
+import {Action, actionReducer} from './actions';
 import previewReducer, {
   initialState as previewInitialState,
   ReducerType as PreviewReducerType,
@@ -51,7 +51,10 @@ const initialState: ReducerType = {
   theme: themeInitialState,
 };
 
-function reducer(state: ReducerType = initialState, action): ReducerType {
+function reducer(
+  state: ReducerType = initialState,
+  action: Action<any>,
+): ReducerType {
   if (!state) {
     return initialState;
   }
@@ -92,7 +95,7 @@ function reducer(state: ReducerType = initialState, action): ReducerType {
 }
 
 // Boring middleware stuff
-declare var __REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+declare var __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: <T>(reducers: T) => T;
 const composeEnhancers =
   typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined'
     ? __REDUX_DEVTOOLS_EXTENSION_COMPOSE__

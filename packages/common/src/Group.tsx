@@ -14,7 +14,7 @@ function collapseChildren(
   children: Children,
   style: CSS | undefined,
   offset: number,
-) {
+): Children {
   if (!children) {
     return children;
   }

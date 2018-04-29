@@ -129,7 +129,7 @@ function parseDate(date: string): string {
 }
 
 function parseDuration(duration: string): number {
-  let durTup;
+  let durTup: Array<number>;
   try {
     durTup = duration
       .replace(/::/g, ':')

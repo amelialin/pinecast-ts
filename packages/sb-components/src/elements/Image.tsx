@@ -47,7 +47,7 @@ export default ({
       email = email[0];
     }
     const hash = md5(
-      typeof email === 'string' ? email : extractPath(item, email),
+      typeof email === 'string' ? email : String(extractPath(item, email)),
     );
     const size =
       parseFloat(styles.width as string) ||

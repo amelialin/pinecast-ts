@@ -22,7 +22,11 @@ export class MountProvider extends React.Component<{
   }
 }
 
-export function getsMount<T>(toAnnotate: T & {contextTypes?: Object}): T {
+export function getsMount<T>(
+  toAnnotate: React.ComponentType<T> & {
+    contextTypes?: PropTypes.ValidationMap<any>;
+  },
+): React.ComponentType<T> {
   toAnnotate.contextTypes = {
     ...toAnnotate.contextTypes,
     mounts: PropTypes.object.isRequired,

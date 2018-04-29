@@ -16,9 +16,10 @@ export default class Upgrade extends React.Component {
   static selector = '.placeholder-upgrade';
 
   static propExtraction = {
-    currentPlan: e => e.getAttribute('data-plan'),
-    hasCustomer: e => e.getAttribute('data-customer') === 'true',
-    stripeKey: e => e.getAttribute('data-stripe-publishable-key'),
+    currentPlan: (e: HTMLElement) => e.getAttribute('data-plan'),
+    hasCustomer: (e: HTMLElement) => e.getAttribute('data-customer') === 'true',
+    stripeKey: (e: HTMLElement) =>
+      e.getAttribute('data-stripe-publishable-key'),
   };
 
   props: {
@@ -33,7 +34,7 @@ export default class Upgrade extends React.Component {
     upgraded: Plan | null;
   };
 
-  constructor(props) {
+  constructor(props: Upgrade['props']) {
     super(props);
     this.state = {
       currentPlan: props.currentPlan,
@@ -41,7 +42,7 @@ export default class Upgrade extends React.Component {
       upgraded: null,
     };
   }
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps(newProps: Upgrade['props']) {
     this.setState({currentPlan: newProps.currentPlan});
   }
 

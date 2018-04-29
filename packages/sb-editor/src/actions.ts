@@ -1,3 +1,5 @@
+import {Sub} from '@pinecast/common/types';
+
 export interface Action<T> {
   type: string;
   payload: T;
@@ -38,13 +40,13 @@ export function deleteArrayItem<T>(
   };
 }
 
-export function actionReducer<T>(
+export function actionReducer<T = {[key: string]: any}>(
   listenForType: string,
   reducer: (state: T, action: Action<any>) => T,
 ): ((state: T, action: Action<any>) => T) {
-  return (state: T, action: Action<any>): T => {
+  return (state: Sub<T>, action: Action<any>): T => {
     if (action.type === listenForType) {
-      const result = reducer(state, action);
+      const result: Sub<T> = reducer(state, action);
       if (result === state) {
         return state;
       }

@@ -25,7 +25,7 @@ function fetch(siteHostname: string, url: string) {
             resp.statusCode < 400
           ) {
             console.warn(`Redirected to ${resp.headers.location}`);
-            reject(new RedirectException(resp.headers.location));
+            reject(new RedirectException(resp.headers.location || ''));
           }
           if (resp.statusCode !== 200) {
             console.error(`Could not get ${siteHostname}/${framedURL}`);

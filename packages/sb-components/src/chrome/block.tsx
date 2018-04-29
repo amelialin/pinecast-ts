@@ -12,7 +12,9 @@ export default function(
   components: Array<ComponentLayout>,
 ): Array<JSX.Element> {
   return components.map((component, i) => {
-    let Component;
+    let Component: React.ComponentType<{
+      template?: ComponentLayout['template'];
+    }>;
     switch (component.type) {
       case 'abstract':
         Component = AbstractElements;

@@ -50,7 +50,7 @@ const ImageUploadDropzone = ({
       className="ImageUpload-ImageUploadDropzone-dropzone"
       disableClick // We do this because it's inside a label
       disablePreview
-      onDrop={files => files.length && onChange(files[0])}
+      onDrop={(files: FileList) => files.length && onChange(files[0])}
       style={{
         ...baseStyle,
         boxShadow:

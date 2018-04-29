@@ -3,7 +3,7 @@ import * as React from 'react';
 import './Range.css';
 
 function debounce(handler: () => void, timeout: number = 200): (() => void) {
-  let timer;
+  let timer: any | null = null;
   return () => {
     if (timer) {
       clearTimeout(timer);
@@ -26,7 +26,7 @@ export default class Range extends React.Component {
   onChangeDebouncer: () => void;
   range: HTMLInputElement | null = null;
 
-  constructor(props) {
+  constructor(props: Range['props']) {
     super(props);
     this.onChangeDebouncer = debounce(() => {
       if (!this.range) {
@@ -47,7 +47,7 @@ export default class Range extends React.Component {
     this.range.value = String(this.props.value);
   }
 
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps(newProps: Range['props']) {
     if (!this.range) {
       return;
     }

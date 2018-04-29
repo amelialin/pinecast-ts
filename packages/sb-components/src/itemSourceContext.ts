@@ -7,7 +7,11 @@ export interface ItemSourceContext<T> {
   [Symbol.iterator]: () => {value: T; done: boolean};
 }
 
-export function getsItemSource(toAnnotate: any) {
+export function getsItemSource<T>(
+  toAnnotate: React.ComponentType<T> & {
+    contextTypes?: PropTypes.ValidationMap<any>;
+  },
+): React.ComponentType<T> {
   toAnnotate.contextTypes = {
     ...toAnnotate.contextTypes,
     itemSource: PropTypes.object,

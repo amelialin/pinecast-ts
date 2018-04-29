@@ -30,12 +30,12 @@ const PreviewToolbar = ({
   frame: FrameType;
   isFullScreen: boolean;
   orientation: OrientationType;
-  onChange: (frame: FrameType, orientatino: OrientationType) => void;
+  onChange: (frame: FrameType, orientation: OrientationType) => void;
   onToggleFullScreen: (fullScreen: boolean) => void;
 }) => (
   <Toolbar>
     <Select
-      onChange={newFrame => onChange(newFrame, orientation)}
+      onChange={(newFrame: FrameType) => onChange(newFrame, orientation)}
       options={{
         desktop: 'Desktop',
         phone: 'Phone',
@@ -46,7 +46,9 @@ const PreviewToolbar = ({
     />
     {frame !== 'desktop' && (
       <Select
-        onChange={newOrientation => onChange(frame, newOrientation)}
+        onChange={(newOrientation: 'portrait' | 'landscape') =>
+          onChange(frame, newOrientation)
+        }
         options={{
           portrait: 'Portrait',
           landscape: 'Landscape',

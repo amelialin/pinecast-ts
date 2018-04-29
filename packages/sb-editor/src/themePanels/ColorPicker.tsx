@@ -3,6 +3,7 @@ import * as React from 'react';
 import {SketchPicker} from 'react-color';
 
 import styled from '@pinecast/styles';
+import {Sub} from '@pinecast/common/types';
 
 import colorKeyNames from '../shared/colorNames';
 import {DEFAULT_FONT} from '@pinecast/common/constants';
@@ -50,7 +51,7 @@ export default class ColorPicker extends React.PureComponent {
   props: {
     colorKey: string;
     colorValue: string;
-    onChange: (string) => void;
+    onChange: (val: string) => void;
   };
   state: {
     showingPicker: boolean;
@@ -58,7 +59,7 @@ export default class ColorPicker extends React.PureComponent {
 
   popoverWrapper: Element | null;
 
-  constructor(props) {
+  constructor(props: ColorPicker['props']) {
     super(props);
     this.state = {showingPicker: false};
   }
@@ -136,7 +137,9 @@ export default class ColorPicker extends React.PureComponent {
             </Popover>
           )}
         </div>
-        <NameWrapper>{colorKeyNames[colorKey]}</NameWrapper>
+        <NameWrapper>
+          {(colorKeyNames as Sub<typeof colorKeyNames>)[colorKey]}
+        </NameWrapper>
       </Wrapper>
     );
   }

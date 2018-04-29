@@ -68,7 +68,11 @@ export interface ComponentContext {
   pagination?: primitives.Paginatable;
 }
 
-export function getsContext<T>(toAnnotate: T & {contextTypes?: Object}): T {
+export function getsContext<T>(
+  toAnnotate: React.ComponentType<T> & {
+    contextTypes?: PropTypes.ValidationMap<any>;
+  },
+): React.ComponentType<T> {
   toAnnotate.contextTypes = {
     ...toAnnotate.contextTypes,
     ctx: PropTypes.object.isRequired,

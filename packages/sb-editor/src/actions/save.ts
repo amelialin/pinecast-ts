@@ -1,3 +1,4 @@
+import {Dispatch} from 'react-redux';
 import {ThunkAction} from 'redux-thunk';
 
 import req from '@pinecast/xhr';
@@ -10,8 +11,8 @@ export type SaveActionPayload = {saving: boolean; error: string | null};
 export const setSaveState = actionFactory<SaveActionPayload>('save.setStatus');
 
 export const doSave: ThunkAction<void, RootReducerType, void> = () => async (
-  dispatch,
-  getState,
+  dispatch: Dispatch<any>,
+  getState: () => RootReducerType,
 ) => {
   await dispatch(setSaveState({saving: true, error: null}));
   const {csrf, slug, theme} = getState();
@@ -19,9 +20,11 @@ export const doSave: ThunkAction<void, RootReducerType, void> = () => async (
   try {
     response = await req({
       body: JSON.stringify(theme),
-      headers: {'X-CSRFToken': csrf},
+      headers: {'X-CSRFToken': csrf || ''},
       method: 'POST',
-      url: `/sites/site_builder/editor/save/theme/${encodeURIComponent(slug)}`,
+      url: `/sites/site_builder/editor/save/theme/${encodeURIComponent(
+        slug || '',
+      )}`,
     });
   } catch (e) {
     return dispatch(

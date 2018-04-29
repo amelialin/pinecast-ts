@@ -4,12 +4,16 @@ import styled from '@pinecast/styles';
 
 import Button, {ButtonGroup} from '@pinecast/common/Button';
 import Label from '@pinecast/common/Label';
+import {Omit} from '@pinecast/common/types';
 import TextInput from '@pinecast/common/TextInput';
+
 import {Host} from './types';
 
 const MiniToolbar = styled('div', {
   marginBottom: 20,
 });
+
+type HostField = keyof Omit<Host, 'name'>;
 
 export default class HostEditor extends React.PureComponent {
   props: {
@@ -23,7 +27,7 @@ export default class HostEditor extends React.PureComponent {
     value: Host;
   };
 
-  changed(field: string, value: string) {
+  changed(field: keyof Host, value: string) {
     this.props.onChange(this.props.index, {
       ...this.props.value,
       [field]: value ? (field === 'name' ? value : [value]) : undefined,
@@ -49,11 +53,11 @@ export default class HostEditor extends React.PureComponent {
     this.props.onChangeIndex(this.props.index, this.props.index - 1);
   };
 
-  getValue(field: string): string {
+  getValue(field: HostField): string {
     if (!this.props.value[field]) {
       return '';
     }
-    return this.props.value[field][0] || '';
+    return (this.props.value[field] || [])[0] || '';
   }
 
   render() {

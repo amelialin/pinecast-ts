@@ -1,6 +1,8 @@
 import * as moment from 'moment';
 import * as React from 'react';
 
+import {Sub} from '@pinecast/common/types';
+
 import atom from './atom';
 import {blockChildren} from './children';
 import {ComponentContext, getsContext} from '../componentContext';
@@ -10,9 +12,9 @@ import {extractProps} from './extractor';
 import {formatColor} from '../helpers';
 
 function extendPseudo(
-  acc: Object = {},
+  acc: Sub<Object> = {},
   pseudo: string,
-  data: React.CSSProperties,
+  data: Sub<React.CSSProperties>,
 ): string {
   if (pseudo === 'elem') {
     if (!acc[':before']) {
@@ -57,7 +59,7 @@ function styleOptions(
     return baseStyles;
   }
   return optionKeys.reduce(
-    (acc: React.CSSProperties, cur: string): React.CSSProperties => {
+    (acc: Sub<React.CSSProperties>, cur: string): React.CSSProperties => {
       if (!(cur in options)) {
         return acc;
       }
@@ -130,9 +132,7 @@ function processContent<T>(content: T, element: Element): T | string {
   ) {
     switch (element.elementOptions.transform) {
       case 'date.fromNow':
-        return ((moment as any).default as (Date) => moment.Moment)(
-          Date.parse(content),
-        ).fromNow();
+        return moment(Date.parse(String(content))).fromNow();
     }
   }
   return content;
@@ -155,7 +155,7 @@ export default getsContext(
             fontSize: '1em',
             fontWeight: 'normal',
             ...(element.extendsStyles &&
-              element.extendsStyles.reduce((acc, cur) => acc[cur], ctx)),
+              element.extendsStyles.reduce((acc: any, cur) => acc[cur], ctx)),
             ...style,
             ...element.styles,
           },

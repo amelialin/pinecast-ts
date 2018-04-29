@@ -20,7 +20,14 @@ const SwatchChiclet = ({
   color: string;
   colorKey: string;
 }) => (
-  <Tooltip placement="bottom" overlay={<span>{colorKeyNames[colorKey]}</span>}>
+  <Tooltip
+    placement="bottom"
+    overlay={
+      <span>
+        {(colorKeyNames as {[color: string]: string | undefined})[colorKey]}
+      </span>
+    }
+  >
     <Chiclet $color={color} />
   </Tooltip>
 );

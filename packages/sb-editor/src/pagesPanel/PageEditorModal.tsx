@@ -11,16 +11,19 @@ import xhr from '@pinecast/xhr';
 import {Page} from './types';
 import {ReducerType} from '../reducer';
 
+type Props = {
+  editorComponent: React.ComponentType<{
+    onChange: (value: Page['body']) => void;
+    value: Page['body'];
+  }>;
+  onClose: () => void;
+  onSave: (newPage: Page) => void;
+  page: Page;
+  showSlug?: boolean;
+};
+
 class PageEditorModal extends React.PureComponent {
-  props: {
-    editorComponent: React.ComponentType<{
-      onChange: (value: Page['body']) => void;
-      value: Page['body'];
-    }>;
-    onClose: () => void;
-    onSave: (newPage: Page) => void;
-    page: Page;
-    showSlug?: boolean;
+  props: Props & {
     slug: string;
   };
   state: {
@@ -32,7 +35,7 @@ class PageEditorModal extends React.PureComponent {
     slugStatus: SlugStatus;
   };
 
-  constructor(props) {
+  constructor(props: PageEditorModal['props']) {
     super(props);
     const {page} = props;
     this.state = {
@@ -45,7 +48,7 @@ class PageEditorModal extends React.PureComponent {
     };
   }
 
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps(newProps: PageEditorModal['props']) {
     if (newProps.page.slug !== this.props.page.slug) {
       this.setState({
         title: newProps.page.title,
@@ -170,6 +173,6 @@ class PageEditorModal extends React.PureComponent {
   }
 }
 
-export default connect((state: ReducerType) => ({
+export default (connect((state: ReducerType) => ({
   slug: state.slug,
-}))(PageEditorModal);
+}))(PageEditorModal) as any) as React.ComponentType<Props>;

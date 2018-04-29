@@ -13,7 +13,7 @@ const PresetsPanel = ({
   changePreset,
 }: {
   preset: ReducerType['theme']['$type'];
-  changePreset: (string) => void;
+  changePreset: (val: string) => void;
 }) => (
   <PanelWrapper>
     <PanelDescription>

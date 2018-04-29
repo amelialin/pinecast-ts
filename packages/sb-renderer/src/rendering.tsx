@@ -40,7 +40,7 @@ function getItemSource<T>(items: Array<T>): ItemSourceContext<T> {
   return {
     getItem: inst.next.bind(inst),
     hasNextItem: () => yielded < items.length,
-    [Symbol.iterator]: inst[Symbol.iterator].bind(inst),
+    [Symbol.iterator]: (inst as any)[Symbol.iterator].bind(inst),
   };
 }
 

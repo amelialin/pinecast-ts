@@ -36,7 +36,8 @@ class TypographyPanel extends React.Component {
   headingsSelector: RandomizableSelector | null;
   bodySelector: RandomizableSelector | null;
   props: {
-    changeFont: (pair: PartialFontHashType) => void;
+    changeFont: (pair: PartialFontHashType) => any;
+    children?: any; // FIXME: required by react-redux
     fonts: FontHashType;
     defaultFonts: FontHashType;
   };
@@ -139,7 +140,5 @@ export default connect(
       ...state.theme.fonts,
     },
   }),
-  {
-    changeFont,
-  },
+  {changeFont},
 )(TypographyPanel);

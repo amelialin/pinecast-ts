@@ -8,7 +8,7 @@ import ModalLayer from '@pinecast/common/ModalLayer';
 import {ReducerType} from './reducer';
 import TextArea from '@pinecast/common/TextArea';
 
-declare var Rollbar;
+declare var Rollbar: {info(msg: string, data: Object): void};
 
 class ReportProblem extends React.PureComponent {
   props: {
@@ -19,7 +19,7 @@ class ReportProblem extends React.PureComponent {
     open: boolean;
   };
 
-  constructor(props) {
+  constructor(props: ReportProblem['props']) {
     super(props);
     this.state = {message: '', open: false};
   }

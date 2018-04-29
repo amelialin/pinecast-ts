@@ -16,7 +16,7 @@ interface Options {
   urlPath: string;
 }
 
-function fontMapper(fontFamily): string | null {
+function fontMapper(fontFamily: string): string | null {
   switch (fontFamily.toLowerCase()) {
     case 'sans-serif':
     case 'monospace':

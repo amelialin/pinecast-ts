@@ -21,7 +21,7 @@ export default class FullScreenWrapper extends React.PureComponent {
     transition: undefined,
   };
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: FullScreenWrapper['props']) {
     const [left, top] = this.getPosition();
     if (nextProps.fullScreen && !this.props.fullScreen) {
       this.setState(

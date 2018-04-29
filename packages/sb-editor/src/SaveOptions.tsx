@@ -21,7 +21,7 @@ class SaveOptions extends React.PureComponent {
     open: boolean;
   };
 
-  constructor(props) {
+  constructor(props: SaveOptions['props']) {
     super(props);
     this.state = {open: false};
   }

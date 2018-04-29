@@ -1,4 +1,4 @@
-import * as hyphenateStyleName from 'fbjs/lib/hyphenateStyleName';
+const hyphenateStyleName = require('fbjs/lib/hyphenateStyleName');
 
 const isUnitlessNumber = {
   animationIterationCount: true,

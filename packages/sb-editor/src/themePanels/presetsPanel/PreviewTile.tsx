@@ -35,7 +35,7 @@ const Button = styled(
 );
 
 interface Props {
-  onSelect: (string) => void;
+  onSelect: (val: string) => void;
   type: string;
 }
 interface StateProps {

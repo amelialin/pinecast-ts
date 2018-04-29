@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/styles';
+import {Sub} from '@pinecast/common/types';
 import {merge} from '@pinecast/sb-presets';
 
 import {AbstractURL} from '../primitives';
@@ -9,38 +10,44 @@ import {extractPath} from './extractor';
 import {formatColor, formatInlineColor} from '../helpers';
 import {MOBILE_MEDIA_QUERY} from '../media';
 
-export function prepareProps(
+export function prepareProps<T>(
   item: any,
-  props: Object,
+  props: Sub<T>,
   ctx: ComponentContext,
-): Object {
-  return Object.keys(props).reduce((acc, cur) => {
-    switch (cur) {
-      case 'href':
-        if (/^https?:\/\//.exec(props[cur]) || props[cur][0] === '/') {
-          acc[cur] = props[cur];
+): T {
+  return Object.keys(props).reduce(
+    (acc, cur) => {
+      switch (cur) {
+        case 'href':
+          if (/^https?:\/\//.exec(props[cur]) || props[cur][0] === '/') {
+            acc[cur] = props[cur];
+            break;
+          }
+          const href: AbstractURL = props[cur];
+          acc[cur] = ctx.url(
+            href.name,
+            Object.keys(href.params || {}).reduce(
+              (resolvedParams, param) => {
+                resolvedParams[param] = extractPath(
+                  item,
+                  (href.params || {})[param],
+                );
+                return resolvedParams;
+              },
+              {} as {[key: string]: any},
+            ),
+          );
           break;
-        }
-        const href: AbstractURL = props[cur];
-        acc[cur] = ctx.url(
-          href.name,
-          Object.keys(href.params || {}).reduce((resolvedParams, param) => {
-            resolvedParams[param] = extractPath(
-              item,
-              (href.params || {})[param],
-            );
-            return resolvedParams;
-          }, {}),
-        );
-        break;
-      case 'src':
-        acc[cur] = ctx.resources[props[cur]] || props[cur];
-        break;
-      default:
-        acc[cur] = props[cur];
-    }
-    return acc;
-  }, {});
+        case 'src':
+          acc[cur] = ctx.resources[props[cur]] || props[cur];
+          break;
+        default:
+          acc[cur] = props[cur];
+      }
+      return acc;
+    },
+    {} as Sub<T>,
+  );
 }
 
 function replaceVars(value: string, ctx: ComponentContext): string | number {
@@ -65,75 +72,92 @@ function replaceVars(value: string, ctx: ComponentContext): string | number {
 }
 
 export function prepareStyle(
-  style: CSS | null,
+  style: Sub<CSS> | null,
   ctx: ComponentContext,
 ): CSS | null {
   if (!style) {
     return null;
   }
-  const out = Object.keys(style).reduce((acc, cur) => {
-    if (!style[cur] && style[cur] !== 0) {
-      return acc;
-    }
+  const out = Object.keys(style).reduce(
+    (acc, cur) => {
+      if (!style[cur] && style[cur] !== 0) {
+        return acc;
+      }
 
-    if (cur[0] === ':' || cur[0] === '@') {
-      const restyled = prepareStyle(style[cur], ctx);
-      if (cur === '@mobile') {
-        acc[MOBILE_MEDIA_QUERY] = restyled;
-      } else {
-        acc[cur] = restyled;
+      if (cur[0] === ':' || cur[0] === '@') {
+        const restyled = prepareStyle(style[cur], ctx);
+        if (cur === '@mobile') {
+          acc[MOBILE_MEDIA_QUERY] = restyled;
+        } else {
+          acc[cur] = restyled;
+        }
+        return acc;
       }
-      return acc;
-    }
-    switch (cur) {
-      case 'boxShadow':
-      case 'background':
-      case 'backgroundImage': {
-        acc[cur] = formatInlineColor(String(style[cur]), ctx);
-        break;
-      }
-      case 'backgroundColor':
-      case 'borderColor':
-      case 'borderBottomColor':
-      case 'borderLeftColor':
-      case 'borderRightColor':
-      case 'borderTopColor':
-      case 'color':
-        acc[cur] = formatColor(String(style[cur]), ctx);
-        break;
-      case 'backgroundImage':
-        if (ctx.resources && String(style[cur]) in ctx.resources) {
-          acc[cur] = `url(${ctx.resources[style[cur] || '']})`;
-        } else {
-          acc[cur] = style[cur];
-        }
-        break;
-      case 'fontFamily':
-        if (ctx.fonts && String(style[cur]) in ctx.fonts) {
-          acc[cur] = ctx.fonts[String(style[cur])] || style[cur];
-        } else {
-          acc[cur] = style[cur];
-        }
-        break;
-      case 'fontSize':
-        if (style[cur] === 'var(--pageFontSize)') {
-          acc[cur] =
-            (ctx.styling && ctx.styling.page && ctx.styling.page.fontSize) ||
-            16;
-        } else {
-          acc[cur] = style[cur];
-        }
-        break;
-      default:
-        if (typeof style[cur] === 'string') {
-          acc[cur] = replaceVars(style[cur], ctx);
+      switch (cur) {
+        case 'boxShadow':
+        case 'background':
+        case 'backgroundImage': {
+          acc[cur] = formatInlineColor(String(style[cur]), ctx);
           break;
         }
-        acc[cur] = style[cur];
-        break;
-    }
-    return acc;
-  }, {});
+        case 'backgroundColor':
+        case 'borderColor':
+        case 'borderBottomColor':
+        case 'borderLeftColor':
+        case 'borderRightColor':
+        case 'borderTopColor':
+        case 'color':
+          acc[cur] = formatColor(String(style[cur]), ctx) || undefined;
+          break;
+        case 'backgroundImage':
+          if (ctx.resources && String(style[cur]) in ctx.resources) {
+            acc[cur] = `url(${ctx.resources[style[cur] || '']})`;
+          } else {
+            acc[cur] = style[cur] != null ? String(style[cur]) : undefined;
+          }
+          break;
+        case 'fontFamily':
+          if (ctx.fonts && String(style[cur]) in ctx.fonts) {
+            acc[cur] =
+              (ctx.fonts as Sub<typeof ctx.fonts>)[String(style[cur])] ||
+              style[cur];
+          } else {
+            acc[cur] = String(style[cur]);
+          }
+          break;
+        case 'fontSize':
+          if (style[cur] === 'var(--pageFontSize)') {
+            acc[cur] =
+              (ctx.styling && ctx.styling.page && ctx.styling.page.fontSize) ||
+              16;
+          } else {
+            acc[cur] = style[cur];
+          }
+          break;
+        default:
+          if (typeof style[cur] === 'string') {
+            acc[cur] = replaceVars(style[cur], ctx);
+            break;
+          }
+          acc[cur] = style[cur];
+          break;
+      }
+      return acc;
+    },
+    {} as {
+      backgroundColor?: string;
+      borderColor?: string;
+      borderBottomColor?: string;
+      borderLeftColor?: string;
+      borderRightColor?: string;
+      borderTopColor?: string;
+      color?: string;
+      backgroundImage?: string;
+      fontFamily?: string;
+      fontSize?: number | string;
+      [key: string]: any;
+    },
+  );
   return out;
 }
 
@@ -163,7 +187,11 @@ export default (elem: string, style?: Object, baseProps?: Object) =>
         prepareStyle(
           merge(
             baseStyle,
-            extends_ && extends_.reduce((acc, cur) => acc[cur], ctx),
+            extends_ &&
+              extends_.reduce(
+                (acc: {[key: string]: any}, cur): any => acc[cur],
+                ctx,
+              ),
             style,
             styleProp,
           ),

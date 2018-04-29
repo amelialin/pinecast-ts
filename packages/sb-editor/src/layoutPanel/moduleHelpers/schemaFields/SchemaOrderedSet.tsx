@@ -126,7 +126,7 @@ const Buffer = styled('aside', ({$open}: {$open: boolean}) => ({
 }));
 
 export default class SchemaOrderedSet extends React.PureComponent {
-  props: SchemaProps & {options: {[key: string]: string}};
+  props: SchemaProps & {options: {[key: string]: string}; value: Array<string>};
   state: {
     currentY: number;
     dragging: number | null;
@@ -317,14 +317,14 @@ export default class SchemaOrderedSet extends React.PureComponent {
   }
 
   render() {
-    const {name, value = []} = this.props;
+    const value: Array<string> = this.props.value || [];
     const {overBuffer} = this.state;
     return (
-      <Label componentType="div" style={labelStyle} text={name}>
+      <Label componentType="div" style={labelStyle} text={this.props.name}>
         <ElementWrapper $count={value.length} $dragging={overBuffer !== null}>
           {value.length ? (
             <React.Fragment>
-              {value.map((element, i) => this.renderElement(element, i))}
+              {value.map(this.renderElement)}
               <Buffer $open={overBuffer === value.length} />
             </React.Fragment>
           ) : (

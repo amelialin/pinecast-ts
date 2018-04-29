@@ -12,9 +12,11 @@ export default class SpotifyDashboard extends React.Component {
   static selector = '.placeholder-spotify';
 
   static propExtraction = {
-    isEligible: e => e.getAttribute('data-is-eligible') === 'true',
-    isSubmitted: e => e.getAttribute('data-is-submitted') === 'true',
-    slug: e => e.getAttribute('data-slug'),
+    isEligible: (e: HTMLElement) =>
+      e.getAttribute('data-is-eligible') === 'true',
+    isSubmitted: (e: HTMLElement) =>
+      e.getAttribute('data-is-submitted') === 'true',
+    slug: (e: HTMLElement) => e.getAttribute('data-slug'),
   };
 
   props: {
@@ -24,7 +26,7 @@ export default class SpotifyDashboard extends React.Component {
   };
   state: {error: string | null; isSubmitted: boolean; saving: boolean};
 
-  constructor(props) {
+  constructor(props: SpotifyDashboard['props']) {
     super(props);
     this.state = {error: null, isSubmitted: props.isSubmitted, saving: false};
   }

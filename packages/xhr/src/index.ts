@@ -22,7 +22,7 @@ export interface Options {
 export default function(
   args: Options | string,
 ): Promise<string> & {xhr: XMLHttpRequest} {
-  let url;
+  let url: string;
   let headers: Options['headers'] = {};
   let method = 'GET';
   let body: Options['body'] = null;

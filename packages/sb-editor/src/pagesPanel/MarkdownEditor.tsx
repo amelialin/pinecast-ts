@@ -20,7 +20,7 @@ export default class MarkdownEditor extends React.PureComponent {
     }> | null;
   };
 
-  constructor(props) {
+  constructor(props: MarkdownEditor['props']) {
     super(props);
     const {value} = props;
     this.state = {
@@ -37,7 +37,7 @@ export default class MarkdownEditor extends React.PureComponent {
     );
   }
 
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps(newProps: MarkdownEditor['props']) {
     if (newProps.value !== this.state.serialValue) {
       this.setState({
         rawValue: {text: newProps.value},

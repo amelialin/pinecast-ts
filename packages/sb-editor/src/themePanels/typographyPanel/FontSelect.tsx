@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import ReactList from 'react-list';
+import * as ReactList from 'react-list';
 
 import styled from '@pinecast/styles';
 
@@ -128,7 +128,7 @@ type State = {
 
 export default class FontSelect extends React.PureComponent {
   props: {
-    onChange: (string) => void;
+    onChange: (val: string) => void;
     value: string;
   };
   state: State = {
@@ -188,10 +188,10 @@ export default class FontSelect extends React.PureComponent {
     this.setState({showingPicker: !this.state.showingPicker});
   };
 
-  itemRenderer = (index: number, key: string) => {
+  itemRenderer = (index: number, key: number | string): JSX.Element => {
     const {filter, fontPreviews} = this.state;
     if (!fontPreviews) {
-      return null;
+      return <div />;
     }
     const source = filter ? fontPreviews.categories[filter] : fontPreviews.list;
     const family = source[index];
@@ -212,7 +212,7 @@ export default class FontSelect extends React.PureComponent {
     );
   };
 
-  handleRef = el => {
+  handleRef = (el: HTMLDivElement | null) => {
     this.popoverWrapper = el;
   };
 

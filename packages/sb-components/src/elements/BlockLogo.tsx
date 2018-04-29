@@ -1,3 +1,5 @@
+import {CSS} from '@pinecast/styles';
+
 import {ComponentContext, getsContext} from '../componentContext';
 import {Element} from '../primitives';
 
@@ -5,9 +7,9 @@ import {layoutElements} from './index';
 
 export default getsContext(
   (
-    {element, item, style}: {element: Element; item: Object; style: Object},
+    {element, item, style}: {element: Element; item: Object; style: CSS},
     {ctx}: {ctx: ComponentContext},
-  ) => {
+  ): any => {
     const children: Element['children'] = [];
     if (ctx.resources.logo) {
       children.push({

@@ -3,7 +3,9 @@ import * as PropTypes from 'prop-types';
 
 import {CSS, Omit} from './types';
 
-declare function require(name: string);
+declare function require(
+  name: 'styletron-utils',
+): {injectStyle(styletron: Object, declarations: Object): string};
 const su = require('styletron-utils');
 
 declare var process: {env: {[key: string]: string}};

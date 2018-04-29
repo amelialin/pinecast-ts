@@ -90,7 +90,7 @@ export default class ContextMenu extends React.PureComponent {
     document.body.removeEventListener('click', this.handleOutsideClick);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: ContextMenu['props']) {
     if (!prevProps.open && this.props.open) {
       const found = this.props.options.findIndex(
         x => x.slug === this.props.toSelect,

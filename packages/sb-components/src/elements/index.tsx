@@ -23,11 +23,15 @@ import ContactTable from './pageHelpers/ContactTable';
 export function layoutElements(
   item: Object,
   elements: Array<Element | InlineElement>,
-  style?: React.CSSProperties,
+  style?: CSS,
   keyOffset: number = 0,
 ) {
   return elements.filter(x => x).map((element, i) => {
-    let Element;
+    let Element: React.ComponentType<{
+      element: typeof element;
+      item: typeof item;
+      style?: CSS;
+    }>;
     switch (element.type) {
       case 'block.link':
         Element = BlockLink;

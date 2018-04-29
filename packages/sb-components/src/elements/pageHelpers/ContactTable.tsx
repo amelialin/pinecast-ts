@@ -24,10 +24,10 @@ export default ({
     ? element.elementOptions.cellStyles
     : null;
   function row(
-    key,
-    title,
-    linkFormat: (string) => string = x => x,
-    textFormat: (string) => string = x => x,
+    key: string | number,
+    title: string,
+    linkFormat: (val: string) => string = x => x,
+    textFormat: (val: string) => string = x => x,
   ) {
     if (
       !(key in item) ||

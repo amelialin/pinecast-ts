@@ -16,7 +16,7 @@ export default class Layer extends React.PureComponent {
     pointerEvents: true,
   };
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     const portal = document.createElement('div');
     portal.style.pointerEvents = props.pointerEvents ? 'auto' : 'none';
@@ -27,7 +27,7 @@ export default class Layer extends React.PureComponent {
     this.portal = portal;
     document.body.appendChild(portal);
   }
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps(newProps: Props) {
     this.portal.style.pointerEvents = newProps.pointerEvents ? 'auto' : 'none';
     this.portal.style.left = newProps.x ? `${newProps.x}px` : '0';
     this.portal.style.top = newProps.y ? `${newProps.y}px` : '0';

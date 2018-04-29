@@ -52,7 +52,6 @@ const ThemePanel = ({
   </StickyHeader.Wrapper>
 );
 
-export default connect(
-  (state: ReducerType) => ({themePage: state.themePage}),
-  dispatch => ({changeThemePage: name => dispatch(changeThemePage(name))}),
-)(ThemePanel);
+export default connect((state: ReducerType) => ({themePage: state.themePage}), {
+  changeThemePage,
+})(ThemePanel);

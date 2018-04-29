@@ -90,7 +90,7 @@ export default getsContext(
                   throw new Error(`unrecognized divider ${div}`);
                 })(layout.divider);
             }
-            const divider = key => (
+            const divider = (key: number) => (
               <Divider key={`div${key}`}>{divChar}</Divider>
             );
             return linkEls

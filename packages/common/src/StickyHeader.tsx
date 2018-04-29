@@ -63,7 +63,7 @@ export class Wrapper extends React.Component {
     headerHeight: 60,
   };
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Wrapper['props']) {
     if (nextProps.keyScrollOn !== this.props.keyScrollOn && this.ref_) {
       this.ref_.scrollTop = 0;
       this.setState({scrolled: 0});

@@ -27,11 +27,12 @@ interface Assets {
 
 class AssetsPanel extends React.PureComponent {
   props: {
+    children?: any; // FIXME: required by react-redux
     csrf: string;
     isPro: boolean;
     slug: string;
 
-    onRefresh: () => void;
+    onRefresh: () => any;
   };
   state: {
     data: Assets | null;

@@ -21,7 +21,5 @@ const ModulesPanel = ({theme}: Props) => (
 
 export default connect(
   (state: ReducerType) => ({theme: mergedTheme(state)}),
-  dispatch => ({
-    //
-  }),
+  {},
 )(ModulesPanel);

@@ -65,7 +65,7 @@ export default class FeedReview extends React.Component {
     slugValid: boolean;
   };
 
-  constructor(props) {
+  constructor(props: FeedReview['props']) {
     super(props);
     this.state = {
       errors: null,

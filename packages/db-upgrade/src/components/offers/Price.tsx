@@ -1,4 +1,4 @@
-import numeral from 'numeral';
+import * as numeral from 'numeral';
 import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/styles';

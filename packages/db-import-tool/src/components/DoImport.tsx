@@ -58,7 +58,7 @@ export default class DoImport extends React.Component {
 
   async startImport() {
     try {
-      const parsed = JSON.parse(
+      const parsed: {error?: string; ids: Array<string>} = JSON.parse(
         await xhr({
           body: JSON.stringify(this.props.feed),
           method: 'POST',

@@ -44,10 +44,7 @@ const ModulesPanel = ({onFooterUpdate, onHeaderUpdate, theme}: Props) => (
   </PanelWrapper>
 );
 
-export default connect(
-  (state: ReducerType) => ({theme: mergedTheme(state)}),
-  dispatch => ({
-    onHeaderUpdate: data => dispatch(setHeaderLayouts(data)),
-    onFooterUpdate: data => dispatch(setFooterLayouts(data)),
-  }),
-)(ModulesPanel);
+export default connect((state: ReducerType) => ({theme: mergedTheme(state)}), {
+  onFooterUpdate: setFooterLayouts,
+  onHeaderUpdate: setHeaderLayouts,
+})(ModulesPanel);

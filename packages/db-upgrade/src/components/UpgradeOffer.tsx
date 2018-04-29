@@ -1,4 +1,4 @@
-import {injectStripe} from 'react-stripe-elements';
+import {injectStripe, ReactStripeElements} from 'react-stripe-elements';
 import * as React from 'react';
 
 import Button from '@pinecast/common/Button';
@@ -52,10 +52,7 @@ type RawProps = {
 };
 
 class UpgradeOffer_ extends React.PureComponent {
-  props: SharedProps &
-    RawProps & {
-      stripe: {createToken: () => Promise<{token: {id: string}}>};
-    };
+  props: SharedProps & RawProps & ReactStripeElements.InjectedStripeProps;
   state: {
     coupon: string | null;
     error: JSX.Element | string | null;
@@ -71,6 +68,9 @@ class UpgradeOffer_ extends React.PureComponent {
   }
 
   async doUpgrade(toPlan: Plan): Promise<void> {
+    if (!this.props.stripe) {
+      throw new Error('unreachable');
+    }
     this.setState({error: null, pending: true});
     const data = new FormData();
     data.append('new_plan', toPlan);
@@ -80,8 +80,11 @@ class UpgradeOffer_ extends React.PureComponent {
 
     if (this.props.chargeCard) {
       try {
-        const {token: {id}} = await this.props.stripe.createToken();
-        data.append('token', id);
+        const {token} = await this.props.stripe.createToken();
+        if (!token) {
+          throw new Error('Token was undefined');
+        }
+        data.append('token', token.id);
       } catch (e) {
         console.error(e);
         this.setError('We could not contact our payments provider.');
@@ -220,7 +223,7 @@ const ErrorWrapper = styled('div', {
 });
 
 class UpgradeOfferWithModal_ extends React.Component {
-  props: SharedProps;
+  props: SharedProps & ReactStripeElements.InjectedStripeProps;
   state: {
     cardProvided: boolean;
     cardResolver: (() => void) | null;

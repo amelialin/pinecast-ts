@@ -19,10 +19,11 @@ export default class ImportTool extends React.Component {
   static selector = '.placeholder-import-tool';
 
   static propExtraction = {
-    feedFetchURL: e => e.getAttribute('data-feed-fetch-url'),
-    formInner: e => Array.from(e.childNodes),
-    hasFormError: e => e.getAttribute('data-has-error') === 'true',
-    isPaid: e => e.getAttribute('data-plan') !== 'demo',
+    feedFetchURL: (e: HTMLElement) => e.getAttribute('data-feed-fetch-url'),
+    formInner: (e: HTMLElement) => Array.from(e.childNodes),
+    hasFormError: (e: HTMLElement) =>
+      e.getAttribute('data-has-error') === 'true',
+    isPaid: (e: HTMLElement) => e.getAttribute('data-plan') !== 'demo',
   };
 
   props: {
@@ -35,7 +36,7 @@ export default class ImportTool extends React.Component {
     source: 'form' | 'import' | null;
   };
 
-  constructor(props) {
+  constructor(props: ImportTool['props']) {
     super(props);
     this.state = {
       source: props.hasFormError ? 'form' : null,

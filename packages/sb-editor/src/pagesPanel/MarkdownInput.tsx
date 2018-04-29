@@ -1,4 +1,6 @@
-import {getSelection} from 'react-mde/lib/js/helpers/ReactMdeSelectionHelper';
+const {
+  getSelection,
+} = require('react-mde/lib/js/helpers/ReactMdeSelectionHelper');
 import * as React from 'react';
 import {
   ReactMdeCommands,
@@ -59,7 +61,7 @@ class SaferPreview extends ReactMdePreview {
     selfClosing: ['img', 'br', 'hr'],
   };
 
-  constructor(props) {
+  constructor(props: MarkdownInput['props']) {
     super(props);
     this.origMakeHTML = this.converter.makeHtml.bind(this.converter);
     this.converter.makeHtml = this.makeHTML;

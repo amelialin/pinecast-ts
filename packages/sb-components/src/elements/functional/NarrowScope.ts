@@ -12,7 +12,7 @@ export default ({
   element: Element;
   item: Object;
   style: React.CSSProperties;
-}) => {
+}): JSX.Element => {
   const newScope = extractPath(item, (element.elementOptions || {}).path || []);
   if (!newScope) {
     throw new Error('Scope could not be narrowed');

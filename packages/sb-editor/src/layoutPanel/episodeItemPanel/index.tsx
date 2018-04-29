@@ -19,21 +19,24 @@ import {PanelDescription, PanelWrapper} from '../../panelComponents';
 import {primitives} from '@pinecast/sb-components';
 import {ReducerType} from '../../reducer';
 
+type ThemePartial = {
+  layout: primitives.PageLayout;
+  options: {defaultConsumeCount: number};
+};
+
 class EpisodeItemPanel extends React.Component {
   props: {
-    onDeleteFirstPagePrefixSegment: (index: number) => void;
-    onDeleteHomeSegment: (index: number) => void;
+    children?: any; // FIXME: required by react-redux
+    onDeleteFirstPagePrefixSegment: (index: number) => any;
+    onDeleteHomeSegment: (index: number) => any;
     onFirstPageAfterPrefixUpdated: (
       layout: Array<primitives.ComponentLayout>,
-    ) => void;
+    ) => any;
     onSetFirstPagePrefixSegments: (
       segments: Array<primitives.LayoutConfig>,
-    ) => void;
-    onSetHomeSegments: (segments: Array<primitives.LayoutConfig>) => void;
-    theme: {
-      layout: primitives.PageLayout;
-      options: {defaultConsumeCount: number};
-    };
+    ) => any;
+    onSetHomeSegments: (segments: Array<primitives.LayoutConfig>) => any;
+    theme: ThemePartial;
   };
 
   handleFirstPagePrefixLayoutChange = (
@@ -155,14 +158,12 @@ class EpisodeItemPanel extends React.Component {
 }
 
 export default connect(
-  (state: ReducerType) => ({theme: mergedTheme(state)}),
-  dispatch => ({
-    onDeleteFirstPagePrefixSegment: index =>
-      dispatch(deleteFirstPagePrefixSegment(index)),
-    onDeleteHomeSegment: index => dispatch(deleteHomeSegment(index)),
-    onFirstPageAfterPrefixUpdated: modules => dispatch(setHeroLayouts(modules)),
-    onSetFirstPagePrefixSegments: segments =>
-      dispatch(setFirstPagePrefixSegments(segments)),
-    onSetHomeSegments: segments => dispatch(setHomeSegments(segments)),
-  }),
+  (state: ReducerType): {theme: ThemePartial} => ({theme: mergedTheme(state)}),
+  {
+    onDeleteFirstPagePrefixSegment: deleteFirstPagePrefixSegment,
+    onDeleteHomeSegment: deleteHomeSegment,
+    onFirstPageAfterPrefixUpdated: setHeroLayouts,
+    onSetFirstPagePrefixSegments: setFirstPagePrefixSegments,
+    onSetHomeSegments: setHomeSegments,
+  },
 )(EpisodeItemPanel);
