@@ -35,7 +35,7 @@ const Select_ = styled('select', {
   background: 'transparent',
   border: 0,
   boxShadow:
-    '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), inset 0 0 0 0.5px rgba(0, 0, 0, .15), rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
+    '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), inset 0 0 0 0.5px #c6caca, rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
   borderRadius: 3,
   fontFamily: DEFAULT_FONT,
   fontSize: 14,
@@ -48,11 +48,11 @@ const Select_ = styled('select', {
 
   ':hover': {
     boxShadow:
-      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px rgba(0, 0, 0, .15), rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
+      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px #c6caca, rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
   },
   ':active': {
     boxShadow:
-      '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px rgba(0, 0, 0, .15), rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
+      '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px #c6caca, rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
   },
   ':disabled': {
     opacity: 0.5,

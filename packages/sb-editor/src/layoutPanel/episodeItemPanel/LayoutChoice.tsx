@@ -111,7 +111,7 @@ export default class LayoutChoice extends React.PureComponent {
   };
   handleChangeEpisodesAcross = (newCount: string) => {
     let count = Number(newCount);
-    if (isNaN(count)) {
+    if (isNaN(count) || count < 2) {
       count = 2;
     }
     count = Math.max(count, 2);
@@ -151,7 +151,10 @@ export default class LayoutChoice extends React.PureComponent {
         </Label>
         {layout.type === 'grid' && (
           <Group spacing={16}>
-            <Label text="Episode spacing">
+            <Label
+              subText="The spacing between episodes"
+              text="Grid item spacing"
+            >
               <TextInput
                 onChange={this.handleChangeItemSpacing}
                 style={{display: 'inline-flex', width: 90}}
@@ -159,12 +162,15 @@ export default class LayoutChoice extends React.PureComponent {
                 value={String(layout.itemSpacing || 0)}
               />
             </Label>
-            <Label text="Max episodes per row">
+            <Label
+              subText="The most episodes per row on a large screen"
+              text="Max episodes per row"
+            >
               <TextInput
                 onChange={this.handleChangeEpisodesAcross}
                 style={{display: 'inline-flex', width: 120}}
                 suffix="episodes"
-                value={String(layout.maxItemsAcross || 0)}
+                value={String(layout.maxItemsAcross || 1)}
               />
             </Label>
           </Group>

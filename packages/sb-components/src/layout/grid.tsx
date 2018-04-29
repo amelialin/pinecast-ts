@@ -10,18 +10,21 @@ import renderN from './util';
 const Wrapper = atom('section');
 const WrapperInner = atom('div');
 
-export default getsItemSource(function<T>(
-  {
-    children: childRenderer,
-    config,
-  }: {
-    children: (index: number, item: T, style: Object) => JSX.Element;
-    config: LayoutConfig;
-  },
-  {itemSource}: {itemSource: ItemSourceContext<T>},
-) {
-  return (
-    <Wrapper style={{backgroundColor: config.bgColor}}>
+export default getsContext(
+  getsItemSource(function<T>(
+    {
+      children: childRenderer,
+      config,
+    }: {
+      children: (index: number, item: T, style: Object) => JSX.Element;
+      config: LayoutConfig;
+    },
+    {
+      ctx,
+      itemSource,
+    }: {ctx: ComponentContext; itemSource: ItemSourceContext<T>},
+  ) {
+    const inner = (
       <WrapperInner
         style={{
           ...alignment(config.alignment || 'center'),
@@ -33,19 +36,22 @@ export default getsItemSource(function<T>(
         }}
       >
         {renderN(config.consumeCount, itemSource, (item: T, i: number) => {
-          const basis = `calc(var(--fixedWidthMax) / ${
-            config.maxItemsAcross
-          } + ${config.itemSpacing}px)`;
+          // const basis = `calc(var(--fixedWidthMax) / ${config.maxItemsAcross})`;
           return childRenderer(i, item, {
             display: 'flex',
-            flex: `0 1`,
-            flexBasis: basis,
-            marginBottom: config.itemSpacing,
+            flex: '1 1',
+            // flex: `0 1 ${basis}`,
+            marginBottom: config.itemSpacing || 0,
+            width: `calc(var(--fixedWidthMax) / ${config.maxItemsAcross})`,
             paddingLeft: (config.itemSpacing || 0) / 2,
             paddingRight: (config.itemSpacing || 0) / 2,
           });
         })}
       </WrapperInner>
-    </Wrapper>
-  );
-});
+    );
+    if (!config.bgColor) {
+      return inner;
+    }
+    return <Wrapper style={{backgroundColor: config.bgColor}}>{inner}</Wrapper>;
+  }),
+);

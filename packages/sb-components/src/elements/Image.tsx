@@ -90,6 +90,9 @@ export default ({
   }
   if (eo.square === 'element') {
     const SquareDiv = atom('div');
+    styles.height = '100%';
+    styles.maxWidth = '100%';
+    styles.minWidth = Number(styles.width) / 2;
     styles.position = styles.position || (squareStyle.position as any);
     styles[':after'] = squareStyle[':after'];
     return (
