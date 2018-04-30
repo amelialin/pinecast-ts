@@ -1,4 +1,4 @@
-import Confetti from 'react-dom-confetti';
+const {default: Confetti} = require('react-dom-confetti');
 import * as React from 'react';
 
 import Button from '@pinecast/common/Button';

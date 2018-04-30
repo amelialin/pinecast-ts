@@ -91,9 +91,14 @@ export default class LayoutChoice extends React.PureComponent {
       Math.max(1, consumeCount),
       this.props.layout.consumeCount + this.props.consumeBudget,
     );
+    let {maxItemsAcross} = this.props.layout;
+    if (maxItemsAcross && consumeCount < maxItemsAcross) {
+      maxItemsAcross = consumeCount;
+    }
     this.props.onChange(this.props.index, {
       ...this.props.layout,
       consumeCount,
+      maxItemsAcross,
     });
   };
 
@@ -109,13 +114,22 @@ export default class LayoutChoice extends React.PureComponent {
     });
   };
   handleChangeEpisodesAcross = (newCount: string) => {
+    const {maxItemsAcross = 2} = this.props.layout;
     let count = Number(newCount);
     if (isNaN(count) || count < 2) {
       count = 2;
     }
     count = Math.max(count, 2);
+    if (count - maxItemsAcross > this.props.consumeBudget) {
+      count = maxItemsAcross + this.props.consumeBudget;
+    }
+    let {consumeCount} = this.props.layout;
+    if (count > consumeCount) {
+      consumeCount = count;
+    }
     this.props.onChange(this.props.index, {
       ...this.props.layout,
+      consumeCount,
       maxItemsAcross: count,
     });
   };
