@@ -10,3 +10,10 @@ export function memoize<T, U>(funcToMemoize: (arg: T) => U): (arg: T) => U {
     return fresh;
   };
 }
+
+export function suppose<T>(value: T | null | undefined): T {
+  if (value == null) {
+    throw new Error('Value was supposed to never be null.');
+  }
+  return value;
+}

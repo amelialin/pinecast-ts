@@ -14,19 +14,19 @@ import Toggler from '@pinecast/common/Toggler';
 
 import ElementColorSelector from '../ElementColorSelector';
 
-const layoutTypeOptions = {
-  stacked: 'Stacked',
-  grid: 'Grid',
-};
-const widthOptions = {
-  full: 'Full width',
-  default: 'Use default page body width',
-};
-const alignmentOptions = {
-  left: 'Left',
-  center: 'Center',
-  right: 'Right',
-};
+const layoutTypeOptions = [
+  {key: 'stacked', label: 'Stacked'},
+  {key: 'grid', label: 'Grid'},
+];
+const widthOptions = [
+  {key: 'full', label: 'Full width'},
+  {key: 'default', label: 'Use default page body width'},
+];
+const alignmentOptions = [
+  {key: 'left', label: 'Left'},
+  {key: 'center', label: 'Center'},
+  {key: 'right', label: 'Right'},
+];
 const buttonStyle: CSS = {
   justifyContent: 'center',
   padding: 0,

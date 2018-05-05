@@ -6,7 +6,7 @@ import Select from '@pinecast/common/Select';
 import {SchemaProps} from './types';
 
 export default class SchemaEnum extends React.PureComponent {
-  props: SchemaProps & {options: {[value: string]: string}};
+  props: SchemaProps & {options: Array<{key: string; label: string}>};
 
   handleChange = (newValue: string) => {
     this.props.onChange(this.props.field, newValue);

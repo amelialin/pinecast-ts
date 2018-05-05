@@ -36,11 +36,11 @@ const PreviewToolbar = ({
   <Toolbar>
     <Select
       onChange={(newFrame: FrameType) => onChange(newFrame, orientation)}
-      options={{
-        desktop: 'Desktop',
-        phone: 'Phone',
-        tablet: 'Tablet',
-      }}
+      options={[
+        {key: 'desktop', label: 'Desktop'},
+        {key: 'phone', label: 'Phone'},
+        {key: 'tablet', label: 'Tablet'},
+      ]}
       style={{height: 30, marginBottom: 0}}
       value={frame || 'desktop'}
     />
@@ -49,10 +49,10 @@ const PreviewToolbar = ({
         onChange={(newOrientation: 'portrait' | 'landscape') =>
           onChange(frame, newOrientation)
         }
-        options={{
-          portrait: 'Portrait',
-          landscape: 'Landscape',
-        }}
+        options={[
+          {key: 'portrait', label: 'Portrait'},
+          {key: 'landscape', label: 'Landscape'},
+        ]}
         style={{height: 30, marginBottom: 0, marginLeft: 4}}
         value={orientation || 'portrait'}
       />

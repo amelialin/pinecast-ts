@@ -47,13 +47,7 @@ export default class ModuleInsertionModal extends React.Component {
             onChange={this.handleChangeType}
             options={Object.entries(componentsMetadata as {
               [key: string]: MetadataType;
-            }).reduce(
-              (acc, [key, value]) => {
-                acc[key] = value.name;
-                return acc;
-              },
-              {} as {[key: string]: string},
-            )}
+            }).map(([key, value]) => ({key, label: value.name}))}
             value={this.state.selectedTag}
           />
         </Label>

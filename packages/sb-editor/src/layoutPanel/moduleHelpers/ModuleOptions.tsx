@@ -94,16 +94,7 @@ export default class ModuleOptions extends React.PureComponent {
     };
 
     function setOptions() {
-      (props as any).options =
-        (option.options &&
-          option.options.reduce(
-            (acc, cur) => {
-              acc[cur.key || cur.value] = cur.name;
-              return acc;
-            },
-            {} as {[key: string]: string},
-          )) ||
-        [];
+      (props as any).options = option.options || [];
     }
 
     switch (option.type) {

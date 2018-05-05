@@ -17,9 +17,9 @@ const textAlignTemplate = {
     name: 'Text alignment',
     type: 'enum',
     options: [
-      {name: 'Left', value: 'left'},
-      {name: 'Center', value: 'center'},
-      {name: 'Right', value: 'right'},
+      {label: 'Left', key: 'left'},
+      {label: 'Center', key: 'center'},
+      {label: 'Right', key: 'right'},
     ],
   },
 };
@@ -41,9 +41,9 @@ export default {
         name: 'Column 1 contents',
         type: 'orderedSet',
         options: [
-          {name: 'Site links', value: 'siteLinks'},
-          {name: 'Pages', value: 'pageLinks'},
-          {name: 'Subscribe links', value: 'subLinks'},
+          {label: 'Site links', key: 'siteLinks'},
+          {label: 'Pages', key: 'pageLinks'},
+          {label: 'Subscribe links', key: 'subLinks'},
         ],
       },
       col2Name: {
@@ -54,9 +54,9 @@ export default {
         name: 'Column 2 contents',
         type: 'orderedSet',
         options: [
-          {name: 'Site links', value: 'siteLinks'},
-          {name: 'Pages', value: 'pageLinks'},
-          {name: 'Subscribe links', value: 'subLinks'},
+          {label: 'Site links', key: 'siteLinks'},
+          {label: 'Pages', key: 'pageLinks'},
+          {label: 'Subscribe links', key: 'subLinks'},
         ],
       },
       ...fixedWidthTemplate,
@@ -93,8 +93,8 @@ export default {
         name: 'Included links',
         type: 'orderedSet',
         options: [
-          {name: 'Site links', value: 'siteLinks'},
-          {name: 'Pages', value: 'pageLinks'},
+          {label: 'Site links', key: 'siteLinks'},
+          {label: 'Pages', key: 'pageLinks'},
         ],
       },
     },
@@ -111,8 +111,8 @@ export default {
         name: 'Contents',
         type: 'orderedSet',
         options: [
-          {name: 'Site links', value: 'links'},
-          {name: 'Pages', value: 'pages'},
+          {label: 'Site links', key: 'links'},
+          {label: 'Pages', key: 'pages'},
         ],
       },
       ...fixedWidthTemplate,
@@ -168,17 +168,17 @@ export default {
 
         options: [
           {
-            name: 'Copyright',
+            label: 'Copyright',
             value: ['podcast', 'copyright'],
             key: 'copyright',
           },
           {
-            name: 'Description',
+            label: 'Description',
             value: ['podcast', 'description'],
             key: 'description',
           },
-          {name: 'Podcast name', value: ['podcast', 'name'], key: 'name'},
-          {name: 'Subtitle', value: ['podcast', 'subtitle'], key: 'subtitle'},
+          {label: 'Podcast name', value: ['podcast', 'name'], key: 'name'},
+          {label: 'Subtitle', value: ['podcast', 'subtitle'], key: 'subtitle'},
         ],
       },
       ...fixedWidthTemplate,

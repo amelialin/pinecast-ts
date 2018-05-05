@@ -73,6 +73,11 @@ const Select_ = styled('select', {
   },
 });
 
+export type Option = {
+  key: string | number;
+  label: string;
+};
+
 const Select = ({
   autoFocus,
   disabled,
@@ -85,7 +90,7 @@ const Select = ({
   autoFocus?: boolean;
   disabled?: boolean;
   onChange: (newValue: string) => void;
-  options: {[key: string]: string};
+  options: Array<Option>;
   style?: React.CSSProperties;
   tabIndex?: number;
   value: string;
@@ -100,9 +105,9 @@ const Select = ({
       tabIndex={tabIndex}
       value={value}
     >
-      {Object.entries(options).map(([k, v]) => (
-        <option key={k} value={k}>
-          {v}
+      {options.map(({key, label}) => (
+        <option key={String(key)} value={key}>
+          {label}
         </option>
       ))}
     </Select_>

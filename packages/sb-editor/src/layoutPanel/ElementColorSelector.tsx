@@ -36,7 +36,10 @@ class ElementColorSelector extends React.PureComponent {
         <Group spacing={8}>
           <Select
             onChange={this.handleChange}
-            options={colorsOptionalKeys}
+            options={Object.entries(colorsOptionalKeys).map(([key, value]) => ({
+              key,
+              label: value,
+            }))}
             value={value || ''}
           />
           <Button onClick={goToColors}>Change colors</Button>

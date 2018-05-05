@@ -5,7 +5,9 @@ import ContextMenu from '@pinecast/common/ContextMenu';
 import IconButton from '@pinecast/common/IconButton';
 import DeleteIcon from '@pinecast/common/icons/Delete';
 import Label from '@pinecast/common/Label';
+import {Omit} from '@pinecast/common/types';
 import styled from '@pinecast/styles';
+import {suppose} from '@pinecast/common/helpers';
 
 import {SchemaProps} from './types';
 
@@ -126,7 +128,10 @@ const Buffer = styled('aside', ({$open}: {$open: boolean}) => ({
 }));
 
 export default class SchemaOrderedSet extends React.PureComponent {
-  props: SchemaProps & {options: {[key: string]: string}; value: Array<string>};
+  props: Omit<SchemaProps, 'value'> & {
+    options: Array<{label: string; value: any; key: string}>;
+    value: Array<string>;
+  };
   state: {
     currentY: number;
     dragging: number | null;
@@ -266,7 +271,9 @@ export default class SchemaOrderedSet extends React.PureComponent {
             this.mouseDown(e.pageY, index);
           }}
         >
-          <span>{this.props.options[element]}</span>
+          <span>
+            {suppose(this.props.options.find(o => o.key === element)).label}
+          </span>
           <IconButton
             Component={DeleteIcon}
             onClick={() => {
@@ -290,8 +297,8 @@ export default class SchemaOrderedSet extends React.PureComponent {
   };
 
   renderFooter() {
-    const remaining = Object.keys(this.props.options).filter(
-      x => !this.props.value.includes(x),
+    const remaining = this.props.options.filter(
+      x => !this.props.value.includes(x.key),
     );
     if (!remaining.length) {
       return null;
@@ -305,9 +312,9 @@ export default class SchemaOrderedSet extends React.PureComponent {
           onClose={this.handleCloseMenu}
           onSelect={this.handleMenuSelect}
           open={this.state.menuOpen}
-          options={remaining.map(slug => ({
-            slug,
-            name: this.props.options[slug],
+          options={remaining.map(o => ({
+            slug: o.key,
+            name: o.label,
           }))}
           x={this.state.menuX}
           y={this.state.menuY}

@@ -12,12 +12,12 @@ export default {
         <Label text="What would you like to import?">
           <Select
             onChange={() => {}}
-            options={{
-              podcast: 'Podcast',
-              network: 'Network',
-              site: 'Site',
-              blog: 'Blog',
-            }}
+            options={[
+              {key: 'podcast', label: 'Podcast'},
+              {key: 'network', label: 'Network'},
+              {key: 'site', label: 'Site'},
+              {key: 'blog', label: 'Blog'},
+            ]}
             value="podcast"
           />
         </Label>
