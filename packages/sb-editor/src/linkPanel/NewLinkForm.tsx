@@ -16,11 +16,16 @@ export default class NewLinkForm extends React.PureComponent {
   } = {title: '', url: ''};
 
   handleCreateSubmit = () => {
-    if (!this.state.title || !this.state.url) {
+    const {title, url} = this.state;
+    if (
+      !title ||
+      !url ||
+      !(url.startsWith('http://') || url.startsWith('https://'))
+    ) {
       return;
     }
 
-    this.props.onNewLink(this.state.title, this.state.url);
+    this.props.onNewLink(title, url);
     this.setState({title: '', url: ''});
   };
 
@@ -32,6 +37,10 @@ export default class NewLinkForm extends React.PureComponent {
   };
 
   render() {
+    const {url} = this.state;
+    const urlInvalid =
+      url.length > 5 &&
+      !(url.startsWith('http://') || url.startsWith('https://'));
     return (
       <Form onSubmit={this.handleCreateSubmit} style={{marginBottom: 20}}>
         <Label text="Link title">
@@ -44,8 +53,16 @@ export default class NewLinkForm extends React.PureComponent {
             value={this.state.title}
           />
         </Label>
-        <Label text="Link URL">
+        <Label
+          error={
+            urlInvalid
+              ? 'URLs must begin with "https://" or "http://".'
+              : undefined
+          }
+          text="Link URL"
+        >
           <TextInput
+            invalid={urlInvalid}
             maxLength={500}
             name="url"
             onChange={this.handleURLChange}

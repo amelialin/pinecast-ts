@@ -247,7 +247,7 @@ export default class SchemaOrderedSet extends React.PureComponent {
     return rawOffset;
   }
 
-  renderElement(element: string, index: number) {
+  renderElement = (element: string, index: number) => {
     const {dragging, overBuffer} = this.state;
     return (
       <React.Fragment key={element}>
@@ -277,7 +277,7 @@ export default class SchemaOrderedSet extends React.PureComponent {
         </Element>
       </React.Fragment>
     );
-  }
+  };
 
   handleCloseMenu = () => this.setState({menuOpen: false});
   handleOpenMenu = (e: React.MouseEvent<any>) =>

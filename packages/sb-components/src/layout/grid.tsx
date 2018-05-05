@@ -36,11 +36,9 @@ export default getsContext(
         }}
       >
         {renderN(config.consumeCount, itemSource, (item: T, i: number) => {
-          // const basis = `calc(var(--fixedWidthMax) / ${config.maxItemsAcross})`;
           return childRenderer(i, item, {
             display: 'flex',
             flex: '1 1',
-            // flex: `0 1 ${basis}`,
             marginBottom: config.itemSpacing || 0,
             width: `calc(var(--fixedWidthMax) / ${config.maxItemsAcross})`,
             paddingLeft: (config.itemSpacing || 0) / 2,

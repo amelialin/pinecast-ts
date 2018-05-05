@@ -97,9 +97,13 @@ export default getsContext(
               .map((le, i) => (i ? [divider(i), le] : [le]))
               .reduce((acc, cur) => acc.concat(cur), []);
           })
-          .reduce((acc: Array<JSX.Element>, cur: Array<JSX.Element>): Array<
-            JSX.Element
-          > => acc.concat(cur)),
+          .reduce(
+            (
+              acc: Array<JSX.Element>,
+              cur: Array<JSX.Element>,
+            ): Array<JSX.Element> => acc.concat(cur),
+            [],
+          ),
       }}
     />
   ),

@@ -1,4 +1,4 @@
-export default ({size = 300, style, showSubtitle, textStyle}) => ({
+export default ({size = 300, style = {}, showSubtitle = false}) => ({
   elements: [
     {
       type: 'block.link',
@@ -60,5 +60,12 @@ export default ({size = 300, style, showSubtitle, textStyle}) => ({
     display: 'block',
     textAlign: 'center',
     ...style,
+  },
+
+  tag: 'grid.minimal',
+  tagOptions: {
+    showSubtitle,
+    size,
+    style,
   },
 });

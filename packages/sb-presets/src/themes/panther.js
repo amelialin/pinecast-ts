@@ -123,7 +123,6 @@ export default {
             fgColor: 'secondaryBackground',
 
             elementLayout: fullWidthImageCenterStackedItem({
-              showBorder: true,
               style: {
                 backgroundColor: 'secondaryBackground',
                 margin: '0 15px',

@@ -153,7 +153,7 @@ export default class LayoutChoice extends React.PureComponent {
             value={layout.type}
           />
         </Label>
-        <Label componentType="div" text="Number of episodes to show">
+        <Label text="Number of episodes to show">
           <TextInput
             onChange={this.handleCountChange}
             style={{marginRight: 8, width: 120}}
