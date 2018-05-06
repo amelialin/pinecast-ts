@@ -1,7 +1,7 @@
 export default ({
   imageSize = 300,
   maxLinesOfSummary = 3.5,
-  padding,
+  padding = '0 0',
   ordering = ['title', 'subtitle', 'summary', 'player'],
   style,
   textStyleType = 'item',
@@ -117,6 +117,15 @@ export default ({
         flexDirection: 'column',
         ...(style && style['@mobile']),
       },
+    },
+
+    tag: 'stacked.fullWidthImageSide',
+    tagOptions: {
+      imageSize,
+      maxLinesOfSummary,
+      ordering,
+      padding,
+      style,
     },
   };
 };

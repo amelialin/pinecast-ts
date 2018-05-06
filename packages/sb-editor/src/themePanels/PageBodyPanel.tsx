@@ -4,6 +4,7 @@ import * as React from 'react';
 import Label from '@pinecast/common/Label';
 import PaddingInput, {
   formatPadding,
+  getPaddingUnit,
   parsePadding,
 } from '@pinecast/common/PaddingInput';
 import * as presets from '@pinecast/sb-presets';
@@ -34,7 +35,7 @@ const PageBodyPanel = ({
   const paddingValue = String(
     (theme.styling.page && theme.styling.page.padding) || '0 0',
   );
-  const unit = paddingValue.includes('%') ? '%' : 'px';
+  const unit = getPaddingUnit(paddingValue);
 
   return (
     <PanelWrapper>

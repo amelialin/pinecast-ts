@@ -132,7 +132,9 @@ function processContent<T>(content: T, element: Element): T | string {
   ) {
     switch (element.elementOptions.transform) {
       case 'date.fromNow':
-        return moment(Date.parse(String(content))).fromNow();
+        return ((moment as any).default as typeof moment)(
+          Date.parse(String(content)),
+        ).fromNow();
     }
   }
   return content;

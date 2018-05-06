@@ -1,4 +1,4 @@
-export default ({size = 300, style = {}, showSubtitle = false}) => ({
+export default ({size = 300, style = {}, showSubtitle = false} = {}) => ({
   elements: [
     {
       type: 'block.link',
@@ -15,6 +15,7 @@ export default ({size = 300, style = {}, showSubtitle = false}) => ({
           styles: {
             height: size,
             width: size,
+            minWidth: size,
           },
         },
         {

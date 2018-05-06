@@ -158,7 +158,7 @@ export default {
 
             width: 'full',
 
-            elementLayout: heroFullWidthStackedItem(),
+            elementLayout: heroFullWidthStackedItem({}),
           },
         ],
         firstPageAfterPrefix: [subheaderSubscribeLinks()],

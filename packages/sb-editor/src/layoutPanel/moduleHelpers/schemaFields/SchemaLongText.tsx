@@ -3,15 +3,21 @@ import * as React from 'react';
 import Label from '@pinecast/common/Label';
 import TextArea from '@pinecast/common/TextArea';
 
-import {SchemaProps} from './types';
+import {LongTextProps} from './types';
 
 export default class SchemaText extends React.PureComponent {
-  props: SchemaProps;
+  props: LongTextProps;
 
   handleChange = (newValue: string) => {
+    if (this.props.type !== 'longText') {
+      throw new Error('unreachable');
+    }
     this.props.onChange(this.props.field, newValue);
   };
   render() {
+    if (this.props.type !== 'longText') {
+      throw new Error('unreachable');
+    }
     return (
       <Label text={this.props.name}>
         <TextArea

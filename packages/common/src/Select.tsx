@@ -93,7 +93,7 @@ const Select = ({
   options: Array<Option>;
   style?: React.CSSProperties;
   tabIndex?: number;
-  value: string;
+  value: string | number;
 }) => (
   <Wrapper style={style}>
     <Select_

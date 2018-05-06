@@ -5,14 +5,15 @@ import Collapser from '@pinecast/common/Collapser';
 import {Delete, Down, Up} from '@pinecast/common/icons';
 import Group from '@pinecast/common/Group';
 import Label from '@pinecast/common/Label';
+import {itemLayoutsMetadata} from '@pinecast/sb-presets';
 import {primitives} from '@pinecast/sb-components';
 import Select from '@pinecast/common/Select';
 import StackedSection from '@pinecast/common/StackedSection';
 import styled, {CSS} from '@pinecast/styles';
 import TextInput from '@pinecast/common/TextInput';
-import Toggler from '@pinecast/common/Toggler';
 
 import ElementColorSelector from '../ElementColorSelector';
+import SchemaField from '../moduleHelpers/schemaFields';
 
 const layoutTypeOptions = [
   {key: 'stacked', label: 'Stacked'},
@@ -49,8 +50,26 @@ export default class LayoutChoice extends React.PureComponent {
     onSwap: (i1: number, i2: number) => void;
     onDelete: (index: number) => void;
   };
+  state: {containerOptionOpen: boolean; episodeOptionOpen: boolean} = {
+    containerOptionOpen: false,
+    episodeOptionOpen: false,
+  };
 
-  handleChangeLayoutType = (newType: string) => {};
+  handleChangeLayoutType = (newType: string) => {
+    this.props.onChange(this.props.index, {
+      ...this.props.layout,
+      type: newType,
+      elementLayout: Object.values(itemLayoutsMetadata)
+        .find(val => val.type === newType)
+        .func(),
+    });
+  };
+  handleChangeLayoutPreset = (preset: string) => {
+    this.props.onChange(this.props.index, {
+      ...this.props.layout,
+      elementLayout: itemLayoutsMetadata[preset].func(),
+    });
+  };
 
   handleDelete = () => {
     this.props.onDelete(this.props.index);
@@ -60,6 +79,19 @@ export default class LayoutChoice extends React.PureComponent {
   };
   handleMoveUp = () => {
     this.props.onSwap(this.props.index, this.props.index + 1);
+  };
+
+  handleToggleContainer = () => {
+    this.setState({
+      containerOptionOpen: !this.state.containerOptionOpen,
+      episodeOptionOpen: false,
+    });
+  };
+  handleToggleEpisode = () => {
+    this.setState({
+      episodeOptionOpen: !this.state.episodeOptionOpen,
+      containerOptionOpen: false,
+    });
   };
 
   handleBGChange = (newBG: string | undefined) => {
@@ -87,18 +119,12 @@ export default class LayoutChoice extends React.PureComponent {
     if (isNaN(consumeCount)) {
       consumeCount = 1;
     }
-    consumeCount = Math.min(
-      Math.max(1, consumeCount),
-      this.props.layout.consumeCount + this.props.consumeBudget,
-    );
-    let {maxItemsAcross} = this.props.layout;
-    if (maxItemsAcross && consumeCount < maxItemsAcross) {
-      maxItemsAcross = consumeCount;
-    }
     this.props.onChange(this.props.index, {
       ...this.props.layout,
-      consumeCount,
-      maxItemsAcross,
+      consumeCount: Math.min(
+        Math.max(1, consumeCount),
+        this.props.layout.consumeCount + this.props.consumeBudget,
+      ),
     });
   };
 
@@ -113,24 +139,10 @@ export default class LayoutChoice extends React.PureComponent {
       itemSpacing: spacing,
     });
   };
-  handleChangeEpisodesAcross = (newCount: string) => {
-    const {maxItemsAcross = 2} = this.props.layout;
-    let count = Number(newCount);
-    if (isNaN(count) || count < 2) {
-      count = 2;
-    }
-    count = Math.max(count, 2);
-    if (count - maxItemsAcross > this.props.consumeBudget) {
-      count = maxItemsAcross + this.props.consumeBudget;
-    }
-    let {consumeCount} = this.props.layout;
-    if (count > consumeCount) {
-      consumeCount = count;
-    }
+  handleChangeEpisodesMinWidth = (newWidth: string) => {
     this.props.onChange(this.props.index, {
       ...this.props.layout,
-      consumeCount,
-      maxItemsAcross: count,
+      minimumItemWidth: Math.max(Number(newWidth) || 0, 100),
     });
   };
 
@@ -141,17 +153,40 @@ export default class LayoutChoice extends React.PureComponent {
     });
   };
 
+  handleSchemaChange = (field: string, newValue: any) => {
+    const {index, layout, onChange} = this.props;
+    const {func} = itemLayoutsMetadata[layout.elementLayout.tag];
+    onChange(index, {
+      ...layout,
+      elementLayout: func({
+        ...layout.elementLayout.tagOptions,
+        [field]: newValue,
+      }),
+    });
+  };
+
   render() {
     const {canDelete, consumeBudget, isFirst, isLast, layout} = this.props;
+    const {schema = {}} = itemLayoutsMetadata[layout.elementLayout.tag];
     return (
       <StackedSection>
         <Label text="Layout type">
-          <Select
-            onChange={this.handleChangeLayoutType}
-            options={layoutTypeOptions}
-            style={{display: 'inline-flex'}}
-            value={layout.type}
-          />
+          <Group spacing={16}>
+            <Select
+              onChange={this.handleChangeLayoutType}
+              options={layoutTypeOptions}
+              style={{display: 'inline-flex'}}
+              value={layout.type}
+            />
+            <Select
+              onChange={this.handleChangeLayoutPreset}
+              options={Object.entries(itemLayoutsMetadata)
+                .filter(([key]) => key.startsWith(`${layout.type}.`))
+                .map(([key, {name}]) => ({label: name, key}))}
+              style={{display: 'inline-flex'}}
+              value={layout.elementLayout.tag}
+            />
+          </Group>
         </Label>
         <Label text="Number of episodes to show">
           <TextInput
@@ -165,7 +200,7 @@ export default class LayoutChoice extends React.PureComponent {
         {layout.type === 'grid' && (
           <Group spacing={16}>
             <Label
-              subText="The spacing between episodes"
+              subText="The size of the margin between each episode"
               text="Grid item spacing"
             >
               <TextInput
@@ -176,82 +211,103 @@ export default class LayoutChoice extends React.PureComponent {
               />
             </Label>
             <Label
-              subText="The most episodes per row on a large screen"
-              text="Max episodes per row"
+              subText="The minimum width of an episode on any screen size"
+              text="Minimum item width"
             >
               <TextInput
-                onChange={this.handleChangeEpisodesAcross}
-                style={{display: 'inline-flex', width: 120}}
-                suffix="episodes"
-                value={String(layout.maxItemsAcross || 1)}
+                onChange={this.handleChangeEpisodesMinWidth}
+                style={{display: 'inline-flex', width: 90}}
+                suffix="px"
+                value={String(layout.minimumItemWidth || 250)}
               />
             </Label>
           </Group>
         )}
-        <Toggler>
-          {({open, toggle}) => (
-            <React.Fragment>
-              <MenuWrapper>
-                <Button onClick={toggle} style={{marginRight: 'auto'}}>
-                  {open ? 'Hide options' : 'Show options'}
+        <MenuWrapper>
+          <ButtonGroup wrapperStyle={{marginRight: 'auto'}}>
+            <Button onClick={this.handleToggleContainer}>
+              {this.state.containerOptionOpen
+                ? 'Hide container options'
+                : 'Show container options'}
+            </Button>
+            {Object.keys(schema).length > 0 && (
+              <Button onClick={this.handleToggleEpisode}>
+                {this.state.episodeOptionOpen
+                  ? 'Hide episode options'
+                  : 'Show episode options'}
+              </Button>
+            )}
+          </ButtonGroup>
+          {(!isFirst || !isLast || canDelete) && (
+            <ButtonGroup>
+              {!isFirst && (
+                <Button
+                  className="ModuleCard--ToolButton"
+                  onClick={this.handleMoveUp}
+                  style={buttonStyle}
+                >
+                  <Up />
                 </Button>
-                {(!isFirst || !isLast || canDelete) && (
-                  <ButtonGroup>
-                    {!isFirst && (
-                      <Button
-                        className="ModuleCard--ToolButton"
-                        onClick={this.handleMoveUp}
-                        style={buttonStyle}
-                      >
-                        <Up />
-                      </Button>
-                    )}
-                    {!isLast && (
-                      <Button
-                        className="ModuleCard--ToolButton"
-                        onClick={this.handleMoveDown}
-                        style={buttonStyle}
-                      >
-                        <Down />
-                      </Button>
-                    )}
-                    {canDelete && (
-                      <Button onClick={this.handleDelete} style={buttonStyle}>
-                        <Delete style={{transform: 'translateX(-0.5px)'}} />
-                      </Button>
-                    )}
-                  </ButtonGroup>
-                )}
-              </MenuWrapper>
-              <Collapser open={open}>
-                <Label $oneLine style={{marginTop: 12}} text="Body width">
-                  <Select
-                    onChange={this.handleWidthChange}
-                    options={widthOptions}
-                    value={layout.width || 'default'}
-                  />
-                </Label>
-                <Label $oneLine text="Body alignment">
-                  <Select
-                    onChange={this.handleAlignmentChange}
-                    options={alignmentOptions}
-                    value={layout.alignment || 'center'}
-                  />
-                </Label>
-                <ElementColorSelector
-                  onChange={this.handleBGChange}
-                  type="background"
-                  value={layout.bgColor || ''}
-                />
-                <ElementColorSelector
-                  onChange={this.handleFGChange}
-                  type="foreground"
-                  value={layout.fgColor || ''}
-                />
-              </Collapser>
-            </React.Fragment>
+              )}
+              {!isLast && (
+                <Button
+                  className="ModuleCard--ToolButton"
+                  onClick={this.handleMoveDown}
+                  style={buttonStyle}
+                >
+                  <Down />
+                </Button>
+              )}
+              {canDelete && (
+                <Button onClick={this.handleDelete} style={buttonStyle}>
+                  <Delete style={{transform: 'translateX(-0.5px)'}} />
+                </Button>
+              )}
+            </ButtonGroup>
           )}
-        </Toggler>
+        </MenuWrapper>
+        <Collapser open={this.state.containerOptionOpen}>
+          <Label $oneLine style={{marginTop: 12}} text="Container inner size">
+            <Select
+              onChange={this.handleWidthChange}
+              options={widthOptions}
+              value={layout.width || 'default'}
+            />
+          </Label>
+          <Label $oneLine text="Container alignment">
+            <Select
+              onChange={this.handleAlignmentChange}
+              options={alignmentOptions}
+              value={layout.alignment || 'center'}
+            />
+          </Label>
+          <ElementColorSelector
+            onChange={this.handleBGChange}
+            type="background"
+            value={layout.bgColor || ''}
+          />
+          <ElementColorSelector
+            onChange={this.handleFGChange}
+            type="foreground"
+            value={layout.fgColor || ''}
+          />
+        </Collapser>
+        <Collapser
+          open={this.state.episodeOptionOpen}
+          paddingTop={12}
+          shave={4}
+        >
+          {Object.entries(schema).map(([key, schema]) => (
+            <SchemaField
+              field={key}
+              key={key}
+              onUpdate={this.handleSchemaChange}
+              open={this.state.episodeOptionOpen}
+              schema={schema as primitives.ComponentLayoutOption}
+              tagOptions={layout.elementLayout.tagOptions}
+            />
+          ))}
+        </Collapser>
       </StackedSection>
     );
   }

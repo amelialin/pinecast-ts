@@ -1,28 +1,31 @@
 import * as React from 'react';
 
 import Label from '@pinecast/common/Label';
-import Select from '@pinecast/common/Select';
+import NumberInput from '@pinecast/common/NumberInput';
 
-import {EnumProps} from './types';
+import {NumberProps} from './types';
 
-export default class SchemaEnum extends React.PureComponent {
-  props: EnumProps;
+export default class SchemaNumber extends React.PureComponent {
+  props: NumberProps;
 
-  handleChange = (newValue: string) => {
-    if (this.props.type !== 'enum') {
+  handleChange = (newValue: number) => {
+    if (this.props.type !== 'number') {
       throw new Error('unreachable');
     }
     this.props.onChange(this.props.field, newValue);
   };
   render() {
-    if (this.props.type !== 'enum') {
+    if (this.props.type !== 'number') {
       throw new Error('unreachable');
     }
     return (
       <Label text={this.props.name}>
-        <Select
+        <NumberInput
+          canBeNegative={this.props.canBeNegative}
+          max={this.props.max}
+          min={this.props.min}
           onChange={this.handleChange}
-          options={this.props.options}
+          suffix={this.props.suffix}
           style={{display: 'inline-flex'}}
           tabIndex={this.props.open ? 0 : -1}
           value={this.props.value}

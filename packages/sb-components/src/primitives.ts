@@ -10,24 +10,41 @@ export interface ComponentLayout {
   tagOptions: {[optionName: string]: any};
 }
 
-export interface ComponentLayoutOption {
+type BaseComponentLayoutOption = {
   name: string;
   type:
     | 'text'
     | 'longText'
-    | 'enum'
-    | 'orderedSet'
     | 'bool'
-    | 'css'
-    | 'rootComponents.fixedWidth';
+    | 'rootComponents.fixedWidth'
+    | 'padding'
+    | 'color';
+};
+type EnumComponentLayoutOption = {
+  name: string;
+  type: 'enum';
+  options: Array<{label: string; key: string | number}>;
+  values: {[key: string]: any};
+};
+type OrderedSetComponentLayoutOption = {
+  name: string;
+  type: 'orderedSet';
+  options: Array<{label: string; key: string}>;
+};
+type NumberComponentLayoutOption = {
+  name: string;
+  max?: number;
+  min?: number;
+  type: 'number';
+  canBeNegative: boolean;
+  suffix?: string;
+};
 
-  // Used for 'enum' and 'set'
-  options?: Array<{name: string; key?: string; value: any}>;
-
-  // Used for 'css'
-  allowedStyles?: Array<string>; // ['fontSize']
-  allowedPseudoselectors?: Array<string>; // [':hover', '@media(mobile)']
-}
+export type ComponentLayoutOption =
+  | BaseComponentLayoutOption
+  | EnumComponentLayoutOption
+  | OrderedSetComponentLayoutOption
+  | NumberComponentLayoutOption;
 
 export interface PageLayout {
   header: Array<ComponentLayout>;
@@ -121,8 +138,8 @@ export interface ElementLayout {
   styles?: CSS;
 
   // For use by the editor to store extra information about trees of elements
-  tag?: string;
-  tagMetadata?: any;
+  tag: string;
+  tagOptions: any;
 }
 export interface LayoutConfig {
   type: string;
@@ -132,7 +149,7 @@ export interface LayoutConfig {
   bgColor?: string;
   fgColor?: string;
   itemSpacing?: number;
-  maxItemsAcross?: number;
+  minimumItemWidth?: number;
 
   width: 'full' | 'default';
 }

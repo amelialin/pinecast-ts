@@ -167,18 +167,10 @@ export default {
         type: 'enum',
 
         options: [
-          {
-            label: 'Copyright',
-            value: ['podcast', 'copyright'],
-            key: 'copyright',
-          },
-          {
-            label: 'Description',
-            value: ['podcast', 'description'],
-            key: 'description',
-          },
-          {label: 'Podcast name', value: ['podcast', 'name'], key: 'name'},
-          {label: 'Subtitle', value: ['podcast', 'subtitle'], key: 'subtitle'},
+          {label: 'Copyright', key: 'copyright'},
+          {label: 'Description', key: 'description'},
+          {label: 'Podcast name', key: 'name'},
+          {label: 'Subtitle', key: 'subtitle'},
         ],
       },
       ...fixedWidthTemplate,

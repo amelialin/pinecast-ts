@@ -1,6 +1,6 @@
 export default ({
   position = 'center top',
-  source = 'coverart',
+  // source = 'coverart',
   textStyleType = 'heroItem',
 } = {}) => ({
   elements: [
@@ -68,4 +68,11 @@ export default ({
     },
   ],
   tagName: 'article',
+
+  tag: 'stacked.heroFullWidth',
+  tagOptions: {
+    position,
+    // source,
+    textStyleType,
+  },
 });

@@ -95,4 +95,7 @@ export default () => ({
   styles: {
     padding: '30px 0 50px',
   },
+
+  tag: 'stacked.noImage',
+  tagOptions: {},
 });

@@ -119,5 +119,14 @@ export default ({
     elements: ordering.map(x => results[x]),
     tagName: 'article',
     styles: style,
+
+    tag: 'stacked.fullWidthImageCenter',
+    tagOptions: {
+      imageHeight,
+      maxLinesOfSummary,
+      ordering,
+      style,
+      textStyleType,
+    },
   };
 };

@@ -9,7 +9,7 @@ export type Unit = '%' | 'px';
 const Row = styled('div', {
   alignItems: 'center',
   display: 'flex',
-  justifyContent: 'center',
+  justifyContent: 'left',
 });
 const Col = styled('div', {
   display: 'flex',
@@ -235,4 +235,8 @@ export function formatPadding(
     bottom,
     unit,
   )} ${unitify(left, unit)}`;
+}
+
+export function getPaddingUnit(value: string): 'px' | '%' {
+  return value.includes('%') ? '%' : 'px';
 }

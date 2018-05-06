@@ -84,6 +84,8 @@ export function prepareStyle(
         return acc;
       }
 
+      // FIXME: This should account for when `style[cur]` is an array.
+
       if (cur[0] === ':' || cur[0] === '@') {
         const restyled = prepareStyle(style[cur], ctx);
         if (cur === '@mobile') {
@@ -111,7 +113,7 @@ export function prepareStyle(
           break;
         case 'backgroundImage':
           if (ctx.resources && String(style[cur]) in ctx.resources) {
-            acc[cur] = `url(${ctx.resources[style[cur] || '']})`;
+            acc[cur] = `url(${ctx.resources[String(style[cur]) || '']})`;
           } else {
             acc[cur] = style[cur] != null ? String(style[cur]) : undefined;
           }
@@ -154,7 +156,7 @@ export function prepareStyle(
       color?: string;
       backgroundImage?: string;
       fontFamily?: string;
-      fontSize?: number | string;
+      fontSize?: number | string | Array<string | number | undefined>;
       [key: string]: any;
     },
   );

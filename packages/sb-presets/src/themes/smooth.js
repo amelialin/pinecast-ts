@@ -168,7 +168,7 @@ export default {
             consumeCount: 8,
 
             itemSpacing: 40,
-            maxItemsAcross: 10,
+            minimumItemWidth: 120,
 
             alignment: 'center',
 

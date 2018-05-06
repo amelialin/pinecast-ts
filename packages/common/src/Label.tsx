@@ -57,6 +57,7 @@ function renderError(error: JSX.Element | string | null): JSX.Element | null {
 
 const nativeLabelStyles: CSS = {
   display: 'block',
+  flex: '1 1',
   fontSize: 14,
   marginBottom: 20,
 };

@@ -5,6 +5,7 @@ export default class Collapser extends React.Component {
   props: {
     children: any;
     open: boolean;
+    paddingTop?: number;
     shave?: number;
   };
   outerEl: HTMLElement | null = null;
@@ -12,6 +13,7 @@ export default class Collapser extends React.Component {
   ro: ResizeObserver | null = null;
 
   static defaultProps = {
+    paddingTop: 0,
     shave: 8,
   };
 
@@ -57,7 +59,7 @@ export default class Collapser extends React.Component {
               : 0,
           margin: '0 -4px',
           overflowY: 'hidden',
-          padding: '0 4px',
+          padding: `${this.props.paddingTop}px 4px 0`,
           transition: 'height 0.2s',
         }}
       >

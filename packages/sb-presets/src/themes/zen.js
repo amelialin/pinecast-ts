@@ -64,10 +64,7 @@ export default {
         content: 'text',
         elementOptions: {
           bgColor: 'accent',
-        },
-        style: {
-          padding: '200px 150px',
-          '@mobile': {padding: '100px 5%'},
+          innerPadding: '15% 8%',
         },
       }),
       subheaderSubscribeLinks(),
@@ -101,7 +98,7 @@ export default {
 
             alignment: 'center',
             itemSpacing: 30,
-            maxItemsAcross: 3,
+            minimumItemWidth: 250,
 
             elementLayout: gridItem({}),
           },

@@ -3,6 +3,7 @@ import * as React from 'react';
 import Label from '@pinecast/common/Label';
 import PaddingInput, {
   formatPadding,
+  getPaddingUnit,
   parsePadding,
   StructuredValue as Padding,
 } from '@pinecast/common/PaddingInput';
@@ -14,6 +15,9 @@ export default class SchemaFixedWidth extends React.PureComponent {
   props: SchemaProps;
 
   handleElementOptionsChange(newEO: Object) {
+    if (this.props.type !== 'rootComponents.fixedWidth') {
+      throw new Error('unreachable');
+    }
     this.props.onChange(this.props.field, {...this.props.value, ...newEO});
   }
 
@@ -23,18 +27,32 @@ export default class SchemaFixedWidth extends React.PureComponent {
   handleFGChange = (newFG: string) => {
     this.handleElementOptionsChange({fgColor: newFG || undefined});
   };
+
+  getPaddingUnit(field: 'innerPadding' | 'outerPadding'): 'px' | '%' {
+    const value = this.props.value as {[key: string]: any};
+    return getPaddingUnit(value[field] || '0 0');
+  }
   handleInnerPaddingChange = (innerPadding: Padding) => {
     this.handleElementOptionsChange({
-      innerPadding: formatPadding(innerPadding),
+      innerPadding: formatPadding(
+        innerPadding,
+        this.getPaddingUnit('innerPadding'),
+      ),
     });
   };
   handleOuterPaddingChange = (outerPadding: Padding) => {
     this.handleElementOptionsChange({
-      outerPadding: formatPadding(outerPadding),
+      outerPadding: formatPadding(
+        outerPadding,
+        this.getPaddingUnit('outerPadding'),
+      ),
     });
   };
   render() {
-    const {open, value = {}} = this.props;
+    if (this.props.type !== 'rootComponents.fixedWidth') {
+      throw new Error('unreachable');
+    }
+    const {open, value = {} as {[key: string]: any}} = this.props;
     return (
       <React.Fragment>
         <ElementColorSelector
@@ -51,6 +69,7 @@ export default class SchemaFixedWidth extends React.PureComponent {
           <PaddingInput
             onChange={this.handleOuterPaddingChange}
             tabIndex={open ? 0 : -1}
+            unit={this.getPaddingUnit('outerPadding')}
             value={parsePadding(value.outerPadding)}
           />
         </Label>
@@ -58,6 +77,7 @@ export default class SchemaFixedWidth extends React.PureComponent {
           <PaddingInput
             onChange={this.handleInnerPaddingChange}
             tabIndex={open ? 0 : -1}
+            unit={this.getPaddingUnit('innerPadding')}
             value={parsePadding(value.innerPadding)}
           />
         </Label>

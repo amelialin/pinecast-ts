@@ -17,6 +17,7 @@ import KeyboardShortcut from './examples/KeyboardShortcut.example';
 import Label from './examples/Label.example';
 import Link from './examples/Link.example';
 import LoadingState from './examples/LoadingState.example';
+import NumberInput from './examples/NumberInput.example';
 import PaddingInput from './examples/PaddingInput.example';
 import ProBadge from './examples/ProBadge.example';
 import Progress from './examples/Progress.example';
@@ -67,6 +68,7 @@ export default {
   Label,
   Link,
   LoadingState,
+  NumberInput,
   PaddingInput,
   ProBadge,
   Progress,

@@ -5,11 +5,10 @@ import ContextMenu from '@pinecast/common/ContextMenu';
 import IconButton from '@pinecast/common/IconButton';
 import DeleteIcon from '@pinecast/common/icons/Delete';
 import Label from '@pinecast/common/Label';
-import {Omit} from '@pinecast/common/types';
 import styled from '@pinecast/styles';
 import {suppose} from '@pinecast/common/helpers';
 
-import {SchemaProps} from './types';
+import {OrderedSetProps} from './types';
 
 const ELEMENT_HEIGHT = 32;
 const BUFFER_SIZE = ELEMENT_HEIGHT / 2;
@@ -26,8 +25,8 @@ function getContainerHeight(count: number, isDragging: boolean): number {
     (isDragging ? ELEMENT_HEIGHT / 2 : 0) +
     // One pixel for the border between each item
     (Math.max(1, count) - 1) +
-    // 4px padding at the top and bottom; border + padding
-    8
+    // 6px padding at the top and bottom; border + padding
+    6
   );
 }
 
@@ -128,10 +127,7 @@ const Buffer = styled('aside', ({$open}: {$open: boolean}) => ({
 }));
 
 export default class SchemaOrderedSet extends React.PureComponent {
-  props: Omit<SchemaProps, 'value'> & {
-    options: Array<{label: string; value: any; key: string}>;
-    value: Array<string>;
-  };
+  props: OrderedSetProps;
   state: {
     currentY: number;
     dragging: number | null;
@@ -161,6 +157,9 @@ export default class SchemaOrderedSet extends React.PureComponent {
   }
 
   handleMouseMove = (e: MouseEvent) => {
+    if (this.props.type !== 'orderedSet') {
+      throw new Error('unreachable');
+    }
     const {dragging} = this.state;
     if (dragging === null) {
       return;
@@ -182,6 +181,9 @@ export default class SchemaOrderedSet extends React.PureComponent {
     this.setState({currentY: e.pageY, overBuffer});
   };
   handleMouseUp = () => {
+    if (this.props.type !== 'orderedSet') {
+      throw new Error('unreachable');
+    }
     document.body.removeEventListener('mousemove', this.handleMouseMove);
 
     const {field, onChange, value} = this.props;
@@ -204,6 +206,9 @@ export default class SchemaOrderedSet extends React.PureComponent {
   };
 
   mouseDown(startY: number, index: number) {
+    if (this.props.type !== 'orderedSet') {
+      throw new Error('unreachable');
+    }
     if (this.props.value.length === 1) {
       return;
     }
@@ -212,6 +217,9 @@ export default class SchemaOrderedSet extends React.PureComponent {
     document.body.addEventListener('mousemove', this.handleMouseMove);
   }
   deleteItem(index: number) {
+    if (this.props.type !== 'orderedSet') {
+      throw new Error('unreachable');
+    }
     const {field, onChange, value} = this.props;
     const newValue = value.slice(0);
     newValue.splice(index, 1);
@@ -235,6 +243,10 @@ export default class SchemaOrderedSet extends React.PureComponent {
         return -1 * elemPositionStart - BUFFER_SIZE;
       }
     }
+
+    if (this.props.type !== 'orderedSet') {
+      throw new Error('unreachable');
+    }
     if (dragging === this.props.value.length - 1) {
       if (rawOffset > 0) {
         return 0;
@@ -254,6 +266,9 @@ export default class SchemaOrderedSet extends React.PureComponent {
 
   renderElement = (element: string, index: number) => {
     const {dragging, overBuffer} = this.state;
+    if (this.props.type !== 'orderedSet') {
+      throw new Error('unreachable');
+    }
     return (
       <React.Fragment key={element}>
         <Buffer $open={overBuffer === index} />
@@ -290,6 +305,9 @@ export default class SchemaOrderedSet extends React.PureComponent {
   handleOpenMenu = (e: React.MouseEvent<any>) =>
     this.setState({menuOpen: true, menuX: e.pageX, menuY: e.pageY});
   handleMenuSelect = (selectedOption: string) => {
+    if (this.props.type !== 'orderedSet') {
+      throw new Error('unreachable');
+    }
     this.props.onChange(
       this.props.field,
       this.props.value.concat([selectedOption]),
@@ -297,9 +315,11 @@ export default class SchemaOrderedSet extends React.PureComponent {
   };
 
   renderFooter() {
-    const remaining = this.props.options.filter(
-      x => !this.props.value.includes(x.key),
-    );
+    if (this.props.type !== 'orderedSet') {
+      throw new Error('unreachable');
+    }
+    const {value} = this.props;
+    const remaining = this.props.options.filter(x => !value.includes(x.key));
     if (!remaining.length) {
       return null;
     }
@@ -324,7 +344,10 @@ export default class SchemaOrderedSet extends React.PureComponent {
   }
 
   render() {
-    const value: Array<string> = this.props.value || [];
+    if (this.props.type !== 'orderedSet') {
+      throw new Error('unreachable');
+    }
+    const value = this.props.value;
     const {overBuffer} = this.state;
     return (
       <Label componentType="div" style={labelStyle} text={this.props.name}>

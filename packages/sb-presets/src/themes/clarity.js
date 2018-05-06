@@ -78,6 +78,7 @@ export default {
       color: 'accent',
       fontSize: 30,
       fontWeight: 400,
+      lineHeight: 36,
     },
     itemSubtitle: {
       color: 'secondaryAccent',

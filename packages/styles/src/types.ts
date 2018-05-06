@@ -5,7 +5,11 @@ export type Omit<T, K extends keyof T> = T extends any
   : never;
 
 export type MappedCSSProperties = {
-  [k in keyof React.CSSProperties]?: React.CSSProperties[k] | string | number
+  [k in keyof React.CSSProperties]?:
+    | React.CSSProperties[k]
+    | Array<React.CSSProperties[k]>
+    | string
+    | number
 };
 
 export type CSSProperties = MappedCSSProperties & {

@@ -29,18 +29,19 @@ export default getsContext(
         style={{
           ...alignment(config.alignment || 'center'),
           backgroundColor: config.fgColor,
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
+          display: 'grid',
+          gridAutoRows: 'auto',
+          gridTemplateColumns: `repeat(auto-fill, minmax(${config.minimumItemWidth ||
+            250}px, 1fr))`,
           maxWidth: config.width === 'full' ? '100%' : 'var(--fixedWidthMax)',
         }}
       >
         {renderN(config.consumeCount, itemSource, (item: T, i: number) => {
           return childRenderer(i, item, {
             display: 'flex',
-            flex: '1 1',
-            marginBottom: config.itemSpacing || 0,
-            width: `calc(var(--fixedWidthMax) / ${config.maxItemsAcross})`,
+            justifyContent: 'center',
+            margin: `0 auto ${config.itemSpacing || 0}`,
+            minWidth: config.minimumItemWidth || 250,
             paddingLeft: (config.itemSpacing || 0) / 2,
             paddingRight: (config.itemSpacing || 0) / 2,
           });
