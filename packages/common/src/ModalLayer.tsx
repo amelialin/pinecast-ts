@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-import Layer, {ClosableLayer} from './Layer';
+import Layer, {CloseableLayer} from './Layer';
 
 const Wash = styled('div', {
   alignItems: 'center',
@@ -61,7 +61,9 @@ export default class ModalLayer extends React.Component {
       </Wash>
     );
     if (this.props.canEscape) {
-      return <ClosableLayer onClose={this.handleClose}>{inner}</ClosableLayer>;
+      return (
+        <CloseableLayer onClose={this.handleClose}>{inner}</CloseableLayer>
+      );
     }
     return <Layer>{inner}</Layer>;
   }

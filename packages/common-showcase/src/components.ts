@@ -15,10 +15,12 @@ import IconButton from './examples/IconButton.example';
 import ImageUpload from './examples/ImageUpload.example';
 import KeyboardShortcut from './examples/KeyboardShortcut.example';
 import Label from './examples/Label.example';
+import Layer from './examples/Layer.example';
 import Link from './examples/Link.example';
 import LoadingState from './examples/LoadingState.example';
 import NumberInput from './examples/NumberInput.example';
 import PaddingInput from './examples/PaddingInput.example';
+import Positioner from './examples/Positioner.example';
 import ProBadge from './examples/ProBadge.example';
 import Progress from './examples/Progress.example';
 import Radio from './examples/Radio.example';
@@ -34,6 +36,7 @@ import Tag from './examples/Tag.example';
 import Text from './examples/Text.example';
 import TextArea from './examples/TextArea.example';
 import TextInput from './examples/TextInput.example';
+import TooltipContainer from './examples/TooltipContainer.example';
 
 export interface Component {
   name: string;
@@ -66,10 +69,12 @@ export default {
   ImageUpload,
   KeyboardShortcut,
   Label,
+  Layer,
   Link,
   LoadingState,
   NumberInput,
   PaddingInput,
+  Positioner,
   ProBadge,
   Progress,
   Radio,
@@ -85,6 +90,7 @@ export default {
   Text,
   TextArea,
   TextInput,
+  TooltipContainer,
 } as {
   [component: string]: Component;
 };

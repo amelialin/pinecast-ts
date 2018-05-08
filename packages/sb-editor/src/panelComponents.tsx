@@ -126,17 +126,16 @@ export class PageSelector extends React.PureComponent {
     return (
       <PageSelectorWrapper className="pageSelector-root">
         <PageSelection onClick={this.handleClick}>
-          {(options.find(x => x.value === selected) || {name: null}).name}
+          <ContextMenu
+            onClose={this.handleClose}
+            onSelect={onChange}
+            open={open}
+            options={options.map(x => ({name: x.name, slug: x.value}))}
+            toSelect={selected}
+          >
+            {(options.find(x => x.value === selected) || {name: null}).name}
+          </ContextMenu>
         </PageSelection>
-        <ContextMenu
-          onClose={this.handleClose}
-          onSelect={onChange}
-          open={open}
-          options={options.map(x => ({name: x.name, slug: x.value}))}
-          toSelect={selected}
-          x={12}
-          y={100}
-        />
       </PageSelectorWrapper>
     );
   }

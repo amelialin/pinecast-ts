@@ -25,8 +25,8 @@ function getContainerHeight(count: number, isDragging: boolean): number {
     (isDragging ? ELEMENT_HEIGHT / 2 : 0) +
     // One pixel for the border between each item
     (Math.max(1, count) - 1) +
-    // 6px padding at the top and bottom; border + padding
-    6
+    // 8px padding at the top and bottom; border + padding
+    8
   );
 }
 
@@ -132,15 +132,11 @@ export default class SchemaOrderedSet extends React.PureComponent {
     currentY: number;
     dragging: number | null;
     menuOpen: boolean;
-    menuX: number;
-    menuY: number;
     overBuffer: number | null;
   } = {
     currentY: 0,
     dragging: null,
     menuOpen: false,
-    menuX: 0,
-    menuY: 0,
     overBuffer: null,
   };
 
@@ -302,8 +298,7 @@ export default class SchemaOrderedSet extends React.PureComponent {
   };
 
   handleCloseMenu = () => this.setState({menuOpen: false});
-  handleOpenMenu = (e: React.MouseEvent<any>) =>
-    this.setState({menuOpen: true, menuX: e.pageX, menuY: e.pageY});
+  handleOpenMenu = () => this.setState({menuOpen: true});
   handleMenuSelect = (selectedOption: string) => {
     if (this.props.type !== 'orderedSet') {
       throw new Error('unreachable');
@@ -325,9 +320,6 @@ export default class SchemaOrderedSet extends React.PureComponent {
     }
     return (
       <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-        <Button size="small" onMouseDown={this.handleOpenMenu}>
-          Add an item
-        </Button>
         <ContextMenu
           onClose={this.handleCloseMenu}
           onSelect={this.handleMenuSelect}
@@ -336,9 +328,11 @@ export default class SchemaOrderedSet extends React.PureComponent {
             slug: o.key,
             name: o.label,
           }))}
-          x={this.state.menuX}
-          y={this.state.menuY}
-        />
+        >
+          <Button size="small" onClick={this.handleOpenMenu}>
+            Add an item
+          </Button>
+        </ContextMenu>
       </div>
     );
   }

@@ -41,7 +41,7 @@ export default class Layer extends React.PureComponent {
   }
 }
 
-export class ClosableLayer extends Layer {
+export class CloseableLayer extends Layer {
   props: {onClose: () => void} & Props;
 
   escListener = (e: KeyboardEvent) => {

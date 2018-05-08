@@ -40,7 +40,7 @@ export default getsContext(
           return childRenderer(i, item, {
             display: 'flex',
             justifyContent: 'center',
-            margin: `0 auto ${config.itemSpacing || 0}`,
+            margin: `0 0 ${config.itemSpacing || 0}px`,
             minWidth: config.minimumItemWidth || 250,
             paddingLeft: (config.itemSpacing || 0) / 2,
             paddingRight: (config.itemSpacing || 0) / 2,

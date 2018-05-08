@@ -2,40 +2,34 @@ import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/styles';
 
-import {ClosableLayer} from './Layer';
+import {Children} from './types';
+import {CloseableLayer} from './Layer';
 import {DEFAULT_FONT} from './constants';
-
-const SIZE_BUFFER = 32;
+import Positioner from './Positioner';
 
 const MenuWrapper = styled(
   'menu',
   ({
     'aria-hidden': ariaHidden,
-    $alignX,
-    $alignY,
-    $height,
-    $width,
+    $xAlign,
+    $yAlign,
   }: {
     'aria-hidden': boolean;
-    $alignX: 'leftEdge' | 'rightEdge';
-    $alignY: 'topEdge' | 'bottomEdge';
-    $height: number;
-    $width: number;
+    $xAlign: 'left' | 'right';
+    $yAlign: 'top' | 'bottom';
   }) => ({
     background: '#fff',
     borderRadius: 2,
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.125)',
     display: 'flex',
     flexDirection: 'column',
-    marginTop: $alignY === 'bottomEdge' ? -1 * $height : 0,
-    marginLeft: $alignX === 'rightEdge' ? -1 * $width : 0,
-    marginBottom: 0,
+    margin: 0,
     minWidth: 200,
     opacity: ariaHidden ? 0 : 1,
     padding: '4px 0',
     pointerEvents: ariaHidden ? 'none' : 'auto',
     transform: ariaHidden ? 'scale(0.9)' : 'scale(1)',
-    transformOrigin: '20% top',
+    transformOrigin: `${$xAlign === 'left' ? '20%' : '80%'} ${$yAlign}`,
     transition: 'opacity 0.2s, transform 0.2s',
     zIndex: 11,
   }),
@@ -65,19 +59,15 @@ export type MenuOption = {
 
 export default class ContextMenu extends React.PureComponent {
   props: {
+    children: Children;
     options: Array<MenuOption>;
     open: boolean;
     onSelect: (slug: string) => void;
     onClose: () => void;
     toSelect?: string;
-    x: number;
-    y: number;
+    xOffset?: number;
   };
-  state: {
-    alignX: 'leftEdge' | 'rightEdge';
-    alignY: 'topEdge' | 'bottomEdge';
-    selectionIndex: number;
-  } = {alignX: 'leftEdge', alignY: 'topEdge', selectionIndex: 0};
+  state: {selectionIndex: number} = {selectionIndex: 0};
 
   wrapper: HTMLElement | null = null;
 
@@ -98,14 +88,13 @@ export default class ContextMenu extends React.PureComponent {
       this.setState({
         selectionIndex: found === -1 ? 0 : found,
       });
-      this.reposition();
     }
   }
 
   handleRef = (el: HTMLElement | null) => {
     this.wrapper = el;
     if (el) {
-      this.reposition();
+      this.forceUpdate();
     }
   };
 
@@ -139,31 +128,12 @@ export default class ContextMenu extends React.PureComponent {
     }
   };
 
-  handleOutsideClick = (e: MouseEvent) => {
+  handleOutsideClick = () => {
     if (!this.props.open) {
       return;
     }
     this.props.onClose();
   };
-
-  reposition() {
-    if (!this.wrapper) {
-      return;
-    }
-    const {clientHeight: height, clientWidth: width} = this.wrapper;
-    const {x, y} = this.props;
-
-    this.setState({
-      alignX:
-        x + width >= document.body.clientWidth - SIZE_BUFFER
-          ? 'rightEdge'
-          : 'leftEdge',
-      alignY:
-        y + height >= document.body.clientHeight - SIZE_BUFFER
-          ? 'bottomEdge'
-          : 'topEdge',
-    });
-  }
 
   renderOption = ({name, slug}: MenuOption, i: number) => {
     return (
@@ -172,6 +142,7 @@ export default class ContextMenu extends React.PureComponent {
         key={slug}
         onClick={e => {
           e.preventDefault();
+          e.stopPropagation();
           this.props.onSelect(slug);
           this.props.onClose();
         }}
@@ -186,22 +157,37 @@ export default class ContextMenu extends React.PureComponent {
   };
 
   render() {
-    const {onClose, open, options, x, y} = this.props;
-    const {alignX, alignY} = this.state;
+    const {children, onClose, open, options, xOffset} = this.props;
     return (
-      <ClosableLayer onClose={onClose} pointerEvents={open} x={x} y={y}>
-        <div ref={this.handleRef} style={{pointerEvents: 'none'}}>
-          <MenuWrapper
-            aria-hidden={!open}
-            $alignX={alignX}
-            $alignY={alignY}
-            $height={this.wrapper ? this.wrapper.clientHeight : 0}
-            $width={this.wrapper ? this.wrapper.clientWidth : 0}
-          >
-            {options.map(this.renderOption)}
-          </MenuWrapper>
-        </div>
-      </ClosableLayer>
+      <Positioner
+        content={<React.Fragment>{children}</React.Fragment>}
+        maxHeight={this.wrapper ? this.wrapper.clientHeight : 0}
+        maxWidth={this.wrapper ? this.wrapper.clientWidth : 0}
+        xOffset={xOffset}
+        yOffset={8}
+      >
+        {({x, xAlign, y, yAlign}) => (
+          <CloseableLayer onClose={onClose} pointerEvents={open} x={x} y={y}>
+            <div
+              ref={this.handleRef}
+              style={{
+                left: 0,
+                pointerEvents: 'none',
+                position: 'absolute',
+                top: yAlign === 'top' ? 0 : -16,
+              }}
+            >
+              <MenuWrapper
+                aria-hidden={!open}
+                $xAlign={xAlign}
+                $yAlign={yAlign}
+              >
+                {options.map(this.renderOption)}
+              </MenuWrapper>
+            </div>
+          </CloseableLayer>
+        )}
+      </Positioner>
     );
   }
 }
