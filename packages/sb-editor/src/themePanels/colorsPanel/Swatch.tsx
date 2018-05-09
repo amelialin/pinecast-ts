@@ -8,6 +8,7 @@ import SwatchChiclet from './SwatchChiclet';
 const Button = styled(
   'button',
   {
+    alignItems: 'stretch',
     background: '#fff',
     border: 0,
     borderRadius: 3,

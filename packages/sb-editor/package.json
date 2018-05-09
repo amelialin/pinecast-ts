@@ -23,7 +23,6 @@
     "@types/redux-thunk": "^2.1.0",
     "@types/sanitize-html": "^1.14.0",
     "@types/showdown": "^1.7.3",
-    "rc-tooltip": "^3.7.0",
     "react-color": "^2.14.0",
     "react-list": "^0.8.8",
     "react-mde": "^2.3.3",

@@ -28,12 +28,28 @@ export default class Layer extends React.PureComponent {
     document.body.appendChild(portal);
   }
   componentWillReceiveProps(newProps: Props) {
-    this.portal.style.pointerEvents = newProps.pointerEvents ? 'auto' : 'none';
-    this.portal.style.left = newProps.x ? `${newProps.x}px` : '0';
-    this.portal.style.top = newProps.y ? `${newProps.y}px` : '0';
+    const updated = {
+      pointerEvents: newProps.pointerEvents ? 'auto' : 'none',
+      left: newProps.x ? `${newProps.x}px` : '0',
+      top: newProps.y ? `${newProps.y}px` : '0',
+    };
+    const portalStyle = this.portal.style;
+    if (
+      updated.pointerEvents === portalStyle.pointerEvents &&
+      updated.left === portalStyle.left &&
+      updated.top === portalStyle.top
+    ) {
+      return;
+    }
+
+    Object.assign(portalStyle, updated);
   }
   componentWillUnmount() {
     document.body.removeChild(this.portal);
+  }
+
+  shouldComponentUpdate(newProps: Props) {
+    return newProps.children !== this.props.children;
   }
 
   render() {

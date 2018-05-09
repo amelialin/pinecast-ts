@@ -1,11 +1,9 @@
 import * as React from 'react';
-import Tooltip from 'rc-tooltip';
 
 import styled from '@pinecast/styles';
+import TooltipContainer from '@pinecast/common/TooltipContainer';
 
 import colorKeyNames from '../../shared/colorNames';
-
-import './rc-tooltip.css';
 
 const Chiclet = styled('div', ({$color}: {$color: string}) => ({
   background: $color,
@@ -20,16 +18,17 @@ const SwatchChiclet = ({
   color: string;
   colorKey: string;
 }) => (
-  <Tooltip
-    placement="bottom"
-    overlay={
+  <TooltipContainer
+    positionerStyle={{width: '100%'}}
+    style={{alignItems: 'stretch', flex: '1 1'}}
+    tooltipContent={
       <span>
         {(colorKeyNames as {[color: string]: string | undefined})[colorKey]}
       </span>
     }
   >
     <Chiclet $color={color} />
-  </Tooltip>
+  </TooltipContainer>
 );
 
 export default SwatchChiclet;

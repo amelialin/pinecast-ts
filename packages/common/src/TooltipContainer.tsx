@@ -7,7 +7,7 @@ import Card from './Card';
 import {Children} from './types';
 import {Info} from './icons';
 import Layer from './Layer';
-import Positioner from './Positioner';
+import Positioner, {XAlign, YAlign} from './Positioner';
 
 type Size = 'normal' | 'large';
 
@@ -64,7 +64,9 @@ export default class TooltipContainer extends React.Component {
   props: {
     active?: boolean;
     children?: Children;
+    positionerStyle?: React.CSSProperties;
     size?: Size;
+    style?: React.CSSProperties;
     tooltipContent: Children;
     xOffset?: number;
   };
@@ -106,55 +108,69 @@ export default class TooltipContainer extends React.Component {
     }
   };
 
+  positionerInner = ({
+    x,
+    xAlign,
+    y,
+    yAlign,
+  }: {
+    x: number;
+    xAlign: XAlign;
+    y: number;
+    yAlign: YAlign;
+  }) => (
+    <Layer pointerEvents={false} x={x} y={y}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: xAlign === 'left' ? 'flex-start' : 'flex-end',
+          width: maxWidths[this.props.size || 'normal'],
+        }}
+        ref={this.handleInnerRef}
+      >
+        <TooltipWrapper
+          $active={this.state.hovering && this.props.active}
+          $size={this.props.size || 'normal'}
+          $xAlign={xAlign}
+          $yAlign={yAlign}
+        >
+          <Card
+            style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              borderRadius: 3,
+              marginBottom: 0,
+              padding: '4px 8px',
+              zIndex: 2,
+              [`border${yAlign === 'top' ? 'Top' : 'Bottom'}${
+                xAlign === 'left' ? 'Left' : 'Right'
+              }Radius`]: 0,
+            }}
+          >
+            {this.props.tooltipContent}
+          </Card>
+        </TooltipWrapper>
+      </div>
+    </Layer>
+  );
+
   render() {
-    const {size = 'normal', xOffset} = this.props;
+    const {active, positionerStyle, style, xOffset} = this.props;
     return (
       <span
         className="TooltipContainer--wrapper"
         onMouseEnter={this.handleEnter}
         onMouseLeave={this.handleLeave}
-        style={{display: 'inline-flex'}}
+        style={{display: 'inline-flex', ...style}}
       >
         <Positioner
+          active={active}
           content={<React.Fragment>{this.props.children}</React.Fragment>}
           maxHeight={this.state.height}
-          maxWidth={maxWidths[size]}
+          maxWidth={maxWidths[this.props.size || 'normal']}
+          style={positionerStyle}
           xOffset={xOffset}
         >
-          {({x, xAlign, y, yAlign}) => (
-            <Layer pointerEvents={false} x={x} y={y}>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: xAlign === 'left' ? 'flex-start' : 'flex-end',
-                  width: maxWidths[size],
-                }}
-                ref={this.handleInnerRef}
-              >
-                <TooltipWrapper
-                  $active={this.state.hovering && this.props.active}
-                  $size={size}
-                  $xAlign={xAlign}
-                  $yAlign={yAlign}
-                >
-                  <Card
-                    style={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                      borderRadius: 3,
-                      marginBottom: 0,
-                      padding: '4px 8px',
-                      zIndex: 2,
-                      [`border${yAlign === 'top' ? 'Top' : 'Bottom'}${
-                        xAlign === 'left' ? 'Left' : 'Right'
-                      }Radius`]: 0,
-                    }}
-                  >
-                    {this.props.tooltipContent}
-                  </Card>
-                </TooltipWrapper>
-              </div>
-            </Layer>
-          )}
+          {this.positionerInner}
         </Positioner>
       </span>
     );

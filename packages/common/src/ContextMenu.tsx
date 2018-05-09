@@ -164,7 +164,7 @@ export default class ContextMenu extends React.PureComponent {
         maxHeight={this.wrapper ? this.wrapper.clientHeight : 0}
         maxWidth={this.wrapper ? this.wrapper.clientWidth : 0}
         xOffset={xOffset}
-        yOffset={8}
+        yOffset={4}
       >
         {({x, xAlign, y, yAlign}) => (
           <CloseableLayer onClose={onClose} pointerEvents={open} x={x} y={y}>
@@ -174,7 +174,6 @@ export default class ContextMenu extends React.PureComponent {
                 left: 0,
                 pointerEvents: 'none',
                 position: 'absolute',
-                top: yAlign === 'top' ? 0 : -16,
               }}
             >
               <MenuWrapper

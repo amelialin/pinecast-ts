@@ -13,6 +13,7 @@ declare var process: {env: {[key: string]: string}};
 export type HTMLProps = Omit<React.AllHTMLAttributes<any>, 'style'>;
 export type StyledProps = {
   className?: string;
+  onRef?: (el: HTMLElement | null) => void;
   style?: CSS;
 } & HTMLProps & {[key: string]: any};
 
@@ -57,7 +58,7 @@ function styled<T>(
     static displayName = `Styled(${elemType})`;
 
     render() {
-      const {className, style, ...ownProps} = this.props as StyledProps;
+      const {className, onRef, style, ...ownProps} = this.props as StyledProps;
       const styleResult = {};
       if (typeof props === 'function') {
         Object.assign(styleResult, props(ownProps as T), style);
@@ -83,6 +84,9 @@ function styled<T>(
         (ownProps as any).className = `${styletronClassNames} ${className}`;
       } else {
         (ownProps as any).className = styletronClassNames;
+      }
+      if (onRef) {
+        (ownProps as any).ref = onRef;
       }
       return React.createElement(elemType, ownProps);
     }

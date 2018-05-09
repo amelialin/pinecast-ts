@@ -1,16 +1,20 @@
 import * as React from 'react';
 
-type XAlign = 'left' | 'right';
-type YAlign = 'top' | 'bottom';
+import {debounce, shallowCompare} from './helpers';
+
+export type XAlign = 'left' | 'right';
+export type YAlign = 'top' | 'bottom';
 
 export default class Positioner extends React.Component {
   props: {
+    active?: boolean;
     children: (
       p: {x: number; xAlign: XAlign; y: number; yAlign: YAlign},
     ) => JSX.Element;
     content?: JSX.Element;
     maxWidth: number;
     maxHeight: number;
+    prefer?: XAlign;
     style?: React.CSSProperties;
     xOffset?: number;
     yOffset?: number;
@@ -23,31 +27,47 @@ export default class Positioner extends React.Component {
   } = {x: 0, xAlign: 'left', y: 0, yAlign: 'top'};
   ref: HTMLDivElement | null = null;
 
+  static defaultProps = {
+    active: true,
+    prefer: 'left',
+  };
+
   componentWillReceiveProps(newProps: Positioner['props']) {
     if (
-      newProps.xOffset !== this.props.xOffset ||
-      newProps.maxWidth !== this.props.maxWidth ||
-      newProps.maxHeight !== this.props.maxHeight
+      (newProps.prefer !== this.props.prefer ||
+        newProps.xOffset !== this.props.xOffset ||
+        newProps.maxWidth !== this.props.maxWidth ||
+        newProps.maxHeight !== this.props.maxHeight) &&
+      newProps.active
     ) {
       this.reposition();
     }
   }
 
+  shouldComponentUpdate(
+    nextProps: Positioner['props'],
+    nextState: Positioner['state'],
+  ) {
+    // We only update when we're active and
+    if (shallowCompare(this.state, nextState) && nextProps.active) {
+      return true;
+    }
+    return this.props.children !== nextProps.children;
+  }
+
+  scrollElementCache = new WeakSet<HTMLElement>();
   handleScroll = (e: Event) => {
-    if (!this.ref) {
+    if (!this.ref || !this.props.active) {
       return;
     }
-    const end = e.target;
-    let cursor: HTMLElement = this.ref;
-    while (cursor !== document.body) {
-      if (cursor === end) {
-        break;
-      }
-      cursor = cursor.parentNode as HTMLElement;
-    }
-    if (cursor === document.body) {
+    if (this.scrollElementCache.has(e.target as HTMLElement)) {
+      this.reposition();
       return;
     }
+    if (!(e.target as HTMLElement).contains(this.ref)) {
+      return;
+    }
+    this.scrollElementCache.add(e.target as HTMLElement);
     this.reposition();
   };
   handleResize = () => this.reposition();
@@ -67,39 +87,62 @@ export default class Positioner extends React.Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
-  reposition() {
+  reposition = debounce(() => {
     if (!this.ref) {
       return;
     }
+
     const {height, left, top, width} = this.ref.getClientRects()[0];
-    const {maxHeight, maxWidth} = this.props;
+    const {maxHeight, maxWidth, prefer = 'left'} = this.props;
+
+    const screenHeight = document.body.clientHeight;
+    const screenWidth = document.body.clientWidth;
 
     const baseXOffset = this.props.xOffset || 0;
     const baseYOffset = this.props.yOffset || 0;
-    const xOffset =
-      (left + maxWidth > document.body.clientWidth ? width - maxWidth : 0) +
-      baseXOffset;
-    const yOffset =
-      (top + maxHeight + height > document.body.clientHeight
-        ? -maxHeight
-        : height) + baseYOffset;
 
-    const state = {
-      x: left + xOffset,
-      xAlign: xOffset === baseXOffset ? 'left' : 'right',
-      y: top + yOffset,
-      yAlign: yOffset === height + baseYOffset ? 'top' : 'bottom',
-    };
+    const speculativeLeftXOffset = left + baseXOffset;
+    const speculativeRightXOffset = left + width - maxWidth - baseXOffset;
+
+    const leftIsValid = speculativeLeftXOffset + maxWidth < screenWidth;
+    const rightIsValid = speculativeRightXOffset < 0;
+
+    let x: number;
+    let xAlign: XAlign;
+
+    if (leftIsValid && prefer === 'left') {
+      x = speculativeLeftXOffset;
+      xAlign = 'left';
+    } else if (rightIsValid && prefer === 'right') {
+      x = speculativeRightXOffset;
+      xAlign = 'right';
+    } else if (leftIsValid) {
+      x = speculativeLeftXOffset;
+      xAlign = 'left';
+    } else {
+      x = speculativeRightXOffset;
+      xAlign = 'right';
+    }
+
+    const speculativeTopYOffset = top - maxHeight - baseYOffset;
+    const speculativeBottomYOffset = top + height + baseYOffset;
+
+    const bottomIsValid = speculativeBottomYOffset + maxHeight < screenHeight;
+
+    const y = bottomIsValid ? speculativeBottomYOffset : speculativeTopYOffset;
+    const yAlign = bottomIsValid ? 'top' : 'bottom';
+
+    const state = this.state;
     if (
-      state.x === this.state.x &&
-      state.y === this.state.y &&
-      state.xAlign === this.state.xAlign &&
-      state.yAlign === this.state.yAlign
+      x === state.x &&
+      y === state.y &&
+      xAlign === state.xAlign &&
+      yAlign === state.yAlign
     ) {
       return;
     }
-    this.setState(state);
-  }
+    this.setState({x, xAlign, y, yAlign});
+  }, 12);
 
   handleRef = (el: HTMLDivElement | null) => {
     this.ref = el;
