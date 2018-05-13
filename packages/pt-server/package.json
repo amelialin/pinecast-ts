@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build_prod": "../../node_modules/.bin/webpack --config=webpack.config.prod.js --progress",
+    "heroku-prebuild": "./preinstall.sh",
     "dev": "../../node_modules/.bin/webpack --config=webpack.config.js --progress --watch --colors --mode=development",
     "start": "nodemon build/index.js"
   },
