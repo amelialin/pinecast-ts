@@ -1,7 +1,7 @@
 cd ../..
 
 echo "npm i"
-npm i
+npm i --production
 echo "lerna bootstrap"
 ./node_modules/.bin/lerna bootstrap
 

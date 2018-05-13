@@ -16,6 +16,10 @@ module.exports = {
     'packages/db-upgrade/src/index.ts',
   ),
   '@pinecast/externals': path.resolve(__dirname, 'packages/externals/src/'),
+  '@pinecast/externals/node': path.resolve(
+    __dirname,
+    'packages/externals/src/node/',
+  ),
 
   '@pinecast/sb-components$': path.resolve(
     __dirname,

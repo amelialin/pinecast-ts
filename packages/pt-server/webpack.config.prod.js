@@ -33,5 +33,5 @@ module.exports = {
     ],
   },
   target: 'node',
-  externals: require('../../webpack.externals'),
+  // externals: require('../../webpack.externals'),
 };

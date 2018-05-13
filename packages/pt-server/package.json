@@ -5,21 +5,22 @@
     "build_prod": "../../node_modules/.bin/webpack --config=webpack.config.prod.js --progress",
     "heroku-postbuild": "./preinstall.sh",
     "dev": "../../node_modules/.bin/webpack --config=webpack.config.js --progress --watch --colors --mode=development",
-    "start": "nodemon build/index.js"
+    "start_dev": "nodemon build/index.js",
+    "start": "node build/index.js"
   },
   "main": "src/",
   "dependencies": {
     "@types/koa": "^2.0.44",
     "@types/koa-router": "^7.0.27",
     "@types/koa-websocket": "^2.1.2",
-    "@types/node": "^10.0.6",
     "babel-loader": "^7.1.4",
     "babel-preset-stage-3": "^6.24.1",
     "koa": "^2.5.0",
     "koa-router": "^7.4.0",
     "koa-websocket": "^4.1.0"
   },
-  "devDependencies": {
-    "nodemon": "^1.17.0"
-  }
+  "cacheDirectories": [
+    "node_modules",
+    "../../node_modules"
+  ]
 }
