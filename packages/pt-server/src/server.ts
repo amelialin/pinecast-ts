@@ -27,7 +27,9 @@ router.get('/', async (ctx, next) => {
 router.get('/test', async (ctx, next) => {
   ctx.body = `
   <script>
-  const ws = new WebSocket(\`ws://$\{location.host}/ws-test\`, 'pt-eng');
+  const ws = new WebSocket(\`$\{
+    location.protocol === 'https:' ? 'wss' : 'ws'
+  }://$\{location.host}/ws-test\`, 'pt-eng');
   ws.onmessage = event => {
     document.write(\`<p>$\{event.data}</p>\`);
   };
