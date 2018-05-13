@@ -23,7 +23,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: 'awesome-typescript-loader',
+        loader: 'ts-loader',
       },
       {
         test: /\.js$/,
@@ -33,9 +33,5 @@ module.exports = {
     ],
   },
   target: 'node',
-  node: {
-    Buffer: false,
-    setImmediate: false,
-    process: false,
-  },
+  externals: require('../../webpack.externals'),
 };

@@ -15,6 +15,7 @@ module.exports = {
     __dirname,
     'packages/db-upgrade/src/index.ts',
   ),
+  '@pinecast/externals': path.resolve(__dirname, 'packages/externals/src/'),
 
   '@pinecast/sb-components$': path.resolve(
     __dirname,
