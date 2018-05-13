@@ -21,6 +21,10 @@ module.exports = {
     'packages/externals/src/node/',
   ),
 
+  '@pinecast/pt-query$': path.resolve(
+    __dirname,
+    'packages/pt-query/src/index.ts',
+  ),
   '@pinecast/sb-components$': path.resolve(
     __dirname,
     'packages/sb-components/src/index.ts',

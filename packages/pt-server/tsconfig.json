@@ -5,14 +5,24 @@
     "baseUrl": ".",
     "checkJs": false,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["dom", "dom.iterable", "es5", "ES2015", "ES2016", "ES2017", "ES2018"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es5",
+      "ES2015",
+      "ES2016",
+      "ES2017",
+      "ES2018"
+    ],
     "module": "commonjs",
     "moduleResolution": "Node",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "outDir": "./dist/",
-    "paths": {},
+    "paths": {
+      "@pinecast/pt-query": ["../pt-query/src/index.ts"]
+    },
     "sourceMap": true,
     "strictNullChecks": true,
     "target": "es6",

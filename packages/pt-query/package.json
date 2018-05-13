@@ -1,0 +1,7 @@
+{
+  "name": "@pinecast/pt-query",
+  "version": "1.0.0",
+  "main": "src/",
+  "ts:main": "src/index.ts",
+  "dependencies": {}
+}

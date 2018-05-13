@@ -19,6 +19,7 @@
       "@pinecast/db-spotify": ["../db-spotify/src/index.ts"],
       "@pinecast/db-upgrade": ["../db-upgrade/src/index.ts"],
       "@pinecast/externals/*": ["../externals/src/*"],
+      "@pinecast/pt-query": ["../pt-query/src/index.ts"],
       "@pinecast/sb-components": ["../sb-components/src/index.ts"],
       "@pinecast/sb-editor": ["../sb-editor/src/index.ts"],
       "@pinecast/sb-presets": ["../sb-presets/src/index.js"],
