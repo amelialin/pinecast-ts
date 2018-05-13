@@ -1,6 +1,10 @@
-pushd ../..
+cd ../..
+
+echo "npm i"
 npm i
-lerna bootstrap
-popd
+echo "lerna bootstrap"
+./node_modules/.bin/lerna bootstrap
+
+cd packages/pt-server
 
 npm run build_prod
