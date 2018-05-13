@@ -62,7 +62,7 @@ app.use(async (ctx, next) => {
     if (!ctx.body) {
       console.error(`No matching routes for ${ctx.originalUrl}`);
       ctx.status = 404;
-      ctx.body = '404 Not Found';
+      ctx.body = 'Not Found';
     }
   } catch (e) {
     if (e instanceof NotFoundError) {

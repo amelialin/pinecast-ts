@@ -48,10 +48,6 @@ export default class Layer extends React.PureComponent {
     document.body.removeChild(this.portal);
   }
 
-  shouldComponentUpdate(newProps: Props) {
-    return newProps.children !== this.props.children;
-  }
-
   render() {
     return ReactDOM.createPortal(this.props.children, this.portal);
   }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/styles';
+import styled, {CSS} from '@pinecast/styles';
 
 const Link = styled('a', {
   color: '#4e7287',
@@ -14,6 +14,11 @@ const Link = styled('a', {
   ':hover:visited': {
     color: '#9eb4c0',
   },
-}) as React.ComponentType<{href: string; rel?: string; target?: '_blank'}>;
+}) as React.ComponentType<{
+  href: string;
+  rel?: string;
+  style?: CSS;
+  target?: '_blank';
+}>;
 
 export default Link;

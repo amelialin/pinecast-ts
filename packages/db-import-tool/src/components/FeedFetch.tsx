@@ -45,17 +45,35 @@ export default class FeedFetch extends React.PureComponent {
 
   submit = async () => {
     this.setState({error: null, fetching: true});
+    const {feedURL} = this.state;
+
+    if (!feedURL.startsWith('http://') && !feedURL.startsWith('https://')) {
+      this.setState({
+        error: 'Your feed URL must start with https:// or http://',
+        fetching: false,
+      });
+      return;
+    }
+    try {
+      new URL(feedURL);
+    } catch (e) {
+      this.setState({
+        error: "That URL doesn't look quite right.",
+        fetching: false,
+      });
+      return;
+    }
 
     let token: string;
     try {
       token = JSON.parse(await xhr('/dashboard/services/get_request_token'))
         .token;
     } catch (e) {
-      Rollbar.error('Problem getting import token from Pinecast', {error: e});
       this.setState({
         error: 'There was a problem contacting Pinecast.',
         fetching: false,
       });
+      Rollbar.error('Problem getting import token from Pinecast', {error: e});
       return;
     }
 
@@ -65,15 +83,15 @@ export default class FeedFetch extends React.PureComponent {
         await xhr(
           `${this.props.feedFetchURL}?token=${encodeURIComponent(
             token,
-          )}&url=${encodeURIComponent(this.state.feedURL)}`,
+          )}&url=${encodeURIComponent(feedURL)}`,
         ),
       ).content;
     } catch (e) {
-      Rollbar.error('Problem importing', {error: e});
       this.setState({
         error: 'There was a problem downloading your feed.',
         fetching: false,
       });
+      Rollbar.error('Problem importing', {error: e});
       return;
     }
 
@@ -100,11 +118,11 @@ export default class FeedFetch extends React.PureComponent {
         <Form onSubmit={this.handleSubmit}>
           <DashboardTitle>Where are we importing from?</DashboardTitle>
           <P>You can import from an RSS feed URL or an iTunes listing URL.</P>
-          <Label text="Feed URL or iTunes listing URL">
+          <Label error={this.state.error} text="Feed URL or iTunes listing URL">
             <TextInput
               autoFocus
               disabled={this.state.fetching}
-              invalid={this.state.requiresFeed}
+              invalid={this.state.requiresFeed || Boolean(this.state.error)}
               onChange={this.handleFeedURLChange}
               placeholder="https://wtfpod.libsyn.com/rss"
               required

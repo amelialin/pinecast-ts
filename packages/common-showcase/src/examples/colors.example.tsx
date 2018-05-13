@@ -103,6 +103,7 @@ export default {
           <Color color="#259461" />
           <Color color="#51D197" />
           <Color color="#8aeabf" />
+          <Color color="#d0f9e6" />
         </Card>
       ),
     },

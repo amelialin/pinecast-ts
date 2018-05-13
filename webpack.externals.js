@@ -10,8 +10,9 @@ module.exports = [
       case 'module':
         return callback(null, '{builtinModules:[]}');
 
-      case 'bluebird':
       case 'any-promise':
+      case 'bluebird':
+      case 'Promise':
         return callback(null, 'Promise');
       case 'function-bind':
         return callback(null, 'Function.prototype.bind');

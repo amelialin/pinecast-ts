@@ -120,6 +120,7 @@ const Suffix = styled(
 export interface Props {
   autoFocus?: boolean;
   disabled?: boolean;
+  endCapStyle?: CSS;
   inputStyle?: CSS;
   invalid?: boolean;
   maxLength?: number;
@@ -158,6 +159,7 @@ export default class TextInput extends React.PureComponent {
 
   render() {
     const {
+      endCapStyle,
       inputStyle,
       invalid,
       onChange,
@@ -179,6 +181,7 @@ export default class TextInput extends React.PureComponent {
             $disabled={rest.disabled || false}
             $invalid={invalid || false}
             $size={size || 'normal'}
+            style={endCapStyle}
           >
             {prefix}
           </Prefix>
@@ -196,6 +199,7 @@ export default class TextInput extends React.PureComponent {
             $disabled={rest.disabled || false}
             $invalid={invalid || false}
             $size={size || 'normal'}
+            style={endCapStyle}
           >
             {suffix}
           </Suffix>

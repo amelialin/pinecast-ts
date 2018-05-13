@@ -9,7 +9,7 @@ const StatusWrapper = styled('span', ({$type}: {$type?: string}) => ({
   alignItems: 'center',
   color:
     $type === 'positive'
-      ? '#259461'
+      ? '#000'
       : $type === 'negative' ? '#bf1d1d' : '#44484d',
   display: 'inline-flex',
   whiteSpace: 'nowrap',
@@ -145,7 +145,7 @@ export default class SlugInput extends React.PureComponent {
       case 'available':
         return (
           <StatusWrapper $type="positive">
-            <Check color="#259461" height={20} />
+            <Check color="#000" height={20} />
             Slug is available
           </StatusWrapper>
         );
@@ -164,6 +164,26 @@ export default class SlugInput extends React.PureComponent {
     return undefined;
   }
 
+  getEndCapStyle() {
+    switch (this.state.response) {
+      case 'available':
+        return {
+          backgroundColor: '#d0f9e6',
+          color: '#000',
+        };
+      case 'unavailable':
+        return {
+          backgroundColor: '#fedede',
+          color: '#bf1d1d',
+        };
+      case 'failed':
+      case 'loading':
+        return {};
+      default:
+        return undefined;
+    }
+  }
+
   render() {
     const {
       onChange,
@@ -180,6 +200,7 @@ export default class SlugInput extends React.PureComponent {
 
     return (
       <TextInput
+        endCapStyle={this.getEndCapStyle()}
         onChange={this.handleChange}
         value={this.state.tentativeSlug || value}
         {...rest}

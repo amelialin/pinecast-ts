@@ -124,10 +124,13 @@ export default class Positioner extends React.Component {
       xAlign = 'right';
     }
 
-    const speculativeTopYOffset = top - maxHeight - baseYOffset;
-    const speculativeBottomYOffset = top + height + baseYOffset;
+    const speculativeTopYOffset =
+      window.scrollY + top - maxHeight - baseYOffset;
+    const speculativeBottomYOffset =
+      window.scrollY + top + height + baseYOffset;
 
-    const bottomIsValid = speculativeBottomYOffset + maxHeight < screenHeight;
+    const bottomIsValid =
+      speculativeBottomYOffset - window.scrollY + maxHeight < screenHeight;
 
     const y = bottomIsValid ? speculativeBottomYOffset : speculativeTopYOffset;
     const yAlign = bottomIsValid ? 'top' : 'bottom';

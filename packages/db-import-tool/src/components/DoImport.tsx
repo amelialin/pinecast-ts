@@ -3,8 +3,9 @@ import * as React from 'react';
 import Callout from '@pinecast/common/Callout';
 import Card from '@pinecast/common/Card';
 import {DashboardTitle, P} from '@pinecast/common/Text';
-import Progress from '@pinecast/common/Progress';
+import Hr from '@pinecast/common/HorizontalRule';
 import styled from '@pinecast/styles';
+import TooltipContainer from '@pinecast/common/TooltipContainer';
 import xhr from '@pinecast/xhr';
 
 import {Feed} from '../types';
@@ -13,6 +14,11 @@ import {cardStyle} from './cardStyle';
 async function sleep(timeout: number): Promise<any> {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
+
+type pendingItem = {id: number; status: 'pending'};
+type failedItem = {id: number; status: 'failed'; failure_message: string};
+type completeItem = {id: number; status: 'complete'};
+type Item = pendingItem | failedItem | completeItem;
 
 const StatusWrap = styled('div', {
   fontWeight: 500,
@@ -23,27 +29,19 @@ const BulkProgressWrapper = styled('div', {
   flexWrap: 'wrap',
   marginBottom: -4,
 });
-const ItemStatus = styled(
-  'div',
-  ({$status}: {$status: 'pending' | 'complete' | 'failed'}) => ({
-    backgroundColor:
-      $status === 'pending'
-        ? '#d8e9f1'
-        : $status === 'complete' ? '#51d197' : '#ef6b6b',
-    borderRadius: 3,
-    display: 'block',
-    flex: '0 0 24px',
-    height: 24,
-    margin: '0 4px 4px 0',
-    transition: 'background-color 0.5s',
-    width: 24,
-  }),
-);
-
-type pendingItem = {id: number; status: 'pending'};
-type failedItem = {id: number; status: 'failed'; failedMessage: string};
-type completeItem = {id: number; status: 'complete'};
-type Item = pendingItem | failedItem | completeItem;
+const ItemStatus = styled('div', ({$status}: {$status: Item['status']}) => ({
+  backgroundColor:
+    $status === 'pending'
+      ? '#d8e9f1'
+      : $status === 'complete' ? '#51d197' : '#ef6b6b',
+  borderRadius: 3,
+  display: 'block',
+  flex: '0 0 24px',
+  height: 24,
+  margin: '0 4px 4px 0',
+  transition: 'background-color 0.5s',
+  width: 24,
+}));
 
 export default class DoImport extends React.Component {
   props: {feed: Feed; onComplete: () => void};
@@ -136,6 +134,21 @@ export default class DoImport extends React.Component {
     this.props.onComplete();
   }
 
+  renderStatusTip(item: Item) {
+    if (item.status === 'pending') {
+      return 'Pending';
+    }
+    if (item.status === 'failed') {
+      return (
+        <React.Fragment>
+          <b>Failed</b>
+          {item.failure_message}
+        </React.Fragment>
+      );
+    }
+    return 'Complete';
+  }
+
   renderProgress() {
     const {ids} = this.state;
     if (!ids) {
@@ -144,21 +157,15 @@ export default class DoImport extends React.Component {
     return (
       <React.Fragment>
         <StatusWrap>{`Importing ${ids.length} assets…`}</StatusWrap>
-        <Progress
-          percent={
-            ids.reduce(
-              (acc, cur) => (cur.status !== 'pending' ? acc + 1 : acc),
-              0,
-            ) /
-            ids.length *
-            100
-          }
-          style={{marginBottom: 4}}
-        />
         <BulkProgressWrapper>
-          {ids
-            .sort(({id: a}, {id: b}) => a - b)
-            .map(({id, status}) => <ItemStatus $status={status} key={id} />)}
+          {ids.sort(({id: a}, {id: b}) => a - b).map(item => (
+            <TooltipContainer
+              key={item.id}
+              tooltipContent={this.renderStatusTip(item)}
+            >
+              <ItemStatus $status={item.status} />
+            </TooltipContainer>
+          ))}
         </BulkProgressWrapper>
       </React.Fragment>
     );
@@ -184,9 +191,8 @@ export default class DoImport extends React.Component {
     return (
       <Card style={cardStyle} whiteBack>
         <DashboardTitle>Perfect, we've started the import.</DashboardTitle>
-        <P style={{marginBottom: 24}}>
-          It should take less than two minutes to import your podcast.
-        </P>
+        <P>It should take less than two minutes to import your podcast.</P>
+        <Hr style={{marginTop: -4}} />
         {this.renderProgress()}
       </Card>
     );

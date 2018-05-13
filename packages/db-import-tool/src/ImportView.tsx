@@ -30,7 +30,9 @@ export default class ImportView extends React.PureComponent {
     this.setState({feed, step: 'importing'});
   };
 
-  handleComplete = () => {};
+  handleComplete = () => {
+    this.setState({step: 'complete'});
+  };
 
   render() {
     if (!this.props.isPaid) {
