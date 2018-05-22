@@ -21,6 +21,7 @@ export default class Loader extends React.Component {
   props: {
     analyticsType: constants.AnalyticsType;
     analyticsView: constants.AnalyticsView;
+    loadEpisodes: boolean;
     children: (p: State) => JSX.Element;
     endpointOverride?: string;
     onError: (error: JSX.Element | string) => void;
@@ -39,12 +40,7 @@ export default class Loader extends React.Component {
   private abort: (() => void) | null = null;
 
   componentDidMount() {
-    this.load(
-      this.props.analyticsType,
-      this.props.analyticsView,
-      this.props.queryString,
-      this.props.endpointOverride,
-    );
+    this.load(this.props);
   }
   componentWillUnmount() {
     if (this.abort) {
@@ -59,21 +55,17 @@ export default class Loader extends React.Component {
       newProps.queryString !== this.props.queryString ||
       newProps.endpointOverride !== this.props.endpointOverride
     ) {
-      this.load(
-        newProps.analyticsType,
-        newProps.analyticsView,
-        newProps.queryString,
-        newProps.endpointOverride,
-      );
+      this.load(newProps);
     }
   }
 
-  async load(
-    type: constants.AnalyticsType,
-    view: constants.AnalyticsView,
-    queryString: string,
-    endpointOverride?: string,
-  ) {
+  async load({
+    endpointOverride,
+    loadEpisodes,
+    queryString,
+    analyticsType: type,
+    analyticsView: view,
+  }: Loader['props']) {
     if (this.abort) {
       this.abort();
       this.abort = null;
@@ -88,13 +80,15 @@ export default class Loader extends React.Component {
     this.setState({data: null, episodes: null, loading: true});
 
     // Kick off episodes loading in parallel
-    xhr({
-      url: `/analytics/services/get_episodes?${queryString}`,
-      method: 'GET',
-      abortPromise,
-    })
-      .then(resp => JSON.parse(resp))
-      .then(parsed => this.setState({episodes: parsed}), () => undefined);
+    if (loadEpisodes) {
+      xhr({
+        url: `/analytics/services/get_episodes?${queryString}`,
+        method: 'GET',
+        abortPromise,
+      })
+        .then(resp => JSON.parse(resp))
+        .then(parsed => this.setState({episodes: parsed}), () => undefined);
+    }
 
     let response;
     try {

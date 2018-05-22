@@ -33,7 +33,13 @@ export default class CityChart extends React.Component {
           chartType="GeoChart"
           data={[header, ...data.map(extractor)]}
           height="500px"
-          options={{height: '600px', width: null}}
+          options={{
+            sizeAxis: {colors: ['white', 'green']},
+            displayMode: 'markers',
+            height: '500px',
+            region: data[0].code, // Just a little hack
+            width: null,
+          }}
           width={null}
         />
       </React.Fragment>

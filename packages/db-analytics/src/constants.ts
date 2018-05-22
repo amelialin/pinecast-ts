@@ -257,7 +257,6 @@ export const TYPE_TIMEFRAMES: {[view: string]: Array<Timeframe>} = {
   [TYPE_GEO_SUBS]: ['day'] as Array<Timeframe>,
   [TYPE_GEO_GRAN_SUBS]: ['day'] as Array<Timeframe>,
   [TYPE_TOP_EPISODES]: ALL_TIMEFRAMES_WITHOUT_CUSTOM,
-  [TYPE_GROWTH]: ['all'] as Array<Timeframe>,
 };
 export const TYPE_GRANULARITIES: {
   [view: string]: Array<Granularity>;
@@ -265,6 +264,7 @@ export const TYPE_GRANULARITIES: {
   [TYPE_LISTENS]: DEFAULT_GRANULARITIES,
   [TYPE_BY_EPISODE]: DEFAULT_GRANULARITIES,
   [TYPE_BY_SOURCE]: DEFAULT_GRANULARITIES,
+  [TYPE_GROWTH]: ['monthly', 'weekly', 'daily'],
 };
 
 export const MENU_LABELS: {[view: string]: string} = {

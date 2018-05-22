@@ -74,6 +74,7 @@ export default class Menu extends React.Component {
             endpointOverride={constants.TYPES_ENDPOINTS_MENU[type][view](
               this.state.selection,
             )}
+            loadEpisodes={false}
             queryString={queryString}
             onError={this.handleError}
           >

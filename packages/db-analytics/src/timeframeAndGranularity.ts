@@ -4,7 +4,7 @@ import * as constants from './constants';
 
 export function hasGranularity(view: constants.AnalyticsView): boolean {
   const viewType = constants.TYPES_CHART_TYPES[view];
-  return viewType === 'timeseries';
+  return viewType === 'timeseries' || viewType === 'growth';
 }
 export function hasTimeframe(view: constants.AnalyticsView): boolean {
   const viewType = constants.TYPES_CHART_TYPES[view];

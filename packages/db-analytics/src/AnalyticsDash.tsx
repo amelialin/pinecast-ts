@@ -5,9 +5,9 @@ import ErrorState from '@pinecast/common/ErrorState';
 import Group from '@pinecast/common/Group';
 import LoadingState from '@pinecast/common/LoadingState';
 import ProBadge from '@pinecast/common/ProBadge';
+import {nullThrows, url} from '@pinecast/common/helpers';
 import styled from '@pinecast/styles';
 import Upsell from '@pinecast/common/Upsell';
-import {url} from '@pinecast/common/helpers';
 
 import * as constants from './constants';
 import GranularityPicker from './GranularityPicker';
@@ -64,24 +64,28 @@ export default class AnalyticsDash extends React.Component {
     this.state = {
       error: null,
       view: persist.get(
-        'dash.view',
+        `dash.${this.getType()}.view`,
         constants.TYPE_LISTENS,
       ) as constants.AnalyticsView,
       // These are just happy defaults because we know the default view is
       // always TYPE_LISTENS, above.
       granularity: persist.get(
-        'dash.granularity',
+        `dash.${this.getType()}.granularity`,
         'daily',
       ) as constants.Granularity,
-      timeframe: persist.get('dash.timeframe', 'month') as constants.Timeframe,
+      timeframe: persist.get(
+        `dash.${this.getType()}.timeframe`,
+        'month',
+      ) as constants.Timeframe,
     };
   }
 
   componentDidUpdate() {
+    const type = this.getType();
     const {granularity, timeframe, view} = this.state;
-    persist.set('dash.view', view);
-    persist.set('dash.granularity', granularity);
-    persist.set('dash.timeframe', timeframe);
+    persist.set(`dash.${type}.view`, view);
+    persist.set(`dash.${type}.granularity`, granularity);
+    persist.set(`dash.${type}.timeframe`, timeframe);
   }
 
   getType(): 'network' | 'episode' | 'podcast' {
@@ -96,16 +100,23 @@ export default class AnalyticsDash extends React.Component {
 
   getQueryString(): string {
     const type = this.getType();
-    const {granularity, timeframe, view} = this.state;
-    return (
-      url`${type}=${this.props[type] as string}` +
-      (timeframeAndGranularity.hasGranularity(view)
-        ? url`&interval=${granularity}`
-        : '') +
-      (timeframeAndGranularity.hasTimeframe(view)
-        ? url`&timeframe=${timeframe}`
-        : '')
-    );
+    const {view} = this.state;
+    const timeframe = timeframeAndGranularity.hasTimeframe(view)
+      ? url`&timeframe=${this.state.timeframe}`
+      : '';
+    const granularity = timeframeAndGranularity.hasGranularity(view)
+      ? url`&interval=${this.state.granularity}`
+      : '';
+    if (type === 'episode') {
+      return (
+        url`episode=${nullThrows(this.props.episode)}&podcast=${nullThrows(
+          this.props.podcast,
+        )}` +
+        granularity +
+        timeframe
+      );
+    }
+    return url`${type}=${this.props[type] as string}` + granularity + timeframe;
   }
 
   handleError = (error: string) => {
@@ -246,8 +257,12 @@ export default class AnalyticsDash extends React.Component {
 
     return (
       <Loader
-        analyticsType={this.getType()}
+        analyticsType={type}
         analyticsView={this.state.view}
+        loadEpisodes={
+          type !== 'episode' &&
+          constants.TYPES_CHART_TYPES[this.state.view] === 'timeseries'
+        }
         onError={this.handleError}
         queryString={this.getQueryString()}
       >

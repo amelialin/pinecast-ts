@@ -26,6 +26,9 @@ export type GranularGeographicData = Array<{
   lon: string;
   label: string;
   count: number;
+
+  // TODO: Remove this hack.
+  code?: string;
 }>;
 
 export type BreakdownData = Array<{label: string; value: number}>;

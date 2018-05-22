@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import Checkbox from '@pinecast/common/Checkbox';
 import Group from '@pinecast/common/Group';
-import {memoize} from '@pinecast/common/helpers';
 import Switch from '@pinecast/common/Switch';
 
 import AreaChartBody from './components/AreaChartBody';
@@ -153,7 +152,7 @@ export default class TimeSeriesChart extends React.Component {
     }
   };
 
-  getYRange = memoize((data: TimeSeriesData): [number, number] => {
+  getYRange = (data: TimeSeriesData): [number, number] => {
     const {activeSeries} = this.state;
     if (this.state.chartType === 'line') {
       return [
@@ -188,7 +187,7 @@ export default class TimeSeriesChart extends React.Component {
         ),
       ];
     }
-  });
+  };
 
   handleChartTypeChange = (newChecked: boolean) => {
     this.setState({chartType: newChecked ? 'area' : 'line'});
@@ -209,18 +208,20 @@ export default class TimeSeriesChart extends React.Component {
   };
 
   renderSubToolbar() {
-    const {data} = this.props;
+    const {data, episodes} = this.props;
     const {chartType, showEpisodes} = this.state;
 
     return (
       <SubToolbar>
         <Group spacing={16}>
-          <Checkbox
-            checked={showEpisodes}
-            onChange={this.handleChangeShowEpisodes}
-            style={{paddingBottom: 0}}
-            text="Episodes"
-          />
+          {Boolean(episodes) && (
+            <Checkbox
+              checked={showEpisodes}
+              onChange={this.handleChangeShowEpisodes}
+              style={{paddingBottom: 0}}
+              text="Episodes"
+            />
+          )}
           {this.canHaveAreaChart(data) && (
             <Switch
               activeColor="#708d9e"
