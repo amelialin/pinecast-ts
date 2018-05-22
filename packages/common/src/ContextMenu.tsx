@@ -21,15 +21,19 @@ const MenuWrapper = styled(
     background: '#fff',
     borderRadius: 2,
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.125)',
-    display: 'flex',
+    display: 'inline-flex',
     flexDirection: 'column',
     margin: 0,
+    maxHeight: 300,
     minWidth: 200,
     opacity: ariaHidden ? 0 : 1,
+    overflowY: 'auto',
     padding: '4px 0',
     pointerEvents: ariaHidden ? 'none' : 'auto',
     transform: ariaHidden ? 'scale(0.9)' : 'scale(1)',
-    transformOrigin: `${$xAlign === 'left' ? '20%' : '80%'} ${$yAlign}`,
+    transformOrigin: `${$xAlign === 'left' ? '20%' : '80%'} ${
+      $yAlign === 'top' ? 'bottom' : 'top'
+    }`,
     transition: 'opacity 0.2s, transform 0.2s',
     zIndex: 11,
   }),
@@ -43,18 +47,20 @@ const MenuOptionRow = styled(
     border: 0,
     borderRadius: 2,
     cursor: 'pointer',
+    flex: '0 0',
     fontFamily: DEFAULT_FONT,
     fontSize: 14,
     margin: '0 4px',
     padding: 8,
     textAlign: 'left',
+    whiteSpace: 'nowrap',
   }),
   {role: 'option'},
 );
 
 export type MenuOption = {
-  name: string;
-  slug: string;
+  name: JSX.Element | string;
+  slug: string | number;
 };
 
 export default class ContextMenu extends React.PureComponent {
@@ -62,9 +68,10 @@ export default class ContextMenu extends React.PureComponent {
     children: Children;
     options: Array<MenuOption>;
     open: boolean;
-    onSelect: (slug: string) => void;
+    onSelect: (slug: string | number) => void;
     onClose: () => void;
-    toSelect?: string;
+    toSelect?: string | number;
+    wrapperStyle?: React.CSSProperties;
     xOffset?: number;
   };
   state: {selectionIndex: number} = {selectionIndex: 0};
@@ -157,12 +164,20 @@ export default class ContextMenu extends React.PureComponent {
   };
 
   render() {
-    const {children, onClose, open, options, xOffset} = this.props;
+    const {
+      children,
+      onClose,
+      open,
+      options,
+      wrapperStyle,
+      xOffset,
+    } = this.props;
     return (
       <Positioner
         content={<React.Fragment>{children}</React.Fragment>}
         maxHeight={this.wrapper ? this.wrapper.clientHeight : 0}
         maxWidth={this.wrapper ? this.wrapper.clientWidth : 0}
+        style={wrapperStyle}
         xOffset={xOffset}
         yOffset={4}
       >

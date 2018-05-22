@@ -1,0 +1,16 @@
+{
+  "name": "@pinecast/db-analytics",
+  "version": "1.0.0",
+  "main": "src/",
+  "ts:main": "src/index.ts",
+  "dependencies": {
+    "@pinecast/i18n": "^1.0.0",
+    "@pinecast/styles": "^1.0.0",
+    "@types/csv-stringify": "^1.4.2",
+    "csv-stringify": "^3.0.0",
+    "react-dates": "^10.1.1",
+    "react-google-charts": "^1.2.1",
+    "react-simple-pie-chart": "^0.4.0",
+    "util": "^0.10.3"
+  }
+}

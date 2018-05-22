@@ -7,6 +7,7 @@ import {DEFAULT_FONT} from './constants';
 const WrapperLabel = styled(
   'label',
   {
+    alignItems: 'center',
     display: 'flex',
     padding: '0 0 20px',
 
@@ -45,7 +46,15 @@ const InvisibleCheckbox = styled(
 
 const Text = styled(
   'div',
-  ({$checked, $disabled}: {$checked: boolean; $disabled: boolean}) => ({
+  ({
+    $checked,
+    $disabled,
+    $onColor,
+  }: {
+    $checked: boolean;
+    $disabled: boolean;
+    $onColor: string;
+  }) => ({
     display: 'flex',
     fontFamily: DEFAULT_FONT,
     fontSize: 14,
@@ -57,7 +66,7 @@ const Text = styled(
     transition: 'opacity 0.2s',
 
     '::before': {
-      backgroundColor: $checked ? '#51D197' : '#dee1df',
+      backgroundColor: $checked ? $onColor : '#dee1df',
       borderRadius: 12,
       bottom: 0,
       boxShadow:
@@ -91,16 +100,27 @@ const Text = styled(
   {className: 'Switch--text'},
 );
 
+const OffText = styled('div', {
+  fontFamily: DEFAULT_FONT,
+  fontSize: 14,
+  fontWeight: 500,
+  marginRight: 8,
+});
+
 const Switch = ({
+  activeColor = '#51D197',
   checked,
   disabled,
+  offText,
   onChange,
   style,
   tabIndex,
   text,
 }: {
+  activeColor?: string;
   checked: boolean;
   disabled?: boolean;
+  offText?: JSX.Element | string;
   onChange: (checkedValue: boolean) => void;
   style?: React.CSSProperties;
   tabIndex?: number;
@@ -108,6 +128,7 @@ const Switch = ({
 }) => {
   return (
     <WrapperLabel style={style}>
+      {offText && <OffText>{offText}</OffText>}
       <InvisibleCheckbox
         checked={checked || false}
         disabled={disabled || false}
@@ -116,7 +137,11 @@ const Switch = ({
         }
         tabIndex={tabIndex}
       />
-      <Text $checked={checked || false} $disabled={disabled || false}>
+      <Text
+        $checked={checked || false}
+        $disabled={disabled || false}
+        $onColor={activeColor}
+      >
         {text}
       </Text>
     </WrapperLabel>

@@ -1,3 +1,5 @@
+import {nullThrows} from '@pinecast/common/helpers';
+
 import {Feed, FeedItem} from '../types';
 
 export class FormatError extends Error {}
@@ -110,12 +112,6 @@ function getItems(
   return {items, __ignored_items: ignored};
 }
 
-function nullThrows<T>(val: T | null): T {
-  if (val === null) {
-    throw new Error('unreachable');
-  }
-  return val;
-}
 function numberNotNan(val: string): number {
   const num = Number(val);
   return isNaN(num) ? 0 : num;

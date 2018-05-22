@@ -7,7 +7,7 @@ import styled, {CSS} from '@pinecast/styles';
 const IconChip = styled('div', {
   color: '#708d9e',
   flex: '0 0 50px',
-  paddingtop: 4,
+  paddingTop: 4,
 });
 
 const Detail = styled('div', {
@@ -49,13 +49,13 @@ const Feature = ({
 }) => (
   <Card style={cardStyles} whiteBack>
     {icon &&
-      !iconRight && <IconChip style={{marginRight: 32}}>{icon}</IconChip>}
+      !iconRight && <IconChip style={{marginRight: 28}}>{icon}</IconChip>}
     <Detail>
       <FeatureName>{title}</FeatureName>
       <FeatureDescription>{description}</FeatureDescription>
       {callToActionText && <Button href={link}>{callToActionText}</Button>}
     </Detail>
-    {icon && iconRight && <IconChip style={{marginLeft: 32}}>{icon}</IconChip>}
+    {icon && iconRight && <IconChip style={{marginLeft: 28}}>{icon}</IconChip>}
   </Card>
 );
 

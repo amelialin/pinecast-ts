@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from '@pinecast/styles';
+import styled, {CSS} from '@pinecast/styles';
 
 import Button from './Button';
 
@@ -19,20 +19,26 @@ const TitleWrapper = styled('div', {
 const TextWrapper = styled('div', {
   marginBottom: 16,
   marginTop: 8,
+
+  ':last-child': {
+    marginBottom: 0,
+  },
 });
 
 const EmptyState = ({
   actionLabel,
   copy,
   onAction,
+  style,
   title,
 }: {
   actionLabel?: JSX.Element | string;
   copy: JSX.Element | string;
   onAction?: () => void;
+  style?: CSS;
   title: JSX.Element | string;
 }) => (
-  <Wrapper>
+  <Wrapper style={style}>
     <TitleWrapper>{title}</TitleWrapper>
     {copy && <TextWrapper>{copy}</TextWrapper>}
     {actionLabel &&

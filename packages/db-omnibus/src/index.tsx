@@ -1,7 +1,9 @@
 import * as React from 'react';
 import {render} from 'react-dom';
 
+import AnalyticsDash from '@pinecast/db-analytics';
 import {ClientStyletron, StyletronProvider} from '@pinecast/styles';
+import {Provider as I18nProvider} from '@pinecast/i18n';
 import ImportTool from '@pinecast/db-import-tool';
 import Spotify from '@pinecast/db-spotify';
 import Upgrade from '@pinecast/db-upgrade';
@@ -14,6 +16,7 @@ type Mountable<T> = React.ComponentType<T> & {
 };
 
 const components: Array<Mountable<{[key: string]: any}>> = [
+  AnalyticsDash,
   ImportTool,
   Spotify,
   Upgrade,
@@ -26,18 +29,20 @@ components.forEach(component => {
   }
   Array.from(elements).forEach((elem: HTMLElement) => {
     render(
-      <StyletronProvider styletron={styletron}>
-        {React.createElement(
-          component,
-          Object.keys(component.propExtraction).reduce(
-            (acc, cur) => {
-              acc[cur] = component.propExtraction[cur](elem);
-              return acc;
-            },
-            {} as {[key: string]: any},
-          ),
-        )}
-      </StyletronProvider>,
+      <I18nProvider locale="en">
+        <StyletronProvider styletron={styletron}>
+          {React.createElement(
+            component,
+            Object.keys(component.propExtraction).reduce(
+              (acc, cur) => {
+                acc[cur] = component.propExtraction[cur](elem);
+                return acc;
+              },
+              {} as {[key: string]: any},
+            ),
+          )}
+        </StyletronProvider>
+      </I18nProvider>,
       elem,
     );
   });

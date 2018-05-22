@@ -3,6 +3,10 @@ const path = require('path');
 module.exports = {
   '@pinecast/common': path.resolve(__dirname, 'packages/common/src/'),
 
+  '@pinecast/db-analytics$': path.resolve(
+    __dirname,
+    'packages/db-analytics/src/index.ts',
+  ),
   '@pinecast/db-import-tool$': path.resolve(
     __dirname,
     'packages/db-import-tool/src/index.ts',
@@ -20,6 +24,8 @@ module.exports = {
     __dirname,
     'packages/externals/src/node/',
   ),
+
+  '@pinecast/i18n$': path.resolve(__dirname, 'packages/i18n/src/index.ts'),
 
   '@pinecast/pt-query$': path.resolve(
     __dirname,

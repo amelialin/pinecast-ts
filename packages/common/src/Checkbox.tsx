@@ -7,6 +7,7 @@ import {DEFAULT_FONT} from './constants';
 const WrapperLabel = styled(
   'label',
   {
+    alignItems: 'center',
     display: 'flex',
     padding: '0 0 20px',
 

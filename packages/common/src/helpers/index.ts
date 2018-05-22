@@ -25,6 +25,13 @@ export function memoize<T, U>(funcToMemoize: (arg: T) => U): (arg: T) => U {
   };
 }
 
+export function nullThrows<T>(val: T | null | undefined): T {
+  if (val == null) {
+    throw new Error('unreachable');
+  }
+  return val;
+}
+
 export function shallowCompare<T = {[key: string]: any}>(
   left: T,
   right: T,
@@ -47,4 +54,18 @@ export function suppose<T>(value: T | null | undefined): T {
     throw new Error('Value was supposed to never be null.');
   }
   return value;
+}
+
+export function url(
+  strings: TemplateStringsArray,
+  ...bits: Array<string | number>
+): string {
+  return strings
+    .map((s, i) => {
+      if (i) {
+        return encodeURIComponent(bits[i - 1].toString()) + s;
+      }
+      return s;
+    })
+    .join('');
 }

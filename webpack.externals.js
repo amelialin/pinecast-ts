@@ -6,7 +6,7 @@ module.exports = [
       case 'net':
         return callback(null, 'null');
       case 'tty':
-        return callback(null, '@pinecast/externals/node/tty');
+        return callback(null, '{isatty(){return false}}');
       case 'module':
         return callback(null, '{builtinModules:[]}');
 
@@ -14,19 +14,19 @@ module.exports = [
       case 'bluebird':
       case 'Promise':
         console.log(request);
-        return callback(null, '@pinecast/externals/Promise');
+        return callback(null, 'Promise');
       case 'function-bind':
-        return callback(null, '@pinecast/externals/FunctionBind');
+        return callback(null, 'Function.prototype.bind');
       case 'is-array':
       case 'isarray':
-        return callback(null, '@pinecast/externals/IsArray');
+        return callback(null, 'Array.isArray');
       case 'is-function':
-        return callback(null, '@pinecast/externals/IsFunction');
+        return callback(null, 'function(x) {return typeof x === "function";}');
       case 'object.assign':
       case 'object-assign':
-        return callback(null, '@pinecast/externals/ObjectAssign');
+        return callback(null, 'Object.assign');
       case 'object-keys':
-        return callback(null, '@pinecast/externals/ObjectKeys');
+        return callback(null, 'Object.keys');
       default:
         return callback();
     }

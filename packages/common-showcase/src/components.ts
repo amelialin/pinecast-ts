@@ -27,6 +27,7 @@ import Radio from './examples/Radio.example';
 import RadioList from './examples/RadioList.example';
 import Range from './examples/Range.example';
 import Select from './examples/Select.example';
+import SelectCustom from './examples/SelectCustom.example';
 import SlugInput from './examples/SlugInput.example';
 import Spinner from './examples/Spinner.example';
 import StickyHeader from './examples/StickyHeader.example';
@@ -81,6 +82,7 @@ export default {
   RadioList,
   Range,
   Select,
+  SelectCustom,
   SlugInput,
   Spinner,
   StickyHeader,

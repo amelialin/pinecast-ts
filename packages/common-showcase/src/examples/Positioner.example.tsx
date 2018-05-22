@@ -21,5 +21,19 @@ export default {
         </Positioner>
       ),
     },
+    {
+      title: 'Prefer',
+      render: () => (
+        <Positioner maxHeight={30} maxWidth={200} preferX="right" preferY="top">
+          {({x, y}) => (
+            <Layer x={x} y={y}>
+              <Card style={{height: 30, padding: 4, width: 200}} whiteBack>
+                Positioned content
+              </Card>
+            </Layer>
+          )}
+        </Positioner>
+      ),
+    },
   ],
 };

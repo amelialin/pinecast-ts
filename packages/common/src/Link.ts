@@ -9,10 +9,10 @@ const Link = styled('a', {
     color: '#708d9e',
   },
   ':visited': {
-    color: '#8aa3b1',
+    color: '#7f8486',
   },
   ':hover:visited': {
-    color: '#9eb4c0',
+    color: '#708d9e',
   },
 }) as React.ComponentType<{
   href: string;

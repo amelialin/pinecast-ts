@@ -14,7 +14,8 @@ export default class Positioner extends React.Component {
     content?: JSX.Element;
     maxWidth: number;
     maxHeight: number;
-    prefer?: XAlign;
+    preferX?: XAlign;
+    preferY?: YAlign;
     style?: React.CSSProperties;
     xOffset?: number;
     yOffset?: number;
@@ -34,7 +35,8 @@ export default class Positioner extends React.Component {
 
   componentWillReceiveProps(newProps: Positioner['props']) {
     if (
-      (newProps.prefer !== this.props.prefer ||
+      (newProps.preferX !== this.props.preferX ||
+        newProps.preferY !== this.props.preferY ||
         newProps.xOffset !== this.props.xOffset ||
         newProps.maxWidth !== this.props.maxWidth ||
         newProps.maxHeight !== this.props.maxHeight) &&
@@ -93,7 +95,12 @@ export default class Positioner extends React.Component {
     }
 
     const {height, left, top, width} = this.ref.getClientRects()[0];
-    const {maxHeight, maxWidth, prefer = 'left'} = this.props;
+    const {
+      maxHeight,
+      maxWidth,
+      preferX = 'left',
+      preferY = 'bottom',
+    } = this.props;
 
     const screenHeight = document.body.clientHeight;
     const screenWidth = document.body.clientWidth;
@@ -105,15 +112,15 @@ export default class Positioner extends React.Component {
     const speculativeRightXOffset = left + width - maxWidth - baseXOffset;
 
     const leftIsValid = speculativeLeftXOffset + maxWidth < screenWidth;
-    const rightIsValid = speculativeRightXOffset < 0;
+    const rightIsValid = speculativeRightXOffset > 0;
 
     let x: number;
     let xAlign: XAlign;
 
-    if (leftIsValid && prefer === 'left') {
+    if (leftIsValid && preferX === 'left') {
       x = speculativeLeftXOffset;
       xAlign = 'left';
-    } else if (rightIsValid && prefer === 'right') {
+    } else if (rightIsValid && preferX === 'right') {
       x = speculativeRightXOffset;
       xAlign = 'right';
     } else if (leftIsValid) {
@@ -131,9 +138,24 @@ export default class Positioner extends React.Component {
 
     const bottomIsValid =
       speculativeBottomYOffset - window.scrollY + maxHeight < screenHeight;
+    const topIsValid = speculativeTopYOffset > 0;
 
-    const y = bottomIsValid ? speculativeBottomYOffset : speculativeTopYOffset;
-    const yAlign = bottomIsValid ? 'top' : 'bottom';
+    let y: number;
+    let yAlign: YAlign;
+
+    if (bottomIsValid && preferY === 'bottom') {
+      y = speculativeBottomYOffset;
+      yAlign = 'bottom';
+    } else if (topIsValid && preferY === 'top') {
+      y = speculativeTopYOffset;
+      yAlign = 'top';
+    } else if (bottomIsValid) {
+      y = speculativeBottomYOffset;
+      yAlign = 'bottom';
+    } else {
+      y = speculativeTopYOffset;
+      yAlign = 'top';
+    }
 
     const state = this.state;
     if (

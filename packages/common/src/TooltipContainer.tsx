@@ -35,11 +35,11 @@ const TooltipWrapper = styled(
     opacity: $active ? 1 : 0,
     position: 'relative',
     transform: $active ? 'scale(1)' : 'scale(0.9)',
-    transformOrigin: `${$xAlign} ${$yAlign}`,
+    transformOrigin: `${$xAlign} ${$yAlign === 'top' ? 'bottom' : 'top'}`,
     transition: 'opacity 0.2s, transform 0.2s',
     zIndex: 3,
 
-    [$yAlign === 'top' ? 'paddingTop' : 'paddingBottom']: 8,
+    [$yAlign === 'bottom' ? 'paddingTop' : 'paddingBottom']: 8,
 
     '::after': {
       border: '0 solid rgba(0, 0, 0, 0.8)',
@@ -49,8 +49,8 @@ const TooltipWrapper = styled(
       zIndex: 2,
 
       [$xAlign === 'left' ? 'left' : 'right']: 0,
-      [$yAlign === 'top' ? 'top' : 'bottom']: 2,
-      [$yAlign === 'top'
+      [$yAlign === 'bottom' ? 'top' : 'bottom']: 2,
+      [$yAlign === 'bottom'
         ? 'borderBottom'
         : 'borderTop']: '6px solid rgba(0, 0, 0, 0.8)',
       [$xAlign === 'left'
@@ -65,6 +65,8 @@ export default class TooltipContainer extends React.Component {
     active?: boolean;
     children?: Children;
     positionerStyle?: React.CSSProperties;
+    preferX?: XAlign;
+    preferY?: YAlign;
     size?: Size;
     style?: React.CSSProperties;
     tooltipContent: Children;
@@ -141,7 +143,7 @@ export default class TooltipContainer extends React.Component {
               marginBottom: 0,
               padding: '4px 8px',
               zIndex: 2,
-              [`border${yAlign === 'top' ? 'Top' : 'Bottom'}${
+              [`border${yAlign === 'bottom' ? 'Top' : 'Bottom'}${
                 xAlign === 'left' ? 'Left' : 'Right'
               }Radius`]: 0,
             }}
@@ -154,7 +156,14 @@ export default class TooltipContainer extends React.Component {
   );
 
   render() {
-    const {active, positionerStyle, style, xOffset} = this.props;
+    const {
+      active,
+      positionerStyle,
+      preferX,
+      preferY,
+      style,
+      xOffset,
+    } = this.props;
     return (
       <span
         className="TooltipContainer--wrapper"
@@ -167,6 +176,8 @@ export default class TooltipContainer extends React.Component {
           content={<React.Fragment>{this.props.children}</React.Fragment>}
           maxHeight={this.state.height}
           maxWidth={maxWidths[this.props.size || 'normal']}
+          preferX={preferX}
+          preferY={preferY}
           style={positionerStyle}
           xOffset={xOffset}
         >

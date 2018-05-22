@@ -18,6 +18,37 @@ export default {
       ),
     },
     {
+      title: 'Off text',
+      render: () => (
+        <Toggler>
+          {({open, toggle}) => (
+            <Switch
+              checked={open}
+              offText="Disabled"
+              onChange={toggle}
+              text="Enabled"
+            />
+          )}
+        </Toggler>
+      ),
+    },
+    {
+      title: 'Active color',
+      render: () => (
+        <Toggler>
+          {({open, toggle}) => (
+            <Switch
+              activeColor="#8aa3b1"
+              checked={open}
+              offText="Line"
+              onChange={toggle}
+              text="Area"
+            />
+          )}
+        </Toggler>
+      ),
+    },
+    {
       title: 'Disabled on',
       render: () => (
         <Switch checked disabled onChange={() => {}} text="This is a switch." />

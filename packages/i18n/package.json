@@ -1,0 +1,10 @@
+{
+  "name": "@pinecast/i18n",
+  "version": "1.0.0",
+  "main": "src/",
+  "ts:main": "src/index.ts",
+  "dependencies": {
+    "@types/react-intl": "^2.3.8",
+    "react-intl": "^2.4.0"
+  }
+}

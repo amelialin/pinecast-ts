@@ -52,4 +52,7 @@ export interface CSS extends CSSProperties {
   '@media (mobile)'?: CSS;
   '@media (max-width: 900px)'?: CSS;
   '@media (max-width: 800px)'?: CSS;
+  '@media (max-width: 700px)'?: CSS;
+  '@media (max-width: 600px)'?: CSS;
+  '@media (max-width: 500px)'?: CSS;
 }

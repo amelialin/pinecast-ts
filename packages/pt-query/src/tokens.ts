@@ -12,6 +12,10 @@ export const TOKENS: Array<[RegExp, string | null]> = [
   [/^BY/i, 'by'],
   [/^BETWEEN/i, 'between'],
   [/^AND/i, 'and'],
+  [/^OR/i, 'or'],
+
+  [/^\(/, '('],
+  [/^\)/, ')'],
 
   // [/^IN/i, 'in'],
   // [/^NOT\s+IN/i, 'not in'],
@@ -39,15 +43,6 @@ export const TOKENS: Array<[RegExp, string | null]> = [
   // [/^\[:/, '[:'],
   // [/^\[/, '['],
   // [/^\]/, ']'],
-  // [/^\(/, '('],
-  // [/^\)/, ')'],
-
-  // // Bitwise operators
-  // [/^\|/, '|'],
-  // [/^&/, '&'],
-  // [/^\^/, '^'],
-  // [/^<</, '<<'],
-  // [/^>>/, '>>'],
 
   // [/^\+/, '+'],
   // [/^\-/, '-'],

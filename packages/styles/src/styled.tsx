@@ -13,7 +13,7 @@ declare var process: {env: {[key: string]: string}};
 export type HTMLProps = Omit<React.AllHTMLAttributes<any>, 'style'>;
 export type StyledProps = {
   className?: string;
-  onRef?: (el: HTMLElement | null) => void;
+  onRef?: (el: SVGElement | HTMLElement | null) => void;
   style?: CSS;
 } & HTMLProps & {[key: string]: any};
 
