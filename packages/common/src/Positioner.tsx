@@ -126,9 +126,12 @@ export default class Positioner extends React.Component {
     } else if (leftIsValid) {
       x = speculativeLeftXOffset;
       xAlign = 'left';
-    } else {
+    } else if (rightIsValid) {
       x = speculativeRightXOffset;
       xAlign = 'right';
+    } else {
+      x = speculativeLeftXOffset;
+      xAlign = 'left';
     }
 
     const speculativeTopYOffset =
@@ -152,9 +155,12 @@ export default class Positioner extends React.Component {
     } else if (bottomIsValid) {
       y = speculativeBottomYOffset;
       yAlign = 'bottom';
-    } else {
+    } else if (topIsValid) {
       y = speculativeTopYOffset;
       yAlign = 'top';
+    } else {
+      y = speculativeBottomYOffset;
+      yAlign = 'bottom';
     }
 
     const state = this.state;
