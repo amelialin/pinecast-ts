@@ -7,4 +7,10 @@ export default class RootQuery {
   constructor(sourceTable: string) {
     this.sourceTable = sourceTable;
   }
+
+  toString(): string {
+    return `FROM ${this.sourceTable} ${this.selectClauses
+      .map(s => s.toString())
+      .join(' ')}`;
+  }
 }

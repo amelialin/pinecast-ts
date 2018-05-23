@@ -10,14 +10,11 @@
     "@types/react-stripe-elements": "^1.1.2",
     "awesome-typescript-loader": "^5.0.0-1",
     "babel-loader": "^7.1.4",
-    "babel-minify-webpack-plugin": "^0.3.1",
     "babel-preset-stage-3": "^6.24.1",
     "css-loader": "^0.28.10",
     "lerna": "^2.9.0",
     "moment": "^2.21.0",
-    "nodemon": "^1.17.0",
     "numeral": "^2.0.6",
-    "prettier": "^1.11.1",
     "prop-types": "^15.6.1",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
@@ -29,8 +26,14 @@
     "webpack-cli": "^2.0.11"
   },
   "devDependencies": {
+    "@types/jest": "^22.2.3",
+    "babel-jest": "^22.4.4",
+    "babel-minify-webpack-plugin": "^0.3.1",
     "husky": "^0.14.3",
+    "jest": "^22.4.4",
     "lint-staged": "^7.0.0",
+    "nodemon": "^1.17.0",
+    "prettier": "^1.11.1",
     "webpack-dev-server": "^3.1.1"
   },
   "scripts": {
@@ -48,6 +51,19 @@
     "*.tsx": [
       "prettier --write",
       "git add"
+    ]
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/jest.preprocessor.js"
+    },
+    "testMatch": [
+      "**/*.test.(ts|tsx|js)"
     ]
   }
 }

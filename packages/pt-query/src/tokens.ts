@@ -19,13 +19,16 @@ export const TOKENS: Array<[RegExp, string | null]> = [
 
   // [/^IN/i, 'in'],
   // [/^NOT\s+IN/i, 'not in'],
-  [/^=/, '='],
+  [/^==?/, '='],
   [/^!=/, '!='],
 
-  [/^[a-zA-Z_][\w_]*/, 'identifier'],
+  [/^TRUE/i, 'true'],
+  [/^FALSE/i, 'false'],
 
-  // [/^"(?:\\(?:.|\r\n|\r|\n)|[^"\\\n])*"/i, 'str'],
-  // [/^'(?:\\(?:.|\r\n|\r|\n)|[^'\\\n])*'/i, 'str'],
+  [/^"(?:\\(?:.|\r\n|\r|\n)|[^"\\\n])*"/i, 'str'],
+  [/^'(?:\\(?:.|\r\n|\r|\n)|[^'\\\n])*'/i, 'str'],
+
+  [/^[a-zA-Z_][\w_]*/, 'identifier'],
   // [/^#[^\n\r]*/i, 'comment'],
   // // sfloat literals
   // [/^\-?[1-9][0-9]*\.[0-9]+s/, 'sfloat'],

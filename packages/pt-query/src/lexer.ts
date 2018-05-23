@@ -97,7 +97,7 @@ export default class Lexer {
   accept(tokenType: string): Token | 'EOF' | null {
     const peeked = this.peek();
     if (
-      (peeked === 'EOF' && tokenType === 'EOF') ||
+      (peeked === 'EOF' && tokenType !== 'EOF') ||
       (peeked !== 'EOF' && peeked.type !== tokenType)
     ) {
       return null;
