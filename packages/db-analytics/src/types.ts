@@ -31,7 +31,11 @@ export type GranularGeographicData = Array<{
   code?: string;
 }>;
 
-export type BreakdownData = Array<{label: string; value: number}>;
+export type BreakdownData = Array<{
+  label: string;
+  value: number;
+  isOther?: true;
+}>;
 
 export type MenuData = Array<{label: string; value: string}>;
 

@@ -261,7 +261,8 @@ export default class AnalyticsDash extends React.Component {
         analyticsView={this.state.view}
         loadEpisodes={
           type !== 'episode' &&
-          constants.TYPES_CHART_TYPES[this.state.view] === 'timeseries'
+          constants.TYPES_CHART_TYPES[this.state.view] === 'timeseries' &&
+          this.state.timeframe !== 'all'
         }
         onError={this.handleError}
         queryString={this.getQueryString()}
