@@ -14,6 +14,7 @@ import LineChartAxes from './components/LineChartAxes';
 import LineChartBody from './components/LineChartBody';
 import * as persist from '../persist';
 import SubToolbar from './components/SubToolbar';
+import TimeSeriesTooltips from './components/TimeSeriesTooltips';
 
 export default class TimeSeriesChart extends React.Component {
   props: {
@@ -119,6 +120,13 @@ export default class TimeSeriesChart extends React.Component {
           width={width}
         />
       ) : null;
+    const tooltips = (
+      <TimeSeriesTooltips
+        data={this.props.data}
+        height={height}
+        xRange={xRange}
+      />
+    );
 
     const {activeSeries, chartType, hovering} = this.state;
     if (chartType === 'line') {
@@ -131,6 +139,7 @@ export default class TimeSeriesChart extends React.Component {
             xRange={xRange}
             yRange={yRange}
           />
+          {tooltips}
           {overlay}
         </React.Fragment>
       );
@@ -146,6 +155,7 @@ export default class TimeSeriesChart extends React.Component {
             xRange={xRange}
             yRange={yRange}
           />
+          {tooltips}
           {overlay}
         </React.Fragment>
       );

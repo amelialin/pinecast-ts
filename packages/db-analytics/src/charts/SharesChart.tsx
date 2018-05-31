@@ -224,24 +224,25 @@ export default class SharesChart extends React.Component {
               ),
             )}
           </g>
-          {data
-            .slice(0, MAX_ITEMS_IN_TOP)
-            .map((item, i) => (
-              <rect
-                fill="#5395D3"
-                height={ITEM_HEIGHT - 20}
-                key={i}
-                rx={3}
-                ry={3}
-                width={item.value / max * (width - marginLeft)}
-                x={marginLeft}
-                y={
-                  X_AXIS_HEIGHT +
-                  (i + 0.5) * ITEM_HEIGHT -
-                  (ITEM_HEIGHT - 20) / 2
-                }
-              />
-            ))}
+          {Boolean(width) &&
+            data
+              .slice(0, MAX_ITEMS_IN_TOP)
+              .map((item, i) => (
+                <rect
+                  fill="#5395D3"
+                  height={ITEM_HEIGHT - 20}
+                  key={i}
+                  rx={3}
+                  ry={3}
+                  width={item.value / max * (width - marginLeft)}
+                  x={marginLeft}
+                  y={
+                    X_AXIS_HEIGHT +
+                    (i + 0.5) * ITEM_HEIGHT -
+                    (ITEM_HEIGHT - 20) / 2
+                  }
+                />
+              ))}
         </SVG>
         {totalHeight > topHeight && (
           <React.Fragment>
@@ -272,20 +273,21 @@ export default class SharesChart extends React.Component {
                       ),
                     )}
                 </g>
-                {data
-                  .slice(MAX_ITEMS_IN_TOP)
-                  .map((item, i) => (
-                    <rect
-                      fill="#5395D3"
-                      height={ITEM_HEIGHT - 20}
-                      key={i}
-                      rx={3}
-                      ry={3}
-                      width={item.value / max * (width - marginLeft)}
-                      x={marginLeft}
-                      y={(i + 0.5) * ITEM_HEIGHT - (ITEM_HEIGHT - 20) / 2}
-                    />
-                  ))}
+                {Boolean(this.state.width) &&
+                  data
+                    .slice(MAX_ITEMS_IN_TOP)
+                    .map((item, i) => (
+                      <rect
+                        fill="#5395D3"
+                        height={ITEM_HEIGHT - 20}
+                        key={i}
+                        rx={3}
+                        ry={3}
+                        width={item.value / max * (width - marginLeft)}
+                        x={marginLeft}
+                        y={(i + 0.5) * ITEM_HEIGHT - (ITEM_HEIGHT - 20) / 2}
+                      />
+                    ))}
               </SVG>
               <div>
                 {data.filter(x => x.isOther).map((d, i) => (
