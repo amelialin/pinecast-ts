@@ -130,7 +130,7 @@ function parseDuration(duration: string): number {
     durTup = duration
       .replace(/::/g, ':')
       .split(':')
-      .map(val => Number(val || '0'));
+      .map(val => numberNotNan(val || '0'));
   } catch {
     return 0;
   }
@@ -140,7 +140,7 @@ function parseDuration(duration: string): number {
     durTup.splice(0, size - 3);
   }
   return durTup
-    .map((x, i) => x * (60 ** durTup.length - i - 1))
+    .map((x, i) => x * (60 ** (durTup.length - i - 1)))
     .reduce((a, b) => a + b);
 }
 
