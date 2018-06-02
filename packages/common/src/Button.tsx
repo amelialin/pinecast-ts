@@ -64,17 +64,17 @@ const NativeButton = styled(
 
     ':focus': {
       boxShadow:
-        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px #b7c9d1, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
+        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px #8aa3b1, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
       outline: 'none',
     },
     ':hover:focus': {
       boxShadow:
-        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px #b7c9d1, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
+        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px #8aa3b1, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
       outline: 'none',
     },
     ':active:focus': {
       boxShadow:
-        '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px #b7c9d1, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
+        '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px #8aa3b1, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
     },
   }),
   {className: 'Button-nativeButton'},
