@@ -48,7 +48,7 @@ export default class SharesChart extends React.Component {
     if (!this.svg) {
       return;
     }
-    this.setState({width: this.svg.clientWidth});
+    this.setState({width: this.svg.getClientRects()[0].width});
   };
 
   getCSVData = () => {
@@ -72,7 +72,7 @@ export default class SharesChart extends React.Component {
   handleRef = (el: SVGElement | null) => {
     this.svg = el;
     if (el) {
-      this.setState({width: el.clientWidth});
+      this.setState({width: el.getClientRects()[0].width});
     }
   };
 

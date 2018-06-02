@@ -65,19 +65,22 @@ export default class LineChartAxes extends React.Component {
 
   handleResize = () => {
     if (this.el) {
-      this.setState({width: this.el.clientWidth});
+      this.setState({width: this.el.getClientRects()[0].width});
     }
   };
 
   handleRef = (el: SVGElement | null) => {
     this.el = el;
     if (el) {
-      this.setState({width: el.clientWidth});
+      this.setState({width: el.getClientRects()[0].width});
     }
   };
 
   renderInner() {
-    const {labels, range: [yMin, yMax]} = this.props;
+    const {
+      labels,
+      range: [yMin, yMax],
+    } = this.props;
 
     const yTicks = getTickValues(yMin, yMax);
     const xTicks = getTickValues(0, labels.length - 1);
