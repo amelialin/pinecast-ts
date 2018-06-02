@@ -68,7 +68,11 @@ export default class FontPreset extends React.PureComponent {
 
     return (
       <Wrapper onClick={this.handleClick}>
-        <Label text={preset.name} labelStyle={{marginBottom: 10}}>
+        <Label
+          text={preset.name}
+          labelStyle={{marginBottom: 10}}
+          style={{marginBottom: 0}}
+        >
           <InnerWrapper>
             <PreviewWrapper>
               <AsyncFontPreview family={preset.logo} />

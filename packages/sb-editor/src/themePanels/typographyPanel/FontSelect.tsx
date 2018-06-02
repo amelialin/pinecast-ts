@@ -2,17 +2,27 @@ import * as React from 'react';
 
 import * as ReactList from 'react-list';
 
+import {CloseableLayer} from '@pinecast/common/Layer';
+import {DEFAULT_FONT} from '@pinecast/common/constants';
+import Positioner from '@pinecast/common/Positioner';
 import styled from '@pinecast/styles';
 
-const SelectBox = styled('div', {
+const SelectBox = styled('button', {
   alignItems: 'center',
+  appearance: 'none',
+  MozAppearance: 'none',
+  WebkitAppearance: 'none',
+  background: '#fff',
+  border: 0,
   borderRadius: 3,
   boxShadow:
     '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), 0 0 0 0.5px rgba(0, 0, 0, .15)',
   display: 'flex',
+  flex: '1 1',
+  fontFamily: DEFAULT_FONT,
   height: 40,
-  marginTop: 10,
   padding: '0 30px 0 10px',
+  position: 'relative',
   transition: 'box-shadow 0.2s',
 
   ':hover': {
@@ -21,9 +31,8 @@ const SelectBox = styled('div', {
   },
 
   ':before': {
-    border: '2px solid #bbb',
-    borderRight: 0,
-    borderBottom: 0,
+    borderLeft: '2px solid #b0b5b5',
+    borderTop: '2px solid #b0b5b5',
     content: '""',
     height: 10,
     position: 'absolute',
@@ -32,9 +41,8 @@ const SelectBox = styled('div', {
     width: 10,
   },
   ':after': {
-    border: '2px solid #bbb',
-    borderLeft: 0,
-    borderTop: 0,
+    borderBottom: '2px solid #b0b5b5',
+    borderRight: '2px solid #b0b5b5',
     content: '""',
     height: 10,
     position: 'absolute',
@@ -51,9 +59,6 @@ const InnerWrapper = styled('div', ({$isOpen}: {$isOpen: boolean}) => ({
   left: 0,
   height: 300,
   opacity: $isOpen ? 1 : 0,
-  pointerEvents: $isOpen ? undefined : 'none',
-  position: 'absolute',
-  top: '100%',
   transform: $isOpen ? 'translateY(1px)' : 'translateY(6px)',
   transition: 'opacity 0.25s, transform 0.3s',
   width: 270,
@@ -137,36 +142,22 @@ export default class FontSelect extends React.PureComponent {
     showingPicker: false,
   };
 
-  popoverWrapper: Element | null;
+  popoverWrapper: HTMLElement | null;
 
-  // TODO: dedupe this from ColorPicker.tsx
-  escapeListener = (e: KeyboardEvent) => {
-    if (!this.state.showingPicker) {
-      return;
-    }
-    if (e.keyCode !== 27) {
-      // ESC
-      return;
-    }
-    this.setState({showingPicker: false});
-  };
   clickListener = (e: MouseEvent) => {
     if (!this.state.showingPicker) {
       return;
     }
-    if (!this.popoverWrapper) {
+    if (
+      !this.popoverWrapper ||
+      this.popoverWrapper.contains(e.target as Node)
+    ) {
       return;
     }
-    let target = e.target as Node;
-    do {
-      if (target === this.popoverWrapper) {
-        return;
-      }
-      if (!target.parentNode) {
-        break;
-      }
-      target = target.parentNode;
-    } while (target.parentNode !== document.body);
+    this.setState({showingPicker: false});
+  };
+
+  handleClose = () => {
     this.setState({showingPicker: false});
   };
 
@@ -176,11 +167,9 @@ export default class FontSelect extends React.PureComponent {
         this.setState({fontPreviews});
       },
     );
-    window.addEventListener('keydown', this.escapeListener);
     document.body.addEventListener('click', this.clickListener);
   }
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.escapeListener);
     document.body.removeEventListener('click', this.clickListener);
   }
 
@@ -246,72 +235,88 @@ export default class FontSelect extends React.PureComponent {
     }
     const FontPreview = fontPreviews.getFontComponent(this.props.value);
     return (
-      <div style={{position: 'relative'}} ref={this.handleRef}>
-        <SelectBox
-          arial-label={this.props.value}
-          onClick={this.handleClick}
-          title={this.props.value}
-        >
-          <FontPreview />
-        </SelectBox>
-        <InnerWrapper
-          $isOpen={showingPicker}
-          aria-activedescendant={
-            showingPicker ? 'font-select-selected' : undefined
-          }
-          aria-hidden={!showingPicker}
-          role="listbox"
-        >
-          <InnerWrapperToolbar>
-            <FilterItem
-              $isSelected={filter === 'serif'}
-              onClick={this.handleFilter('serif')}
-              style={{fontFamily: 'serif'}}
-            >
-              Serif
-            </FilterItem>
-            <FilterItem
-              $isSelected={filter === 'sans-serif'}
-              onClick={this.handleFilter('sans-serif')}
-              style={{fontFamily: 'sans-serif'}}
-            >
-              Sans
-            </FilterItem>
-            <FilterItem
-              $isSelected={filter === 'monospace'}
-              onClick={this.handleFilter('monospace')}
-              style={{fontFamily: 'Courier, Courier New, monospace'}}
-            >
-              Mono
-            </FilterItem>
-            <FilterItem
-              $isSelected={filter === 'display'}
-              onClick={this.handleFilter('display')}
-              style={{fontFamily: 'Impact, Arial Black'}}
-            >
-              Disp
-            </FilterItem>
-            <FilterItem
-              $isSelected={filter === 'handwriting'}
-              onClick={this.handleFilter('handwriting')}
-              style={{fontFamily: 'Comic, Comic Sans, cursive'}}
-            >
-              HW
-            </FilterItem>
-          </InnerWrapperToolbar>
-          <InnerWrapperList>
-            <ReactList
-              itemRenderer={this.itemRenderer}
-              length={
-                filter
-                  ? fontPreviews.categories[filter].length
-                  : fontPreviews.list.length
+      <Positioner
+        content={
+          <SelectBox
+            arial-label={this.props.value}
+            onClick={this.handleClick}
+            title={this.props.value}
+          >
+            <FontPreview />
+          </SelectBox>
+        }
+        maxHeight={300}
+        maxWidth={270}
+        style={{display: 'flex'}}
+      >
+        {({x, y}) => (
+          <CloseableLayer
+            onClose={this.handleClose}
+            pointerEvents={showingPicker}
+            x={x}
+            y={y}
+          >
+            <InnerWrapper
+              $isOpen={showingPicker}
+              aria-activedescendant={
+                showingPicker ? 'font-select-selected' : undefined
               }
-              type="uniform"
-            />
-          </InnerWrapperList>
-        </InnerWrapper>
-      </div>
+              aria-hidden={!showingPicker}
+              onRef={this.handleRef}
+              role="listbox"
+            >
+              <InnerWrapperToolbar>
+                <FilterItem
+                  $isSelected={filter === 'serif'}
+                  onClick={this.handleFilter('serif')}
+                  style={{fontFamily: 'serif'}}
+                >
+                  Serif
+                </FilterItem>
+                <FilterItem
+                  $isSelected={filter === 'sans-serif'}
+                  onClick={this.handleFilter('sans-serif')}
+                  style={{fontFamily: 'sans-serif'}}
+                >
+                  Sans
+                </FilterItem>
+                <FilterItem
+                  $isSelected={filter === 'monospace'}
+                  onClick={this.handleFilter('monospace')}
+                  style={{fontFamily: 'Courier, Courier New, monospace'}}
+                >
+                  Mono
+                </FilterItem>
+                <FilterItem
+                  $isSelected={filter === 'display'}
+                  onClick={this.handleFilter('display')}
+                  style={{fontFamily: 'Impact, Arial Black'}}
+                >
+                  Disp
+                </FilterItem>
+                <FilterItem
+                  $isSelected={filter === 'handwriting'}
+                  onClick={this.handleFilter('handwriting')}
+                  style={{fontFamily: 'Comic, Comic Sans, cursive'}}
+                >
+                  HW
+                </FilterItem>
+              </InnerWrapperToolbar>
+              <InnerWrapperList>
+                <ReactList
+                  itemRenderer={this.itemRenderer}
+                  length={
+                    filter
+                      ? fontPreviews.categories[filter].length
+                      : fontPreviews.list.length
+                  }
+                  type="uniform"
+                />
+              </InnerWrapperList>
+            </InnerWrapper>
+          </CloseableLayer>
+        )}
+      </Positioner>
     );
   }
 }
