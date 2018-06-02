@@ -14,7 +14,7 @@ const Radio = styled(
     backgroundColor: '#fff',
     borderRadius: 30,
     boxShadow:
-      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+      '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), 0 0 0 0.5px rgba(0, 0, 0, .15)',
     display: 'flex',
     height: 30,
     justifyContent: 'center',
@@ -26,7 +26,7 @@ const Radio = styled(
 
     ':hover': {
       boxShadow:
-        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+        '0 1px 3px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(0, 0, 0, .15)',
     },
     ':active': {
       boxShadow:

@@ -253,7 +253,7 @@ const ALL_TIMEFRAMES_WITHOUT_CUSTOM: Array<Timeframe> = ALL_TIMEFRAMES.filter(
   x => x !== 'custom',
 );
 export const TYPE_TIMEFRAMES: {[view: string]: Array<Timeframe>} = {
-  [TYPE_SUBS]: ['year', 'sixmonth', 'month'] as Array<Timeframe>,
+  [TYPE_SUBS]: ['sixmonth', 'month'] as Array<Timeframe>,
   [TYPE_LISTENS]: ALL_TIMEFRAMES,
   [TYPE_BY_EPISODE]: ALL_TIMEFRAMES,
   [TYPE_BY_SOURCE]: ALL_TIMEFRAMES,
@@ -266,6 +266,7 @@ export const TYPE_GRANULARITIES: {
   [view: string]: Array<Granularity>;
 } = {
   [TYPE_LISTENS]: DEFAULT_GRANULARITIES,
+  [TYPE_SUBS]: ['daily'],
   [TYPE_BY_EPISODE]: DEFAULT_GRANULARITIES,
   [TYPE_BY_SOURCE]: DEFAULT_GRANULARITIES,
   [TYPE_GROWTH]: ['monthly', 'weekly', 'daily'],

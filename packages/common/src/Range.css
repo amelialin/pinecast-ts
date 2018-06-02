@@ -16,7 +16,7 @@
   border: 0px solid rgba(1, 1, 1, 0);
 }
 .RangeInput::-webkit-slider-thumb {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), 0 0 0 0.5px rgba(0, 0, 0, .15);
   border: 0px solid #000000;
   height: 21px;
   width: 21px;
@@ -39,7 +39,7 @@
   border: 0px solid rgba(1, 1, 1, 0);
 }
 .RangeInput::-moz-range-thumb {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), 0 0 0 0.5px rgba(0, 0, 0, .15);
   border: 0px solid #000000;
   height: 21px;
   width: 21px;
@@ -68,7 +68,7 @@
   box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.1);
 }
 .RangeInput::-ms-thumb {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), 0 0 0 0.5px rgba(0, 0, 0, .15);
   border: 0px solid #000000;
   height: 21px;
   width: 21px;

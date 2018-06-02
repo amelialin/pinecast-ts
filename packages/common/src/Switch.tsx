@@ -38,7 +38,7 @@ const InvisibleCheckbox = styled(
     },
     ':focus + .Switch--text::before': {
       boxShadow:
-        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 2px #c9d9e0',
+        '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), 0 0 0 2px #c9d9e0',
     },
   },
   {type: 'checkbox'},
@@ -70,7 +70,7 @@ const Text = styled(
       borderRadius: 12,
       bottom: 0,
       boxShadow:
-        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 transparent',
+        '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), 0 0 0 transparent',
       content: '""',
       height: 20,
       left: 0,

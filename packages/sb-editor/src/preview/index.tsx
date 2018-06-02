@@ -32,7 +32,7 @@ const UTIL_PAGE_HEAD = `
       display: inline-block;
       background: #fff;
       border-radius: 3px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), 0 0 0 0.5px rgba(0, 0, 0, .15);
       color: #000;
       font-size: 13px;
       font-weight: 500;
@@ -43,7 +43,7 @@ const UTIL_PAGE_HEAD = `
       transition: box-shadow 0.2s;
     }
     .btn:hover {
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(0, 0, 0, .15);
     }
     .btn:active {
       box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15);

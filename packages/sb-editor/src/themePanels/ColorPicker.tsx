@@ -17,7 +17,7 @@ const Chiclet = styled('div', ({$color}: {$color: string}) => ({
   backgroundColor: $color,
   borderRadius: 3,
   boxShadow:
-    '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+    '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), 0 0 0 0.5px rgba(0, 0, 0, .15)',
   cursor: 'pointer',
   height: 30,
   transition: 'box-shadow 0.2s',
@@ -25,7 +25,7 @@ const Chiclet = styled('div', ({$color}: {$color: string}) => ({
 
   ':hover': {
     boxShadow:
-      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+      '0 1px 3px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(0, 0, 0, .15)',
   },
   ':active': {
     boxShadow:
@@ -113,7 +113,10 @@ export default class ColorPicker extends React.PureComponent {
   };
 
   render() {
-    const {props: {colorKey, colorValue}, state: {showingPicker}} = this;
+    const {
+      props: {colorKey, colorValue},
+      state: {showingPicker},
+    } = this;
     return (
       <Wrapper>
         <div

@@ -36,7 +36,7 @@ const SelectButton = styled('button', {
   background: 'transparent',
   border: 0,
   boxShadow:
-    '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), inset 0 0 0 0.5px #c6caca, rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
+    '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), inset 0 0 0 0.5px #c6caca, rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
   borderRadius: 3,
   fontFamily: DEFAULT_FONT,
   fontSize: 14,
@@ -52,7 +52,7 @@ const SelectButton = styled('button', {
 
   ':hover': {
     boxShadow:
-      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px #c6caca, rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
+      '0 1px 3px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.1), inset 0 0 0 0.5px #c6caca, rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
   },
   ':active': {
     boxShadow:
@@ -64,12 +64,12 @@ const SelectButton = styled('button', {
 
   ':focus': {
     boxShadow:
-      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), inset 0 0 0 0.5px #9eb4c0, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
+      '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), inset 0 0 0 0.5px #9eb4c0, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
     outline: 'none',
   },
   ':focus:hover': {
     boxShadow:
-      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px #9eb4c0, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
+      '0 1px 3px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.1), inset 0 0 0 0.5px #9eb4c0, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
   },
   ':focus:active': {
     boxShadow:

@@ -50,7 +50,7 @@ const Select_ = styled(
 
     ':hover': {
       boxShadow:
-        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px #c6caca, rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
+        '0 1px 3px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.1), inset 0 0 0 0.5px #c6caca, rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
     },
     ':active': {
       boxShadow:
@@ -62,12 +62,12 @@ const Select_ = styled(
 
     ':focus': {
       boxShadow:
-        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), inset 0 0 0 0.5px #8aa3b1, rgba(167, 210, 243, 0.75) 0 0 0 3px inset',
+        '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), inset 0 0 0 0.5px #8aa3b1, rgba(167, 210, 243, 0.75) 0 0 0 3px inset',
       outline: 'none',
     },
     ':focus:hover': {
       boxShadow:
-        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px #8aa3b1, rgba(167, 210, 243, 0.75) 0 0 0 3px inset',
+        '0 1px 3px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.1), inset 0 0 0 0.5px #8aa3b1, rgba(167, 210, 243, 0.75) 0 0 0 3px inset',
     },
     ':focus:active': {
       boxShadow:

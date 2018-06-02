@@ -14,7 +14,7 @@ const Wrapper = styled(
     border: 0,
     borderRadius: 3,
     boxShadow:
-      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+      '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), 0 0 0 0.5px rgba(0, 0, 0, .15)',
     marginBottom: 30,
     padding: 15,
     textAlign: 'left',
@@ -22,7 +22,7 @@ const Wrapper = styled(
 
     ':hover': {
       boxShadow:
-        '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
+        '0 1px 3px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(0, 0, 0, .15)',
     },
     ':active': {
       boxShadow:

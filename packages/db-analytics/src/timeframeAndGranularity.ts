@@ -53,8 +53,6 @@ export function getGranularities(
       switch (granularity) {
         case 'hourly':
           return false;
-        case 'daily':
-          return timeframe !== 'year';
         case 'monthly':
           return timeframe !== 'month';
       }

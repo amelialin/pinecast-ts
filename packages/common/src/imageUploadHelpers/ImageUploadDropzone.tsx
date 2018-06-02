@@ -9,7 +9,7 @@ const U = styled('span', {color: '#4e7287', textDecoration: 'underline'});
 const Stub = styled('b', {
   ':empty + .ImageUpload-ImageUploadDropzone-dropzone:focus': {
     boxShadow:
-      '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), rgba(167, 210, 243, 0.5) 0 0 0 3.5px inset !important',
+      '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), rgba(167, 210, 243, 0.5) 0 0 0 3.5px inset !important',
     outline: 'none',
   },
 });
@@ -45,7 +45,7 @@ const ImageUploadDropzone = ({
         ...baseStyle,
         borderColor: '#c9d9e0',
         boxShadow:
-          '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
+          '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
       }}
       className="ImageUpload-ImageUploadDropzone-dropzone"
       disableClick // We do this because it's inside a label
@@ -54,7 +54,7 @@ const ImageUploadDropzone = ({
       style={{
         ...baseStyle,
         boxShadow:
-          '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05), 0 0 0 transparent inset',
+          '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), 0 0 0 transparent inset',
       }}
       tabIndex={0}
     >

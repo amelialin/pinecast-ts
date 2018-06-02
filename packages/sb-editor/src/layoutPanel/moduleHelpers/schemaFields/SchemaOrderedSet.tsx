@@ -60,7 +60,7 @@ const Element = styled(
   }) => ({
     alignItems: 'center',
     background: '#fff',
-    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05)',
+    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025)',
     cursor: $isOnly ? 'auto' : 'ns-resize',
     display: 'flex',
     height: ELEMENT_HEIGHT,
