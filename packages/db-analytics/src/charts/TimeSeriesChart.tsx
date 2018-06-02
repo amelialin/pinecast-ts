@@ -204,6 +204,7 @@ export default class TimeSeriesChart extends React.Component {
   };
   handleChangeShowEpisodes = (newState: boolean) => {
     this.setState({showEpisodes: newState});
+    persist.set('tschart.showEpisodes', newState ? 'true' : 'false');
   };
 
   getCSVData = () => {

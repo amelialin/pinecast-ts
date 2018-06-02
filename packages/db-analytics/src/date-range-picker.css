@@ -36,15 +36,15 @@
   position: relative;
 }
 .date-range-picker .rdtPicker {
+  background: #fff;
+  border: 1px solid #f9f9f9;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 3px 4px rgba(0, 0, 0, 0.05);
   display: none;
+  margin-top: 1px;
+  padding: 4px;
   position: absolute;
   width: 250px;
-  padding: 4px;
-  margin-top: 1px;
   z-index: 99999 !important;
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #f9f9f9;
 }
 @media (max-width: 600px) {
   .date-range-picker {
@@ -148,6 +148,7 @@
 .date-range-picker .rdtPicker th.rdtNext,
 .date-range-picker .rdtPicker th.rdtPrev {
   font-size: 21px;
+  line-height: 24px;
   vertical-align: top;
 }
 
@@ -165,14 +166,15 @@
 .date-range-picker .rdtPicker th.rdtDisabled,
 .date-range-picker .rdtPicker th.rdtDisabled:hover {
   background: none;
-  color: #999999;
+  color: #939899;
   cursor: not-allowed;
 }
 .date-range-picker .rdtPicker thead tr:first-child th {
   cursor: pointer;
 }
 .date-range-picker .rdtPicker thead tr:first-child th:hover {
-  background: #eeeeee;
+  background: #eeefea;
+  border-radius: 3px;
 }
 
 .date-range-picker .rdtPicker tfoot {
@@ -201,7 +203,7 @@
 }
 .date-range-picker td.rdtMonth:hover,
 .date-range-picker td.rdtYear:hover {
-  background: #eee;
+  background: #eeefea;
 }
 
 .date-range-picker .rdtCounters {
@@ -238,7 +240,7 @@
   user-select: none;
 }
 .date-range-picker .rdtCounter .rdtBtn:hover {
-  background: #eee;
+  background: #eeefea;
 }
 .date-range-picker .rdtCounter .rdtCount {
   height: 20%;

@@ -34,6 +34,7 @@ export const TYPES: {[type: string]: Array<AnalyticsView>} = {
   episode: [
     TYPE_LISTENS,
     TYPE_BY_SOURCE,
+    TYPE_BY_AGENT,
     TYPE_GROWTH,
     TYPE_GEO_LISTENS,
     TYPE_GEO_GRAN_LISTENS,
@@ -44,6 +45,7 @@ export const TYPES: {[type: string]: Array<AnalyticsView>} = {
     TYPE_SUBS,
     TYPE_GROWTH,
     TYPE_BY_SOURCE,
+    TYPE_BY_AGENT,
     TYPE_GEO_LISTENS,
     TYPE_GEO_GRAN_LISTENS,
     TYPE_GEO_SUBS,
@@ -87,6 +89,7 @@ export const TYPES_ENDPOINTS: {[type: string]: {[view: string]: string}} = {
   episode: {
     [TYPE_LISTENS]: 'episode/listens',
     [TYPE_BY_SOURCE]: 'episode/listens/breakdown',
+    [TYPE_BY_AGENT]: 'episode/listens/agent',
     [TYPE_GROWTH]: 'episode/growth',
     [TYPE_GEO_LISTENS]: 'episode/listens/location',
     [TYPE_GEO_GRAN_LISTENS]: 'episode/listens/location/options',
@@ -95,6 +98,7 @@ export const TYPES_ENDPOINTS: {[type: string]: {[view: string]: string}} = {
   network: {
     [TYPE_LISTENS]: 'network/listens',
     [TYPE_BY_SOURCE]: 'network/listens/breakdown',
+    [TYPE_BY_AGENT]: 'network/listens/agent',
     [TYPE_GROWTH]: 'network/growth',
     [TYPE_GEO_LISTENS]: 'network/listens/location',
     [TYPE_GEO_GRAN_LISTENS]: 'network/listens/location/options',

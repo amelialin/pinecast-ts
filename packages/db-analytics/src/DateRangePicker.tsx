@@ -8,7 +8,6 @@ import './date-range-picker.css';
 
 class ValidDatePicker extends React.Component {
   props: {
-    className?: string;
     isValidDate: (date: Moment) => boolean;
     onChange: (newDate: Moment) => void;
     value: Moment;
@@ -32,7 +31,7 @@ class ValidDatePicker extends React.Component {
     return (
       <DateTimePicker
         {...props}
-        className={`drp-vdp ${props.className || ''}`}
+        className="drp-vdp"
         onChange={this.handleDateChange}
         timeFormat={false}
         value={invalidState || props.value}
@@ -105,7 +104,6 @@ export default class DateRangePicker extends React.Component {
         <div className="drp-wrapper">
           <span>{gettext('To')}</span>
           <ValidDatePicker
-            className="right-on-mobile"
             isValidDate={this.isValidEndDate}
             onChange={this.handleEndDateChange}
             ref={this.handleEndDateRef}
