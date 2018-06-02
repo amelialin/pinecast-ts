@@ -62,7 +62,12 @@ class EpisodeItem extends React.PureComponent {
           y1={baseline}
           y2={baseline - height}
         />
-        <foreignObject x={xOffset} y={baseline - height - EP_HEIGHT}>
+        <foreignObject
+          x={xOffset}
+          y={baseline - height - EP_HEIGHT}
+          height={16}
+          width={16}
+        >
           <TooltipContainer
             preferY="top"
             tooltipContent={
