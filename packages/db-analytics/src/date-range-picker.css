@@ -3,21 +3,33 @@
  */
 
 .date-range-picker {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
 }
 .date-range-picker .drp-wrapper {
-    align-items: center;
-    display: flex;
-    margin: 0 10px;
+  align-items: center;
+  display: flex;
+  margin: 0 10px;
 }
 .date-range-picker .drp-wrapper > span {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 .date-range-picker .form-control {
-    border-radius: 3px;
-    margin: 0;
-    padding: 5px;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px #c6caca, 0 0 0 0 #c9d9e0;
+  color: #44484d;
+  font-size: 14px;
+  height: 32px;
+  line-height: 32px;
+  margin: 0;
+  padding: 0 10px;
+  transition: box-shadow 0.2s, opacity 0.2s;
+}
+.date-range-picker .form-control:focus {
+  box-shadow: 0 0 0 1px #9eb4c0, 0 0 0 4px #c9d9e0;
+  outline: none;
 }
 
 .date-range-picker .rdt {
@@ -31,13 +43,19 @@
   margin-top: 1px;
   z-index: 99999 !important;
   background: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid #f9f9f9;
 }
 @media (max-width: 600px) {
-    .date-range-picker .right-on-mobile .rdtPicker {
-        right: 0;
-    }
+  .date-range-picker {
+    flex-direction: column;
+  }
+  .date-range-picker .drp-wrapper + .drp-wrapper {
+    margin-top: 12px;
+  }
+  .date-range-picker .right-on-mobile .rdtPicker {
+    right: 0;
+  }
 }
 
 .date-range-picker .rdtOpen .rdtPicker {
@@ -65,17 +83,21 @@
 .date-range-picker .rdtPicker td {
   cursor: pointer;
 }
+.date-range-picker .rdtPicker th {
+  font-weight: 500;
+}
 .date-range-picker .rdtPicker td.rdtDay:hover,
 .date-range-picker .rdtPicker td.rdtHour:hover,
 .date-range-picker .rdtPicker td.rdtMinute:hover,
 .date-range-picker .rdtPicker td.rdtSecond:hover,
 .date-range-picker .rdtPicker .rdtTimeToggle:hover {
-  background: #eeeeee;
+  background: #eeefea;
+  border-radius: 2px;
   cursor: pointer;
 }
 .date-range-picker .rdtPicker td.rdtOld,
 .date-range-picker .rdtPicker td.rdtNew {
-  color: #999999;
+  color: #939899;
 }
 .date-range-picker .rdtPicker td.rdtToday {
   position: relative;
@@ -84,7 +106,7 @@
   content: '';
   display: inline-block;
   border-left: 7px solid transparent;
-  border-bottom: 7px solid #428bca;
+  border-bottom: 7px solid #708d9e;
   border-top-color: rgba(0, 0, 0, 0.2);
   position: absolute;
   bottom: 4px;
@@ -92,7 +114,8 @@
 }
 .date-range-picker .rdtPicker td.rdtActive,
 .date-range-picker .rdtPicker td.rdtActive:hover {
-  background-color: #428bca;
+  background-color: #708d9e;
+  border-radius: 2px;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
@@ -115,9 +138,6 @@
   color: #999999;
   cursor: not-allowed;
 }
-.date-range-picker .rdtPicker th {
-  border-bottom: 1px solid #f9f9f9;
-}
 .date-range-picker .rdtPicker .dow {
   width: 14.2857%;
   border-bottom: none;
@@ -135,10 +155,10 @@
 .date-range-picker .rdtNext span {
   display: block;
   -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none;   /* Chrome/Safari/Opera */
-  -khtml-user-select: none;    /* Konqueror */
-  -moz-user-select: none;      /* Firefox */
-  -ms-user-select: none;       /* Internet Explorer/Edge */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
 }
 
@@ -173,14 +193,14 @@
   height: 100%;
 }
 
-.date-range-picker  td.rdtMonth,
-.date-range-picker  td.rdtYear {
+.date-range-picker td.rdtMonth,
+.date-range-picker td.rdtYear {
   height: 50px;
   width: 25%;
   cursor: pointer;
 }
-.date-range-picker  td.rdtMonth:hover,
-.date-range-picker  td.rdtYear:hover {
+.date-range-picker td.rdtMonth:hover,
+.date-range-picker td.rdtYear:hover {
   background: #eee;
 }
 
@@ -211,10 +231,10 @@
   display: block;
 
   -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none;   /* Chrome/Safari/Opera */
-  -khtml-user-select: none;    /* Konqueror */
-  -moz-user-select: none;      /* Firefox */
-  -ms-user-select: none;       /* Internet Explorer/Edge */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
 }
 .date-range-picker .rdtCounter .rdtBtn:hover {

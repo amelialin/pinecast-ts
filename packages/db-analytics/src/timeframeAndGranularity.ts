@@ -19,7 +19,7 @@ export function getGranularities(
   if (timeframe === 'custom') {
     const out: Array<constants.Granularity> = ['daily'];
     const start = nullThrows(tfRange)[0].getTime() / 1000;
-    const end = nullThrows(tfRange)[0].getTime() / 1000;
+    const end = nullThrows(tfRange)[1].getTime() / 1000;
 
     if (end - start < 86400 * 3) {
       out.push('hourly');
@@ -69,8 +69,9 @@ export function getDefaultGranularity(
   newView: constants.AnalyticsView,
   previousGranularity: constants.Granularity,
   timeframe: constants.Timeframe,
+  tfRange: [Date, Date] | null,
 ): constants.Granularity {
-  const newGrans = getGranularities(newView, timeframe);
+  const newGrans = getGranularities(newView, timeframe, tfRange);
   if (newGrans.includes(previousGranularity)) {
     return previousGranularity;
   }

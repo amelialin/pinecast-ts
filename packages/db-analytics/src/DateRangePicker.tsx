@@ -1,19 +1,21 @@
-import DateTimePicker from 'react-datetime';
+import {Moment} from 'moment';
+const DateTimePicker = require('react-datetime');
 import * as React from 'react';
 
-import {gettext} from 'pinecast-i18n';
+import {gettext} from '@pinecast/i18n';
 
 import './date-range-picker.css';
 
 class ValidDatePicker extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      invalidState: null,
-    };
-  }
+  props: {
+    className?: string;
+    isValidDate: (date: Moment) => boolean;
+    onChange: (newDate: Moment) => void;
+    value: Moment;
+  };
+  state: {invalidState: string | null} = {invalidState: null};
 
-  handleDateChange = val => {
+  handleDateChange = (val: string | Moment) => {
     if (typeof val === 'string') {
       this.setState({invalidState: val});
       return;
@@ -23,7 +25,10 @@ class ValidDatePicker extends React.Component {
   };
 
   render() {
-    const {props, state: {invalidState}} = this;
+    const {
+      props,
+      state: {invalidState},
+    } = this;
     return (
       <DateTimePicker
         {...props}
@@ -37,13 +42,17 @@ class ValidDatePicker extends React.Component {
 }
 
 export default class DateRangePicker extends React.Component {
-  constructor(props) {
-    super(props);
-    this._start = null;
-    this._end = null;
-  }
+  props: {
+    endDate: Moment;
+    isOutsideRange: (date: Moment) => boolean;
+    onDatesChanged: (dates: {startDate: Moment; endDate: Moment}) => void;
+    startDate: Moment;
+  };
 
-  handleChange = (dateName, value) => {
+  _start: ValidDatePicker | null = null;
+  _end: ValidDatePicker | null = null;
+
+  handleChange = (dateName: 'startDate' | 'endDate', value: Moment) => {
     const endDate = this.props.endDate.clone().startOf('day');
     if (
       dateName === 'startDate' &&
@@ -54,24 +63,31 @@ export default class DateRangePicker extends React.Component {
     ) {
       value = endDate.clone().add(-1, 'days');
     }
-    this.props.onDatesChange({
+    this.props.onDatesChanged({
       startDate: this.props.startDate,
       endDate: this.props.endDate,
       [dateName]: value,
     });
   };
 
-  handleStartDateRef = el => (this._start = el);
-  isValidStartDate = date =>
+  handleStartDateRef = (el: ValidDatePicker | null) => {
+    this._start = el;
+  };
+  isValidStartDate = (date: Moment) =>
     !this.props.isOutsideRange(date) &&
     date.isBefore(this.props.endDate.clone().startOf('day'));
-  handleStartDateChange = val =>
+  handleStartDateChange = (val: Moment) => {
     this.handleChange('startDate', val.startOf('day'));
+  };
 
-  handleEndDateRef = el => (this._end = el);
-  isValidEndDate = date =>
+  handleEndDateRef = (el: ValidDatePicker | null) => {
+    this._end = el;
+  };
+  isValidEndDate = (date: Moment) =>
     !this.props.isOutsideRange(date) && date.isAfter(this.props.startDate);
-  handleEndDateChange = val => this.handleChange('endDate', val.endOf('day'));
+  handleEndDateChange = (val: Moment) => {
+    this.handleChange('endDate', val.endOf('day'));
+  };
 
   render() {
     const {endDate, startDate} = this.props;

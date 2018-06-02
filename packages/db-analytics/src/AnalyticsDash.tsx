@@ -1,3 +1,5 @@
+import {Moment} from 'moment';
+const moment = require('moment');
 import * as React from 'react';
 
 import Card from '@pinecast/common/Card';
@@ -10,6 +12,7 @@ import styled from '@pinecast/styles';
 import Upsell from '@pinecast/common/Upsell';
 
 import * as constants from './constants';
+import DateRangePicker from './DateRangePicker';
 import GranularityPicker from './GranularityPicker';
 import Loader, {State as LoaderState} from './Loader';
 import * as persist from './persist';
@@ -53,6 +56,7 @@ export default class AnalyticsDash extends React.Component {
     upgradeURL: string;
   };
   state: {
+    customTimeframe: [Date, Date] | null;
     error: string | null;
     granularity: constants.Granularity;
     timeframe: constants.Timeframe;
@@ -61,20 +65,31 @@ export default class AnalyticsDash extends React.Component {
 
   constructor(props: AnalyticsDash['props']) {
     super(props);
+
+    const type = this.getType();
+    const customTFPreviousUnparsed = persist.get(`dash.${type}.ctf`, '');
+    const customTFPrevious: AnalyticsDash['state']['customTimeframe'] = customTFPreviousUnparsed
+      ? (customTFPreviousUnparsed.split(',').map(x => new Date(x)) as [
+          Date,
+          Date
+        ])
+      : null;
+
     this.state = {
+      customTimeframe: customTFPrevious,
       error: null,
       view: persist.get(
-        `dash.${this.getType()}.view`,
+        `dash.${type}.view`,
         constants.TYPE_LISTENS,
       ) as constants.AnalyticsView,
       // These are just happy defaults because we know the default view is
       // always TYPE_LISTENS, above.
       granularity: persist.get(
-        `dash.${this.getType()}.granularity`,
+        `dash.${type}.granularity`,
         'daily',
       ) as constants.Granularity,
       timeframe: persist.get(
-        `dash.${this.getType()}.timeframe`,
+        `dash.${type}.timeframe`,
         'month',
       ) as constants.Timeframe,
     };
@@ -82,7 +97,13 @@ export default class AnalyticsDash extends React.Component {
 
   componentDidUpdate() {
     const type = this.getType();
-    const {granularity, timeframe, view} = this.state;
+    const {customTimeframe, granularity, timeframe, view} = this.state;
+    persist.set(
+      `dash.${type}.ctf`,
+      customTimeframe
+        ? customTimeframe.map(x => x.toISOString()).join(',')
+        : '',
+    );
     persist.set(`dash.${type}.view`, view);
     persist.set(`dash.${type}.granularity`, granularity);
     persist.set(`dash.${type}.timeframe`, timeframe);
@@ -98,12 +119,25 @@ export default class AnalyticsDash extends React.Component {
     return 'podcast';
   }
 
+  getQueryStringTimeframe(): string {
+    if (!timeframeAndGranularity.hasTimeframe(this.state.view)) {
+      return '';
+    }
+    const out = url`&timeframe=${this.state.timeframe}`;
+    if (this.state.timeframe !== 'custom') {
+      return out;
+    }
+    return (
+      out +
+      url`&tf_range=${nullThrows(this.state.customTimeframe)
+        .map(x => x.toISOString())
+        .join(',')}`
+    );
+  }
   getQueryString(): string {
     const type = this.getType();
     const {view} = this.state;
-    const timeframe = timeframeAndGranularity.hasTimeframe(view)
-      ? url`&timeframe=${this.state.timeframe}`
-      : '';
+    const timeframe = this.getQueryStringTimeframe();
     const granularity = timeframeAndGranularity.hasGranularity(view)
       ? url`&interval=${this.state.granularity}`
       : '';
@@ -134,6 +168,7 @@ export default class AnalyticsDash extends React.Component {
         view,
         this.state.granularity,
         this.state.timeframe,
+        this.state.customTimeframe,
       ),
       timeframe: timeframeAndGranularity.getDefaultTimeframe(
         view,
@@ -142,18 +177,56 @@ export default class AnalyticsDash extends React.Component {
     });
   };
   handleChangeTimeframe = (timeframe: constants.Timeframe) => {
+    const customTimeframe =
+      timeframe === 'custom'
+        ? this.getDefaultCustomTimeframe()
+        : this.state.customTimeframe;
     this.setState({
       timeframe,
       granularity: timeframeAndGranularity.getDefaultGranularity(
         this.state.view,
         this.state.granularity,
         timeframe,
+        customTimeframe,
       ),
+      customTimeframe,
     });
   };
   handleChangeGranularity = (granularity: constants.Granularity) => {
     this.setState({granularity});
   };
+
+  getDefaultCustomTimeframe(): [Date, Date] {
+    const {customTimeframe, timeframe} = this.state;
+    if (timeframe === 'custom') {
+      return [
+        nullThrows(customTimeframe)[0],
+        moment()
+          .endOf('day')
+          .toDate(),
+      ];
+    }
+
+    const durations = {
+      day: 1,
+      week: 7,
+      month: 30,
+      sixmonth: 30 * 6,
+      year: 365,
+      all: 365, // whatever
+    };
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - durations[timeframe]);
+
+    return [
+      moment(startDate)
+        .startOf('day')
+        .toDate(),
+      moment()
+        .endOf('day')
+        .toDate(),
+    ];
+  }
 
   renderToolbar() {
     return (
@@ -173,10 +246,45 @@ export default class AnalyticsDash extends React.Component {
             onChange={this.handleChangeGranularity}
             timeframe={this.state.timeframe}
             value={this.state.granularity}
-            view={this.state.view}
           />
         </Group>
       </Toolbar>
+    );
+  }
+
+  isOutsideRange = (day: Moment) =>
+    moment(nullThrows(this.state.customTimeframe)[0])
+      .add(365, 'days')
+      .isBefore(day) ||
+    moment(nullThrows(this.state.customTimeframe)[1])
+      .subtract(365, 'days')
+      .isAfter(day) ||
+    day.isAfter(
+      moment()
+        .startOf('day')
+        .add(1, 'days'),
+    );
+  handleCustomTimeframeChanged = ({
+    endDate,
+    startDate,
+  }: {
+    endDate: Moment;
+    startDate: Moment;
+  }) => {
+    this.setState({customTimeframe: [startDate.toDate(), endDate.toDate()]});
+  };
+
+  renderCustomTimeframe() {
+    const {customTimeframe, timeframe} = this.state;
+    return (
+      timeframe === 'custom' && (
+        <DateRangePicker
+          endDate={moment(nullThrows(customTimeframe)[1])}
+          isOutsideRange={this.isOutsideRange}
+          onDatesChanged={this.handleCustomTimeframeChanged}
+          startDate={moment(nullThrows(customTimeframe)[0])}
+        />
+      )
     );
   }
 
@@ -276,12 +384,14 @@ export default class AnalyticsDash extends React.Component {
     return (
       <Provider
         value={{
+          customTimeframe: this.state.customTimeframe,
           queryString: this.getQueryString(),
           type: this.getType(),
           view: this.state.view,
         }}
       >
         {this.renderToolbar()}
+        {this.renderCustomTimeframe()}
         <Card style={{padding: '12px 12px 12px'}} whiteBack>
           {this.renderBody()}
         </Card>

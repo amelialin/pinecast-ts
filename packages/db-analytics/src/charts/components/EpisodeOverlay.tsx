@@ -1,4 +1,4 @@
-const {default: moment} = require('moment');
+const moment = require('moment');
 import * as React from 'react';
 
 import styled from '@pinecast/styles';
