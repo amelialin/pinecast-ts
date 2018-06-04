@@ -12,6 +12,11 @@ import measureText from './measureText';
 const HEIGHT = 300;
 const X_AXIS_HEIGHT = 60;
 
+const marginRight = 8;
+const marginTop = 8;
+const yRangeTop = HEIGHT - X_AXIS_HEIGHT;
+const yRangeBottom = marginTop;
+
 const gridlineStyle = {stroke: '#eeefea', strokeWidth: 1};
 
 const SVG = styled('svg', {
@@ -53,8 +58,47 @@ export default class LineChartAxes extends React.Component {
     labels: Array<string>;
     range: [number, number];
   };
+  state: {
+    marginLeft?: number;
+    width: number | null;
+    widthInner?: number;
+    xRange?: (n: number) => number;
+    xTicks?: Array<number>;
+    yRange?: (n: number) => number;
+    yTicks?: Array<number>;
+  } = {width: null};
+
   el: SVGElement | null = null;
-  state: {width: number | null} = {width: null};
+
+  static getDerivedStateFromProps(
+    {labels, range: [yMin, yMax]}: LineChartAxes['props'],
+    state: LineChartAxes['state'],
+  ): LineChartAxes['state'] {
+    if (!state.width) {
+      return state || {width: null};
+    }
+
+    const yTicks = getTickValues(yMin, yMax);
+    const marginLeft =
+      Math.max(
+        0,
+        ...yTicks.map(value =>
+          measureText(renderYAxisLabel(value), `500 12px ${DEFAULT_FONT}`),
+        ),
+      ) +
+      16 +
+      8;
+    const width = nullThrows(state.width) - marginRight;
+    return {
+      ...state,
+      marginLeft,
+      widthInner: width,
+      xRange: scaleLinearLight(marginLeft, width, 0, labels.length - 1),
+      xTicks: getTickValues(0, labels.length - 1),
+      yRange: scaleLinearLight(yRangeTop, yRangeBottom, yMin, yMax),
+      yTicks,
+    };
+  }
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
@@ -77,33 +121,18 @@ export default class LineChartAxes extends React.Component {
   };
 
   renderInner() {
+    const {labels} = this.props;
     const {
-      labels,
-      range: [yMin, yMax],
-    } = this.props;
-
-    const yTicks = getTickValues(yMin, yMax);
-    const xTicks = getTickValues(0, labels.length - 1);
-
-    const marginLeft =
-      Math.max(
-        0,
-        ...yTicks.map(value =>
-          measureText(renderYAxisLabel(value), `500 12px ${DEFAULT_FONT}`),
-        ),
-      ) +
-      16 +
-      8;
-    const marginRight = 8;
-    const marginTop = 8;
-
-    const yRangeBottom = marginTop;
-    const yRangeTop = HEIGHT - X_AXIS_HEIGHT;
-
-    const width = nullThrows(this.state.width) - marginRight;
-
-    const xRange = scaleLinearLight(marginLeft, width, 0, labels.length - 1);
-    const yRange = scaleLinearLight(yRangeTop, yRangeBottom, yMin, yMax);
+      marginLeft,
+      widthInner: width,
+      xRange,
+      xTicks,
+      yRange,
+      yTicks,
+    } = this.state;
+    if (!marginLeft || !width || !xRange || !xTicks || !yTicks || !yRange) {
+      throw new Error('unreachable');
+    }
 
     return (
       <React.Fragment>

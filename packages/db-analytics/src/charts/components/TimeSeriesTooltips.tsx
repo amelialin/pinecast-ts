@@ -24,7 +24,9 @@ const TooltipMarker = styled(
   {className: 'TooltipMarker'},
 );
 
-export default class TimeSeriesTooltips extends React.Component {
+const cache = new WeakMap<TimeSeriesData['labels'], Array<JSX.Element>>();
+
+export default class TimeSeriesTooltips extends React.PureComponent {
   props: {
     data: TimeSeriesData;
     height: number;
@@ -100,41 +102,53 @@ export default class TimeSeriesTooltips extends React.Component {
     );
   }
 
-  render() {
+  renderBars() {
     const {
       data: {labels},
       height,
       xRange,
     } = this.props;
+
+    const cached = cache.get(labels);
+    if (cached) {
+      return cached;
+    }
+
+    const out = labels.map((label, idx) => {
+      return (
+        <TooltipGroup key={idx}>
+          <TooltipMarker
+            x1={xRange(idx)}
+            x2={xRange(idx)}
+            y1={8}
+            y2={8 + height}
+          />
+          <rect
+            className="has-tooltip"
+            data-idx={idx}
+            fill="transparent"
+            height={height}
+            key={idx}
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.handleMouseLeave}
+            onMouseMove={this.handleMouseMove}
+            width={Math.ceil(innerWidth / labels.length)}
+            x={Math.floor((xRange(idx) + xRange(idx - 1)) / 2 + 1)}
+            y={8}
+          />
+        </TooltipGroup>
+      );
+    });
+    cache.set(labels, out);
+    return out;
+  }
+
+  render() {
     const {selected, y} = this.state;
 
     return (
       <React.Fragment>
-        {labels.map((label, idx) => {
-          return (
-            <TooltipGroup key={idx}>
-              <TooltipMarker
-                x1={xRange(idx)}
-                x2={xRange(idx)}
-                y1={8}
-                y2={8 + height}
-              />
-              <rect
-                className="has-tooltip"
-                data-idx={idx}
-                fill="transparent"
-                height={height}
-                key={idx}
-                onMouseEnter={this.handleMouseEnter}
-                onMouseLeave={this.handleMouseLeave}
-                onMouseMove={this.handleMouseMove}
-                width={Math.ceil(innerWidth / labels.length)}
-                x={Math.floor((xRange(idx) + xRange(idx - 1)) / 2 + 1)}
-                y={8}
-              />
-            </TooltipGroup>
-          );
-        })}
+        {this.renderBars()}
         {selected !== null && (
           <Layer pointerEvents={false} x={this.getTooltipOffset()} y={y || 0}>
             <Tooltip onRef={this.handleRef}>

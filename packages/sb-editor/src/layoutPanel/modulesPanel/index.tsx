@@ -18,8 +18,9 @@ type Props = {
 const ModulesPanel = ({onFooterUpdate, onHeaderUpdate, theme}: Props) => (
   <PanelWrapper>
     <PanelDescription>
-      Adding and removing modules lets you add or remove features from your
-      podcast website.
+      Modules are the sections of content on each of your pages. One group of
+      modules composes your header, and another composes your website's footer.
+      You can add, remove, and modify modules from either group.
     </PanelDescription>
     <Label
       componentType="div"

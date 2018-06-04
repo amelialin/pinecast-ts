@@ -1,3 +1,4 @@
+import {Action} from 'redux';
 import {Dispatch} from 'react-redux';
 import {ThunkAction} from 'redux-thunk';
 
@@ -10,10 +11,12 @@ export type SaveActionPayload = {saving: boolean; error: string | null};
 
 export const setSaveState = actionFactory<SaveActionPayload>('save.setStatus');
 
-export const doSave: ThunkAction<void, RootReducerType, void> = () => async (
-  dispatch: Dispatch<any>,
-  getState: () => RootReducerType,
-) => {
+export const doSave: ThunkAction<
+  void,
+  RootReducerType,
+  void,
+  Action
+> = () => async (dispatch: Dispatch<any>, getState: () => RootReducerType) => {
   await dispatch(setSaveState({saving: true, error: null}));
   const {csrf, slug, theme} = getState();
   let response;

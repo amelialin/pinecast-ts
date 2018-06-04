@@ -292,7 +292,8 @@ export default class SharesChart extends React.Component {
               <div>
                 {data.filter(x => x.isOther).map((d, i) => (
                   <Other key={i}>
-                    {d.label} <OtherCount>{d.value}</OtherCount>
+                    {d.label}{' '}
+                    <OtherCount>{numeral(d.value).format('0,0')}</OtherCount>
                   </Other>
                 ))}
               </div>

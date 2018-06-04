@@ -43,7 +43,7 @@ const initialState: ReducerType = {
   wasLoaded: false,
   needsSave: false,
 
-  page: 'theme',
+  page: 'layout',
   themePage: 'colors',
   layoutPage: 'episodeItems',
   preview: previewInitialState,

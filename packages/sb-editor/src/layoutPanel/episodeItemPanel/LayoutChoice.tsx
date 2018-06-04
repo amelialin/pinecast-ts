@@ -269,6 +269,7 @@ export default class LayoutChoice extends React.PureComponent {
         <Collapser open={this.state.containerOptionOpen}>
           <Label $oneLine style={{marginTop: 12}} text="Container inner size">
             <Select
+              disabled={!this.state.containerOptionOpen}
               onChange={this.handleWidthChange}
               options={widthOptions}
               value={layout.width || 'default'}
@@ -276,17 +277,20 @@ export default class LayoutChoice extends React.PureComponent {
           </Label>
           <Label $oneLine text="Container alignment">
             <Select
+              disabled={!this.state.containerOptionOpen}
               onChange={this.handleAlignmentChange}
               options={alignmentOptions}
               value={layout.alignment || 'center'}
             />
           </Label>
           <ElementColorSelector
+            disabled={!this.state.containerOptionOpen}
             onChange={this.handleBGChange}
             type="background"
             value={layout.bgColor || ''}
           />
           <ElementColorSelector
+            disabled={!this.state.containerOptionOpen}
             onChange={this.handleFGChange}
             type="foreground"
             value={layout.fgColor || ''}

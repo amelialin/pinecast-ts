@@ -8,8 +8,9 @@ import LineChartBody from './components/LineChartBody';
 
 import {Episode, TimeSeriesData} from '../types';
 import SubToolbar from './components/SubToolbar';
+import TimeSeriesTooltips from './components/TimeSeriesTooltips';
 
-export default class TimeSeriesChart extends React.Component {
+export default class GrowthChart extends React.Component {
   props: {
     data: TimeSeriesData;
     episodes: Array<Episode> | null;
@@ -20,7 +21,7 @@ export default class TimeSeriesChart extends React.Component {
     hovering: string | number | null;
   };
 
-  constructor(props: TimeSeriesChart['props']) {
+  constructor(props: GrowthChart['props']) {
     super(props);
     this.state = {
       activeSeries: props.data.datasets.map((_, i) => i),
@@ -79,13 +80,20 @@ export default class TimeSeriesChart extends React.Component {
   }) => {
     const {activeSeries, hovering} = this.state;
     return (
-      <LineChartBody
-        activeSeries={activeSeries}
-        data={this.props.data}
-        hovering={hovering}
-        xRange={xRange}
-        yRange={yRange}
-      />
+      <React.Fragment>
+        <LineChartBody
+          activeSeries={activeSeries}
+          data={this.props.data}
+          hovering={hovering}
+          xRange={xRange}
+          yRange={yRange}
+        />
+        <TimeSeriesTooltips
+          data={this.props.data}
+          height={height}
+          xRange={xRange}
+        />
+      </React.Fragment>
     );
   };
 
@@ -108,7 +116,9 @@ export default class TimeSeriesChart extends React.Component {
   };
 
   getCSVData = () => {
-    const {data: {datasets, labels}} = this.props;
+    const {
+      data: {datasets, labels},
+    } = this.props;
     return [
       ['Timestamp', ...datasets.map(ds => ds.label)],
       ...labels.map((label, i) => [

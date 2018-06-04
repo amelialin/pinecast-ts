@@ -12,6 +12,7 @@ import * as chromeActions from '../actions/chrome';
 const colorsOptionalKeys = {...colorKeyNames, '': '--'};
 
 type Props = {
+  disabled?: boolean;
   onChange: (newColor: string | undefined) => void;
   type: 'background' | 'foreground';
   value: string | null | undefined;
@@ -35,6 +36,7 @@ class ElementColorSelector extends React.PureComponent {
       >
         <Group spacing={8}>
           <Select
+            disabled={this.props.disabled}
             onChange={this.handleChange}
             options={Object.entries(colorsOptionalKeys).map(([key, value]) => ({
               key,
@@ -42,7 +44,9 @@ class ElementColorSelector extends React.PureComponent {
             }))}
             value={value || ''}
           />
-          <Button onClick={goToColors}>Change colors</Button>
+          <Button disabled={this.props.disabled} onClick={goToColors}>
+            Change colors
+          </Button>
         </Group>
       </Label>
     );
