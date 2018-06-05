@@ -323,12 +323,13 @@ export default class AnalyticsDash extends React.Component {
           copy={
             isOwner ? (
               <React.Fragment>
-                These analytics are for podcasts owned by <ProBadge />{' '}
-                customers.
+                These analytics are for podcasts owned by{' '}
+                <ProBadge marginRight={false} /> customers.
               </React.Fragment>
             ) : (
               <React.Fragment>
-                These analytics are available for <ProBadge /> customers.
+                These analytics are available for{' '}
+                <ProBadge marginRight={false} /> customers.
               </React.Fragment>
             )
           }

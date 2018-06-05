@@ -8,6 +8,8 @@ import ImportTool from '@pinecast/db-import-tool';
 import Spotify from '@pinecast/db-spotify';
 import Upgrade from '@pinecast/db-upgrade';
 
+import './pageScripts';
+
 const styletron = new ClientStyletron();
 
 type Mountable<T> = React.ComponentType<T> & {

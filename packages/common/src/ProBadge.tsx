@@ -10,12 +10,15 @@ const Badge = styled('span', {
   fontSize: 13,
   fontStyle: 'italic',
   fontWeight: 500,
-  marginRight: 4,
   padding: '2px 5px 3px',
 });
 
-const ProBadge = ({style}: {style?: React.CSSProperties}) => (
-  <Badge style={style}>Pro</Badge>
-);
+const ProBadge = ({
+  marginRight = true,
+  style,
+}: {
+  marginRight?: boolean;
+  style?: React.CSSProperties;
+}) => <Badge style={{...style, marginRight: marginRight ? 4 : 0}}>Pro</Badge>;
 
 export default ProBadge;
