@@ -35,8 +35,11 @@ module.exports = {
       },
     ],
   },
-  externals: require('../../webpack.externals'),
   target: 'node',
+  optimization: {
+    minimizer: [],
+    splitChunks: false,
+  },
   node: {
     Buffer: false,
     setImmediate: false,

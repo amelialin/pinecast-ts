@@ -125,7 +125,9 @@ export const routes: {[route: string]: Route} = {
 export function route(name: string, params: {[name: string]: string}): string {
   const route = routes[name];
   if (!route) {
-    throw new Error(`Unexpected route '${name}'`);
+    throw new Error(
+      `Unexpected route '${name}' with params ${JSON.stringify(params)}`,
+    );
   }
   return route.format(params);
 }

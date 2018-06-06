@@ -66,7 +66,7 @@ export default class Positioner extends React.Component {
       this.reposition();
       return;
     }
-    if (!(e.target as HTMLElement).contains(this.ref)) {
+    if (!e.target || !(e.target as HTMLElement).contains(this.ref)) {
       return;
     }
     this.scrollElementCache.add(e.target as HTMLElement);
