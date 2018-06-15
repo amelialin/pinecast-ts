@@ -26,10 +26,10 @@ const Wrapper = styled(
       opacity: 1,
     },
   },
-  {className: 'ModuleInsertionPoint--Wrapper'},
+  {className: 'InsertionPoint--Wrapper'},
 );
 
-export default class ModuleInsertionPoint extends React.Component {
+export default class InsertionPoint extends React.Component {
   props: {
     index: number;
     onInsert: (index: number, newTag: string) => void;

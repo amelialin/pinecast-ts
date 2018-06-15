@@ -75,7 +75,7 @@ function getItems(
   let ignored = 0;
   const items: Array<FeedItem> = [];
   for (const node of nodes) {
-    const audioURL = firstTagAttr(node, 'enclosure', 'url');
+    const audioURL = firstTagAttr(node, 'enclosure', 'url', '');
     if (!audioURL) {
       ignored++;
       continue;
@@ -140,7 +140,7 @@ function parseDuration(duration: string): number {
     durTup.splice(0, size - 3);
   }
   return durTup
-    .map((x, i) => x * (60 ** (durTup.length - i - 1)))
+    .map((x, i) => x * 60 ** (durTup.length - i - 1))
     .reduce((a, b) => a + b);
 }
 

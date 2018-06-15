@@ -8,12 +8,12 @@ import styled from '@pinecast/styles';
 
 import {MetadataType} from './types';
 import ModuleCard from './ModuleCard';
-import ModuleInsertionPoint from './ModuleInsertionPoint';
+import InsertionPoint from './InsertionPoint';
 import ModuleInsertionModal from './ModuleInsertionModal';
 
 const Wrapper = styled('div', {
   marginBottom: 28,
-  ':not(:empty) .ModuleCard--outerWrapper:hover + .ModuleInsertionPoint--Wrapper .Button-nativeButton': {
+  ':not(:empty) .ModuleCard--outerWrapper:hover + .InsertionPoint--Wrapper .Button-nativeButton': {
     opacity: 1,
   },
 });
@@ -83,7 +83,7 @@ export default class ComponentLayoutGroup extends React.PureComponent {
       <Wrapper>
         {layouts.map((layout, i) => (
           <React.Fragment key={i}>
-            <ModuleInsertionPoint index={i} onInsert={this.handleOnInsert} />
+            <InsertionPoint index={i} onInsert={this.handleOnInsert} />
             <ModuleCard
               canDelete
               index={i}
@@ -96,10 +96,7 @@ export default class ComponentLayoutGroup extends React.PureComponent {
             />
           </React.Fragment>
         ))}
-        <ModuleInsertionPoint
-          index={layouts.length}
-          onInsert={this.handleOnInsert}
-        />
+        <InsertionPoint index={layouts.length} onInsert={this.handleOnInsert} />
       </Wrapper>
     );
   }
