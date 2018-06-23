@@ -11,7 +11,6 @@ export const TYPE_GEO_LISTENS = 'listen_geo';
 export const TYPE_GEO_GRAN_SUBS = 'subscribers_geo_gran';
 export const TYPE_GEO_GRAN_LISTENS = 'listen_geo_gran';
 export const TYPE_TOP_EPISODES = 'top_episodes';
-export const TYPE_TOP_CITIES = 'top_cities';
 export const TYPE_GROWTH = 'network_growth';
 
 export type AnalyticsType = 'episode' | 'network' | 'podcast';
@@ -27,7 +26,6 @@ export type AnalyticsView =
   | typeof TYPE_GEO_GRAN_SUBS
   | typeof TYPE_GEO_GRAN_LISTENS
   | typeof TYPE_TOP_EPISODES
-  | typeof TYPE_TOP_CITIES
   | typeof TYPE_GROWTH;
 
 export const TYPES: {[type: string]: Array<AnalyticsView>} = {
@@ -38,7 +36,6 @@ export const TYPES: {[type: string]: Array<AnalyticsView>} = {
     TYPE_GROWTH,
     TYPE_GEO_LISTENS,
     TYPE_GEO_GRAN_LISTENS,
-    TYPE_TOP_CITIES,
   ],
   network: [
     TYPE_LISTENS,
@@ -50,7 +47,6 @@ export const TYPES: {[type: string]: Array<AnalyticsView>} = {
     TYPE_GEO_GRAN_LISTENS,
     TYPE_GEO_SUBS,
     TYPE_GEO_GRAN_SUBS,
-    TYPE_TOP_CITIES,
   ],
   podcast: [
     TYPE_LISTENS,
@@ -64,8 +60,6 @@ export const TYPES: {[type: string]: Array<AnalyticsView>} = {
     TYPE_GEO_GRAN_LISTENS,
     TYPE_GEO_SUBS,
     TYPE_GEO_GRAN_SUBS,
-    TYPE_TOP_EPISODES,
-    TYPE_TOP_CITIES,
   ],
 };
 
@@ -82,7 +76,6 @@ export const TYPES_NAMES: {[type: string]: string} = {
   [TYPE_GEO_LISTENS]: gettext('Listener Locations'),
   [TYPE_GEO_GRAN_LISTENS]: gettext('Listener locations by city'),
   [TYPE_TOP_EPISODES]: gettext('Top episodes'),
-  [TYPE_TOP_CITIES]: gettext('Top cities (by listen)'),
 };
 
 export const TYPES_ENDPOINTS: {[type: string]: {[view: string]: string}} = {
@@ -93,7 +86,6 @@ export const TYPES_ENDPOINTS: {[type: string]: {[view: string]: string}} = {
     [TYPE_GROWTH]: 'episode/growth',
     [TYPE_GEO_LISTENS]: 'episode/listens/location',
     [TYPE_GEO_GRAN_LISTENS]: 'episode/listens/location/options',
-    [TYPE_TOP_CITIES]: 'episode/listens/location/options',
   },
   network: {
     [TYPE_LISTENS]: 'network/listens',
@@ -105,7 +97,6 @@ export const TYPES_ENDPOINTS: {[type: string]: {[view: string]: string}} = {
     [TYPE_SUBS]: 'network/subscribers',
     [TYPE_GEO_SUBS]: 'network/subscribers/location',
     [TYPE_GEO_GRAN_SUBS]: 'network/subscribers/location/options',
-    [TYPE_TOP_CITIES]: 'network/listens/location/options',
   },
   podcast: {
     [TYPE_LISTENS]: 'podcast/listens',
@@ -120,7 +111,6 @@ export const TYPES_ENDPOINTS: {[type: string]: {[view: string]: string}} = {
     [TYPE_SUBS]: 'podcast/subscribers',
     [TYPE_GEO_SUBS]: 'podcast/subscribers/location',
     [TYPE_GEO_GRAN_SUBS]: 'podcast/subscribers/location/options',
-    [TYPE_TOP_CITIES]: 'podcast/listens/location/options',
   },
 };
 export const TYPES_ENDPOINTS_MENU: {
@@ -129,24 +119,18 @@ export const TYPES_ENDPOINTS_MENU: {
   episode: {
     [TYPE_GEO_GRAN_LISTENS]: (choice: string) =>
       `episode/listens/location/${encodeURIComponent(choice)}`,
-    [TYPE_TOP_CITIES]: (choice: string) =>
-      `episode/listens/location/${encodeURIComponent(choice)}/top`,
   },
   network: {
     [TYPE_GEO_GRAN_LISTENS]: (choice: string) =>
       `network/listens/location/${encodeURIComponent(choice)}`,
     [TYPE_GEO_GRAN_SUBS]: (choice: string) =>
       `network/subscribers/location/${encodeURIComponent(choice)}`,
-    [TYPE_TOP_CITIES]: (choice: string) =>
-      `network/listens/location/${encodeURIComponent(choice)}/top`,
   },
   podcast: {
     [TYPE_GEO_GRAN_LISTENS]: (choice: string) =>
       `podcast/listens/location/${encodeURIComponent(choice)}`,
     [TYPE_GEO_GRAN_SUBS]: (choice: string) =>
       `podcast/subscribers/location/${encodeURIComponent(choice)}`,
-    [TYPE_TOP_CITIES]: (choice: string) =>
-      `podcast/listens/location/${encodeURIComponent(choice)}/top`,
   },
 };
 
@@ -171,13 +155,11 @@ export const TYPES_CHART_TYPES: {[view: string]: ChartType} = {
   [TYPE_GEO_GRAN_SUBS]: 'menu',
   [TYPE_GEO_GRAN_LISTENS]: 'menu',
   [TYPE_TOP_EPISODES]: 'table',
-  [TYPE_TOP_CITIES]: 'menu',
   [TYPE_GROWTH]: 'growth',
 };
 export const TYPES_CHART_MENU_TYPES: {[view: string]: ChartType} = {
   [TYPE_GEO_GRAN_SUBS]: 'geo_gran',
   [TYPE_GEO_GRAN_LISTENS]: 'geo_gran',
-  [TYPE_TOP_CITIES]: 'table',
 };
 
 export const TYPES_CHART_REQUIRES: {
@@ -194,7 +176,6 @@ export const TYPES_CHART_REQUIRES: {
   [TYPE_GEO_GRAN_SUBS]: 'pro',
   [TYPE_GEO_GRAN_LISTENS]: 'pro',
   [TYPE_TOP_EPISODES]: 'pro',
-  [TYPE_TOP_CITIES]: 'pro',
   [TYPE_GROWTH]: 'pro',
 };
 
@@ -275,7 +256,6 @@ export const TYPE_GRANULARITIES: {
 export const MENU_LABELS: {[view: string]: string} = {
   [TYPE_GEO_GRAN_LISTENS]: gettext('Listener country'),
   [TYPE_GEO_GRAN_SUBS]: gettext('Subscriber country'),
-  [TYPE_TOP_CITIES]: gettext('Cities in country'),
 };
 
 export const LINE_CHART_DEFAULT_DISPLAY_OVERRIDE: {
