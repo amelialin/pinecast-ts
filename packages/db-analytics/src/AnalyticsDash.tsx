@@ -271,7 +271,19 @@ export default class AnalyticsDash extends React.Component {
     endDate: Moment;
     startDate: Moment;
   }) => {
-    this.setState({customTimeframe: [startDate.toDate(), endDate.toDate()]});
+    const customTimeframe: [Date, Date] = [
+      startDate.toDate(),
+      endDate.toDate(),
+    ];
+    this.setState({
+      customTimeframe,
+      granularity: timeframeAndGranularity.getDefaultGranularity(
+        this.state.view,
+        this.state.granularity,
+        this.state.timeframe,
+        customTimeframe,
+      ),
+    });
   };
 
   renderCustomTimeframe() {

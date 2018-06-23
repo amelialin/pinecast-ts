@@ -32,6 +32,7 @@ class ValidDatePicker extends React.Component {
       <DateTimePicker
         {...props}
         className="drp-vdp"
+        closeOnSelect
         onChange={this.handleDateChange}
         timeFormat={false}
         value={invalidState || props.value}
