@@ -4,8 +4,6 @@ import Button from '@pinecast/common/Button';
 import ModalLayer from '@pinecast/common/ModalLayer';
 import styled from '@pinecast/styles';
 
-import ModuleInsertionModal from './ModuleInsertionModal';
-
 const Wrapper = styled(
   'aside',
   {
@@ -32,6 +30,12 @@ const Wrapper = styled(
 export default class InsertionPoint extends React.Component {
   props: {
     index: number;
+    label: string;
+    Modal: React.ComponentType<{
+      index: number;
+      onClose: () => void;
+      onInsert: (index: number, tag: string) => void;
+    }>;
     onInsert: (index: number, newTag: string) => void;
   };
   state: {isOpen: boolean} = {isOpen: false};
@@ -44,17 +48,18 @@ export default class InsertionPoint extends React.Component {
   };
 
   render() {
+    const {Modal} = this.props;
     return (
       <Wrapper>
         <Button onClick={this.handleClick} size="small">
-          Add module
+          {this.props.label}
         </Button>
         <ModalLayer
           canEscape
           onClose={this.handleClose}
           open={this.state.isOpen}
         >
-          <ModuleInsertionModal
+          <Modal
             index={this.props.index}
             onClose={this.handleClose}
             onInsert={this.props.onInsert}

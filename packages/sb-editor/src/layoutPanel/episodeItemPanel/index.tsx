@@ -13,7 +13,7 @@ import {
   setFirstPagePrefixSegments,
 } from '../../actions/theme';
 import ComponentLayoutGroup from '../moduleHelpers/ComponentLayoutGroup';
-import LayoutChoice from './LayoutChoice';
+import LayoutChoiceGroup from './LayoutChoiceGroup';
 import {mergedTheme} from '../../reducers/selectors';
 import {PanelDescription, PanelWrapper} from '../../panelComponents';
 import {primitives} from '@pinecast/sb-components';
@@ -39,40 +39,6 @@ class EpisodeItemPanel extends React.Component {
     theme: ThemePartial;
   };
 
-  handleFirstPagePrefixLayoutChange = (
-    index: number,
-    layout: primitives.LayoutConfig,
-  ) => {
-    const newSegments = [...this.props.theme.layout.body.home.firstPagePrefix];
-    newSegments[index] = {
-      ...this.props.theme.layout.body.home.firstPagePrefix[index],
-      ...layout,
-    };
-    this.props.onSetFirstPagePrefixSegments(newSegments);
-  };
-  handleHomeLayoutChange = (index: number, layout: primitives.LayoutConfig) => {
-    const newSegments = [...this.props.theme.layout.body.home.segments];
-    newSegments[index] = {
-      ...this.props.theme.layout.body.home.segments[index],
-      ...layout,
-    };
-    this.props.onSetHomeSegments(newSegments);
-  };
-  handleHomeLayoutSwap = (fromIndex: number, toIndex: number) => {
-    const newSegments = [...this.props.theme.layout.body.home.segments];
-    const temp = newSegments[fromIndex];
-    newSegments[fromIndex] = newSegments[toIndex];
-    newSegments[toIndex] = temp;
-    this.props.onSetHomeSegments(newSegments);
-  };
-  handleFirstPagePrefixLayoutSwap = (fromIndex: number, toIndex: number) => {
-    const newSegments = [...this.props.theme.layout.body.home.firstPagePrefix];
-    const temp = newSegments[fromIndex];
-    newSegments[fromIndex] = newSegments[toIndex];
-    newSegments[toIndex] = temp;
-    this.props.onSetFirstPagePrefixSegments(newSegments);
-  };
-
   remainingBudget(): number {
     const {firstPagePrefix, segments} = this.props.theme.layout.body.home;
 
@@ -95,20 +61,12 @@ class EpisodeItemPanel extends React.Component {
         </PanelDescription>
         <Tabs>
           <Tab name="Every page">
-            {theme.layout.body.home.segments.map((segment, i) => (
-              <LayoutChoice
-                canDelete={theme.layout.body.home.segments.length > 1}
-                consumeBudget={budget}
-                index={i}
-                isFirst={i === 0}
-                isLast={i === theme.layout.body.home.segments.length - 1}
-                key={i}
-                layout={segment}
-                onChange={this.handleHomeLayoutChange}
-                onSwap={this.handleHomeLayoutSwap}
-                onDelete={this.props.onDeleteHomeSegment}
-              />
-            ))}
+            <LayoutChoiceGroup
+              canDelete={theme.layout.body.home.segments.length > 1}
+              consumeBudget={budget}
+              layouts={theme.layout.body.home.segments}
+              onUpdated={this.props.onSetHomeSegments}
+            />
           </Tab>
           <Tab name="First page">
             <Label
@@ -117,22 +75,12 @@ class EpisodeItemPanel extends React.Component {
               text="Hero episodes"
             >
               {theme.layout.body.home.firstPagePrefix.length ? (
-                theme.layout.body.home.firstPagePrefix.map((segment, i) => (
-                  <LayoutChoice
-                    canDelete
-                    consumeBudget={budget}
-                    index={i}
-                    isFirst={i === 0}
-                    isLast={
-                      i === theme.layout.body.home.firstPagePrefix.length - 1
-                    }
-                    key={i}
-                    layout={segment}
-                    onChange={this.handleFirstPagePrefixLayoutChange}
-                    onSwap={this.handleFirstPagePrefixLayoutSwap}
-                    onDelete={this.props.onDeleteFirstPagePrefixSegment}
-                  />
-                ))
+                <LayoutChoiceGroup
+                  canDelete
+                  consumeBudget={budget}
+                  layouts={theme.layout.body.home.firstPagePrefix || []}
+                  onUpdated={this.props.onSetFirstPagePrefixSegments}
+                />
               ) : (
                 <EmptyState
                   copy="Hero sections let you feature recent episodes on your site's homepage."

@@ -4,8 +4,8 @@ import Button, {ButtonGroup} from '@pinecast/common/Button';
 import Collapser from '@pinecast/common/Collapser';
 import {Delete, Down, Up} from '@pinecast/common/icons';
 import Group from '@pinecast/common/Group';
-import Label from '@pinecast/common/Label';
 import {itemLayoutsMetadata} from '@pinecast/sb-presets';
+import Label from '@pinecast/common/Label';
 import {primitives} from '@pinecast/sb-components';
 import Select from '@pinecast/common/Select';
 import StackedSection from '@pinecast/common/StackedSection';
@@ -13,12 +13,9 @@ import styled, {CSS} from '@pinecast/styles';
 import TextInput from '@pinecast/common/TextInput';
 
 import ElementColorSelector from '../ElementColorSelector';
+import LayoutPicker from './LayoutPicker';
 import SchemaField from '../moduleHelpers/schemaFields';
 
-const layoutTypeOptions = [
-  {key: 'stacked', label: 'Stacked'},
-  {key: 'grid', label: 'Grid'},
-];
 const widthOptions = [
   {key: 'full', label: 'Full width'},
   {key: 'default', label: 'Use default page body width'},
@@ -55,16 +52,7 @@ export default class LayoutChoice extends React.PureComponent {
     episodeOptionOpen: false,
   };
 
-  handleChangeLayoutType = (newType: string) => {
-    this.props.onChange(this.props.index, {
-      ...this.props.layout,
-      type: newType,
-      elementLayout: Object.values(itemLayoutsMetadata)
-        .find(val => val.type === newType)
-        .func(),
-    });
-  };
-  handleChangeLayoutPreset = (preset: string) => {
+  handleChangeLayout = (preset: string) => {
     this.props.onChange(this.props.index, {
       ...this.props.layout,
       elementLayout: itemLayoutsMetadata[preset].func(),
@@ -170,24 +158,10 @@ export default class LayoutChoice extends React.PureComponent {
     const {schema = {}} = itemLayoutsMetadata[layout.elementLayout.tag];
     return (
       <StackedSection>
-        <Label text="Layout type">
-          <Group spacing={16}>
-            <Select
-              onChange={this.handleChangeLayoutType}
-              options={layoutTypeOptions}
-              style={{display: 'inline-flex'}}
-              value={layout.type}
-            />
-            <Select
-              onChange={this.handleChangeLayoutPreset}
-              options={Object.entries(itemLayoutsMetadata)
-                .filter(([key]) => key.startsWith(`${layout.type}.`))
-                .map(([key, {name}]) => ({label: name, key}))}
-              style={{display: 'inline-flex'}}
-              value={layout.elementLayout.tag}
-            />
-          </Group>
-        </Label>
+        <LayoutPicker
+          onSelect={this.handleChangeLayout}
+          selection={layout.elementLayout.tag}
+        />
         <Label text="Number of episodes to show">
           <TextInput
             onChange={this.handleCountChange}

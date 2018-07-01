@@ -13,9 +13,6 @@ import ModuleInsertionModal from './ModuleInsertionModal';
 
 const Wrapper = styled('div', {
   marginBottom: 28,
-  ':not(:empty) .ModuleCard--outerWrapper:hover + .InsertionPoint--Wrapper .Button-nativeButton': {
-    opacity: 1,
-  },
 });
 
 export default class ComponentLayoutGroup extends React.PureComponent {
@@ -83,7 +80,12 @@ export default class ComponentLayoutGroup extends React.PureComponent {
       <Wrapper>
         {layouts.map((layout, i) => (
           <React.Fragment key={i}>
-            <InsertionPoint index={i} onInsert={this.handleOnInsert} />
+            <InsertionPoint
+              index={i}
+              label="Add module"
+              Modal={ModuleInsertionModal}
+              onInsert={this.handleOnInsert}
+            />
             <ModuleCard
               canDelete
               index={i}
@@ -96,7 +98,12 @@ export default class ComponentLayoutGroup extends React.PureComponent {
             />
           </React.Fragment>
         ))}
-        <InsertionPoint index={layouts.length} onInsert={this.handleOnInsert} />
+        <InsertionPoint
+          index={layouts.length}
+          label="Add module"
+          Modal={ModuleInsertionModal}
+          onInsert={this.handleOnInsert}
+        />
       </Wrapper>
     );
   }
