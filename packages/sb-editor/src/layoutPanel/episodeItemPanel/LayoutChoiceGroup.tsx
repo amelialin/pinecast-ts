@@ -41,11 +41,14 @@ export default class LayoutChoiceGroup extends React.PureComponent {
   };
 
   handleOnInsert = (index: number, tag: string) => {
+    const layout = itemLayoutsMetadata[tag];
     const newAddition: primitives.LayoutConfig = {
-      type: tag.split('.')[0],
-      consumeCount: Math.min(this.props.consumeBudget, 5),
       alignment: 'left',
+      consumeCount:
+        layout.forceConsumeCount || Math.min(this.props.consumeBudget, 5),
       elementLayout: itemLayoutsMetadata[tag].func({}),
+      itemSpacing: layout.type === 'grid' ? 15 : undefined,
+      type: tag.split('.')[0],
       width: 'default',
     };
     const out = [...this.props.layouts];
@@ -85,12 +88,14 @@ export default class LayoutChoiceGroup extends React.PureComponent {
       <Wrapper>
         {layouts.map((layout, i) => (
           <React.Fragment key={i}>
-            <InsertionPoint
-              index={i}
-              label="Add episode layout"
-              Modal={LayoutInsertionModal}
-              onInsert={this.handleOnInsert}
-            />
+            {consumeBudget > 0 && (
+              <InsertionPoint
+                index={i}
+                label="Add episode layout"
+                Modal={LayoutInsertionModal}
+                onInsert={this.handleOnInsert}
+              />
+            )}
             <LayoutChoice
               canDelete={canDelete}
               consumeBudget={consumeBudget}
@@ -104,12 +109,14 @@ export default class LayoutChoiceGroup extends React.PureComponent {
             />
           </React.Fragment>
         ))}
-        <InsertionPoint
-          index={layouts.length}
-          label="Add episode layout"
-          Modal={LayoutInsertionModal}
-          onInsert={this.handleOnInsert}
-        />
+        {consumeBudget > 0 && (
+          <InsertionPoint
+            index={layouts.length}
+            label="Add episode layout"
+            Modal={LayoutInsertionModal}
+            onInsert={this.handleOnInsert}
+          />
+        )}
       </Wrapper>
     );
   }

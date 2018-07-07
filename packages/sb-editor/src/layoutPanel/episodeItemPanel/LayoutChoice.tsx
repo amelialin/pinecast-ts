@@ -63,10 +63,10 @@ export default class LayoutChoice extends React.PureComponent {
     this.props.onDelete(this.props.index);
   };
   handleMoveDown = () => {
-    this.props.onSwap(this.props.index, this.props.index - 1);
+    this.props.onSwap(this.props.index, this.props.index + 1);
   };
   handleMoveUp = () => {
-    this.props.onSwap(this.props.index, this.props.index + 1);
+    this.props.onSwap(this.props.index, this.props.index - 1);
   };
 
   handleToggleContainer = () => {

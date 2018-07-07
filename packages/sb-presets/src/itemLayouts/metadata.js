@@ -61,6 +61,7 @@ export default {
     description: 'A stacked layout meant to be used as the hero.',
     type: 'stacked',
     func: heroFullWidthStackedItem,
+    forceConsumeCount: 1,
 
     schema: {
       position: {
