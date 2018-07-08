@@ -41,7 +41,7 @@ export default class TimeSeriesTooltips extends React.PureComponent {
   tooltip: HTMLElement | null = null;
 
   handleMouseMove = (e: React.MouseEvent<SVGElement>) => {
-    if (this.state.selected) {
+    if (this.state.selected !== null) {
       this.setState({x: e.pageX, y: e.pageY});
     }
   };
@@ -114,7 +114,13 @@ export default class TimeSeriesTooltips extends React.PureComponent {
       return cached;
     }
 
+    const segmentWidth = Math.ceil(innerWidth / labels.length);
     const out = labels.map((label, idx) => {
+      const x = idx
+        ? Math.floor((xRange(idx) + xRange(idx - 1)) / 2 + 1)
+        : xRange(idx);
+      const width =
+        idx && idx < labels.length - 1 ? segmentWidth : segmentWidth / 2;
       return (
         <TooltipGroup key={idx}>
           <TooltipMarker
@@ -132,8 +138,8 @@ export default class TimeSeriesTooltips extends React.PureComponent {
             onMouseEnter={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}
             onMouseMove={this.handleMouseMove}
-            width={Math.ceil(innerWidth / labels.length)}
-            x={Math.floor((xRange(idx) + xRange(idx - 1)) / 2 + 1)}
+            width={width}
+            x={x}
             y={8}
           />
         </TooltipGroup>
