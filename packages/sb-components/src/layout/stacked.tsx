@@ -24,12 +24,8 @@ export default getsItemSource(function<T>(
     backgroundColor: config.fgColor,
     maxWidth: config.width === 'full' ? '100%' : 'var(--fixedWidthMax)',
   };
-  const inner = (
-    <WrapperInner style={wrapperStyle}>
-      {renderN(config.consumeCount, itemSource, (item: T, i: number) =>
-        childRenderer(i, item, null),
-      )}
-    </WrapperInner>
+  const inner = renderN(config.consumeCount, itemSource, (item: T, i: number) =>
+    childRenderer(i, item, null),
   );
 
   if (!config.bgColor) {

@@ -155,7 +155,14 @@ export default class LayoutChoice extends React.PureComponent {
 
   render() {
     const {canDelete, consumeBudget, isFirst, isLast, layout} = this.props;
-    const {schema = {}} = itemLayoutsMetadata[layout.elementLayout.tag];
+    const {func: renderFunc, schema = {}} = itemLayoutsMetadata[
+      layout.elementLayout.tag
+    ];
+    const tagOptions = layout.elementLayout.tagOptions;
+    const mergedTagOptions = {
+      ...renderFunc().tagOptions,
+      ...tagOptions,
+    };
     return (
       <StackedSection>
         <LayoutPicker
@@ -282,7 +289,7 @@ export default class LayoutChoice extends React.PureComponent {
               onUpdate={this.handleSchemaChange}
               open={this.state.episodeOptionOpen}
               schema={schema as primitives.ComponentLayoutOption}
-              tagOptions={layout.elementLayout.tagOptions}
+              tagOptions={mergedTagOptions}
             />
           ))}
         </Collapser>

@@ -1,6 +1,9 @@
 export default ({
+  overlayStyle = 'dark',
+  padding = '50px 0 30px',
   position = 'center top',
   // source = 'coverart',
+  text = 'Latest episode',
   textStyleType = 'heroItem',
 } = {}) => ({
   elements: [
@@ -20,7 +23,7 @@ export default ({
               type: 'block.text',
               tagName: 'h1',
 
-              textContent: 'Latest Episode',
+              textContent: text,
 
               extendsStyles: ['textStyles', 'heroItemSecondary'],
               styles: {},
@@ -59,8 +62,11 @@ export default ({
             },
           ],
           elementOptions: {
-            bgColor: 'rgba(0, 0, 0, 0.5)',
-            innerPadding: '50px 0 30px',
+            bgColor:
+              overlayStyle === 'dark'
+                ? 'rgba(0, 0, 0, 0.5)'
+                : 'rgba(255, 255, 255, 0.5)',
+            innerPadding: padding,
             outerPadding: '0 15px',
           },
         },
@@ -71,8 +77,11 @@ export default ({
 
   tag: 'stacked.heroFullWidth',
   tagOptions: {
+    overlayStyle,
+    padding,
     position,
     // source,
+    text,
     textStyleType,
   },
 });

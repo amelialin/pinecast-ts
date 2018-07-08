@@ -64,6 +64,18 @@ export default {
     forceConsumeCount: 1,
 
     schema: {
+      overlayStyle: {
+        name: 'Background overlay style',
+        type: 'enum',
+        options: [
+          {key: 'dark', label: 'Darken'},
+          {key: 'light', label: 'Lighten'},
+        ],
+      },
+      padding: {
+        name: 'Inner episode padding',
+        type: 'padding',
+      },
       position: {
         name: 'Background image centering',
         type: 'enum',
@@ -78,6 +90,10 @@ export default {
           {key: 'center bottom', label: 'Bottom edge'},
           {key: 'right bottom', label: 'Bottom right corner'},
         ],
+      },
+      text: {
+        name: 'Label',
+        type: 'text',
       },
     },
   },
