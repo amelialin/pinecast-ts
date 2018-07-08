@@ -141,16 +141,23 @@ export default class AnalyticsDash extends React.Component {
     const granularity = timeframeAndGranularity.hasGranularity(view)
       ? url`&interval=${this.state.granularity}`
       : '';
+    const timezone = url`&tz=${new Date().getTimezoneOffset() / 60}`;
     if (type === 'episode') {
       return (
         url`episode=${nullThrows(this.props.episode)}&podcast=${nullThrows(
           this.props.podcast,
         )}` +
         granularity +
-        timeframe
+        timeframe +
+        timezone
       );
     }
-    return url`${type}=${this.props[type] as string}` + granularity + timeframe;
+    return (
+      url`${type}=${this.props[type] as string}` +
+      granularity +
+      timeframe +
+      timezone
+    );
   }
 
   handleError = (error: string) => {
