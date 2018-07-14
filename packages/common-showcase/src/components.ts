@@ -9,6 +9,7 @@ import DeleteButton from './examples/DeleteButton.example';
 import Dialog from './examples/Dialog.example';
 import EmptyState from './examples/EmptyState.example';
 import ErrorState from './examples/ErrorState.example';
+import Fieldset from './examples/Fieldset.example';
 import Form from './examples/Form.example';
 import Group from './examples/Group.example';
 import IconButton from './examples/IconButton.example';
@@ -64,6 +65,7 @@ export default {
   Dialog,
   EmptyState,
   ErrorState,
+  Fieldset,
   Form,
   Group,
   IconButton,

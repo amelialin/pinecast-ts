@@ -24,6 +24,17 @@ export default {
     itemSecondary: {},
     itemSummary: {},
     footerText: {},
+
+    heroItemSecondary: {
+      color: 'foreground',
+      fontWeight: 500,
+      fontSize: 16,
+    },
+    heroItemHeading: {
+      color: 'secondaryAccent',
+      fontWeight: 500,
+      fontSize: 20,
+    },
   },
 
   styling: {

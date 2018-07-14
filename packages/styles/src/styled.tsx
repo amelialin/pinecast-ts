@@ -3,6 +3,8 @@ import * as PropTypes from 'prop-types';
 
 import {CSS, Omit} from './types';
 
+const isFirefox = navigator.userAgent.includes('Gecko/');
+
 declare function require(
   name: 'styletron-utils',
 ): {injectStyle(styletron: Object, declarations: Object): string};
@@ -73,6 +75,14 @@ function styled<T>(
       for (const key in ownProps) {
         if (key[0] === '$') {
           delete ownProps[key];
+        }
+      }
+
+      if (isFirefox) {
+        for (const key in styleResult) {
+          if (key.includes('-webkit')) {
+            delete (styleResult as any)[key];
+          }
         }
       }
 

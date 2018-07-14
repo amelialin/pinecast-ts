@@ -3,6 +3,7 @@ import * as React from 'react';
 import Button, {ButtonGroup} from '@pinecast/common/Button';
 import Collapser from '@pinecast/common/Collapser';
 import {Delete, Down, Up} from '@pinecast/common/icons';
+import Fieldset from '@pinecast/common/Fieldset';
 import Group from '@pinecast/common/Group';
 import {itemLayoutsMetadata} from '@pinecast/sb-presets';
 import Label from '@pinecast/common/Label';
@@ -47,10 +48,7 @@ export default class LayoutChoice extends React.PureComponent {
     onSwap: (i1: number, i2: number) => void;
     onDelete: (index: number) => void;
   };
-  state: {containerOptionOpen: boolean; episodeOptionOpen: boolean} = {
-    containerOptionOpen: false,
-    episodeOptionOpen: false,
-  };
+  state: {containerOptionOpen: boolean} = {containerOptionOpen: false};
 
   handleChangeLayout = (preset: string) => {
     this.props.onChange(this.props.index, {
@@ -73,12 +71,6 @@ export default class LayoutChoice extends React.PureComponent {
     this.setState({
       containerOptionOpen: !this.state.containerOptionOpen,
       episodeOptionOpen: false,
-    });
-  };
-  handleToggleEpisode = () => {
-    this.setState({
-      episodeOptionOpen: !this.state.episodeOptionOpen,
-      containerOptionOpen: false,
     });
   };
 
@@ -155,9 +147,11 @@ export default class LayoutChoice extends React.PureComponent {
 
   render() {
     const {canDelete, consumeBudget, isFirst, isLast, layout} = this.props;
-    const {func: renderFunc, schema = {}} = itemLayoutsMetadata[
-      layout.elementLayout.tag
-    ];
+    const {
+      forceConsumeCount,
+      func: renderFunc,
+      schema = {},
+    } = itemLayoutsMetadata[layout.elementLayout.tag];
     const tagOptions = layout.elementLayout.tagOptions;
     const mergedTagOptions = {
       ...renderFunc().tagOptions,
@@ -169,15 +163,17 @@ export default class LayoutChoice extends React.PureComponent {
           onSelect={this.handleChangeLayout}
           selection={layout.elementLayout.tag}
         />
-        <Label text="Number of episodes to show">
-          <TextInput
-            onChange={this.handleCountChange}
-            style={{marginRight: 8, width: 120}}
-            suffix={layout.consumeCount === 1 ? 'episode' : 'episodes'}
-            value={String(layout.consumeCount)}
-          />
-          {consumeBudget === 0 && ' (at maximum for one page)'}
-        </Label>
+        {typeof forceConsumeCount !== 'number' && (
+          <Label text="Number of episodes to show">
+            <TextInput
+              onChange={this.handleCountChange}
+              style={{marginRight: 8, width: 120}}
+              suffix={layout.consumeCount === 1 ? 'episode' : 'episodes'}
+              value={String(layout.consumeCount)}
+            />
+            {consumeBudget === 0 && ' (at maximum for one page)'}
+          </Label>
+        )}
         {layout.type === 'grid' && (
           <Group spacing={16}>
             <Label
@@ -205,20 +201,12 @@ export default class LayoutChoice extends React.PureComponent {
           </Group>
         )}
         <MenuWrapper>
-          <ButtonGroup wrapperStyle={{marginRight: 'auto'}}>
-            <Button onClick={this.handleToggleContainer}>
-              {this.state.containerOptionOpen
-                ? 'Hide container options'
-                : 'Show container options'}
-            </Button>
-            {Object.keys(schema).length > 0 && (
-              <Button onClick={this.handleToggleEpisode}>
-                {this.state.episodeOptionOpen
-                  ? 'Hide episode options'
-                  : 'Show episode options'}
-              </Button>
-            )}
-          </ButtonGroup>
+          <Button
+            onClick={this.handleToggleContainer}
+            style={{marginRight: 'auto'}}
+          >
+            {this.state.containerOptionOpen ? 'Hide options' : 'Show options'}
+          </Button>
           {(!isFirst || !isLast || canDelete) && (
             <ButtonGroup>
               {!isFirst && (
@@ -247,51 +235,51 @@ export default class LayoutChoice extends React.PureComponent {
             </ButtonGroup>
           )}
         </MenuWrapper>
-        <Collapser open={this.state.containerOptionOpen}>
-          <Label $oneLine style={{marginTop: 12}} text="Container inner size">
-            <Select
+        <Collapser open={this.state.containerOptionOpen} shave={16}>
+          <Fieldset label="Container options">
+            <Label $oneLine style={{marginTop: 12}} text="Container inner size">
+              <Select
+                disabled={!this.state.containerOptionOpen}
+                onChange={this.handleWidthChange}
+                options={widthOptions}
+                value={layout.width || 'default'}
+              />
+            </Label>
+            <Label $oneLine text="Container alignment">
+              <Select
+                disabled={!this.state.containerOptionOpen}
+                onChange={this.handleAlignmentChange}
+                options={alignmentOptions}
+                value={layout.alignment || 'center'}
+              />
+            </Label>
+            <ElementColorSelector
               disabled={!this.state.containerOptionOpen}
-              onChange={this.handleWidthChange}
-              options={widthOptions}
-              value={layout.width || 'default'}
+              onChange={this.handleBGChange}
+              type="background"
+              value={layout.bgColor || ''}
             />
-          </Label>
-          <Label $oneLine text="Container alignment">
-            <Select
+            <ElementColorSelector
               disabled={!this.state.containerOptionOpen}
-              onChange={this.handleAlignmentChange}
-              options={alignmentOptions}
-              value={layout.alignment || 'center'}
+              onChange={this.handleFGChange}
+              type="foreground"
+              value={layout.fgColor || ''}
             />
-          </Label>
-          <ElementColorSelector
-            disabled={!this.state.containerOptionOpen}
-            onChange={this.handleBGChange}
-            type="background"
-            value={layout.bgColor || ''}
-          />
-          <ElementColorSelector
-            disabled={!this.state.containerOptionOpen}
-            onChange={this.handleFGChange}
-            type="foreground"
-            value={layout.fgColor || ''}
-          />
-        </Collapser>
-        <Collapser
-          open={this.state.episodeOptionOpen}
-          paddingTop={12}
-          shave={4}
-        >
-          {Object.entries(schema).map(([key, schema]) => (
-            <SchemaField
-              field={key}
-              key={key}
-              onUpdate={this.handleSchemaChange}
-              open={this.state.episodeOptionOpen}
-              schema={schema as primitives.ComponentLayoutOption}
-              tagOptions={mergedTagOptions}
-            />
-          ))}
+          </Fieldset>
+          {Object.keys(schema).length > 0 && (
+            <Fieldset label="Episode options">
+              {Object.entries(schema).map(([key, schema]) => (
+                <SchemaField
+                  field={key}
+                  key={key}
+                  onUpdate={this.handleSchemaChange}
+                  open={this.state.containerOptionOpen}
+                  schema={schema as primitives.ComponentLayoutOption}
+                  tagOptions={mergedTagOptions}
+                />
+              ))}
+            </Fieldset>
+          )}
         </Collapser>
       </StackedSection>
     );

@@ -95,17 +95,6 @@ export default {
       padding: '10px 0',
       textTransform: 'uppercase',
     },
-
-    heroItemSecondary: {
-      color: 'foreground',
-      fontWeight: 500,
-      fontSize: 16,
-    },
-    heroItemHeading: {
-      color: 'secondaryAccent',
-      fontWeight: 500,
-      fontSize: 20,
-    },
   },
 
   layout: {

@@ -1,7 +1,7 @@
 export default ({
   imageSize = 300,
   maxLinesOfSummary = 3.5,
-  padding = '0 0',
+  padding = '15px 15px',
   ordering = ['title', 'subtitle', 'summary', 'player'],
   style,
   textStyleType = 'item',
