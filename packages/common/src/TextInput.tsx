@@ -31,6 +31,7 @@ const Input = styled(
     fontFamily: DEFAULT_FONT,
     fontSize: $size === 'normal' ? 14 : 20,
     height: '100%',
+    maxWidth: '100%',
     padding: '0 10px',
     position: 'relative',
     transition: 'box-shadow 0.2s, opacity 0.2s',

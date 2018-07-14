@@ -14,7 +14,7 @@ const Wrapper = styled('section', {
   display: 'block',
   flexDirection: 'columm',
   margin: '16px 0 20px',
-  padding: '16px 12px 0',
+  padding: '16px 12px 0.5px',
   position: 'relative',
 });
 const Legend = styled('div', {
