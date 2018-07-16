@@ -19,7 +19,7 @@ export default class SchemaText extends React.PureComponent {
       throw new Error('unreachable');
     }
     return (
-      <Label text={this.props.name}>
+      <Label subText={this.props.description} text={this.props.name}>
         <TextInput
           onChange={this.handleChange}
           tabIndex={this.props.open ? 0 : -1}

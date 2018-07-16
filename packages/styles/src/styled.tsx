@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 
-import {CSS, Omit} from './types';
+import {CSS, Omit, PseudoElementType} from './types';
 
 const isFirefox = navigator.userAgent.includes('Gecko/');
 
@@ -84,6 +84,36 @@ function styled<T>(
             delete (styleResult as any)[key];
           }
         }
+      }
+      if (process.env.NODE_ENV !== 'production') {
+        const sr = styleResult as CSS;
+        ([':before', ':after', '::before', '::after'] as Array<
+          keyof CSS
+        >).forEach(pseudoElement => {
+          const pe: PseudoElementType | undefined = sr[pseudoElement] as any;
+          if (!pe || pe.content == null) {
+            return;
+          }
+          if (typeof pe.content !== 'string') {
+            console.error(
+              "Pseudo-element 'content' descriptor must not be a number.",
+            );
+            return;
+          }
+          if (
+            !(
+              (pe.content.startsWith('attr(') && pe.content.endsWith(')')) ||
+              (pe.content.startsWith('"') && pe.content.endsWith('"')) ||
+              (pe.content.startsWith("'") && pe.content.endsWith("'"))
+            )
+          ) {
+            console.error(
+              `Pseudo-element 'content' descriptor must be either attr() function or a string; got '${
+                pe.content
+              }' instead.`,
+            );
+          }
+        });
       }
 
       const styletronClassNames: string = su.injectStyle(

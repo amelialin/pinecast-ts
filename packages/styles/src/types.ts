@@ -16,6 +16,10 @@ export type CSSProperties = MappedCSSProperties & {
   WebkitAppearance?: 'none' | string | undefined;
 };
 
+export type PseudoElementType = Omit<CSSProperties, 'content'> & {
+  content?: string;
+};
+
 export interface CSS extends CSSProperties {
   ':active'?: CSSProperties;
   ':focus'?: CSSProperties;
@@ -31,23 +35,23 @@ export interface CSS extends CSSProperties {
   ':last-child'?: CSSProperties;
   ':last-of-type'?: CSSProperties;
 
-  ':after'?: CSSProperties & {content?: string};
-  ':before'?: CSSProperties & {content?: string};
-  ':active:before'?: CSSProperties & {content?: string};
-  ':focus:before'?: CSSProperties & {content?: string};
-  ':hover:before'?: CSSProperties & {content?: string};
-  ':active:after'?: CSSProperties & {content?: string};
-  ':focus:after'?: CSSProperties & {content?: string};
-  ':hover:after'?: CSSProperties & {content?: string};
+  ':after'?: PseudoElementType;
+  ':before'?: PseudoElementType;
+  ':active:before'?: PseudoElementType;
+  ':focus:before'?: PseudoElementType;
+  ':hover:before'?: PseudoElementType;
+  ':active:after'?: PseudoElementType;
+  ':focus:after'?: PseudoElementType;
+  ':hover:after'?: PseudoElementType;
 
-  '::after'?: CSSProperties & {content?: string};
-  '::before'?: CSSProperties & {content?: string};
-  ':active::before'?: CSSProperties & {content?: string};
-  ':focus::before'?: CSSProperties & {content?: string};
-  ':hover::before'?: CSSProperties & {content?: string};
-  ':active::after'?: CSSProperties & {content?: string};
-  ':focus::after'?: CSSProperties & {content?: string};
-  ':hover::after'?: CSSProperties & {content?: string};
+  '::after'?: PseudoElementType;
+  '::before'?: PseudoElementType;
+  ':active::before'?: PseudoElementType;
+  ':focus::before'?: PseudoElementType;
+  ':hover::before'?: PseudoElementType;
+  ':active::after'?: PseudoElementType;
+  ':focus::after'?: PseudoElementType;
+  ':hover::after'?: PseudoElementType;
 
   '@media (mobile)'?: CSS;
   '@media (max-width: 900px)'?: CSS;

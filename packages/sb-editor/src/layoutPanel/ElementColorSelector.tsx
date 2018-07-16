@@ -1,15 +1,15 @@
 import {connect, Dispatch} from 'react-redux';
 import * as React from 'react';
 
-import Button from '@pinecast/common/Button';
 import Group from '@pinecast/common/Group';
 import Label from '@pinecast/common/Label';
+import Link from '@pinecast/common/Link';
 import Select from '@pinecast/common/Select';
 
 import colorKeyNames from '../shared/colorNames';
 import * as chromeActions from '../actions/chrome';
 
-const colorsOptionalKeys = {...colorKeyNames, '': '--'};
+const colorsOptionalKeys = {...colorKeyNames, '': '-- Theme default'};
 
 type Props = {
   disabled?: boolean;
@@ -34,7 +34,7 @@ class ElementColorSelector extends React.PureComponent {
         $oneLine
         text={type === 'background' ? 'Background color' : 'Foreground color'}
       >
-        <Group spacing={8}>
+        <Group spacing={8} wrapperStyle={{alignItems: 'center'}}>
           <Select
             disabled={this.props.disabled}
             onChange={this.handleChange}
@@ -44,9 +44,7 @@ class ElementColorSelector extends React.PureComponent {
             }))}
             value={value || ''}
           />
-          <Button disabled={this.props.disabled} onClick={goToColors}>
-            Change colors
-          </Button>
+          <Link onClick={goToColors}>Change color palette…</Link>
         </Group>
       </Label>
     );

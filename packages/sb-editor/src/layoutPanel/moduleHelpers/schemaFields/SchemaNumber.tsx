@@ -19,7 +19,7 @@ export default class SchemaNumber extends React.PureComponent {
       throw new Error('unreachable');
     }
     return (
-      <Label text={this.props.name}>
+      <Label subText={this.props.description} text={this.props.name}>
         <NumberInput
           canBeNegative={this.props.canBeNegative}
           max={this.props.max}

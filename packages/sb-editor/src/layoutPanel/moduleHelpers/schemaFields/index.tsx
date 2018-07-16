@@ -23,7 +23,7 @@ export {default as SchemaText} from './SchemaText';
 
 export {SchemaProps} from './types';
 
-export default class SchemaField extends React.Component {
+export default class SchemaField extends React.PureComponent {
   props: {
     field: string;
     onUpdate: (field: string, newValue: any) => void;
@@ -38,6 +38,7 @@ export default class SchemaField extends React.Component {
     const baseProps = {
       field,
       name: schema.name,
+      description: schema.description,
       onChange: onUpdate,
       open: open,
       value: tagOptions[field],

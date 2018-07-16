@@ -12,6 +12,7 @@ import Select from '@pinecast/common/Select';
 import StackedSection from '@pinecast/common/StackedSection';
 import styled, {CSS} from '@pinecast/styles';
 import TextInput from '@pinecast/common/TextInput';
+import TooltipContainer, {HelpIcon} from '@pinecast/common/TooltipContainer';
 
 import ElementColorSelector from '../ElementColorSelector';
 import LayoutPicker from './LayoutPicker';
@@ -210,34 +211,51 @@ export default class LayoutChoice extends React.PureComponent {
           {(!isFirst || !isLast || canDelete) && (
             <ButtonGroup>
               {!isFirst && (
-                <Button
-                  className="ModuleCard--ToolButton"
-                  onClick={this.handleMoveUp}
-                  style={buttonStyle}
-                >
-                  <Up />
-                </Button>
+                <TooltipContainer tooltipContent="Move section up">
+                  <Button
+                    className="ModuleCard--ToolButton"
+                    onClick={this.handleMoveUp}
+                    style={buttonStyle}
+                  >
+                    <Up />
+                  </Button>
+                </TooltipContainer>
               )}
               {!isLast && (
-                <Button
-                  className="ModuleCard--ToolButton"
-                  onClick={this.handleMoveDown}
-                  style={buttonStyle}
-                >
-                  <Down />
-                </Button>
+                <TooltipContainer tooltipContent="Move section down">
+                  <Button
+                    className="ModuleCard--ToolButton"
+                    onClick={this.handleMoveDown}
+                    style={buttonStyle}
+                  >
+                    <Down />
+                  </Button>
+                </TooltipContainer>
               )}
               {canDelete && (
-                <Button onClick={this.handleDelete} style={buttonStyle}>
-                  <Delete style={{transform: 'translateX(-0.5px)'}} />
-                </Button>
+                <TooltipContainer tooltipContent="Remove section">
+                  <Button onClick={this.handleDelete} style={buttonStyle}>
+                    <Delete style={{transform: 'translateX(-0.5px)'}} />
+                  </Button>
+                </TooltipContainer>
               )}
             </ButtonGroup>
           )}
         </MenuWrapper>
         <Collapser open={this.state.containerOptionOpen} shave={16}>
           <Fieldset label="Container options">
-            <Label $oneLine style={{marginTop: 12}} text="Container inner size">
+            <Label
+              $oneLine
+              style={{marginTop: 12}}
+              text={
+                <React.Fragment>
+                  Inner size{' '}
+                  <HelpIcon style={{marginLeft: 8}}>
+                    Width of the container around the episodes
+                  </HelpIcon>
+                </React.Fragment>
+              }
+            >
               <Select
                 disabled={!this.state.containerOptionOpen}
                 onChange={this.handleWidthChange}
@@ -245,7 +263,17 @@ export default class LayoutChoice extends React.PureComponent {
                 value={layout.width || 'default'}
               />
             </Label>
-            <Label $oneLine text="Container alignment">
+            <Label
+              $oneLine
+              text={
+                <React.Fragment>
+                  Alignment{' '}
+                  <HelpIcon style={{marginLeft: 8}}>
+                    Alignment of the container relative to the page
+                  </HelpIcon>
+                </React.Fragment>
+              }
+            >
               <Select
                 disabled={!this.state.containerOptionOpen}
                 onChange={this.handleAlignmentChange}

@@ -344,7 +344,12 @@ export default class SchemaOrderedSet extends React.PureComponent {
     const value = this.props.value;
     const {overBuffer} = this.state;
     return (
-      <Label componentType="div" style={labelStyle} text={this.props.name}>
+      <Label
+        componentType="div"
+        style={labelStyle}
+        subText={this.props.description}
+        text={this.props.name}
+      >
         <ElementWrapper $count={value.length} $dragging={overBuffer !== null}>
           {value.length ? (
             <React.Fragment>

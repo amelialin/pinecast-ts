@@ -19,7 +19,7 @@ export default class SchemaEnum extends React.PureComponent {
       throw new Error('unreachable');
     }
     return (
-      <Label text={this.props.name}>
+      <Label subText={this.props.description} text={this.props.name}>
         <Select
           onChange={this.handleChange}
           options={this.props.options}

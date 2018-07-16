@@ -12,6 +12,7 @@ export interface ComponentLayout {
 
 type BaseComponentLayoutOption = {
   name: string;
+  description?: string;
   type:
     | 'text'
     | 'longText'
@@ -22,17 +23,20 @@ type BaseComponentLayoutOption = {
 };
 type EnumComponentLayoutOption = {
   name: string;
+  description?: string;
   type: 'enum';
   options: Array<{label: string; key: string | number}>;
   values: {[key: string]: any};
 };
 type OrderedSetComponentLayoutOption = {
   name: string;
+  description?: string;
   type: 'orderedSet';
   options: Array<{label: string; key: string}>;
 };
 type NumberComponentLayoutOption = {
   name: string;
+  description?: string;
   max?: number;
   min?: number;
   type: 'number';

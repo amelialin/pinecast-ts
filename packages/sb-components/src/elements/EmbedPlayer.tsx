@@ -14,6 +14,12 @@ export const PLAYER_HEIGHTS = {
   slim: 20,
 };
 
+const Container = atom(
+  'iframe',
+  {borderWidth: 0, width: '100%'},
+  {seamless: true},
+);
+
 export default getsContext(
   (
     {
@@ -30,13 +36,15 @@ export default getsContext(
     if (element.extendsStyles) {
       throw new Error('Cannot extend styles on embed player');
     }
-    const Container = atom('iframe');
     const props: {src?: string; [prop: string]: any} = {
       ...element.props,
       ...extractProps(item, element.propPaths),
     };
-    const theme = (ctx.options && ctx.options.embedTheme) || 'minimal';
-    if (theme !== 'minimal') {
+    const theme =
+      (props.themeOverride as keyof typeof PLAYER_HEIGHTS) ||
+      (ctx.options && ctx.options.embedTheme) ||
+      'minimal';
+    if (theme !== 'minimal' && PLAYER_HEIGHTS.hasOwnProperty(theme)) {
       props.src = `${props.src || ''}?theme=${theme}`;
     }
     return (
@@ -44,15 +52,10 @@ export default getsContext(
         {...props}
         height={PLAYER_HEIGHTS[theme]}
         item={item}
-        seamless
-        style={{
-          borderWidth: 0,
-          width: '100%',
-          ...expandElementStyles(
-            {...style, ...element.styles},
-            element.elementOptions || {},
-          ),
-        }}
+        style={expandElementStyles(
+          {...style, ...element.styles},
+          element.elementOptions || {},
+        )}
       />
     );
   },

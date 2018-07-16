@@ -1,5 +1,6 @@
 type BaseProps = {
   name: string;
+  description?: string;
   field: string;
   open: boolean;
 };

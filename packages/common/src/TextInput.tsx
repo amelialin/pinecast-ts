@@ -12,14 +12,22 @@ const InputWrapper = styled(
     alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius: 4,
-    display: 'flex',
+    display: ['flex', 'grid'],
     height: $size === 'normal' ? 32 : 40,
     margin: 0,
   }),
 );
 const Input = styled(
   'input',
-  ({$invalid, $size = 'normal'}: {$invalid: boolean; $size?: Sizes}) => ({
+  ({
+    $hasPrefix,
+    $invalid,
+    $size = 'normal',
+  }: {
+    $hasPrefix: boolean;
+    $invalid: boolean;
+    $size?: Sizes;
+  }) => ({
     background: 'transparent',
     border: 0,
     borderRadius: 4,
@@ -30,6 +38,8 @@ const Input = styled(
     flex: '1 1',
     fontFamily: DEFAULT_FONT,
     fontSize: $size === 'normal' ? 14 : 20,
+    gridColumn: $hasPrefix ? '2 / 2' : '1 / 1',
+    gridRow: '1 / 1',
     height: '100%',
     maxWidth: '100%',
     padding: '0 10px',
@@ -82,6 +92,8 @@ const Prefix = styled(
     color: '#333',
     flex: '0 0',
     fontSize: $size === 'normal' ? 14 : 20,
+    gridColumn: '1 / 1',
+    gridRow: '1 / 1',
     height: '100%',
     lineHeight: '32px',
     marginRight: 1,
@@ -95,10 +107,12 @@ const Suffix = styled(
   'span',
   ({
     $disabled,
+    $hasPrefix,
     $invalid,
     $size,
   }: {
     $disabled: boolean;
+    $hasPrefix: boolean;
     $invalid: boolean;
     $size: Sizes;
   }) => ({
@@ -109,6 +123,8 @@ const Suffix = styled(
     color: '#333',
     flex: '0 0',
     fontSize: $size === 'normal' ? 14 : 20,
+    gridColumn: $hasPrefix ? '3 / 3' : '2 / 2',
+    gridRow: '1 / 1',
     height: '100%',
     lineHeight: '32px',
     marginLeft: 1,
@@ -188,6 +204,7 @@ export default class TextInput extends React.PureComponent {
           </Prefix>
         )}
         <Input
+          $hasPrefix={Boolean(prefix)}
           $invalid={invalid || false}
           $size={size}
           style={inputStyle}
@@ -198,6 +215,7 @@ export default class TextInput extends React.PureComponent {
         {suffix && (
           <Suffix
             $disabled={rest.disabled || false}
+            $hasPrefix={Boolean(prefix)}
             $invalid={invalid || false}
             $size={size || 'normal'}
             style={endCapStyle}

@@ -40,10 +40,13 @@ export default {
     schema: {
       showSubtitle: {
         name: 'Show subtitle?',
+        description:
+          'Should the episode subtitle be shown in addition to the title?',
         type: 'bool',
       },
       size: {
         name: 'Image size',
+        description: 'The size of each episode artwork image',
         type: 'enum',
         options: artworkSizeOptions,
       },
@@ -66,6 +69,8 @@ export default {
     schema: {
       overlayStyle: {
         name: 'Background overlay style',
+        description:
+          'How is the chosen image changed to improve text contrast?',
         type: 'enum',
         options: [
           {key: 'dark', label: 'Darken'},
@@ -74,10 +79,14 @@ export default {
       },
       padding: {
         name: 'Inner episode padding',
+        description:
+          "The spacing between the borders of each episode and it's contents",
         type: 'padding',
       },
       position: {
         name: 'Background image centering',
+        description:
+          'How is the image positioned? (All images are stretched to "cover" the episode.)',
         type: 'enum',
         options: [
           {key: 'left top', label: 'Top left corner'},
@@ -93,6 +102,7 @@ export default {
       },
       text: {
         name: 'Label',
+        description: 'Text shown above the episode',
         type: 'text',
       },
     },
@@ -107,6 +117,7 @@ export default {
     schema: {
       ordering: {
         name: 'Elements',
+        description: 'What information about each episode is displayed?',
         type: 'orderedSet',
         options: [
           {key: 'date', label: 'Publish date'},
@@ -119,6 +130,7 @@ export default {
       },
       imageHeight: {
         name: 'Episode artwork height',
+        description: 'How tall should each episode artwork image be?',
         type: 'enum',
         options: artworkSizeOptions,
       },
@@ -126,6 +138,8 @@ export default {
         canBeNegative: false,
         min: 1,
         name: 'Summary line count',
+        description:
+          'The maximum number of lines of the episode description to show in the episode.',
         suffix: 'lines',
         type: 'number',
       },
@@ -141,6 +155,7 @@ export default {
     schema: {
       ordering: {
         name: 'Elements',
+        description: 'What information about each episode is displayed?',
         type: 'orderedSet',
         options: [
           {key: 'title', label: 'Title'},
@@ -151,6 +166,7 @@ export default {
       },
       imageSize: {
         name: 'Episode artwork width',
+        description: 'The width of each episode artwork image',
         type: 'enum',
         options: artworkSizeOptions,
       },
@@ -158,16 +174,21 @@ export default {
         canBeNegative: false,
         min: 1,
         name: 'Summary line count',
+        description:
+          'The maximum number of lines of the episode description to show in the episode.',
         suffix: 'lines',
         type: 'number',
       },
       imageSize: {
         name: 'Episode artwork width',
+        description: 'The width of each episode artwork image',
         type: 'enum',
         options: artworkSizeOptions,
       },
       padding: {
         name: 'Inner episode padding',
+        description:
+          "The spacing between the borders of each episode and it's contents",
         type: 'padding',
       },
     },

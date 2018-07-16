@@ -11,8 +11,8 @@ import * as StickyHeader from '@pinecast/common/StickyHeader';
 import WrappersPanel from './wrappersPanel';
 
 const pageOptions = [
-  {value: 'modules', name: 'Modules'},
-  {value: 'episodeItems', name: 'Episode items'},
+  {value: 'modules', name: 'Header and footer'},
+  {value: 'episodeItems', name: 'Episode lists'},
   {value: 'wrappers', name: 'Page wrappers'},
 ];
 

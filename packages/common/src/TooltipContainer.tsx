@@ -189,11 +189,13 @@ export default class TooltipContainer extends React.Component {
 }
 
 export const HelpIcon = (props: {
-  size?: Size;
   children: Children;
+  size?: Size;
+  style?: React.CSSProperties;
 }): JSX.Element => (
   <TooltipContainer
     size={props.size}
+    style={props.style}
     tooltipContent={props.children}
     xOffset={12}
   >
