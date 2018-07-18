@@ -1,6 +1,7 @@
 import * as moment from 'moment';
 import * as React from 'react';
 
+import {calc} from '@pinecast/styles';
 import {Sub} from '@pinecast/common/types';
 
 import atom from './atom';
@@ -17,10 +18,10 @@ function extendPseudo(
   data: Sub<React.CSSProperties>,
 ): string {
   if (pseudo === 'elem') {
-    if (!acc[':before']) {
-      pseudo = ':before';
+    if (!acc['::before']) {
+      pseudo = '::before';
     } else if (!acc[':after']) {
-      pseudo = ':after';
+      pseudo = '::after';
     } else {
       throw new Error(
         'Element has no pseudoelements remaining for element option',
@@ -65,8 +66,12 @@ function styleOptions(
       }
       switch (cur) {
         case 'maxLines':
-          acc.maxHeight =
-            parseFloat(String(acc.lineHeight)) * Number(options.maxLines);
+          if (!acc.lineHeight) {
+            console.error('Expected `lineHeight` to exist in BlockText');
+          }
+          acc.maxHeight = calc`calc(${String(
+            acc.lineHeight || '1.5em',
+          )} * ${Number(options.maxLines)})`;
           acc.overflow = 'hidden';
           break;
         case 'maxLinesOnHover':
@@ -76,9 +81,9 @@ function styleOptions(
           acc.transition = acc.transition ? acc.transition + ', ' : '';
           acc.transition += 'max-height 0.2s';
           extendPseudo(acc, ':hover', {
-            maxHeight:
-              parseFloat(String(acc.lineHeight)) *
-              Number(options.maxLinesOnHover),
+            maxHeight: calc`calc(${String(
+              acc.lineHeight || '1.5em',
+            )} * ${Number(options.maxLinesOnHover)})`,
           });
           break;
         case 'singleLineTruncation':
@@ -108,12 +113,14 @@ function styleOptions(
             left: 0,
             position: 'absolute',
             right: 0,
-            top: (acc.maxHeight as number) - maxLineFade.height,
+            top: calc`calc(${acc.maxHeight as any} - ${maxLineFade.height})`,
             transition: 'top 0.2s',
           });
           if (options.maxLinesOnHover) {
             extendPseudo(acc, ':hover' + mlfPseudo, {
-              top: acc[':hover'].maxHeight - maxLineFade.height,
+              top: calc`calc(${acc[':hover'].maxHeight} - ${
+                maxLineFade.height
+              })`,
             });
           }
           break;

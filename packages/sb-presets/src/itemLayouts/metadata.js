@@ -58,6 +58,28 @@ export default {
     description: 'A simple stacked layout with no image.',
     type: 'stacked',
     func: noImageStackedItem,
+    schema: {
+      padding: {
+        name: 'Inner episode padding',
+        description:
+          "The spacing between the borders of each episode and it's contents",
+        type: 'padding',
+      },
+      text: {
+        name: '"Read more" text',
+        description: 'Text of the link leading to the full episode page',
+        type: 'text',
+      },
+      maxLinesOfSummary: {
+        canBeNegative: false,
+        min: 1,
+        name: 'Summary line count',
+        description:
+          'The maximum number of lines of the episode description to show in the episode.',
+        suffix: 'lines',
+        type: 'number',
+      },
+    },
   },
   'stacked.heroFullWidth': {
     name: 'Full width hero',

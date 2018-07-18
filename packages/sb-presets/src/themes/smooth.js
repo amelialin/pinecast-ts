@@ -78,32 +78,32 @@ export default {
       color: 'accent',
       fontSize: 20,
       fontWeight: 'bold',
-      lineHeight: 32,
+      lineHeight: '32px',
     },
     heroItemSubtitle: {
       fontSize: 20,
       fontWeight: 'normal',
-      lineHeight: 32,
+      lineHeight: '32px',
     },
     heroItemSummary: {
       fontSize: 14,
       fontWeight: 'normal',
-      lineHeight: 22,
+      lineHeight: '22px',
     },
     itemHeading: {
       fontSize: 16,
       fontWeight: 'bold',
-      lineHeight: 22,
+      lineHeight: '22px',
     },
     itemSubtitle: {
       fontSize: 16,
       fontWeight: 'normal',
-      lineHeight: 22,
+      lineHeight: '22px',
     },
     itemSummary: {
       fontSize: 14,
       fontWeight: 'normal',
-      lineHeight: 22,
+      lineHeight: '22px',
     },
   },
 

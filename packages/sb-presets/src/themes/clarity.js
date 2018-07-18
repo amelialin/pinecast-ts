@@ -78,14 +78,14 @@ export default {
       color: 'accent',
       fontSize: 30,
       fontWeight: 400,
-      lineHeight: 36,
+      lineHeight: '36px',
     },
     itemSubtitle: {
       color: 'secondaryAccent',
       fontSize: 20,
     },
     itemSummary: {
-      lineHeight: 20,
+      lineHeight: '20px',
     },
     itemSecondary: {
       color: 'text',

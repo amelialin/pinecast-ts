@@ -161,6 +161,7 @@ export default class LayoutChoice extends React.PureComponent {
     return (
       <StackedSection>
         <LayoutPicker
+          oneLine
           onSelect={this.handleChangeLayout}
           selection={layout.elementLayout.tag}
         />

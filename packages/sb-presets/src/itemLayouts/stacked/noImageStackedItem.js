@@ -1,4 +1,8 @@
-export default () => ({
+export default ({
+  maxLinesOfSummary = 10,
+  padding = '30px 0 50px',
+  readMoreText = 'Read more…',
+} = {}) => ({
   elements: [
     {
       type: 'block.text',
@@ -56,7 +60,7 @@ export default () => ({
           color: 'background',
           height: 40,
         },
-        maxLines: 10,
+        maxLines: maxLinesOfSummary,
       },
 
       extendsStyles: ['textStyles', 'itemSummary'],
@@ -71,7 +75,7 @@ export default () => ({
           type: 'block.text',
           tagName: 'span',
 
-          textContent: 'Read more…',
+          textContent: readMoreText,
 
           styles: {
             color: 'secondaryAccent',
@@ -93,9 +97,13 @@ export default () => ({
   ],
   tagName: 'article',
   styles: {
-    padding: '30px 0 50px',
+    padding,
   },
 
   tag: 'stacked.noImage',
-  tagOptions: {},
+  tagOptions: {
+    maxLinesOfSummary,
+    padding,
+    readMoreText,
+  },
 });

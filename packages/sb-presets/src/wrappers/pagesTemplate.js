@@ -87,7 +87,7 @@ export default ({style, elementOptions} = {}) => ({
                 styles: {
                   fontSize: 20,
                   fontWeight: 'bold',
-                  lineHeight: 32,
+                  lineHeight: '32px',
                 },
               },
               {

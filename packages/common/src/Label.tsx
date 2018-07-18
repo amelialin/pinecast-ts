@@ -8,20 +8,30 @@ import {Children} from './types';
 import {DEFAULT_FONT} from './constants';
 import {ErrorFlag} from './icons';
 
-const Text = styled('span', ({$oneLine}: {$oneLine: boolean}) => ({
-  alignItems: 'center',
-  alignSelf: $oneLine ? 'stretch' : undefined,
-  display: 'flex',
-  flex: $oneLine ? '0 0 30%' : undefined,
-  fontFamily: DEFAULT_FONT,
-  fontSize: 14,
-  fontWeight: 500,
-  justifyContent: $oneLine ? 'flex-end' : 'flex-start',
-  paddingBottom: $oneLine ? 0 : 8,
-  paddingRight: 8,
-  maxHeight: $oneLine ? 35 : undefined,
-  textAlign: $oneLine ? 'right' : undefined,
-}));
+const Text = styled(
+  'span',
+  ({
+    $oneLine,
+    $oneLineCollapse,
+  }: {
+    $oneLine: boolean;
+    $oneLineCollapse: boolean;
+  }) => ({
+    alignItems: 'center',
+    alignSelf: $oneLine ? 'stretch' : undefined,
+    display: 'flex',
+    flex: $oneLine ? `0 0 ${$oneLineCollapse ? '' : '30%'}` : undefined,
+    fontFamily: DEFAULT_FONT,
+    fontSize: 14,
+    fontWeight: 500,
+    justifyContent: $oneLine ? 'flex-end' : 'flex-start',
+    paddingBottom: $oneLine ? 0 : 8,
+    paddingRight: 8,
+    maxHeight: $oneLine ? 35 : undefined,
+    textAlign: $oneLine ? 'right' : undefined,
+    whiteSpace: $oneLineCollapse ? 'nowrap' : undefined,
+  }),
+);
 const SubText = styled('span', {
   display: 'block',
   fontFamily: DEFAULT_FONT,
@@ -68,6 +78,7 @@ nativeLabelMap.set('div', styled('div', nativeLabelStyles));
 
 const Label = ({
   $oneLine,
+  $oneLineCollapse,
   children,
   componentType = 'label',
   error,
@@ -78,6 +89,7 @@ const Label = ({
   text,
 }: {
   $oneLine?: boolean;
+  $oneLineCollapse?: boolean;
   children: Children;
   componentType?: string;
   error?: JSX.Element | string | null;
@@ -121,6 +133,7 @@ const Label = ({
     >
       <Text
         $oneLine={$oneLine || false}
+        $oneLineCollapse={$oneLineCollapse || false}
         style={(!subText && labelStyle) || undefined}
       >
         {contents}

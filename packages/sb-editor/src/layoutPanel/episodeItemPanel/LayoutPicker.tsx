@@ -13,6 +13,7 @@ const layoutTypeOptions = [
 
 export default class LayoutPicker extends React.PureComponent {
   props: {
+    oneLine?: boolean;
     onSelect: (key: string) => void;
     selection: string;
   };
@@ -27,7 +28,11 @@ export default class LayoutPicker extends React.PureComponent {
   render() {
     const type = this.props.selection.split('.')[0];
     return (
-      <Label text="Layout type">
+      <Label
+        $oneLine={this.props.oneLine}
+        $oneLineCollapse={this.props.oneLine}
+        text="Layout type"
+      >
         <Group spacing={16}>
           <Select
             onChange={this.handleChangeLayoutType}

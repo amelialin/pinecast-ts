@@ -71,7 +71,7 @@ export default {
       fontFamily: 'headings',
       fontSize: 36,
       fontWeight: 600,
-      lineHeight: 30,
+      lineHeight: '30px',
       textTransform: 'uppercase',
     },
 
@@ -80,18 +80,18 @@ export default {
       fontFamily: 'headings',
       fontSize: 30,
       fontWeight: 600,
-      lineHeight: 30,
+      lineHeight: '30px',
       textDecoration: 'underline',
     },
     itemSubtitle: {
       fontSize: 16,
       fontWeight: 600,
-      lineHeight: 16,
+      lineHeight: '16px',
       textTransform: 'uppercase',
     },
     itemSummary: {
       fontSize: 12,
-      lineHeight: 18,
+      lineHeight: '18px',
     },
   },
 

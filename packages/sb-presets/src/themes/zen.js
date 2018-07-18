@@ -52,7 +52,7 @@ export default {
     itemHeading: {
       fontSize: 16,
       fontWeight: 'normal',
-      lineHeight: 22,
+      lineHeight: '22px',
       paddingLeft: 15,
       paddingRight: 15,
     },
