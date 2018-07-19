@@ -1,5 +1,5 @@
 function formatKey(key: string): string {
-  return `0.db-omnibus.db-analytics.${key}`;
+  return `1.db-omnibus.db-analytics.${key}`;
 }
 
 export function get(key: string, def: string): string;
