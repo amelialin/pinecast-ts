@@ -3,7 +3,8 @@ import * as PropTypes from 'prop-types';
 
 import {CSS, Omit, PseudoElementType} from './types';
 
-const isFirefox = navigator.userAgent.includes('Gecko/');
+const isFirefox =
+  typeof navigator !== 'undefined' && navigator.userAgent.includes('Gecko/');
 
 declare function require(
   name: 'styletron-utils',
