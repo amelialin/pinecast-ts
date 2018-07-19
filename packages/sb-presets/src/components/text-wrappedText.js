@@ -6,7 +6,7 @@ export default data => {
       innerPadding: '20px 0',
     },
     style,
-    text = 'copyright',
+    text = ['podcast', 'copyright'],
   } = data;
   return {
     type: 'abstract',
@@ -17,7 +17,7 @@ export default data => {
           children: [
             {
               type: 'block.text',
-              textContent: ['podcast', text],
+              textContent: text,
             },
           ],
           elementOptions: {
