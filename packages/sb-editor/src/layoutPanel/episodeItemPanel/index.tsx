@@ -67,7 +67,7 @@ class EpisodeItemPanel extends React.Component {
               onUpdated={this.props.onSetHomeSegments}
             />
           </Tab>
-          <Tab name="First page">
+          <Tab name="Homepage">
             <Label
               componentType="div"
               subText="Hero episodes appear directly below the header modules on your website homepage. They're useful for featuring recent episodes."
