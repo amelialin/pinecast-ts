@@ -1,7 +1,6 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
-import EmptyState from '@pinecast/common/EmptyState';
 import Label from '@pinecast/common/Label';
 import Tabs, {Tab} from '@pinecast/common/Tabs';
 
@@ -71,26 +70,19 @@ class EpisodeItemPanel extends React.Component {
           <Tab name="First page">
             <Label
               componentType="div"
-              subText="Hero episodes appear before all other episodes on the homepage, and are useful for featuring recent episodes."
+              subText="Hero episodes appear directly below the header modules on your website homepage. They're useful for featuring recent episodes."
               text="Hero episodes"
             >
-              {theme.layout.body.home.firstPagePrefix.length ? (
-                <LayoutChoiceGroup
-                  canDelete
-                  consumeBudget={budget}
-                  layouts={theme.layout.body.home.firstPagePrefix || []}
-                  onUpdated={this.props.onSetFirstPagePrefixSegments}
-                />
-              ) : (
-                <EmptyState
-                  copy="Hero sections let you feature recent episodes on your site's homepage."
-                  title="There is no hero section."
-                />
-              )}
+              <LayoutChoiceGroup
+                canDelete
+                consumeBudget={budget}
+                layouts={theme.layout.body.home.firstPagePrefix || []}
+                onUpdated={this.props.onSetFirstPagePrefixSegments}
+              />
             </Label>
             <Label
               componentType="div"
-              subText="Add modules that will appear between your hero sections and the first regular episode segment."
+              subText="Add modules that will appear between your hero sections and the first regular episode segment. If you have no hero section, these modules will appear directly below the header on your website's homepage."
               text="Modules after hero section"
             >
               <ComponentLayoutGroup

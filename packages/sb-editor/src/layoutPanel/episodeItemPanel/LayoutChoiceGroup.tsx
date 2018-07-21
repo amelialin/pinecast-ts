@@ -60,28 +60,39 @@ export default class LayoutChoiceGroup extends React.PureComponent {
     const {canDelete, consumeBudget, layouts} = this.props;
 
     if (!layouts.length) {
-      return (
-        <Wrapper>
-          <ModalOpener
-            renderModal={({handleClose}) => (
-              <LayoutInsertionModal
-                index={0}
-                onClose={handleClose}
-                onInsert={this.handleOnInsert}
-              />
-            )}
-          >
-            {({handleOpen}) => (
-              <EmptyState
-                actionLabel="Add layout"
-                copy="This section will be collapsed until an episode layout is added."
-                onAction={handleOpen}
-                title="There are no episode layouts in this section."
-              />
-            )}
-          </ModalOpener>
-        </Wrapper>
-      );
+      if (consumeBudget) {
+        return (
+          <Wrapper>
+            <ModalOpener
+              renderModal={({handleClose}) => (
+                <LayoutInsertionModal
+                  index={0}
+                  onClose={handleClose}
+                  onInsert={this.handleOnInsert}
+                />
+              )}
+            >
+              {({handleOpen}) => (
+                <EmptyState
+                  actionLabel="Add layout"
+                  copy="This section will be collapsed until an episode layout is added."
+                  onAction={handleOpen}
+                  title="There are no episode layouts in this section."
+                />
+              )}
+            </ModalOpener>
+          </Wrapper>
+        );
+      } else {
+        return (
+          <Wrapper>
+            <EmptyState
+              copy="This section will be collapsed until an episode layout is added, but you've reached the limit for the number of episodes shown on one page."
+              title="There are no episode layouts in this section."
+            />
+          </Wrapper>
+        );
+      }
     }
 
     return (
