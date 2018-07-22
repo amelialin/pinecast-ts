@@ -60,12 +60,18 @@ class EpisodeItemPanel extends React.Component {
         </PanelDescription>
         <Tabs>
           <Tab name="Every page">
-            <LayoutChoiceGroup
-              canDelete={theme.layout.body.home.segments.length > 1}
-              consumeBudget={budget}
-              layouts={theme.layout.body.home.segments}
-              onUpdated={this.props.onSetHomeSegments}
-            />
+            <Label
+              componentType="div"
+              subText="Each page of episodes will be structured with these layouts. The number of episodes per page is determined by the total of the number of episodes to show for each layout."
+              text="Episode layouts"
+            >
+              <LayoutChoiceGroup
+                canDelete={theme.layout.body.home.segments.length > 1}
+                consumeBudget={budget}
+                layouts={theme.layout.body.home.segments}
+                onUpdated={this.props.onSetHomeSegments}
+              />
+            </Label>
           </Tab>
           <Tab name="Homepage">
             <Label

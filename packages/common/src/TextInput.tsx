@@ -8,12 +8,24 @@ export type Sizes = 'normal' | 'large';
 
 const InputWrapper = styled(
   'div',
-  ({$disabled, $size = 'normal'}: {$disabled: boolean; $size?: Sizes}) => ({
+  ({
+    $disabled,
+    $hasPrefix,
+    $size = 'normal',
+  }: {
+    $disabled: boolean;
+    $hasPrefix: boolean;
+    $size?: Sizes;
+  }) => ({
     alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius: 4,
     display: ['flex', 'grid'],
+    gridTemplateColumns: $hasPrefix
+      ? 'max-content 1fr max-content'
+      : '1fr max-content',
     height: $size === 'normal' ? 32 : 40,
+    lineHeight: $size === 'normal' ? '32px' : '40px',
     margin: 0,
   }),
 );
@@ -95,7 +107,6 @@ const Prefix = styled(
     gridColumn: '1 / 1',
     gridRow: '1 / 1',
     height: '100%',
-    lineHeight: '32px',
     marginRight: 1,
     padding: '0 8px',
     ':not(:empty) + input': {
@@ -126,7 +137,6 @@ const Suffix = styled(
     gridColumn: $hasPrefix ? '3 / 3' : '2 / 2',
     gridRow: '1 / 1',
     height: '100%',
-    lineHeight: '32px',
     marginLeft: 1,
     opacity: $disabled ? 0.5 : 1,
     padding: '0 8px',
@@ -190,6 +200,7 @@ export default class TextInput extends React.PureComponent {
     return (
       <InputWrapper
         $disabled={rest.disabled || false}
+        $hasPrefix={Boolean(prefix)}
         $size={size}
         style={style}
       >

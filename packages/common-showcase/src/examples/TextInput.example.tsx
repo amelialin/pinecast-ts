@@ -67,21 +67,62 @@ export default {
     },
     {
       title: 'With prefix',
-      render: () => <TextInput onChange={() => {}} prefix="$" value="20.00" />,
+      render: () => (
+        <React.Fragment>
+          <Label text="Text input field">
+            <TextInput onChange={() => {}} prefix="$" value="20.00" />
+          </Label>
+          <Label text="Text input field">
+            <TextInput
+              onChange={() => {}}
+              prefix="$"
+              size="large"
+              value="20.00"
+            />
+          </Label>
+        </React.Fragment>
+      ),
     },
     {
       title: 'With suffix',
-      render: () => <TextInput onChange={() => {}} suffix="px" value="32" />,
+      render: () => (
+        <React.Fragment>
+          <Label text="Text input field">
+            <TextInput onChange={() => {}} suffix="px" value="32" />
+          </Label>
+          <Label text="Text input field">
+            <TextInput
+              onChange={() => {}}
+              suffix="px"
+              size="large"
+              value="32"
+            />
+          </Label>
+        </React.Fragment>
+      ),
     },
     {
       title: 'With prefix and suffix',
       render: () => (
-        <TextInput
-          onChange={() => {}}
-          prefix="$"
-          suffix="USD"
-          value="1,000.00"
-        />
+        <React.Fragment>
+          <Label text="Text input field">
+            <TextInput
+              onChange={() => {}}
+              prefix="$"
+              suffix="USD"
+              value="1,000.00"
+            />
+          </Label>
+          <Label text="Text input field">
+            <TextInput
+              onChange={() => {}}
+              prefix="$"
+              suffix="USD"
+              size="large"
+              value="1,000.00"
+            />
+          </Label>
+        </React.Fragment>
       ),
     },
   ],
