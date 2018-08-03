@@ -7,7 +7,7 @@ import header from '../components/header-centeredFixed';
 import headerPageLinkList from '../components/header-pageLinkList';
 import paginationForwardBack from '../components/pagination-forwardBack-fixed';
 
-import * as colors from './colors/clarity.json';
+import colors from './colors/clarity.json';
 
 export default {
   ...baseTheme,

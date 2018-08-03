@@ -7,7 +7,7 @@ import header from '../components/header-centeredFixed';
 import headerPageLinkList from '../components/header-pageLinkList';
 import paginationForwardBack from '../components/pagination-forwardBack-fixed';
 
-import * as colors from './colors/smooth.json';
+import colors from './colors/smooth.json';
 
 export default {
   ...baseTheme,

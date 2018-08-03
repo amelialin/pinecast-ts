@@ -8,7 +8,7 @@ import paginationForwardBack from '../components/pagination-forwardBack-fixed';
 import subheaderSubscribeLinks from '../components/subheader-subscribeLinks';
 import textWrappedText from '../components/text-wrappedText';
 
-import * as colors from './colors/zen.json';
+import colors from './colors/zen.json';
 
 export default {
   ...baseTheme,

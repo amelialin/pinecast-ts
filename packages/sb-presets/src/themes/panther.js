@@ -6,7 +6,7 @@ import header from '../components/header-centeredFixed';
 import pagesTemplate from '../wrappers/pagesTemplate';
 import paginationForwardBackFixed from '../components/pagination-forwardBack-fixed';
 
-import * as colors from './colors/panther.json';
+import colors from './colors/panther.json';
 
 export default {
   ...baseTheme,

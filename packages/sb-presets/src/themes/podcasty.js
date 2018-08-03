@@ -9,7 +9,7 @@ import paginationForwardBack from '../components/pagination-forwardBack-fixed';
 import subheaderSubscribeLinks from '../components/subheader-subscribeLinks';
 import textWrappedText from '../components/text-wrappedText';
 
-import * as colors from './colors/podcasty.json';
+import colors from './colors/podcasty.json';
 
 export default {
   ...baseTheme,

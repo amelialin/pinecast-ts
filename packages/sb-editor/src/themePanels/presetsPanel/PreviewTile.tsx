@@ -34,13 +34,13 @@ const Button = styled(
   {type: 'button'},
 );
 
-interface Props {
+type Props = {
   onSelect: (val: string) => void;
   type: string;
-}
-interface StateProps {
+};
+type StateProps = {
   isActive: boolean;
-}
+};
 const PreviewTile = ({isActive, onSelect, type}: Props & StateProps) => {
   const theme = presets.themes[type];
   return (

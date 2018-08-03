@@ -13,6 +13,7 @@ const Button = styled(
     border: 0,
     borderRadius: 3,
     boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025)',
+    cursor: 'pointer',
     display: 'flex',
     height: 50,
     marginBottom: 30,
