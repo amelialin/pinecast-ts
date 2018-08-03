@@ -12,10 +12,8 @@ export function actionHandler<T = {}>(handlers: {
 }): Reducer<T> {
   return (state: T, action: Action<any>): T => {
     let updated = false;
-    return Object.entries(handlers)
-      .map(([key, val]: [keyof T, Reducer<any>]): Reducer<
-        T
-      > => (state: T, action: Action<T>): T => {
+    return (Object.entries(handlers) as Array<[keyof T, Reducer<any>]>)
+      .map(([key, val]): Reducer<T> => (state: T, action: Action<T>): T => {
         const recomputed: T[keyof T] = val(state[key], action);
         if (recomputed === state[key]) {
           return state;

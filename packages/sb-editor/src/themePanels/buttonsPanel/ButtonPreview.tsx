@@ -19,10 +19,12 @@ const Button = styled(
   {type: 'button'},
 );
 
+const noop = () => {};
+
 const ButtonPreview = ({
-  onClick = () => {},
+  onClick = noop,
   preset,
-  style = null,
+  style,
   theme,
 }: {
   onClick?: () => void;

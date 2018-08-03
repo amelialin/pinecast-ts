@@ -83,7 +83,7 @@ const NativeButton = styled(
 const keyboardShortcutStyles: React.CSSProperties = {
   alignSelf: 'flex-end',
   fontWeight: 400,
-  marginBottom: 1,
+  marginBottom: 2,
   marginLeft: 4,
   opacity: 0.5,
 };

@@ -77,7 +77,7 @@ export default function(
         xhr.setRequestHeader(name, value);
       });
     }
-    xhr.send(body);
+    xhr.send(body || undefined);
 
     if (abortPromise) {
       abortPromise.then(() => xhr.abort());

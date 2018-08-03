@@ -108,7 +108,7 @@ export default {
         nextText: 'Back in time',
         previousText: 'Onward to the Future',
       }),
-      footerColumnsFixed({}),
+      footerColumnsFixed(),
     ],
 
     body: {

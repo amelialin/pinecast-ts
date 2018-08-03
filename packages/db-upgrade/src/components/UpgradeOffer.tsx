@@ -121,6 +121,11 @@ class UpgradeOffer_ extends React.PureComponent {
               'The coupon code you provided is not able to be used.',
             );
             return;
+          case 'too_often':
+            this.setError(
+              'Your account was downgraded too recently. Please contact Pinecast support.',
+            );
+            return;
           default:
             console.error(response.error);
             this.setError('There was a problem while processing your request.');
@@ -166,7 +171,10 @@ class UpgradeOffer_ extends React.PureComponent {
   };
 
   render() {
-    const {props: {currentPlan, toPlan}, state: {error, pending}} = this;
+    const {
+      props: {currentPlan, toPlan},
+      state: {error, pending},
+    } = this;
 
     const errorMessage = error ? <ErrorMessage>{error}</ErrorMessage> : null;
 

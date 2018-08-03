@@ -13,8 +13,19 @@ const mounts = {
   },
 };
 
-export default (data = {}) => ({
+export default (
+  data = {
+    bgStyle: 'dark',
+    elementOptions: {},
+    col1Items: ['pageLinks', 'siteLinks'],
+    col1Name: 'Menu',
+    col2Items: ['subLinks'],
+    col2Name: 'Subscribe',
+    linkStyle: null,
+  },
+) => ({
   type: 'links.linkMount',
+  elementOptions: data.elementOptions,
   layout: {
     linkStyle: {
       borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
@@ -34,7 +45,7 @@ export default (data = {}) => ({
     elements: [
       {
         type: 'layout.fixedWrapper',
-        elementOptions: data.elementOptions || {},
+        elementOptions: {},
         children: [
           {
             type: 'layout.column',
@@ -48,9 +59,7 @@ export default (data = {}) => ({
                   marginBottom: 20,
                 },
               },
-              ...(data.col1Items || ['pageLinks', 'siteLinks']).map(
-                x => mounts[x],
-              ),
+              ...data.col1Items.map(x => mounts[x]),
             ],
             styles: {
               flex: '1 1',
@@ -69,7 +78,7 @@ export default (data = {}) => ({
                   marginBottom: 20,
                 },
               },
-              ...(data.col2Items || ['subLinks']).map(x => mounts[x]),
+              ...data.col2Items.map(x => mounts[x]),
             ],
             styles: {
               flex: '1 1',
@@ -78,7 +87,10 @@ export default (data = {}) => ({
           },
         ],
         styles: {
-          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          backgroundColor:
+            data.bgStyle === 'dark'
+              ? 'rgba(0, 0, 0, 0.5)'
+              : 'rgba(255, 255, 255, 0.5)',
           color: 'foreground',
           display: 'flex',
           fontSize: 14,
@@ -93,13 +105,5 @@ export default (data = {}) => ({
     },
   },
   tag: 'footer.columnsFixed',
-  tagOptions: {
-    col1Name: 'Menu',
-    col1Items: ['pageLinks', 'siteLinks'],
-    col2Name: 'Subscribe',
-    col2Items: ['subLinks'],
-    elementOptions: {},
-    linkStyle: null,
-    ...data,
-  },
+  tagOptions: data,
 });

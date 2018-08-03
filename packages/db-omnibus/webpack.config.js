@@ -17,19 +17,16 @@ module.exports = env => {
 
     const MinifyPlugin = require('babel-minify-webpack-plugin');
     plugins.push(
-      new MinifyPlugin(
-        {
-          mangle: {
-            blacklist: ['Buffer'],
-          },
+      new MinifyPlugin({
+        mangle: {
+          blacklist: ['Buffer'],
         },
-        // {sourceMap: 'source-maps'},
-      ),
+      }),
     );
   }
 
   return {
-    devtool: env === 'prod' ? false : 'source-maps',
+    devtool: 'source-maps',
     entry: {
       index: './src/index.tsx',
     },
