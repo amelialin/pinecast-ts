@@ -1,4 +1,5 @@
-export const DEFAULT_FONT = 'Nort';
+export const DEFAULT_FONT =
+  'Nort, -apple-system, BlinkMacSystemFont, sans-serif';
 export const DEFAULT_FONT_CSS_IMPORT = `
 @font-face {
   font-family: "Nort";
