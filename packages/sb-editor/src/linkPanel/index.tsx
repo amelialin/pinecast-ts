@@ -10,13 +10,7 @@ import {Table, TableBodyCell, TableHeaderCell} from '@pinecast/common/Table';
 import xhr from '@pinecast/xhr';
 
 import NewLinkForm from './NewLinkForm';
-import {
-  PageHeading,
-  PanelDescription,
-  PanelDivider,
-  PanelSectionTitle,
-  PanelWrapper,
-} from '../panelComponents';
+import {PageHeading, PanelDescription, PanelWrapper} from '../panelComponents';
 import {ReducerType} from '../reducer';
 import {refresh} from '../actions/preview';
 import request, {clearCache} from '../data/requests';
@@ -29,8 +23,6 @@ const HeaderWrapper = styled('div', {
 
 class LinkPanel extends React.PureComponent {
   props: {
-    children?: any; // FIXME: required by react-redux
-    csrf: string;
     onRefresh: () => any;
     slug: string;
   };
@@ -69,10 +61,9 @@ class LinkPanel extends React.PureComponent {
 
   save(newLinksArr: Array<{title: string; url: string}>) {
     this.setState({data: null, error: null});
-    const {csrf, slug} = this.props;
+    const {slug} = this.props;
     xhr({
       body: JSON.stringify(newLinksArr),
-      headers: {'X-CSRFToken': csrf},
       method: 'POST',
       url: `/sites/site_builder/editor/links/${encodeURIComponent(slug)}`,
     })
@@ -90,12 +81,7 @@ class LinkPanel extends React.PureComponent {
   }
 
   renderCreateForm() {
-    return (
-      <React.Fragment>
-        <PanelSectionTitle>Add site link</PanelSectionTitle>
-        <NewLinkForm onNewLink={this.handleNewLink} />
-      </React.Fragment>
-    );
+    return <NewLinkForm onNewLink={this.handleNewLink} />;
   }
 
   renderInner() {
@@ -113,7 +99,6 @@ class LinkPanel extends React.PureComponent {
             title="No site links"
             copy="You don't have any site links created yet."
           />
-          <PanelDivider />
           {this.renderCreateForm()}
         </React.Fragment>
       );
@@ -149,7 +134,6 @@ class LinkPanel extends React.PureComponent {
             })}
           </tbody>
         </Table>
-        <PanelDivider />
         {this.renderCreateForm()}
       </React.Fragment>
     );
@@ -176,7 +160,6 @@ class LinkPanel extends React.PureComponent {
 
 export default connect(
   (state: ReducerType) => ({
-    csrf: state.csrf || '',
     slug: state.slug || '',
   }),
   {onRefresh: refresh},

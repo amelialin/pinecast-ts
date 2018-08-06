@@ -7,7 +7,6 @@ import xhr from '@pinecast/xhr';
 export default class ImageSettingsUpdate extends React.PureComponent {
   props: {
     children: JSX.Element;
-    csrf: string;
     onFileUpdate: (url: string | null) => void;
     slug: string;
   };
@@ -26,13 +25,12 @@ export default class ImageSettingsUpdate extends React.PureComponent {
     this.setState({saving: true, error: null});
 
     try {
-      const {children, csrf, slug} = this.props;
+      const {children, slug} = this.props;
       const imageType = React.Children.only(children).props.imageType;
       const result = await xhr({
         body: JSON.stringify({
           [imageType]: newFile,
         }),
-        headers: {'X-CSRFToken': csrf},
         method: 'POST',
         url: `/sites/site_builder/editor/assets/${encodeURIComponent(slug)}`,
       });

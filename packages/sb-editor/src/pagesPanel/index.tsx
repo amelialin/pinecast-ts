@@ -29,8 +29,6 @@ const HeaderWrapper = styled('div', {
 
 class PagesPanel extends React.PureComponent {
   props: {
-    children?: any; // FIXME: required by react-redux
-    csrf: string;
     onNavigate: (path: string) => any;
     onRefresh: () => any;
     path: string;
@@ -92,9 +90,8 @@ class PagesPanel extends React.PureComponent {
     delete newData[pageSlug];
     this.setState({data: null, error: null});
 
-    const {csrf, slug} = this.props;
+    const {slug} = this.props;
     xhr({
-      headers: {'X-CSRFToken': csrf},
       method: 'POST',
       url: `/sites/site_builder/editor/pages/${encodeURIComponent(
         slug,
@@ -197,10 +194,9 @@ class PagesPanel extends React.PureComponent {
         break;
     }
 
-    const {csrf, slug} = this.props;
+    const {slug} = this.props;
     xhr({
       body,
-      headers: {'X-CSRFToken': csrf},
       method: 'POST',
       url: `/sites/site_builder/editor/pages/${encodeURIComponent(
         slug,
@@ -276,10 +272,9 @@ class PagesPanel extends React.PureComponent {
       typeof page.body === 'object' ? JSON.stringify(page.body) : page.body,
     );
     body.append('page_type', page.page_type);
-    const {csrf, slug} = this.props;
+    const {slug} = this.props;
     xhr({
       body,
-      headers: {'X-CSRFToken': csrf},
       method: 'POST',
       url: `/sites/site_builder/editor/pages/${encodeURIComponent(slug)}`,
     }).then(
@@ -357,7 +352,6 @@ class PagesPanel extends React.PureComponent {
 
 export default connect(
   (state: ReducerType) => ({
-    csrf: state.csrf,
     path: state.preview.path,
     slug: state.slug,
   }),

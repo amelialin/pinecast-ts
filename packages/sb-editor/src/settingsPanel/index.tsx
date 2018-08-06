@@ -41,8 +41,6 @@ interface Settings {
 
 class SettingsPanel extends React.PureComponent {
   props: {
-    children?: any; // FIXME: required by react-redux
-    csrf: string;
     onRefresh: () => any;
     slug: string;
   };
@@ -122,10 +120,9 @@ class SettingsPanel extends React.PureComponent {
     const updatedData = this.state.updatedData;
     this.setState({error: null, pending: true});
 
-    const {csrf, slug} = this.props;
+    const {slug} = this.props;
     xhr({
       body: JSON.stringify(updatedData),
-      headers: {'X-CSRFToken': csrf},
       method: 'POST',
       url: `/sites/site_builder/editor/settings/${encodeURIComponent(slug)}`,
     })
@@ -293,7 +290,6 @@ class SettingsPanel extends React.PureComponent {
 
 export default connect(
   (state: ReducerType) => ({
-    csrf: state.csrf,
     slug: state.slug,
   }),
   {onRefresh: refresh},

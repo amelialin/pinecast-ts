@@ -27,8 +27,6 @@ interface Assets {
 
 class AssetsPanel extends React.PureComponent {
   props: {
-    children?: any; // FIXME: required by react-redux
-    csrf: string;
     isPro: boolean;
     slug: string;
 
@@ -67,18 +65,14 @@ class AssetsPanel extends React.PureComponent {
   };
 
   renderInputs() {
-    const {csrf, isPro, slug} = this.props;
+    const {isPro, slug} = this.props;
     const {data} = this.state;
     if (!data) {
       return null;
     }
     return (
       <React.Fragment>
-        <ImageSettingsUpdate
-          csrf={csrf}
-          onFileUpdate={this.handleGotNewLogo}
-          slug={slug}
-        >
+        <ImageSettingsUpdate onFileUpdate={this.handleGotNewLogo} slug={slug}>
           <ImageUpload
             imageType="site_logo"
             labelText="Logo"
@@ -90,7 +84,6 @@ class AssetsPanel extends React.PureComponent {
         </ImageSettingsUpdate>
         <ProGuard isPro={isPro}>
           <ImageSettingsUpdate
-            csrf={csrf}
             onFileUpdate={this.handleGotNewFavicon}
             slug={slug}
           >
@@ -141,7 +134,6 @@ class AssetsPanel extends React.PureComponent {
 
 export default connect(
   (state: ReducerType) => ({
-    csrf: state.csrf,
     isPro: state.isPro,
     slug: state.slug,
   }),

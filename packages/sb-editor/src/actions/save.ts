@@ -18,12 +18,11 @@ export const doSave: ThunkAction<
   Action
 > = () => async (dispatch: Dispatch<any>, getState: () => RootReducerType) => {
   await dispatch(setSaveState({saving: true, error: null}));
-  const {csrf, slug, theme} = getState();
+  const {slug, theme} = getState();
   let response;
   try {
     response = await req({
       body: JSON.stringify(theme),
-      headers: {'X-CSRFToken': csrf || ''},
       method: 'POST',
       url: `/sites/site_builder/editor/save/theme/${encodeURIComponent(
         slug || '',
