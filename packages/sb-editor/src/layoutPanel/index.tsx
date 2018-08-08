@@ -13,7 +13,7 @@ import WrappersPanel from './wrappersPanel';
 const pageOptions = [
   {value: 'modules', name: 'Header and footer'},
   {value: 'episodeItems', name: 'Episode lists'},
-  {value: 'wrappers', name: 'Page wrappers'},
+  // {value: 'wrappers', name: 'Page wrappers'},
 ];
 
 const LayoutPanel = ({

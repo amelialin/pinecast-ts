@@ -12,7 +12,8 @@ export default class SchemaEnum extends React.PureComponent {
     if (this.props.type !== 'enum') {
       throw new Error('unreachable');
     }
-    this.props.onChange(this.props.field, newValue);
+    const found = this.props.options.find(x => String(x.key) === newValue)!;
+    this.props.onChange(this.props.field, found.value || found.key);
   };
   render() {
     if (this.props.type !== 'enum') {
@@ -22,10 +23,13 @@ export default class SchemaEnum extends React.PureComponent {
       <Label subText={this.props.description} text={this.props.name}>
         <Select
           onChange={this.handleChange}
-          options={this.props.options}
+          options={this.props.options.map(({label, key}) => ({
+            label,
+            key: String(key),
+          }))}
           style={{display: 'inline-flex'}}
           tabIndex={this.props.open ? 0 : -1}
-          value={this.props.value}
+          value={this.props.value.toString()}
         />
       </Label>
     );

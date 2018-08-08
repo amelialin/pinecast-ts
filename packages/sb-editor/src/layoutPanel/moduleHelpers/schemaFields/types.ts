@@ -12,7 +12,7 @@ export type BoolProps = BaseProps & {
 };
 export type EnumProps = BaseProps & {
   onChange: (field: string, newValue: string | number) => void;
-  options: Array<{label: string; key: string | number}>;
+  options: Array<{label: string; key: string | number; value?: any}>;
   type: 'enum';
   value: string | number;
 };
