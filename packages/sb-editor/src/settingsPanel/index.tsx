@@ -56,6 +56,7 @@ class SettingsPanel extends React.PureComponent {
     updatedData: null,
     pending: true,
   };
+  unmounted: boolean = false;
 
   componentDidMount() {
     const {slug} = this.props;
@@ -63,15 +64,24 @@ class SettingsPanel extends React.PureComponent {
       .then(data => JSON.parse(data))
       .then(
         parsed => {
+          if (this.unmounted) {
+            return;
+          }
           this.setState({data: parsed, updatedData: parsed, pending: false});
         },
         () => {
+          if (this.unmounted) {
+            return;
+          }
           this.setState({
             error: 'Failed to load settings from Pinecast',
             pending: false,
           });
         },
       );
+  }
+  componentWillUnmount() {
+    this.unmounted = true;
   }
 
   handleChangeAnalyticsID = (analyticsID: string) => {

@@ -57,7 +57,7 @@ module.exports = env => {
         },
         {
           test: /\.js$/,
-          exclude: /node_modules/,
+          exclude: env === 'prod' ? undefined : /node_modules/,
           loader: 'babel-loader',
         },
         {

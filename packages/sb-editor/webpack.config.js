@@ -34,7 +34,7 @@ module.exports = env => {
       alias: require('../../webpack.aliases'),
       aliasFields: ['es2017', 'es2015', 'browser'],
       extensions: ['.ts', '.tsx', '.js', '.json'],
-      mainFields: ['ts:main', 'jsnext:main', 'module', 'main'],
+      mainFields: ['ts:main', 'jsnext:main', 'module', 'browser', 'main'],
       modules: ['node_modules'],
     },
     output: {
@@ -57,7 +57,7 @@ module.exports = env => {
         },
         {
           test: /\.js$/,
-          exclude: /node_modules/,
+          exclude: env === 'prod' ? undefined : /node_modules/,
           loader: 'babel-loader',
         },
         {

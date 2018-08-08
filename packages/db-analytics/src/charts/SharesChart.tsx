@@ -90,6 +90,10 @@ export default class SharesChart extends React.Component {
     const {data} = this.props;
     const {width} = this.state;
 
+    if (!data || !data.length) {
+      return null;
+    }
+
     const yAxisLabelWidth = data.reduce(
       (acc, cur) =>
         cur.isOther

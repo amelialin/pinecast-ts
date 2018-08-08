@@ -33,6 +33,7 @@ class LinkPanel extends React.PureComponent {
     data: null,
     error: null,
   };
+  unmounted: boolean = false;
 
   componentWillMount() {
     const {slug} = this.props;
@@ -40,12 +41,21 @@ class LinkPanel extends React.PureComponent {
       .then(data => JSON.parse(data))
       .then(
         parsed => {
+          if (this.unmounted) {
+            return;
+          }
           this.setState({data: parsed});
         },
         () => {
+          if (this.unmounted) {
+            return;
+          }
           this.setState({error: 'Failed to load site links from Pinecast'});
         },
       );
+  }
+  componentWillUnmount() {
+    this.unmounted = true;
   }
 
   handleNewLink = (title: string, url: string) => {

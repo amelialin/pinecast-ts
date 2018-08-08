@@ -10,6 +10,7 @@
     "@types/react-stripe-elements": "^1.1.2",
     "awesome-typescript-loader": "^5.0.0-1",
     "babel-loader": "^7.1.4",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "css-loader": "^1.0.0",
     "lerna": "^2.9.0",

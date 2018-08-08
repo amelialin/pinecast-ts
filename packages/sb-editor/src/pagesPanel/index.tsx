@@ -45,6 +45,7 @@ class PagesPanel extends React.PureComponent {
     error: null,
     new_: null,
   };
+  unmounted: boolean = false;
 
   componentWillMount() {
     const {slug} = this.props;
@@ -52,12 +53,21 @@ class PagesPanel extends React.PureComponent {
       .then(data => JSON.parse(data))
       .then(
         parsed => {
+          if (this.unmounted) {
+            return;
+          }
           this.setState({data: parsed});
         },
         () => {
+          if (this.unmounted) {
+            return;
+          }
           this.setState({error: 'Failed to load pages from Pinecast'});
         },
       );
+  }
+  componentWillUnmount() {
+    this.unmounted = true;
   }
 
   handleNewMarkdown = () => this.setState({new_: 'markdown'});
