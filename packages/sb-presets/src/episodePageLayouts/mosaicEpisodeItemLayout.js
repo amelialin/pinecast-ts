@@ -13,7 +13,7 @@ export default {
             top: -300,
           },
         },
-        square: 'element',
+        square: 'background',
       },
       propPaths: {src: ['image_url']},
       styles: {
