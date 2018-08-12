@@ -138,10 +138,12 @@ function processContent<T>(content: T, element: Element): T | string {
     element.elementOptions.transform
   ) {
     switch (element.elementOptions.transform) {
-      case 'date.fromNow':
+      case 'date.fromNow': {
+        const stringDate = String(content);
         return ((moment as any).default as typeof moment)(
-          Date.parse(String(content)),
+          Date.parse(stringDate + (stringDate.endsWith('Z') ? '' : 'Z')),
         ).fromNow();
+      }
     }
   }
   return content;

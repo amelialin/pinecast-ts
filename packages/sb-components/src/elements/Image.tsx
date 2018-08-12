@@ -61,9 +61,22 @@ export default ({
     ] = /^https:\/\/pinecast\-storage\.s3\.amazonaws\.com\/(.*)$/.exec(
       props.src || '',
     ) || [null, null];
-    if (key && (styles.height || styles.width)) {
-      let height = styles.height || styles.width || 0;
-      let width = styles.width || styles.height || 0;
+    if (
+      key &&
+      (styles.height || styles.width || styles.maxHeight || styles.maxWidth)
+    ) {
+      let height =
+        styles.maxHeight ||
+        styles.height ||
+        styles.maxWidth ||
+        styles.width ||
+        0;
+      let width =
+        styles.maxWidth ||
+        styles.width ||
+        styles.maxHeight ||
+        styles.height ||
+        0;
       if (typeof height === 'string') {
         height = width;
       } else if (typeof width === 'string') {
@@ -91,7 +104,8 @@ export default ({
   if (eo.square === 'element') {
     const SquareDiv = atom('div');
     styles.height = '100%';
-    styles.maxWidth = '100%';
+    styles.width = '100%';
+    styles.maxWidth = styles.maxWidth || styles.width || '100%';
     styles.minWidth = Number(styles.width) / 2;
     styles.position = styles.position || (squareStyle.position as any);
     styles[':after'] = squareStyle[':after'];
