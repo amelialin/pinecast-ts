@@ -146,7 +146,12 @@ class PageEditorModal extends React.PureComponent {
         title={page.title ? `Edit: ${page.title}` : 'New page'}
       >
         <form onSubmit={this.handleSubmit}>
-          <Label $oneLine error={titleError} text="Page Title">
+          <Label
+            $oneLine
+            $oneLineCollapse={!showSlug}
+            error={titleError}
+            text="Page Title"
+          >
             <TextInput
               invalid={Boolean(titleError)}
               onChange={this.handleTitleChange}

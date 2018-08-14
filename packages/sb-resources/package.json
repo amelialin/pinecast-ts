@@ -9,14 +9,12 @@
   "main": "src/",
   "ts:main": "src/index.ts",
   "dependencies": {
-    "base85": "^2.1.0",
     "parse-svg-path": "^0.1.2"
   },
   "devDependencies": {
     "gzip-size": "^4.0.0",
     "inquirer": "^3.3.0",
     "isomorphic-fetch": "^2.2.1",
-    "jest": "^21.2.1",
     "opentype.js": "^0.7.3"
   }
 }

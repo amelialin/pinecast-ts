@@ -1,7 +1,8 @@
 const path = require('path');
 
-module.exports = {
+module.exports = env => ({
   devtool: 'source-maps',
+  mode: 'production',
   entry: {
     app: ['./src/server.ts'],
   },
@@ -23,7 +24,10 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: 'awesome-typescript-loader',
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: env === 'prod',
+        },
       },
       {
         test: /\.js$/,
@@ -38,5 +42,4 @@ module.exports = {
     setImmediate: false,
     process: false,
   },
-  externals: require('../../webpack.externals'),
-};
+});

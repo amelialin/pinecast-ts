@@ -33,9 +33,14 @@ export default {
     {
       title: 'One line',
       render: () => (
-        <Label $oneLine text="Label with a text input">
-          <TextInput onChange={() => {}} value="" />
-        </Label>
+        <React.Fragment>
+          <Label $oneLine text="Label with a text input">
+            <TextInput onChange={() => {}} value="" />
+          </Label>
+          <Label $oneLine $oneLineCollapse text="Label with a text input">
+            <TextInput onChange={() => {}} value="" />
+          </Label>
+        </React.Fragment>
       ),
     },
     {

@@ -2,8 +2,9 @@ const path = require('path');
 
 const webpack = require('webpack');
 
-module.exports = {
+module.exports = env => ({
   devtool: 'source-maps',
+  mode: env === 'prod' ? 'production' : 'development',
   entry: {
     app: ['./src/server.ts'],
   },
@@ -26,7 +27,10 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: 'awesome-typescript-loader',
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: env === 'prod',
+        },
       },
       {
         test: /\.js$/,
@@ -45,4 +49,4 @@ module.exports = {
     setImmediate: false,
     process: false,
   },
-};
+});

@@ -2,6 +2,9 @@ const path = require('path');
 
 const webpack = require('webpack');
 
+const DEV_SERVER_PORT = 8001;
+const DEV_SERVER_PUBLIC_PATH = '/build/';
+
 module.exports = env => {
   const plugins = [];
 
@@ -14,16 +17,13 @@ module.exports = env => {
     );
     plugins.push(new webpack.LoaderOptionsPlugin({minimize: true}));
     plugins.push(new webpack.optimize.ModuleConcatenationPlugin());
-
-    const MinifyPlugin = require('babel-minify-webpack-plugin');
-    plugins.push(
-      new MinifyPlugin({
-        mangle: {
-          blacklist: ['Buffer'],
-        },
-      }),
-    );
   }
+
+  const publicPath =
+    env === 'prod'
+      ? `https://js.pinecast.net${process.env.PUBLIC_PATH}`
+      : `//localhost:${DEV_SERVER_PORT}${DEV_SERVER_PUBLIC_PATH}`;
+  console.log(`Using publicPath: ${publicPath}`);
 
   return {
     devtool: 'source-maps',
@@ -39,7 +39,7 @@ module.exports = env => {
     },
     output: {
       path: path.resolve(__dirname, 'build'),
-      publicPath: '/',
+      publicPath,
       filename: 'index.js',
       chunkFilename: '[name].chunk.js',
     },
@@ -57,7 +57,7 @@ module.exports = env => {
         },
         {
           test: /\.js$/,
-          exclude: env === 'prod' ? undefined : /node_modules/,
+          exclude: /node_modules/,
           loader: 'babel-loader',
         },
         {
@@ -66,16 +66,18 @@ module.exports = env => {
         },
       ],
     },
-    optimization: {
-      minimizer: [],
-      splitChunks: false,
-    },
+    optimization:
+      (env !== 'prod' && {
+        minimizer: [],
+        splitChunks: false,
+      }) ||
+      undefined,
     performance: {
       maxAssetSize: 4000000,
     },
     devServer: {
       contentBase: __dirname,
-      port: 8001,
+      port: DEV_SERVER_PORT,
       publicPath: '/build/',
 
       headers: {

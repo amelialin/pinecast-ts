@@ -4,7 +4,7 @@
   "description": "An editor component for the Pinecast site builder",
   "scripts": {
     "dev": "../../node_modules/.bin/webpack-dev-server",
-    "build": "../../node_modules/.bin/webpack --config webpack.config.js --env prod",
+    "build": "../../node_modules/.bin/webpack --config webpack.config.js --env prod --progress",
     "build_stat": "../../node_modules/.bin/webpack --config webpack.config.js --env prod --json > stat.json"
   },
   "main": "src/",
@@ -20,7 +20,6 @@
     "@types/react-color": "^2.13.4",
     "@types/react-list": "^0.8.3",
     "@types/react-redux": "^5.0.19",
-    "@types/redux-thunk": "^2.1.0",
     "@types/sanitize-html": "^1.14.0",
     "@types/showdown": "^1.7.3",
     "react-color": "^2.14.0",

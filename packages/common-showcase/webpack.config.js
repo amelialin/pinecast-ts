@@ -14,18 +14,6 @@ module.exports = env => {
     );
     plugins.push(new webpack.LoaderOptionsPlugin({minimize: true}));
     plugins.push(new webpack.optimize.ModuleConcatenationPlugin());
-
-    const MinifyPlugin = require('babel-minify-webpack-plugin');
-    plugins.push(
-      new MinifyPlugin(
-        {
-          mangle: {
-            blacklist: ['Buffer'],
-          },
-        },
-        // {sourceMap: 'source-maps'},
-      ),
-    );
   }
 
   return {
@@ -69,10 +57,12 @@ module.exports = env => {
         },
       ],
     },
-    optimization: {
-      minimizer: [],
-      splitChunks: false,
-    },
+    optimization:
+      (env !== 'prod' && {
+        minimizer: [],
+        splitChunks: false,
+      }) ||
+      undefined,
     performance: {
       maxAssetSize: 4000000,
     },
