@@ -35,7 +35,7 @@ export default class TimeSeriesChart extends React.Component {
     const shouldDefaultToArea =
       constants.LINE_CHART_DEFAULT_DISPLAY_OVERRIDE[props.view] === 'area';
     this.state = {
-      activeSeries: props.data.datasets.map((_, i) => i),
+      activeSeries: (props.data.datasets || []).map((_, i) => i),
       chartType:
         shouldDefaultToArea && this.canHaveAreaChart(props.data)
           ? 'area'
@@ -250,6 +250,9 @@ export default class TimeSeriesChart extends React.Component {
   }
 
   render() {
+    if (!this.props.data.datasets) {
+      return null;
+    }
     return (
       <React.Fragment>
         {this.renderSubToolbar()}
