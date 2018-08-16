@@ -89,8 +89,7 @@ const Toolbar = () => (
     <Pinecast color="#616669" height={20} style={{marginRight: 12}} />
     <ConnectedToolbarButton id="theme">Theme</ConnectedToolbarButton>
     <ConnectedToolbarButton id="layout">Layout</ConnectedToolbarButton>
-    <ConnectedToolbarButton id="links">Links</ConnectedToolbarButton>
-    <ConnectedToolbarButton id="pages">Pages</ConnectedToolbarButton>
+    <ConnectedToolbarButton id="content">Content</ConnectedToolbarButton>
     <ConnectedToolbarButton id="assets">Assets</ConnectedToolbarButton>
     <ConnectedToolbarButton id="settings">Settings</ConnectedToolbarButton>
     <RHS>

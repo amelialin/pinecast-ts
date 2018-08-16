@@ -6,26 +6,19 @@ import EmptyState from '@pinecast/common/EmptyState';
 import ErrorState from '@pinecast/common/ErrorState';
 import LoadingState from '@pinecast/common/LoadingState';
 import ModalLayer from '@pinecast/common/ModalLayer';
-import styled from '@pinecast/styles';
 import {Table, TableHeaderCell} from '@pinecast/common/Table';
 import xhr from '@pinecast/xhr';
 
-import {changePath, refresh} from '../actions/preview';
+import {changePath, refresh} from '../../actions/preview';
 import ContactFields from './ContactFields';
 import HostsFields from './HostsFields';
 import PageEditorModal from './PageEditorModal';
 import MarkdownEditor from './MarkdownEditor';
 import {Page} from './types';
 import PageTableRow from './PageTableRow';
-import {PageHeading, PanelDescription, PanelWrapper} from '../panelComponents';
-import {ReducerType} from '../reducer';
-import request, {clearCache} from '../data/requests';
-
-const HeaderWrapper = styled('div', {
-  alignItems: 'center',
-  display: 'flex',
-  justifyContent: 'space-between',
-});
+import {PanelDescription, PanelWrapper} from '../../panelComponents';
+import {ReducerType} from '../../reducer';
+import request, {clearCache} from '../../data/requests';
 
 class PagesPanel extends React.PureComponent {
   props: {
@@ -341,9 +334,6 @@ class PagesPanel extends React.PureComponent {
   render() {
     return (
       <React.Fragment>
-        <HeaderWrapper>
-          <PageHeading>Pages</PageHeading>
-        </HeaderWrapper>
         <PanelWrapper>
           <PanelDescription>
             Add pages to your site to add content alongside your episodes.

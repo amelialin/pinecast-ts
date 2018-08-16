@@ -5,21 +5,14 @@ import DeleteButton from '@pinecast/common/DeleteButton';
 import EmptyState from '@pinecast/common/EmptyState';
 import ErrorState from '@pinecast/common/ErrorState';
 import LoadingState from '@pinecast/common/LoadingState';
-import styled from '@pinecast/styles';
 import {Table, TableBodyCell, TableHeaderCell} from '@pinecast/common/Table';
 import xhr from '@pinecast/xhr';
 
 import NewLinkForm from './NewLinkForm';
-import {PageHeading, PanelDescription, PanelWrapper} from '../panelComponents';
-import {ReducerType} from '../reducer';
-import {refresh} from '../actions/preview';
-import request, {clearCache} from '../data/requests';
-
-const HeaderWrapper = styled('div', {
-  alignItems: 'center',
-  display: 'flex',
-  justifyContent: 'space-between',
-});
+import {PanelDescription, PanelWrapper} from '../../panelComponents';
+import {ReducerType} from '../../reducer';
+import {refresh} from '../../actions/preview';
+import request, {clearCache} from '../../data/requests';
 
 class LinkPanel extends React.PureComponent {
   props: {
@@ -151,19 +144,14 @@ class LinkPanel extends React.PureComponent {
 
   render() {
     return (
-      <React.Fragment>
-        <HeaderWrapper>
-          <PageHeading>Links</PageHeading>
-        </HeaderWrapper>
-        <PanelWrapper>
-          <PanelDescription>
-            Site links allow you to link your podcast website to other websites,
-            like Facebook and Twitter.
-          </PanelDescription>
+      <PanelWrapper>
+        <PanelDescription>
+          Site links allow you to link your podcast website to other websites,
+          like Facebook and Twitter.
+        </PanelDescription>
 
-          {this.renderInner()}
-        </PanelWrapper>
-      </React.Fragment>
+        {this.renderInner()}
+      </PanelWrapper>
     );
   }
 }

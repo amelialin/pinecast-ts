@@ -21,7 +21,7 @@ export interface ReducerType {
   readonly wasLoaded: boolean;
   readonly needsSave: boolean;
 
-  readonly page: 'theme' | 'layout' | 'links' | 'pages' | 'assets' | 'settings';
+  readonly page: 'theme' | 'layout' | 'content' | 'assets' | 'settings';
   readonly themePage:
     | 'presets'
     | 'colors'
@@ -30,6 +30,7 @@ export interface ReducerType {
     | 'embedPlayer'
     | 'buttons';
   readonly layoutPage: 'modules' | 'episodeItems' | 'wrappers';
+  readonly contentPage: 'links' | 'pages';
   readonly preview: PreviewReducerType;
   readonly save: SaveReducerType;
   readonly theme: ThemeReducerType;
@@ -44,6 +45,7 @@ const initialState: ReducerType = {
   page: 'theme',
   themePage: 'presets',
   layoutPage: 'modules',
+  contentPage: 'links',
   preview: previewInitialState,
   save: saveInitialState,
   theme: themeInitialState,
@@ -85,6 +87,10 @@ function reducer(
       'switchLayoutPage',
       (state, action) => action.payload,
     )(state.layoutPage, action),
+    contentPage: actionReducer<ReducerType['contentPage']>(
+      'switchContentPage',
+      (state, action) => action.payload,
+    )(state.contentPage, action),
     preview: previewReducer(state.preview, action),
     save: saveReducer(state.save, action),
     theme: themeState,

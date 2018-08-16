@@ -127,7 +127,10 @@ export default class MarkdownInput extends React.Component {
   };
 
   handleCommand = async (command: ReactMdeTypes.Command) => {
-    const {value: {text}, onChange} = this.props;
+    const {
+      value: {text},
+      onChange,
+    } = this.props;
     let newValue = await command.execute(text, getSelection(this.textArea));
     // This is necessary because otherwise, when the value is reset, the scroll will jump to the end
     newValue.scrollTop = this.textArea.scrollTop;

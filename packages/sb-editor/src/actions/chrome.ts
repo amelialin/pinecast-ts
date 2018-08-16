@@ -10,3 +10,6 @@ export const changeThemePage = actionFactory<ReducerType['themePage']>(
 export const changeLayoutPage = actionFactory<ReducerType['layoutPage']>(
   'switchLayoutPage',
 );
+export const changeContentPage = actionFactory<ReducerType['contentPage']>(
+  'switchContentPage',
+);

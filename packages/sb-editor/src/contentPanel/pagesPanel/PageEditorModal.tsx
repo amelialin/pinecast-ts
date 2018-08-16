@@ -9,7 +9,7 @@ import TextInput from '@pinecast/common/TextInput';
 import xhr from '@pinecast/xhr';
 
 import {Page} from './types';
-import {ReducerType} from '../reducer';
+import {ReducerType} from '../../reducer';
 
 type Props = {
   editorComponent: React.ComponentType<{
