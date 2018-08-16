@@ -3,6 +3,7 @@ import {Dispatch} from 'react-redux';
 import {ThunkAction} from 'redux-thunk';
 
 import req from '@pinecast/xhr';
+import {url} from '@pinecast/common/helpers';
 
 import {actionFactory} from '../actions';
 import {ReducerType as RootReducerType} from '../reducer';
@@ -24,9 +25,7 @@ export const doSave: ThunkAction<
     response = await req({
       body: JSON.stringify(theme),
       method: 'POST',
-      url: `/sites/site_builder/editor/save/theme/${encodeURIComponent(
-        slug || '',
-      )}`,
+      url: url`/sites/site_builder/editor/save/theme/${slug || ''}`,
     });
   } catch (e) {
     return dispatch(

@@ -1,4 +1,5 @@
 import {DataAPI, JSONObject} from '@pinecast/sb-renderer';
+import {url} from '@pinecast/common/helpers';
 
 import request from './requests';
 
@@ -8,7 +9,7 @@ async function parse(data: string): Promise<JSONObject> {
 
 export const fetcher: ((theme: Object) => DataAPI) = (theme: Object) => ({
   getSite(hostname: string): Promise<JSONObject> {
-    return request(`/sites/site_builder/data/${encodeURIComponent(hostname)}`)
+    return request(url`/sites/site_builder/data/${hostname}`)
       .then(parse)
       .then((siteData: any) => ({
         ...siteData,
@@ -20,16 +21,12 @@ export const fetcher: ((theme: Object) => DataAPI) = (theme: Object) => ({
   },
   getEpisodes(hostname: string, offset: number, count: number) {
     return request(
-      `/sites/site_builder/data/${encodeURIComponent(
-        hostname,
-      )}/episode?offset=${offset}&count=${count}`,
+      url`/sites/site_builder/data/${hostname}/episode?offset=${offset}&count=${count}`,
     ).then(parse);
   },
   getEpisode(hostname: string, id: string) {
-    return request(
-      `/sites/site_builder/data/${encodeURIComponent(
-        hostname,
-      )}/episode/${encodeURIComponent(id)}`,
-    ).then(parse);
+    return request(`/sites/site_builder/data/${hostname}/episode/${id}`).then(
+      parse,
+    );
   },
 });
