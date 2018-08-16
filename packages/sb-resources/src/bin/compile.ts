@@ -1,5 +1,4 @@
 import * as fs from 'fs';
-import * as path from 'path';
 
 import * as fetch from 'isomorphic-fetch';
 import * as inquirer from 'inquirer';
@@ -19,6 +18,12 @@ function exists(path: string): Promise<boolean> {
 
 const FONT_SIZE = 20;
 
+type FontObject = {
+  family: string;
+  category: string;
+  files: {[weight: string]: string};
+};
+
 async function run() {
   const {apiKey} = await inquirer.prompt([
     {type: 'input', name: 'apiKey', message: 'Google Fonts API Key?'},
@@ -31,11 +36,7 @@ async function run() {
   );
   const response: {
     error: any;
-    items: Array<{
-      family: string;
-      category: string;
-      files: {[weight: string]: string};
-    }>;
+    items: Array<FontObject>;
   } = await request.json();
 
   if (!response.items) {
@@ -50,20 +51,23 @@ async function run() {
   const filteredItems = response.items
     .filter(x => !x.family.includes('Barcode'))
     .filter(x => Boolean(x.files.regular))
-    .reduce((acc, cur) => {
-      if (!acc.some(x => cur.family.startsWith(x.family))) {
-        acc.push(cur);
-      }
-      return acc;
-    }, []);
+    .reduce(
+      (acc, cur) => {
+        if (!acc.some(x => cur.family.startsWith(x.family))) {
+          acc.push(cur);
+        }
+        return acc;
+      },
+      [] as Array<FontObject>,
+    );
 
   const fontRequests = await Promise.all(
     filteredItems.map(async ({family, files}) => {
       const pathname = `/tmp/${encodeURIComponent(family)}.ttf`;
-      let buff;
+      let buff: Buffer;
       if (await exists(pathname)) {
         console.log(`Loading ${family}`);
-        buff = await new Promise((resolve, reject) => {
+        buff = await new Promise<Buffer>((resolve, reject) => {
           fs.readFile(pathname, (err, data) => {
             if (err) {
               reject(err);
@@ -145,7 +149,7 @@ async function run() {
 
   const completedFamilies = fontRequests
     .filter(x => x)
-    .sort((a, b) => a.localeCompare(b));
+    .sort((a, b) => a!.localeCompare(b!));
   fs.writeFileSync(
     'src/fontPreviews/fontList.json',
     JSON.stringify(completedFamilies),
@@ -153,16 +157,19 @@ async function run() {
   fs.writeFileSync(
     'src/fontPreviews/fontCategories.json',
     JSON.stringify(
-      filteredItems.reduce((acc, cur) => {
-        if (!completedFamilies.includes(cur.family)) {
+      filteredItems.reduce(
+        (acc, cur) => {
+          if (!completedFamilies.includes(cur.family)) {
+            return acc;
+          }
+          if (!acc[cur.category]) {
+            acc[cur.category] = [];
+          }
+          acc[cur.category].push(cur.family);
           return acc;
-        }
-        if (!acc[cur.category]) {
-          acc[cur.category] = [];
-        }
-        acc[cur.category].push(cur.family);
-        return acc;
-      }, {}),
+        },
+        {} as {[category: string]: Array<string>},
+      ),
     ),
   );
 }

@@ -12,6 +12,9 @@
     "parse-svg-path": "^0.1.2"
   },
   "devDependencies": {
+    "@types/inquirer": "^0.0.43",
+    "@types/isomorphic-fetch": "^0.0.34",
+    "@types/opentype.js": "^0.7.0",
     "gzip-size": "^4.0.0",
     "inquirer": "^3.3.0",
     "isomorphic-fetch": "^2.2.1",
