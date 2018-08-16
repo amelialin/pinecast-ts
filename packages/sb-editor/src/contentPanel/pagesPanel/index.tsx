@@ -7,6 +7,7 @@ import ErrorState from '@pinecast/common/ErrorState';
 import LoadingState from '@pinecast/common/LoadingState';
 import ModalLayer from '@pinecast/common/ModalLayer';
 import {Table, TableHeaderCell} from '@pinecast/common/Table';
+import {url} from '@pinecast/common/helpers';
 import xhr from '@pinecast/xhr';
 
 import {changePath, refresh} from '../../actions/preview';
@@ -42,7 +43,7 @@ class PagesPanel extends React.PureComponent {
 
   componentWillMount() {
     const {slug} = this.props;
-    request(`/sites/site_builder/editor/pages/${encodeURIComponent(slug)}`)
+    request(url`/sites/site_builder/editor/pages/${slug}`)
       .then(data => JSON.parse(data))
       .then(
         parsed => {
@@ -96,9 +97,7 @@ class PagesPanel extends React.PureComponent {
     const {slug} = this.props;
     xhr({
       method: 'POST',
-      url: `/sites/site_builder/editor/pages/${encodeURIComponent(
-        slug,
-      )}/${encodeURIComponent(pageSlug)}/delete`,
+      url: url`/sites/site_builder/editor/pages/${slug}/${pageSlug}/delete`,
     }).then(
       () => {
         this.setState({data: newData});
@@ -201,9 +200,7 @@ class PagesPanel extends React.PureComponent {
     xhr({
       body,
       method: 'POST',
-      url: `/sites/site_builder/editor/pages/${encodeURIComponent(
-        slug,
-      )}/${encodeURIComponent(page.slug)}`,
+      url: url`/sites/site_builder/editor/pages/${slug}/${page.slug}`,
     }).then(
       () => {
         this.setState({data: newData});
@@ -279,7 +276,7 @@ class PagesPanel extends React.PureComponent {
     xhr({
       body,
       method: 'POST',
-      url: `/sites/site_builder/editor/pages/${encodeURIComponent(slug)}`,
+      url: url`/sites/site_builder/editor/pages/${slug}`,
     }).then(
       () => {
         this.setState({data: newData});
