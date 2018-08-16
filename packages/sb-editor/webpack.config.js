@@ -66,12 +66,10 @@ module.exports = env => {
         },
       ],
     },
-    optimization:
-      (env !== 'prod' && {
-        minimizer: [],
-        splitChunks: false,
-      }) ||
-      undefined,
+    optimization: {
+      minimizer: env === 'prod' ? undefined : [],
+      splitChunks: false,
+    },
     performance: {
       maxAssetSize: 4000000,
     },

@@ -41,7 +41,7 @@ module.exports = env => ({
   },
   target: 'node',
   optimization: {
-    minimizer: [],
+    minimizer: env === 'prod' ? undefined : [],
     splitChunks: false,
   },
   node: {
