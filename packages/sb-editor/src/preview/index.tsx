@@ -108,7 +108,7 @@ const frameStyles: {
 
 class PreviewRenderer extends React.Component {
   iframe: HTMLIFrameElement | null;
-  reqId: number;
+  reqId: number = 0;
   props: {
     changePath: (path: string) => any;
     children?: any; // FIXME: required by react-redux
@@ -121,18 +121,11 @@ class PreviewRenderer extends React.Component {
     frame: null | 'mobile' | 'tablet';
     fullScreen: false;
     orientation: null | 'portrait' | 'landscape';
+  } = {
+    frame: null,
+    fullScreen: false,
+    orientation: null,
   };
-
-  constructor(props: PreviewRenderer['props']) {
-    super(props);
-    this.reqId = 0;
-
-    this.state = {
-      frame: null,
-      fullScreen: false,
-      orientation: null,
-    };
-  }
 
   ref = (e: HTMLIFrameElement | null) => {
     this.iframe = e;
