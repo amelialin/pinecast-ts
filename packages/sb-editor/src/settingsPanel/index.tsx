@@ -173,7 +173,7 @@ class SettingsPanel extends React.PureComponent {
 
         <Form onSubmit={this.handleSubmit} style={{marginBottom: 20}}>
           <Tabs>
-            <Tab name="Subscribe links">
+            <Tab name="Directory listings">
               <PanelSectionDescription>
                 Add links to your show on podcast directories to drive listeners
                 to subscribe.

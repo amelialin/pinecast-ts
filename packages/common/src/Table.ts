@@ -10,7 +10,7 @@ export const Table = styled('table', {
 });
 export const TableHeaderCell = styled('th', {
   borderBottom: '1px solid #ccc',
-  color: '#888',
+  color: '#4e7287',
   fontSize: 12,
   fontWeight: 500,
   lineHeight: 26,
