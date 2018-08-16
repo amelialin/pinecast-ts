@@ -41,7 +41,7 @@ const initialState: ReducerType = {
   wasLoaded: false,
   needsSave: false,
 
-  page: 'layout',
+  page: 'theme',
   themePage: 'presets',
   layoutPage: 'modules',
   preview: previewInitialState,
