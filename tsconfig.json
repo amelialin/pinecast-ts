@@ -27,6 +27,7 @@
       "@pinecast/db-import-tool": ["../db-import-tool/src/index.ts"],
       "@pinecast/db-spotify": ["../db-spotify/src/index.ts"],
       "@pinecast/db-upgrade": ["../db-upgrade/src/index.ts"],
+      "@pinecast/db-uploader": ["../db-uploader/src/index.ts"],
       "@pinecast/externals/*": ["../externals/src/*"],
       "@pinecast/i18n": ["../i18n/src/index.ts"],
       "@pinecast/pt-query": ["../pt-query/src/index.ts"],
@@ -36,7 +37,16 @@
       "@pinecast/sb-renderer": ["../sb-renderer/src/index.ts"],
       "@pinecast/sb-resources": ["../sb-resources/src/index.ts"],
       "@pinecast/styles": ["../styles/src/index.ts"],
-      "@pinecast/xhr": ["../xhr/src/index.ts"]
+      "@pinecast/xhr": ["../xhr/src/index.ts"],
+
+      "@mattbasta/browser-id3-writer": [
+        "../../typings/@mattbasta/browser-id3-writer/index.d.ts"
+      ],
+      "@mattbasta/jsmediatags": [
+        "../../typings/@mattbasta/jsmediatags/index.d.ts"
+      ],
+      "canvas-to-blob": ["../../typings/canvas-to-blob/index.d.ts"],
+      "exif": ["../../typings/exif/index.d.ts"]
     },
     "sourceMap": true,
     "strictNullChecks": true,

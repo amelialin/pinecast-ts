@@ -6,7 +6,6 @@
   "dependencies": {
     "@pinecast/styles": "^1.0.0",
     "@pinecast/xhr": "^1.0.0",
-    "react-dropzone": "^4.2.9",
     "resize-observer-polyfill": "^1.5.0"
   }
 }

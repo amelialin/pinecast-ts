@@ -15,6 +15,10 @@ module.exports = {
     __dirname,
     'packages/db-spotify/src/index.ts',
   ),
+  '@pinecast/db-uploader$': path.resolve(
+    __dirname,
+    'packages/db-uploader/src/index.ts',
+  ),
   '@pinecast/db-upgrade$': path.resolve(
     __dirname,
     'packages/db-upgrade/src/index.ts',

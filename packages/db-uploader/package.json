@@ -1,0 +1,16 @@
+{
+  "name": "@pinecast/db-uploader",
+  "version": "1.0.0",
+  "main": "src/",
+  "ts:main": "src/index.ts",
+  "dependencies": {
+    "@mattbasta/browser-id3-writer": "^3.0.8",
+    "@mattbasta/jsmediatags": "^3.6.3",
+    "@pinecast/i18n": "^1.0.0",
+    "@pinecast/styles": "^1.0.0",
+    "@pinecast/xhr": "^1.0.0",
+    "blob-to-buffer": "^1.2.6",
+    "canvas-to-blob": "0.0.0",
+    "exif": "^0.6.0"
+  }
+}

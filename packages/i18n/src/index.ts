@@ -11,6 +11,13 @@ export function gettext(inp: string): string {
   }
   return inp;
 }
+export function ngettext(text: string, plural: string, n: number) {
+  if (!warned) {
+    console.warn(`Legacy ngettext() used for string "${text}"`);
+    warned = true;
+  }
+  return (n === 1 ? text : plural).replace(/%d/, String(n));
+}
 
 export type Message = {
   id: string;

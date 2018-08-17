@@ -17,11 +17,22 @@ export interface Options {
 
   noCSRFToken?: boolean;
   abortPromise?: Promise<void> | null;
-  onProgress?: (percent: number) => void;
+  onProgress?: (percent: number, bytesLoaded: number) => void;
 }
-export default function(
+
+type Result<T> = Promise<T> & {xhr: XMLHttpRequest};
+
+// Overloading options
+function xhr(args: Options | string): Result<string>;
+function xhr(
   args: Options | string,
-): Promise<string> & {xhr: XMLHttpRequest} {
+  responseType: 'arraybuffer',
+): Result<ArrayBuffer>;
+
+function xhr<T>(
+  args: Options | string,
+  responseType?: 'arraybuffer',
+): Result<T> {
   let url: string;
   let headers: Options['headers'] = {};
   let method = 'GET';
@@ -50,7 +61,10 @@ export default function(
   }
 
   const xhr = new XMLHttpRequest();
-  const out = new Promise<string>((resolve, reject) => {
+  const out = new Promise<T>((resolve, reject) => {
+    if (responseType) {
+      xhr.responseType = responseType;
+    }
     if (onProgress) {
       xhr.upload.addEventListener(
         'progress',
@@ -62,7 +76,7 @@ export default function(
           if (!onProgress) {
             return;
           }
-          onProgress(Math.min(e.loaded / e.total * 100, 99.9));
+          onProgress(Math.min(e.loaded / e.total * 100, 99.9), e.loaded);
         },
         false,
       );
@@ -88,7 +102,11 @@ export default function(
         reject(`Status code ${xhr.status}`);
         return;
       }
-      resolve(xhr.responseText);
+      if (responseType) {
+        resolve(xhr.response);
+      } else {
+        resolve(xhr.responseText as any);
+      }
     });
     xhr.addEventListener('error', () => {
       console.warn(xhr);
@@ -99,3 +117,5 @@ export default function(
   (out as any).xhr = xhr;
   return out as any;
 }
+
+export default xhr;
