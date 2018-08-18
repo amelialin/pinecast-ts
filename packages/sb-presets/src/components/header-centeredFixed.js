@@ -1,9 +1,9 @@
-export default data => {
+export default (data = {}) => {
   const {
     elementOptions: {imageElementOptions, imageStyles, ...elementOptions} = {},
-    showSubtitle,
-    style,
-    textAlign,
+    showSubtitle = false,
+    style = {},
+    textAlign = 'center',
   } = data;
 
   return {
@@ -48,8 +48,7 @@ export default data => {
             },
           ],
           styles: {
-            textAlign: textAlign || 'center',
-
+            textAlign,
             ...style,
           },
         },
@@ -59,9 +58,10 @@ export default data => {
 
     tag: 'header.centeredFixed',
     tagOptions: {
-      elementOptions: {},
-      showSubtitle: false,
-      textAlign: 'center',
+      elementOptions,
+      showSubtitle,
+      textAlign,
+      style,
       ...data,
     },
   };

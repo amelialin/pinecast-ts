@@ -1,34 +1,46 @@
-export default (data = {}) => ({
-  type: 'links.linkBar',
-  layout: {
-    includes: data.includes,
-    textStyle: {
-      color: 'text',
-    },
-    ...data.layout,
-  },
-  template: {
-    tagName: 'nav',
-    elements: [
-      {
-        type: 'layout.fixedWrapper',
-        children: [
-          {
-            type: 'mount',
-            props: {mount: 'links'},
-          },
-        ],
-        elementOptions: data.elementOptions,
-        styles: {textAlign: 'left', ...data.style},
-      },
-    ],
-  },
+export default (data = {}) => {
+  const {
+    includes = ['links', 'pages'],
+    elementOptions = {},
+    layout = null,
+    style,
+    textAlign = 'left',
+  } = data;
 
-  tag: 'links.linkBar',
-  tagOptions: {
-    includes: ['links', 'pages'],
-    elementOptions: {},
-    layout: null,
-    ...data,
-  },
-});
+  return {
+    type: 'links.linkBar',
+    layout: {
+      includes: includes,
+      textStyle: {
+        color: 'text',
+      },
+      ...layout,
+    },
+    template: {
+      tagName: 'nav',
+      elements: [
+        {
+          type: 'layout.fixedWrapper',
+          children: [
+            {
+              type: 'mount',
+              props: {mount: 'links'},
+            },
+          ],
+          elementOptions: elementOptions,
+          styles: {textAlign, ...style},
+        },
+      ],
+    },
+
+    tag: 'links.linkBar',
+    tagOptions: {
+      includes,
+      elementOptions,
+      layout,
+      style,
+      textAlign,
+      ...data,
+    },
+  };
+};

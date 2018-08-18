@@ -1,5 +1,6 @@
 const path = require('path');
 
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = env => {
@@ -58,7 +59,18 @@ module.exports = env => {
       ],
     },
     optimization: {
-      minimizer: env === 'prod' ? undefined : [],
+      minimizer:
+        env === 'prod'
+          ? [
+              new UglifyJSPlugin({
+                uglifyOptions: {
+                  mangle: {
+                    safari10: true,
+                  },
+                },
+              }),
+            ]
+          : [],
       splitChunks: false,
     },
     performance: {

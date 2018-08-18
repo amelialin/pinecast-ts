@@ -33,6 +33,14 @@ export default {
     func: footerColumnsFixed,
 
     schema: {
+      // bgStyle: {
+      //   name: 'Background style',
+      //   type: 'enum',
+      //   options: [
+      //     {label: 'Darken', key: 'dark'},
+      //     {label: 'Lighten', key: 'light'},
+      //   ],
+      // },
       col1Name: {
         name: 'Column 1 heading',
         type: 'text',
@@ -115,6 +123,7 @@ export default {
           {label: 'Pages', key: 'pages'},
         ],
       },
+      ...textAlignTemplate,
       ...fixedWidthTemplate,
     },
   },

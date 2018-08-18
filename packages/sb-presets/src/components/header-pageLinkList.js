@@ -9,39 +9,49 @@ const mounts = {
   },
 };
 
-export default (data = {}) => ({
-  type: 'links.linkMount',
-  layout: {
-    linkStyle: {
-      marginRight: 20,
-      whiteSpace: 'nowrap',
-      ...data.linkStyle,
-    },
-  },
-  template: {
-    elements: [
-      {
-        type: 'layout.fixedWrapper',
-        children: (data.includes || ['siteLinks', 'pageLinks'])
-          .filter(x => mounts[x])
-          .map(x => mounts[x]),
-        elementOptions: data.elementOptions,
+export default (data = {}) => {
+  const {
+    elementOptions = {},
+    includes = ['siteLinks', 'pageLinks'],
+    linkStyle = {},
+    openInNewWindow = false,
+    textAlign = 'left',
+    style,
+  } = data;
+
+  return {
+    type: 'links.linkMount',
+    layout: {
+      linkStyle: {
+        marginRight: 20,
+        whiteSpace: 'nowrap',
+        ...linkStyle,
       },
-    ],
-    tagName: 'nav',
-    styles: {
-      margin: '30px 0',
-      textAlign: data.textAlign || 'left',
-      ...data.style,
     },
-  },
-  tag: 'header.pageLinkList',
-  tagOptions: {
-    elementOptions: {},
-    includes: ['siteLinks', 'pageLinks'],
-    linkStyle: {},
-    openInNewWindow: false,
-    textAlign: 'left',
-    ...data,
-  },
-});
+    template: {
+      elements: [
+        {
+          type: 'layout.fixedWrapper',
+          children: includes.filter(x => mounts[x]).map(x => mounts[x]),
+          elementOptions: elementOptions,
+        },
+      ],
+      tagName: 'nav',
+      styles: {
+        margin: '30px 0',
+        textAlign,
+        ...style,
+      },
+    },
+    tag: 'header.pageLinkList',
+    tagOptions: {
+      elementOptions,
+      includes,
+      linkStyle,
+      openInNewWindow,
+      textAlign,
+      style,
+      ...data,
+    },
+  };
+};
