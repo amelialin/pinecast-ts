@@ -29,7 +29,11 @@ export default class SchemaEnum extends React.PureComponent {
           }))}
           style={{display: 'inline-flex'}}
           tabIndex={this.props.open ? 0 : -1}
-          value={this.props.value.toString()}
+          value={
+            this.props.value
+              ? String(this.props.value)
+              : String(this.props.options[0].key)
+          }
         />
       </Label>
     );
