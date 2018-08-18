@@ -1,1 +1,2 @@
 import './clickToSelect';
+import './tabs';
