@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 
 import AnalyticsDash from '@pinecast/db-analytics';
 import {AudioUploader, ImageUploader} from '@pinecast/db-uploader';
+import Categories from '@pinecast/db-categories';
 import {ClientStyletron, StyletronProvider} from '@pinecast/styles';
 import {Provider as I18nProvider} from '@pinecast/i18n';
 import ImportTool from '@pinecast/db-import-tool';
@@ -21,6 +22,7 @@ type Mountable<T> = React.ComponentType<T> & {
 const components: Array<Mountable<{[key: string]: any}>> = [
   AnalyticsDash,
   AudioUploader,
+  Categories,
   ImageUploader,
   ImportTool,
   Spotify,

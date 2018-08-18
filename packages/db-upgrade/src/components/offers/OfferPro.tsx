@@ -19,7 +19,7 @@ const OfferPro = ({children}: {children: Children}) => (
   <OfferBase period="month" planName="Pro plan" price={5000}>
     <React.Fragment>
       <DetailsWrapper>
-        <Tag $color="green" style={{marginBottom: 8}}>
+        <Tag color="green" size="large" style={{marginBottom: 8}}>
           Everything from the Starter plan
         </Tag>
         <Reason>256MB/episode size limit</Reason>

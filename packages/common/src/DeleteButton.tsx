@@ -1,8 +1,10 @@
+import * as React from 'react';
+
 import styled, {CSS} from '@pinecast/styles';
 
-const DeleteButton = styled(
+const DeleteButton_ = styled(
   'button',
-  {
+  ({$idleColor = '#c6caca'}: {$idleColor?: string}) => ({
     backgroundColor: 'transparent',
     border: 0,
     borderRadius: 0,
@@ -11,42 +13,67 @@ const DeleteButton = styled(
     height: 20,
     marginTop: -3,
     padding: 0,
+    position: 'relative',
     verticalAlign: 'middle',
     width: 20,
 
     ':before': {
-      backgroundColor: '#ccc',
+      backgroundColor: $idleColor,
+      bottom: '25%',
       content: '""',
       display: 'block',
       height: 2,
+      left: '25%',
       margin: 'auto',
-      transform: 'translateX(5px) rotate(45deg)',
+      position: 'absolute',
+      right: '25%',
+      top: '25%',
+      transform: 'rotate(45deg)',
       transformOrigin: 'center',
       transition: 'background-color 0.25s',
-      width: 20,
     },
     ':after': {
-      backgroundColor: '#ccc',
+      backgroundColor: $idleColor,
+      bottom: '25%',
       content: '""',
       display: 'block',
       height: 2,
+      left: '25%',
       margin: 'auto',
-      transform: 'translateX(-5px) rotate(-45deg)',
+      position: 'absolute',
+      right: '25%',
+      top: '25%',
+      transform: 'rotate(-45deg)',
       transformOrigin: 'center',
       transition: 'background-color 0.25s',
-      width: 20,
     },
     ':hover:before': {
-      backgroundColor: '#b00',
+      backgroundColor: '#bf1d1d',
     },
     ':hover:after': {
-      backgroundColor: '#b00',
+      backgroundColor: '#bf1d1d',
     },
-  },
+  }),
   {'aria-label': 'Delete', title: 'Delete', type: 'button'},
 );
 
-export default DeleteButton as React.ComponentType<{
+const DeleteButton = ({
+  idleColor,
+  onClick,
+  style,
+}: {
+  idleColor?: string;
   onClick: () => void;
   style?: CSS;
-}>;
+}) => (
+  <DeleteButton_
+    $idleColor={idleColor}
+    onClick={e => {
+      e.preventDefault();
+      onClick();
+    }}
+    style={style}
+  />
+);
+
+export default DeleteButton;

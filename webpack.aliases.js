@@ -7,6 +7,10 @@ module.exports = {
     __dirname,
     'packages/db-analytics/src/index.ts',
   ),
+  '@pinecast/db-categories$': path.resolve(
+    __dirname,
+    'packages/db-categories/src/index.ts',
+  ),
   '@pinecast/db-import-tool$': path.resolve(
     __dirname,
     'packages/db-import-tool/src/index.ts',

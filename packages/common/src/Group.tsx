@@ -45,17 +45,19 @@ function collapseChildren(
 }
 
 const Group = ({
+  allowWrap,
   children,
   spacing,
   style,
   wrapperStyle,
 }: {
+  allowWrap?: boolean;
   children: Children;
   spacing: number;
   style?: CSS;
   wrapperStyle?: CSS;
 }) => (
-  <Wrapper style={wrapperStyle}>
+  <Wrapper style={{flexWrap: allowWrap ? 'wrap' : undefined, ...wrapperStyle}}>
     {collapseChildren(spacing, children, style, 0)}
   </Wrapper>
 );

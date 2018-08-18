@@ -41,7 +41,8 @@ const InvisibleCheckbox = styled(
       boxShadow: '0 0 0 2px #c9d9e0',
     },
   },
-  {type: 'checkbox'},
+  // TODO: Remove when form-block is gone
+  {type: 'checkbox', className: 'Checkbox--InvisibleCheckbox'},
 );
 
 const Text = styled(

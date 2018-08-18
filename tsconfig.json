@@ -24,6 +24,7 @@
       "@pinecast/common": ["../common/src/index.ts"],
       "@pinecast/common/*": ["../common/src/*"],
       "@pinecast/db-analytics": ["../db-analytics/src/index.ts"],
+      "@pinecast/db-categories": ["../db-categories/src/index.ts"],
       "@pinecast/db-import-tool": ["../db-import-tool/src/index.ts"],
       "@pinecast/db-spotify": ["../db-spotify/src/index.ts"],
       "@pinecast/db-upgrade": ["../db-upgrade/src/index.ts"],
