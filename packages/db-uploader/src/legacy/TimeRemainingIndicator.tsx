@@ -55,6 +55,6 @@ export default class TimeRemainingIndicator extends React.PureComponent {
     if (this.props.renderer) {
       return this.props.renderer(body);
     }
-    return <div className="time-remaining">{body}</div>;
+    return <div>{body}</div>;
   }
 }

@@ -4,11 +4,31 @@ import Button from '@pinecast/common/Button';
 import Card from '@pinecast/common/Card';
 import {gettext, ngettext} from '@pinecast/i18n';
 import Progress from '@pinecast/common/Progress';
+import styled from '@pinecast/styles';
 
 import TimeRemainingIndicator from '../legacy/TimeRemainingIndicator';
 import UploadIcon from '../icons/upload';
 import {UploadManagerEntry} from './manager';
 import UploadOrder from './order';
+
+const Column = styled('div', {
+  alignItems: 'center',
+  display: 'flex',
+  flexDirection: 'column',
+});
+const Order = styled('div', {
+  padding: '0 10px',
+});
+const OrderTitle = styled('strong', {
+  display: 'block',
+  fontSize: 13,
+  lineHeight: '1.5em',
+});
+const Options = styled('div', {
+  display: 'flex',
+  justifyContent: 'flex-start',
+  padding: '0.5em 10px',
+});
 
 export default class ManagementComponent extends React.PureComponent {
   props: {
@@ -68,13 +88,7 @@ export default class ManagementComponent extends React.PureComponent {
     } = this;
     return (
       <Card whiteBack>
-        <div
-          style={{
-            alignItems: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
+        <Column>
           <UploadIcon height={46} width={46} />
           <strong>
             {ngettext(
@@ -83,24 +97,14 @@ export default class ManagementComponent extends React.PureComponent {
               orders.length,
             )}
           </strong>
-        </div>
+        </Column>
         {files.map((manager, i) => (
-          <div key={i} style={{padding: '0 10px'}}>
-            <strong
-              style={{display: 'block', fontSize: 13, lineHeight: '1.5em'}}
-            >
-              {orders[i].title}
-            </strong>
+          <Order key={i}>
+            <OrderTitle>{orders[i].title}</OrderTitle>
             <Progress percent={manager.progress} />
-          </div>
+          </Order>
         ))}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            padding: '0.5em 10px',
-          }}
-        >
+        <Options>
           <Button onClick={this.abort} style={{marginRight: 15}}>
             {gettext('Cancel')}
           </Button>
@@ -109,7 +113,7 @@ export default class ManagementComponent extends React.PureComponent {
             renderer={body => <span>{body}</span>}
             startTime={startTime}
           />
-        </div>
+        </Options>
       </Card>
     );
   }

@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Card from '@pinecast/common/Card';
+import Collapser from '@pinecast/common/Collapser';
 import {gettext} from '@pinecast/i18n';
 import Progress from '@pinecast/common/Progress';
 import styled from '@pinecast/styles';
@@ -79,7 +80,7 @@ export default class Storage extends React.PureComponent {
           </div>
           <ToggleButton onClick={this.toggle} isToggled={open} />
         </div>
-        {open && (
+        <Collapser open={open} shave={0}>
           <div style={{paddingLeft: 33}}>
             <div>
               {gettext(
@@ -106,11 +107,11 @@ export default class Storage extends React.PureComponent {
                 >
                   {gettext('Surge remaining:')}
                 </span>
-                <Progress percent={surge / limit * 100} />
+                <Progress percent={surge / limit * 100} style={{flex: '1 1'}} />
               </div>
             )}
           </div>
-        )}
+        </Collapser>
       </Card>
     );
   }
