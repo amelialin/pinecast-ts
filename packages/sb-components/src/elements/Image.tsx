@@ -103,10 +103,19 @@ export default ({
   }
   if (eo.square === 'element') {
     const SquareDiv = atom('div');
+    if (styles.height) {
+      styles.maxHeight = styles.maxHeight || styles.height || '100%';
+      styles.minHeight = Number(styles.height) / 2;
+      styles.maxWidth = styles.maxHeight;
+      styles.minWidth = styles.minHeight;
+    } else {
+      styles.maxWidth = styles.maxWidth || styles.width || '100%';
+      styles.minWidth = Number(styles.width) / 2;
+      styles.maxHeight = styles.maxWidth;
+      styles.minHeight = styles.minWidth;
+    }
     styles.height = '100%';
     styles.width = '100%';
-    styles.maxWidth = styles.maxWidth || styles.width || '100%';
-    styles.minWidth = Number(styles.width) / 2;
     styles.position = styles.position || (squareStyle.position as any);
     styles[':after'] = squareStyle[':after'];
     return (

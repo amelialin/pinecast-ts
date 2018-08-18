@@ -19,7 +19,7 @@ export default ({
 }) => {
   const ImageContainer = atom(element.tagName || 'div');
   const props: {
-    image?: string;
+    src?: string;
     position?: React.CSSProperties['backgroundPosition'];
     size?: React.CSSProperties['backgroundSize'];
   } = {
@@ -28,7 +28,7 @@ export default ({
   } as any;
   const styles = expandElementStyles(
     {
-      backgroundImage: `url(${props.image || ''})`,
+      backgroundImage: `url(${props.src || ''})`,
       backgroundPosition: props.position || 'center',
       backgroundSize: props.size || 'cover',
       ...style,

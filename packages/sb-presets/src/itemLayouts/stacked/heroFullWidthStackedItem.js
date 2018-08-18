@@ -10,7 +10,7 @@ export default ({
     {
       type: 'image.background',
       propPaths: {
-        image: ['image_url'],
+        src: ['image_url'],
       },
       props: {
         position,

@@ -1,5 +1,6 @@
 export default ({
   imageHeight = 250,
+  imageStyle = 'rectangle',
   maxLinesOfSummary = 10,
   ordering = ['date', 'title', 'subtitle', 'image'],
   style,
@@ -77,8 +78,10 @@ export default ({
       },
     },
     image: {
-      type: 'image',
-      elementOptions: {square: 'background'},
+      type: imageStyle === 'square' ? 'image' : 'image.background',
+      elementOptions: {
+        square: imageStyle === 'square' ? 'element' : undefined,
+      },
       propPaths: {src: ['image_url']},
       props: {alt: ''},
       styles: {
@@ -123,6 +126,7 @@ export default ({
     tag: 'stacked.fullWidthImageCenter',
     tagOptions: {
       imageHeight,
+      imageStyle,
       maxLinesOfSummary,
       ordering,
       style,

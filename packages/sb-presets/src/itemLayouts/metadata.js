@@ -29,6 +29,10 @@ const artworkSizeOptions = [
   {key: 100, label: '100px'},
   {key: 75, label: '75px'},
 ];
+const artworkStyleOptions = [
+  {key: 'rectangle', label: 'Rectangular'},
+  {key: 'square', label: 'Square'},
+];
 
 export default {
   'grid.minimal': {
@@ -155,6 +159,11 @@ export default {
         description: 'How tall should each episode artwork image be?',
         type: 'enum',
         options: artworkSizeOptions,
+      },
+      imageStyle: {
+        name: 'Episode artwork style',
+        type: 'enum',
+        options: artworkStyleOptions,
       },
       maxLinesOfSummary: {
         canBeNegative: false,

@@ -78,7 +78,9 @@ export default ({
     elements: [
       {
         type: 'image',
-        elementOptions: {square: 'element'},
+        elementOptions: {
+          square: 'background',
+        },
         propPaths: {src: ['image_url']},
         props: {alt: ''},
         styles: {
