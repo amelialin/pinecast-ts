@@ -33,5 +33,5 @@ export default class ID3Writer {
   setFrame(frameID: string, value: Array<string>);
 
   addTag(): void;
-  getBlob(): ArrayBuffer;
+  getBlob(): Blob;
 }

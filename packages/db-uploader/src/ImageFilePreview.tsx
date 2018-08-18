@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Card from '@pinecast/common/Card';
+import DeleteButton from '@pinecast/common/DeleteButton';
 import styled from '@pinecast/styles';
 
 import Asset from './assets';
@@ -8,24 +9,6 @@ import ImageViewer from './ImageViewer';
 import prettyBytes from './formatSize';
 import ReadyToUploadOverlay from './ReadyToUploadOverlay';
 
-const ClearButton = styled(
-  'button',
-  {
-    appearance: 'none',
-    MozAppearance: 'none',
-    WebkitAppearance: 'none',
-    background: 'transparent',
-    border: 0,
-    color: '#888',
-    cursor: 'pointer',
-    fontSize: 16,
-    padding: '5px 10px',
-    position: 'absolute',
-    top: 0,
-    right: 0,
-  },
-  {type: 'button'},
-);
 const Column = styled('div', {
   display: 'flex',
   flexDirection: 'column',
@@ -47,10 +30,12 @@ export default ({
   source: string | Asset;
 }) => (
   <Card
+    whiteBack
     style={{
       alignItems: 'center',
       flexDirection: 'row',
       lineHeight: '1.5em',
+      position: 'relative',
     }}
   >
     <ImageViewer
@@ -64,13 +49,9 @@ export default ({
       {size !== null && <div>{prettyBytes(size)}</div>}
     </Column>
     {!isUploaded && <ReadyToUploadOverlay />}
-    <ClearButton
-      onClick={e => {
-        e.preventDefault();
-        onRemove();
-      }}
-    >
-      &times;
-    </ClearButton>
+    <DeleteButton
+      onClick={onRemove}
+      style={{position: 'absolute', right: 8, top: 8}}
+    />
   </Card>
 );

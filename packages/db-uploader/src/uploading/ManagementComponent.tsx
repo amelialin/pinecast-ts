@@ -67,7 +67,7 @@ export default class ManagementComponent extends React.PureComponent {
       state: {files, startTime, totalPercent},
     } = this;
     return (
-      <Card>
+      <Card whiteBack>
         <div
           style={{
             alignItems: 'center',

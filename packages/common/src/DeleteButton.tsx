@@ -43,7 +43,7 @@ const DeleteButton = styled(
       backgroundColor: '#b00',
     },
   },
-  {'aria-label': 'Delete', title: 'Delete'},
+  {'aria-label': 'Delete', title: 'Delete', type: 'button'},
 );
 
 export default DeleteButton as React.ComponentType<{

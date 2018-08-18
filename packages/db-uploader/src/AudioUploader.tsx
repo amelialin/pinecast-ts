@@ -62,7 +62,7 @@ type Phase =
   | 'confirm remove artwork';
 
 export default class AudioUploader extends React.Component {
-  static selector = '.audio-upload-placeholder';
+  static selector = '.audio-uploader-placeholder';
 
   static propExtraction = {
     podcast: (e: HTMLElement) => e.getAttribute('data-podcast'),
@@ -352,17 +352,13 @@ export default class AudioUploader extends React.Component {
     if (!audioFile) {
       throw new Error('unreachable');
     }
-    let newAudioFile;
+    let newAudioFile: Asset;
     try {
-      const buffer = addMetadata(
+      const blob = addMetadata(
         await audioFile.getAsArrayBuffer(),
         metadataScratch!,
       );
-      newAudioFile = Asset.fromArrayBuffer(
-        buffer,
-        audioFile.name,
-        audioFile.type,
-      );
+      newAudioFile = Asset.fromBlob(blob, audioFile.name);
       await this.promiseSetState({audioFile: newAudioFile});
     } catch (e) {
       console.error(e);
@@ -397,6 +393,14 @@ export default class AudioUploader extends React.Component {
     const {
       state: {audioFile, duration, audioSourceURL, phase, uploadOrders},
     } = this;
+
+    let url: string | null;
+    if (uploadOrders) {
+      url = uploadOrders.find(x => x.type === 'audio')!.getURL();
+    } else {
+      url = audioSourceURL;
+    }
+
     return (
       <AudioFilePreview
         duration={duration!}
@@ -404,11 +408,7 @@ export default class AudioUploader extends React.Component {
         name="Episode Audio"
         onCancel={this.clearFile}
         size={audioFile!.size}
-        url={unsign(
-          uploadOrders
-            ? uploadOrders.find(x => x.type === 'audio')!.getURL()!
-            : audioSourceURL!,
-        )}
+        url={url ? unsign(url) : null}
       />
     );
   }
@@ -478,7 +478,7 @@ export default class AudioUploader extends React.Component {
             <AudioFilePicker
               onGetFile={file =>
                 this.setState(
-                  {audioFile: file, phase: 'waiting'},
+                  {audioFile: Asset.fromFile(file), phase: 'waiting'},
                   this.handleGotFileToUpload,
                 )
               }
@@ -510,16 +510,20 @@ export default class AudioUploader extends React.Component {
           <div>
             {this.renderAudioPreview()}
             <CardAddArtwork
-              existingSource={unsign(props.defImageURL)}
-              onGotFile={(file, isExisting) => {
-                this.setState(
-                  {
+              existingSource={props.defImageURL && unsign(props.defImageURL)}
+              onGotFile={async (asset, isExisting) => {
+                await guardCallback(
+                  this,
+                  this.promiseSetState({
                     artworkSourceURL: isExisting ? props.defImageURL : null,
-                    metadataScratch: {...metadataScratch, artwork: file},
+                    metadataScratch: {
+                      ...metadataScratch,
+                      artwork: await asset.getAsArrayBuffer(),
+                    },
                     phase: 'waiting',
-                  },
-                  () => this.addMetadata(isExisting),
+                  }),
                 );
+                this.addMetadata(isExisting);
               }}
               onReject={() => {
                 if (metadataScratch) {

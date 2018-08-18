@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Button from '@pinecast/common/Button';
+import Button, {ButtonGroup} from '@pinecast/common/Button';
 import Card from '@pinecast/common/Card';
 import {gettext} from '@pinecast/i18n';
 
@@ -36,7 +36,7 @@ export default ({
   onIgnore: () => void;
   problems: Array<ImageProblem>;
 }) => (
-  <Card style={{flexDirection: 'row'}}>
+  <Card whiteBack style={{flexDirection: 'row'}}>
     <Warning
       width={46}
       height={46}
@@ -56,12 +56,12 @@ export default ({
           <li key={problem}>{getProblemName(problem)}</li>
         ))}
       </ul>
-      <div>
+      <ButtonGroup>
         <Button onClick={onAccept} $isPrimary>
-          {gettext('Fix Problems')}
+          {gettext('Fix problems')}
         </Button>
         <Button onClick={onIgnore}>{gettext('Ignore')}</Button>
-      </div>
+      </ButtonGroup>
     </div>
   </Card>
 );

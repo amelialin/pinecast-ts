@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Card from '@pinecast/common/Card';
+import DeleteButton from '@pinecast/common/DeleteButton';
 import {gettext} from '@pinecast/i18n';
 
 import Cassette from './icons/cassette';
@@ -25,18 +26,20 @@ export default ({
   size,
   url,
 }: {
-  duration: number;
+  duration: number | null;
   isUploaded?: boolean;
   name: string;
   onCancel: () => void;
-  size: number;
-  url: string;
+  size: number | null;
+  url: string | null;
 }) => (
   <Card
+    whiteBack
     style={{
       alignItems: 'center',
       flexDirection: 'row',
       lineHeight: '1.5em',
+      position: 'relative',
     }}
   >
     <Cassette width={46} height={34} style={{marginRight: '1em'}} />
@@ -50,7 +53,7 @@ export default ({
       <strong style={{display: 'block'}}>{name}</strong>
       {(duration || size || url) && (
         <div>
-          {Boolean(duration) && (
+          {duration != null && (
             <span>
               {(duration / 3600) | 0}:
               {lpad(((duration % 3600) / 60) | 0, 2, '0')}:
@@ -58,9 +61,9 @@ export default ({
             </span>
           )}
           {Boolean(duration && size) && ' • '}
-          {Boolean(size) && <span>{prettyBytes(size)}</span>}
+          {size != null && <span>{prettyBytes(size)}</span>}
           {Boolean((duration || size) && url) && ' • '}
-          {Boolean(url) && (
+          {url && (
             <a href={url} download>
               {gettext('Download')}
             </a>
@@ -69,28 +72,9 @@ export default ({
       )}
     </div>
     {!isUploaded && <ReadyToUploadOverlay />}
-    <button
-      onClick={e => {
-        e.preventDefault();
-        onCancel();
-      }}
-      style={{
-        appearance: 'none',
-        MozAppearance: 'none',
-        WebkitAppearance: 'none',
-        background: 'transparent',
-        border: 0,
-        color: '#888',
-        cursor: 'pointer',
-        fontSize: 16,
-        padding: '5px 10px',
-        position: 'absolute',
-        top: 0,
-        right: 0,
-      }}
-      type="button"
-    >
-      &times;
-    </button>
+    <DeleteButton
+      onClick={onCancel}
+      style={{position: 'absolute', right: 8, top: 8}}
+    />
   </Card>
 );

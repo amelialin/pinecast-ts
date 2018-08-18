@@ -14,7 +14,7 @@ import MusicInfo from '../icons/music-info';
 export default class AddArtwork extends React.PureComponent {
   props: {
     existingSource: string;
-    onGotFile: (file: Asset, isExisting?: boolean) => void;
+    onGotFile: (asset: Asset, isExisting?: boolean) => void;
     onReject: () => void;
     onRequestWaiting: () => Promise<void>;
     sizeLimit: number;
@@ -90,7 +90,7 @@ export default class AddArtwork extends React.PureComponent {
     } = this;
 
     return (
-      <Card style={{flexDirection: 'row'}}>
+      <Card whiteBack style={{flexDirection: 'row'}}>
         <MusicInfo
           width={46}
           height={46}
@@ -136,14 +136,18 @@ export default class AddArtwork extends React.PureComponent {
                 >
                   {gettext('...or use the artwork we have on file.')}
                 </b>
-                <Button onClick={this.handleClickUseExisting} $isPrimary>
-                  {gettext('Use Existing')}
+                <Button
+                  onClick={this.handleClickUseExisting}
+                  $isPrimary
+                  size="small"
+                >
+                  {gettext('Use existing')}
                 </Button>
               </div>
             </div>
           )}
           <div>
-            <Button onClick={onReject}>{gettext('Skip Artwork')}</Button>
+            <Button onClick={onReject}>{gettext('Skip artwork')}</Button>
           </div>
         </div>
       </Card>

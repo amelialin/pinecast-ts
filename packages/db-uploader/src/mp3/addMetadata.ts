@@ -9,7 +9,7 @@ export type MetadataObj = {
   artwork?: ArrayBuffer;
 };
 
-export default function(arrayBuffer: ArrayBuffer, metadata: MetadataObj) {
+export default function(arrayBuffer: ArrayBuffer, metadata: MetadataObj): Blob {
   const writer = new ID3Writer(arrayBuffer);
   if (metadata.title) {
     writer.setFrame('TIT2', String(metadata.title));

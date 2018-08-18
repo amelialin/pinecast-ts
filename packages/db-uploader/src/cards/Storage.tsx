@@ -60,6 +60,7 @@ export default class Storage extends React.PureComponent {
     const IconComponent = surge < limit ? StoragePartial : StorageFull;
     return (
       <Card
+        whiteBack
         style={{
           backgroundColor: open
             ? 'rgba(255, 255, 255, 0.75)'
@@ -70,7 +71,7 @@ export default class Storage extends React.PureComponent {
       >
         <div style={{display: 'flex'}}>
           <IconComponent style={{flex: '0 0 23px', marginRight: 10}} />
-          <div style={{flex: '1 1', fontSize: 14, fontWeight: 600}}>
+          <div style={{flex: '1 1', fontSize: 14, fontWeight: 500}}>
             {gettext('You can upload files up to %s.').replace(
               /%s/,
               prettyBytes(limit + surge),
@@ -103,7 +104,7 @@ export default class Storage extends React.PureComponent {
                 <span
                   style={{flex: '0 0', marginRight: 10, whiteSpace: 'nowrap'}}
                 >
-                  {gettext('Surge Remaining:')}
+                  {gettext('Surge remaining:')}
                 </span>
                 <Progress percent={surge / limit * 100} />
               </div>

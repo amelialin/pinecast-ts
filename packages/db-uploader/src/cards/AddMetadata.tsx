@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Button from '@pinecast/common/Button';
+import Button, {ButtonGroup} from '@pinecast/common/Button';
 import Card from '@pinecast/common/Card';
 import {gettext} from '@pinecast/i18n';
 
@@ -62,7 +62,7 @@ export default ({
   onAccept: () => void;
   onReject: () => void;
 }) => (
-  <Card style={{flexDirection: 'row'}}>
+  <Card style={{flexDirection: 'row'}} whiteBack>
     <MusicInfo
       width={46}
       height={46}
@@ -78,12 +78,12 @@ export default ({
         )}
       </span>
       <TitleMonitor />
-      <div>
+      <ButtonGroup>
         <Button onClick={onAccept} $isPrimary>
-          {gettext('Add Metadata')}
+          {gettext('Add metadata')}
         </Button>
         <Button onClick={onReject}>{gettext('Skip')}</Button>
-      </div>
+      </ButtonGroup>
     </div>
   </Card>
 );

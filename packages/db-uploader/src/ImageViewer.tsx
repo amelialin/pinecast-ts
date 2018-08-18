@@ -15,7 +15,7 @@ export default class ImageViewer extends React.PureComponent {
       }
     | {source: null; url: null} = {source: null, url: null};
 
-  static deriveStateFromProps(
+  static getDerivedStateFromProps(
     {source}: ImageViewer['props'],
     state: ImageViewer['state'],
   ): ImageViewer['state'] {

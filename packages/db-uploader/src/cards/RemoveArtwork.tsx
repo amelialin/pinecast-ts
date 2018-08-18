@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Button from '@pinecast/common/Button';
+import Button, {ButtonGroup} from '@pinecast/common/Button';
 import Card from '@pinecast/common/Card';
 import {gettext} from '@pinecast/i18n';
 
@@ -13,7 +13,7 @@ export default ({
   onAccept: () => void;
   onCancel: () => void;
 }) => (
-  <Card style={{textAlign: 'center'}}>
+  <Card whiteBack style={{textAlign: 'center'}}>
     <Trash width={44} height={46} style={{margin: '0 auto'}} />
     <b style={{display: 'block', marginBottom: '0.25em'}}>
       {gettext('Remove episode artwork?')}
@@ -23,13 +23,13 @@ export default ({
         'Removing artwork will revert to the podcast cover art on your feed podcast website. To change artwork in podcast apps, you must upload a new audio file.',
       )}
     </span>
-    <div>
+    <ButtonGroup>
       <Button onClick={onAccept} $isPrimary>
-        {gettext('Remove Artwork')}
+        {gettext('Remove artwork')}
       </Button>
       <Button onClick={onCancel} style={{marginRight: 0}}>
         {gettext('Cancel')}
       </Button>
-    </div>
+    </ButtonGroup>
   </Card>
 );

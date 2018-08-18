@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Button from '@pinecast/common/Button';
+import Button, {ButtonGroup} from '@pinecast/common/Button';
 import Card from '@pinecast/common/Card';
 import {gettext} from '@pinecast/i18n';
 
@@ -55,11 +55,11 @@ export default ({
         <b>{gettext('New')}</b>
       </div>
     </div>
-    <div>
-      <Button onClick={onChooseExisting}>{gettext('Use Existing')}</Button>
+    <ButtonGroup>
+      <Button onClick={onChooseExisting}>{gettext('Use existing')}</Button>
       <Button onClick={onChooseNew} $isPrimary style={{marginRight: 0}}>
-        {gettext('Use New')}
+        {gettext('Use new')}
       </Button>
-    </div>
+    </ButtonGroup>
   </Card>
 );

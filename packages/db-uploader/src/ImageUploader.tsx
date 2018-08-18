@@ -43,7 +43,7 @@ function unsign(signedURL: string): string {
 type Phase = 'ready' | 'problems' | 'uploading' | 'uploaded' | 'waiting';
 
 export default class ImageUploader extends React.PureComponent {
-  static selector = '.image-upload-placeholder';
+  static selector = '.image-uploader-placeholder';
 
   static propExtraction = {
     defURL: (e: HTMLElement) => e.getAttribute('data-default-url'),
@@ -258,7 +258,7 @@ export default class ImageUploader extends React.PureComponent {
           <ImageFilePicker
             onGetFile={file =>
               this.setState(
-                {imageFile: file, phase: 'waiting'},
+                {imageFile: Asset.fromFile(file), phase: 'waiting'},
                 this.handleGotFileToUpload,
               )
             }

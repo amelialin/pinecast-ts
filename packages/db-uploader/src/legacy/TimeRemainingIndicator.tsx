@@ -14,7 +14,7 @@ export default class TimeRemainingIndicator extends React.PureComponent {
   };
   timer: ReturnType<typeof setTimeout> | null = null;
 
-  static deriveStateFromProps(
+  static getDerivedStateFromProps(
     nextProps: TimeRemainingIndicator['props'],
     state: TimeRemainingIndicator['state'],
   ): TimeRemainingIndicator['state'] {
