@@ -16,12 +16,17 @@ export default class PublishPicker extends React.Component {
 
   static propExtraction = {
     defaultValue: (e: HTMLElement) => e.getAttribute('data-default-value'),
+    label: (e: HTMLElement) => e.getAttribute('data-label'),
+    labelDescription: (e: HTMLElement) =>
+      e.getAttribute('data-label-description'),
     labelNow: (e: HTMLElement) => e.getAttribute('data-label-now'),
     labelDateTime: (e: HTMLElement) => e.getAttribute('data-label-datetime'),
   };
 
   props: {
     defaultValue: string;
+    label: string;
+    labelDescription: string;
     labelNow: string;
     labelDateTime: string;
   };
@@ -68,13 +73,17 @@ export default class PublishPicker extends React.Component {
 
   render() {
     const {
-      props: {labelNow, labelDateTime},
+      props: {label, labelDescription, labelNow, labelDateTime},
       state: {invalidState, option, selection},
     } = this;
 
     return (
       <Card whiteBack>
-        <Label style={{marginBottom: 0}} text="Publish at…">
+        <Label
+          style={{marginBottom: 0}}
+          subText={labelDescription}
+          text={label}
+        >
           <Radio
             checked={option === 'now'}
             onChange={checked => {
