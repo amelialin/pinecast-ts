@@ -3,6 +3,7 @@ import * as React from 'react';
 import Card from '@pinecast/common/Card';
 import Callout from '@pinecast/common/Callout';
 import Checkbox from '@pinecast/common/Checkbox';
+import EmptyState from '@pinecast/common/EmptyState';
 import {gettext} from '@pinecast/i18n';
 import Group from '@pinecast/common/Group';
 import Label from '@pinecast/common/Label';
@@ -45,6 +46,7 @@ export default class Categories extends React.Component {
   renderOption = (text: string) => (
     <Checkbox
       checked={this.state.selectedCats.includes(text)}
+      key={text}
       onChange={checked => {
         if (checked) {
           this.doSelect(text);
@@ -69,6 +71,7 @@ export default class Categories extends React.Component {
     <Tag
       color="gray"
       deleteButton
+      key={category}
       onDelete={() => {
         this.doUnselect(category);
       }}
@@ -80,9 +83,10 @@ export default class Categories extends React.Component {
   );
 
   render() {
+    const {selectedCats} = this.state;
     return (
       <Card whiteBack>
-        {this.state.selectedCats.length > 3 && (
+        {selectedCats.length > 3 && (
           <Callout type="negative" style={{marginTop: 0}}>
             {gettext(
               'Too many selections: some categories may be ignored by Apple and Google.',
@@ -90,9 +94,20 @@ export default class Categories extends React.Component {
           </Callout>
         )}
         <Label componentType="div" text={gettext('Selected categories')}>
-          <Group spacing={8} wrapperStyle={{flexWrap: 'wrap'}}>
-            {this.state.selectedCats.map(this.renderSelection)}
-          </Group>
+          {selectedCats.length ? (
+            <Group spacing={8} wrapperStyle={{flexWrap: 'wrap'}}>
+              {selectedCats.map(this.renderSelection)}
+            </Group>
+          ) : (
+            <EmptyState
+              style={{
+                color: '#7f8486',
+                marginBottom: 0,
+                padding: '20px 0',
+              }}
+              title={gettext('No categories selected yet')}
+            />
+          )}
         </Label>
         <Label
           componentType="div"
@@ -104,7 +119,7 @@ export default class Categories extends React.Component {
         <input
           name={this.props.name}
           type="hidden"
-          value={this.state.selectedCats.join(',')}
+          value={selectedCats.join(',')}
         />
       </Card>
     );

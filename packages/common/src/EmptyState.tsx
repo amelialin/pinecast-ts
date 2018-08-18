@@ -33,13 +33,15 @@ const EmptyState = ({
   title,
 }: {
   actionLabel?: JSX.Element | string;
-  copy: JSX.Element | string;
+  copy?: JSX.Element | string;
   onAction?: () => void;
   style?: CSS;
   title: JSX.Element | string;
 }) => (
   <Wrapper style={style}>
-    <TitleWrapper>{title}</TitleWrapper>
+    <TitleWrapper style={copy ? undefined : {fontSize: 14}}>
+      {title}
+    </TitleWrapper>
     {copy && <TextWrapper>{copy}</TextWrapper>}
     {actionLabel &&
       onAction && <Button onClick={onAction}>{actionLabel}</Button>}

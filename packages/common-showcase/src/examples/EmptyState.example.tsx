@@ -15,6 +15,12 @@ export default {
       ),
     },
     {
+      title: 'No copy',
+      render: () => (
+        <EmptyState title="You haven't selected any categories yet." />
+      ),
+    },
+    {
       title: 'Action',
       render: () => (
         <EmptyState
