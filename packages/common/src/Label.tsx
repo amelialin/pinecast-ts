@@ -122,6 +122,7 @@ const Label = ({
   );
   return (
     <NativeLabel
+      className="Label--NativeLabel"
       style={
         style || $oneLine
           ? {

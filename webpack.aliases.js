@@ -15,6 +15,10 @@ module.exports = {
     __dirname,
     'packages/db-import-tool/src/index.ts',
   ),
+  '@pinecast/db-publish-picker$': path.resolve(
+    __dirname,
+    'packages/db-publish-picker/src/index.ts',
+  ),
   '@pinecast/db-spotify$': path.resolve(
     __dirname,
     'packages/db-spotify/src/index.ts',

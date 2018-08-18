@@ -9,10 +9,5 @@
       "../../node_modules/.bin/webpack --config webpack.config.js --env prod --json > stat.json"
   },
   "main": "src/",
-  "ts:main": "src/index.tsx",
-  "dependencies": {
-    "@pinecast/db-spotify": "^1.0.0",
-    "@pinecast/db-upgrade": "^1.0.0",
-    "@pinecast/styles": "^1.0.0"
-  }
+  "ts:main": "src/index.tsx"
 }

@@ -153,7 +153,16 @@ export interface Props {
   maxLength?: number;
   minlength?: number;
   name?: string;
-  onChange: (value: string) => void;
+  nativeEvents?: Partial<{
+    onBlur: React.HTMLAttributes<HTMLInputElement>['onBlur'];
+    onChange: React.HTMLAttributes<HTMLInputElement>['onChange'];
+    onClick: React.HTMLAttributes<HTMLInputElement>['onClick'];
+    onFocus: React.HTMLAttributes<HTMLInputElement>['onFocus'];
+    onKeyDown: React.HTMLAttributes<HTMLInputElement>['onKeyDown'];
+    onKeyUp: React.HTMLAttributes<HTMLInputElement>['onKeyUp'];
+    onKeyPress: React.HTMLAttributes<HTMLInputElement>['onKeyPress'];
+  }>;
+  onChange?: (value: string) => void;
   pattern?: string;
   placeholder?: string;
   prefix?: JSX.Element | string;
@@ -175,6 +184,9 @@ export default class TextInput extends React.PureComponent {
   };
 
   handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    if (!this.props.onChange) {
+      return;
+    }
     const value = (e.target as HTMLInputElement).value;
     const {maxLength} = this.props;
     if (maxLength && value.length > maxLength) {
@@ -190,6 +202,7 @@ export default class TextInput extends React.PureComponent {
       inputStyle,
       invalid,
       onChange,
+      nativeEvents,
       prefix,
       size,
       style,
@@ -221,6 +234,7 @@ export default class TextInput extends React.PureComponent {
           style={inputStyle}
           {...rest}
           onChange={this.handleChange}
+          {...nativeEvents}
           value={value}
         />
         {suffix && (

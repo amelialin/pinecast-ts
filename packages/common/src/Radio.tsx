@@ -14,7 +14,7 @@ const WrapperLabel = styled(
       marginTop: -12,
     },
   },
-  {className: 'Radio--WrapperLabel'},
+  {className: 'Radio--WrapperLabel Label--NativeLabel'},
 );
 const InvisibleRadio = styled(
   'input',
@@ -44,7 +44,7 @@ const InvisibleRadio = styled(
         'inset 0 0 0 0 #b0b5b5, inset 0 0 0 5px #708d9e, 0 0 0 2px #c9d9e0',
     },
   },
-  {type: 'radio'},
+  {className: 'Radio--InvisibleRadio', type: 'radio'},
 );
 
 const Text = styled(

@@ -10,7 +10,9 @@ const StatusWrapper = styled('span', ({$type}: {$type?: string}) => ({
   color:
     $type === 'positive'
       ? '#000'
-      : $type === 'negative' ? '#bf1d1d' : '#44484d',
+      : $type === 'negative'
+        ? '#bf1d1d'
+        : '#44484d',
   display: 'inline-flex',
   whiteSpace: 'nowrap',
 
@@ -78,7 +80,9 @@ export default class SlugInput extends React.PureComponent {
       const cleaned = slugify(sourceValue);
       if (cleaned !== this.state.tentativeSlug) {
         this.setState({tentativeSlug: cleaned});
-        this.props.onChange(cleaned);
+        if (this.props.onChange) {
+          this.props.onChange(cleaned);
+        }
         this.triggerLookup(cleaned);
         return;
       }
@@ -101,7 +105,9 @@ export default class SlugInput extends React.PureComponent {
   handleChange = (newSlug: string) => {
     const filteredSlug = slugify(newSlug);
     this.setState({tentativeSlug: filteredSlug});
-    this.props.onChange(filteredSlug);
+    if (this.props.onChange) {
+      this.props.onChange(filteredSlug);
+    }
     this.triggerLookup(filteredSlug);
   };
 

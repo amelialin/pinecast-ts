@@ -1,0 +1,200 @@
+.publish-picker-datetime {
+    max-width: 300px;
+    margin-top: 16px;
+    width: 100%;
+}
+
+.publish-picker-datetime th,
+.publish-picker-datetime td {
+    text-align: center;
+}
+
+.publish-picker-datetime .rdtPicker .rdtTimeToggle {
+  text-align: center;
+}
+
+.publish-picker-datetime .rdtPicker table {
+  width: 100%;
+  margin: 0;
+}
+.publish-picker-datetime .rdtPicker td,
+.publish-picker-datetime .rdtPicker th {
+  text-align: center;
+  height: 28px;
+}
+.publish-picker-datetime .rdtPicker td {
+  cursor: pointer;
+}
+.publish-picker-datetime .rdtPicker td.rdtDay:hover,
+.publish-picker-datetime .rdtPicker td.rdtHour:hover,
+.publish-picker-datetime .rdtPicker td.rdtMinute:hover,
+.publish-picker-datetime .rdtPicker td.rdtSecond:hover,
+.publish-picker-datetime .rdtPicker .rdtTimeToggle:hover {
+  background: #eeefea;
+  cursor: pointer;
+}
+.publish-picker-datetime .rdtPicker td.rdtOld,
+.publish-picker-datetime .rdtPicker td.rdtNew {
+  color: #c6caca;
+}
+.publish-picker-datetime .rdtPicker td.rdtToday {
+  position: relative;
+}
+.publish-picker-datetime .rdtPicker td.rdtToday:before {
+  content: '';
+  display: inline-block;
+  border-left: 7px solid transparent;
+  border-bottom: 7px solid #428bca;
+  border-top-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+}
+.publish-picker-datetime .rdtPicker td.rdtActive,
+.publish-picker-datetime .rdtPicker td.rdtActive:hover {
+  background-color: #708d9e;
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.publish-picker-datetime .rdtPicker td.rdtActive.rdtToday:before {
+  border-bottom-color: #fff;
+}
+.publish-picker-datetime .rdtPicker td.rdtDisabled,
+.publish-picker-datetime .rdtPicker td.rdtDisabled:hover {
+  background: none;
+  color: #c6caca;
+  cursor: not-allowed;
+}
+
+.publish-picker-datetime .rdtPicker td span.rdtOld {
+  color: #c6caca;
+}
+.publish-picker-datetime .rdtPicker td span.rdtDisabled,
+.publish-picker-datetime .rdtPicker td span.rdtDisabled:hover {
+  background: none;
+  color: #c6caca;
+  cursor: not-allowed;
+}
+.publish-picker-datetime .rdtPicker th {
+  border-bottom: 1px solid #c6caca;
+}
+.publish-picker-datetime .rdtPicker .dow {
+  width: 14.2857%;
+  border-bottom: none;
+}
+.publish-picker-datetime .rdtPicker th.rdtSwitch {
+  width: 100px;
+}
+.publish-picker-datetime .rdtPicker th.rdtNext,
+.publish-picker-datetime .rdtPicker th.rdtPrev {
+  font-size: 21px;
+  vertical-align: top;
+}
+
+.publish-picker-datetime .rdtPrev span,
+.publish-picker-datetime .rdtNext span {
+  display: block;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+.publish-picker-datetime .rdtPicker th.rdtDisabled,
+.publish-picker-datetime .rdtPicker th.rdtDisabled:hover {
+  background: none;
+  color: #c6caca;
+  cursor: not-allowed;
+}
+.publish-picker-datetime .rdtPicker thead tr:first-child th {
+  cursor: pointer;
+}
+.publish-picker-datetime .rdtPicker thead tr:first-child th:hover {
+  background: #eeefea;
+}
+
+.publish-picker-datetime .rdtPicker tfoot {
+  border-top: 1px solid #f9f9f9;
+}
+
+.publish-picker-datetime .rdtPicker button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.publish-picker-datetime .rdtPicker button:hover {
+  background-color: #eee;
+}
+
+.publish-picker-datetime .rdtPicker thead button {
+  width: 100%;
+  height: 100%;
+}
+
+.publish-picker-datetime td.rdtMonth,
+.publish-picker-datetime td.rdtYear {
+  height: 50px;
+  width: 25%;
+  cursor: pointer;
+}
+.publish-picker-datetime td.rdtMonth:hover,
+.publish-picker-datetime td.rdtYear:hover {
+  background: #eee;
+}
+
+.publish-picker-datetime .rdtCounters {
+  display: flex;
+  justify-content: center;
+}
+
+.publish-picker-datetime .rdtCounters > div {
+  float: left;
+}
+
+.publish-picker-datetime .rdtCounter {
+  height: 100px;
+}
+
+.publish-picker-datetime .rdtCounter {
+  width: 40px;
+}
+
+.publish-picker-datetime .rdtCounterSeparator {
+  line-height: 100px;
+}
+
+.publish-picker-datetime .rdtCounter .rdtBtn {
+  height: 40%;
+  line-height: 40px;
+  cursor: pointer;
+  display: block;
+
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;
+}
+.publish-picker-datetime .rdtCounter .rdtBtn:hover {
+  background: #eee;
+}
+.publish-picker-datetime .rdtCounter .rdtCount {
+  font-size: 1.2em;
+  height: 20%;
+  line-height: 1.2em;
+}
+
+.publish-picker-datetime .rdtMilli {
+  vertical-align: middle;
+  padding-left: 8px;
+  width: 48px;
+}
+
+.publish-picker-datetime .rdtMilli input {
+  width: 100%;
+  font-size: 1.2em;
+  margin-top: 37px;
+}

@@ -7,6 +7,7 @@ import Categories from '@pinecast/db-categories';
 import {ClientStyletron, StyletronProvider} from '@pinecast/styles';
 import {Provider as I18nProvider} from '@pinecast/i18n';
 import ImportTool from '@pinecast/db-import-tool';
+import PublishPicker from '@pinecast/db-publish-picker';
 import Spotify from '@pinecast/db-spotify';
 import Upgrade from '@pinecast/db-upgrade';
 
@@ -25,6 +26,7 @@ const components: Array<Mountable<{[key: string]: any}>> = [
   Categories,
   ImageUploader,
   ImportTool,
+  PublishPicker,
   Spotify,
   Upgrade,
 ];
