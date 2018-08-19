@@ -53,7 +53,7 @@ const ErrorWrap = styled('div', {
   padding: '4px 0',
 });
 
-function renderError(error: JSX.Element | string | null): JSX.Element | null {
+function renderError(error: React.ReactNode): JSX.Element | null {
   if (!error) {
     return null;
   }
@@ -92,7 +92,7 @@ const Label = ({
   $oneLineCollapse?: boolean;
   children: Children;
   componentType?: string;
-  error?: JSX.Element | string | null;
+  error?: React.ReactNode;
   labelStyle?: React.CSSProperties;
   optional?: boolean;
   style?: React.CSSProperties;

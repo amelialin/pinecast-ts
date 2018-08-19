@@ -23,6 +23,10 @@ module.exports = {
     __dirname,
     'packages/db-spotify/src/index.ts',
   ),
+  '@pinecast/db-tip-jar-connect$': path.resolve(
+    __dirname,
+    'packages/db-tip-jar-connect/src/index.ts',
+  ),
   '@pinecast/db-uploader$': path.resolve(
     __dirname,
     'packages/db-uploader/src/index.ts',

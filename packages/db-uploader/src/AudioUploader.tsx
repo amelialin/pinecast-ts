@@ -516,6 +516,7 @@ export default class AudioUploader extends React.Component {
                   this,
                   this.promiseSetState({
                     artworkSourceURL: isExisting ? props.defImageURL : null,
+                    artworkFile: !isExisting ? asset : null,
                     metadataScratch: {
                       ...metadataScratch,
                       artwork: await asset.getAsArrayBuffer(),

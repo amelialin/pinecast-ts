@@ -11,10 +11,10 @@ const Wrapper = styled('div', {
 
 function collapseChildren(
   spacing: number,
-  children: Children,
+  children: React.ReactNode,
   style: CSS | undefined,
   offset: number,
-): Children {
+): React.ReactNode {
   if (!children) {
     return children;
   }
@@ -58,7 +58,7 @@ const Group = ({
   wrapperStyle?: CSS;
 }) => (
   <Wrapper style={{flexWrap: allowWrap ? 'wrap' : undefined, ...wrapperStyle}}>
-    {collapseChildren(spacing, children, style, 0)}
+    {collapseChildren(spacing, children as any, style, 0)}
   </Wrapper>
 );
 

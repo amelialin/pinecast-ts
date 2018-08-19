@@ -9,6 +9,7 @@ import {Provider as I18nProvider} from '@pinecast/i18n';
 import ImportTool from '@pinecast/db-import-tool';
 import PublishPicker from '@pinecast/db-publish-picker';
 import Spotify from '@pinecast/db-spotify';
+import TipJarConnect from '@pinecast/db-tip-jar-connect';
 import Upgrade from '@pinecast/db-upgrade';
 
 import './pageScripts';
@@ -28,6 +29,7 @@ const components: Array<Mountable<{[key: string]: any}>> = [
   ImportTool,
   PublishPicker,
   Spotify,
+  TipJarConnect,
   Upgrade,
 ];
 

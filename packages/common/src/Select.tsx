@@ -30,7 +30,7 @@ const Wrapper = styled('div', {
 });
 const Select_ = styled(
   'select',
-  {
+  ({$invalid}: {$invalid: boolean}) => ({
     appearance: 'none',
     MozAppearance: 'none',
     WebkitAppearance: 'none',
@@ -73,7 +73,7 @@ const Select_ = styled(
       boxShadow:
         '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px #8aa3b1, rgba(167, 210, 243, 0.75) 0 0 0 3px inset',
     },
-  },
+  }),
   {className: 'Select'},
 );
 
@@ -85,6 +85,8 @@ export type Option = {
 const Select = ({
   autoFocus,
   disabled,
+  invalid,
+  nativeEvents,
   onChange,
   options,
   style,
@@ -93,6 +95,16 @@ const Select = ({
 }: {
   autoFocus?: boolean;
   disabled?: boolean;
+  invalid?: boolean;
+  nativeEvents?: Partial<{
+    onBlur: React.HTMLAttributes<HTMLSelectElement>['onBlur'];
+    onChange: React.HTMLAttributes<HTMLSelectElement>['onChange'];
+    onClick: React.HTMLAttributes<HTMLSelectElement>['onClick'];
+    onFocus: React.HTMLAttributes<HTMLSelectElement>['onFocus'];
+    onKeyDown: React.HTMLAttributes<HTMLSelectElement>['onKeyDown'];
+    onKeyUp: React.HTMLAttributes<HTMLSelectElement>['onKeyUp'];
+    onKeyPress: React.HTMLAttributes<HTMLSelectElement>['onKeyPress'];
+  }>;
   onChange: (newValue: string) => void;
   options: Array<Option>;
   style?: CSS;
@@ -103,9 +115,11 @@ const Select = ({
     <Select_
       autoFocus={autoFocus}
       disabled={disabled}
+      $invalid={invalid || false}
       onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
         onChange(e.target.value)
       }
+      {...nativeEvents}
       tabIndex={tabIndex}
       value={value}
     >

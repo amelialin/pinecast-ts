@@ -1,0 +1,6 @@
+{
+  "name": "@pinecast/db-tip-jar-connect",
+  "version": "1.0.0",
+  "main": "src/",
+  "ts:main": "src/index.ts"
+}

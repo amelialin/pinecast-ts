@@ -9,6 +9,7 @@
 - **Dashboard import tool** `db-import-tool`: The podcast importer
 - **Dashboard omnibus** `db-omnibus`: The dashboard root entry point
 - **Dashboard spotify** `db-spotify`: The Spotify settings dashboard
+- **Dashboard tip jar setup** `db-tip-jar-connect`: The form to onboard and update tip jars
 - **Dashboard upgrade** `db-upgrade`: The Upgrade page componentry
 - **Dashboard uploader** `db-uploader`: The upload widget used for uploading images and audio
 - **Externals** `externals`: Node module overrides
