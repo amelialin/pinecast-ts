@@ -20,6 +20,7 @@ import Layer from './examples/Layer.example';
 import Link from './examples/Link.example';
 import LoadingState from './examples/LoadingState.example';
 import NumberInput from './examples/NumberInput.example';
+import OptionButton from './examples/OptionButton.example';
 import PaddingInput from './examples/PaddingInput.example';
 import Positioner from './examples/Positioner.example';
 import ProBadge from './examples/ProBadge.example';
@@ -76,6 +77,7 @@ export default {
   Link,
   LoadingState,
   NumberInput,
+  OptionButton,
   PaddingInput,
   Positioner,
   ProBadge,
