@@ -1,42 +1,8 @@
 import * as React from 'react';
 
-import {DEFAULT_FONT} from '@pinecast/common/constants';
-import styled from '@pinecast/styles';
+import OptionButton from '@pinecast/common/OptionButton';
 
 import components from './components';
-
-const Option = styled(
-  'button',
-  ({$isSelected}: {$isSelected: boolean}) => ({
-    appearance: 'none',
-    backgroundColor: $isSelected ? '#dee1df' : 'transparent',
-    border: 0,
-    borderRadius: 3,
-    boxShadow: '0 0 0 0 transparent',
-    flex: '0 0 36px',
-    fontFamily: DEFAULT_FONT,
-    fontSize: 14,
-    fontWeight: $isSelected ? 500 : 400,
-    lineHeight: 20,
-    marginBottom: 4,
-    padding: '8px 12px',
-    textAlign: 'left',
-    transition: 'background-color 0.2s, box-shadow 0.2s',
-
-    ':hover': {
-      backgroundColor: '#eeefea',
-    },
-    ':focus': {
-      boxShadow: '0 0 0 4px #eeefea',
-      outline: 'none',
-    },
-    ':focus:hover': {
-      backgroundColor: '#ddd',
-      boxShadow: '0 0 0 4px #eeefea',
-    },
-  }),
-  {type: 'button'},
-);
 
 const componentPairs = Object.entries(components);
 
@@ -46,22 +12,25 @@ type Props = {
 };
 
 const ComponentList = ({onSet, selected}: Props) => (
-  <React.Fragment>
+  <div>
     {componentPairs
       .sort(([, a], [, b]) => a.name.localeCompare(b.name))
       .map(([key, {name}]) => (
-        <Option
-          $isSelected={selected === key}
+        <OptionButton
           key={key}
-          onClick={e => {
-            e.preventDefault();
+          onClick={() => {
             onSet(key);
+          }}
+          selected={selected === key}
+          style={{
+            marginBottom: 8,
+            width: '100%',
           }}
         >
           {name}
-        </Option>
+        </OptionButton>
       ))}
-  </React.Fragment>
+  </div>
 );
 
 export default ComponentList;

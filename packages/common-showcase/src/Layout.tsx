@@ -26,9 +26,7 @@ const BodyWrapper = styled('div', {
 });
 const Sidebar = styled('aside', {
   borderRight: '1px solid #eeefea',
-  display: 'flex',
   flex: '0 0 300px',
-  flexDirection: 'column',
   height: '100%',
   overflowY: 'auto',
   overflow: 'auto',
