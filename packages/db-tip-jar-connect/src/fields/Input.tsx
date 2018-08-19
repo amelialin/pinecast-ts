@@ -5,9 +5,13 @@ import {gettext} from '@pinecast/i18n';
 type ValidationReturn = React.ReactNode | null;
 type ValidationRule = (value: string) => ValidationReturn;
 
-export const compose = (...funcs: Array<ValidationRule>): ValidationRule => (
-  value: string,
-) => funcs.reduce((acc, cur) => acc || cur(value), null);
+export const compose = (
+  ...funcs: Array<ValidationRule | false | null>
+): ValidationRule => (value: string) =>
+  (funcs.filter(x => x) as Array<ValidationRule>).reduce(
+    (acc, cur) => acc || cur(value),
+    null,
+  );
 
 export function required(value: string): ValidationReturn {
   return value ? null : gettext('This field is required');
@@ -56,10 +60,8 @@ export default class Input extends React.Component {
   };
   handleChange = (value: string) => {
     const valid = this.props.validation(value);
-    this.setState({touched: true, valid});
-    if (value) {
-      this.props.onChange(value);
-    }
+    this.setState({error: valid, valid: !valid});
+    this.props.onChange(value);
   };
   render() {
     return this.props.children({

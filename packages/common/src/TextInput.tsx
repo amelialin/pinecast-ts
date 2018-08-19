@@ -6,15 +6,15 @@ import {DEFAULT_FONT} from './constants';
 
 export type Sizes = 'normal' | 'large';
 
-const InputWrapper = styled(
+export const InputWrapper = styled(
   'div',
   ({
     $disabled,
     $hasPrefix,
     $size = 'normal',
   }: {
-    $disabled: boolean;
-    $hasPrefix: boolean;
+    $disabled?: boolean;
+    $hasPrefix?: boolean;
     $size?: Sizes;
   }) => ({
     alignItems: 'center',

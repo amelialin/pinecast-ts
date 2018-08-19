@@ -2,19 +2,21 @@ import * as React from 'react';
 
 import Button from '@pinecast/common/Button';
 import Callout from '@pinecast/common/Callout';
+import Card from '@pinecast/common/Card';
 import Form from '@pinecast/common/Form';
 import {gettext} from '@pinecast/i18n';
+import Group from '@pinecast/common/Group';
 import Label from '@pinecast/common/Label';
 import Select from '@pinecast/common/Select';
 import xhr from '@pinecast/xhr';
 
 import {countryOptions} from './constants';
 import ExternalAccount from './ExternalAccount';
-// import LEAddressCityField from './fields/LEAddressCityField';
-// import LEAddressStateField from './fields/LEAddressStateField';
-// import LEAddressSecondField from './fields/LEAddressSecondField';
-// import LEAddressStreetField from './fields/LEAddressStreetField';
-// import LEAddressZipField from './fields/LEAddressZipField';
+import LEAddressCityField from './fields/LEAddressCityField';
+import LEAddressStateField from './fields/LEAddressStateField';
+import LEAddressSecondField from './fields/LEAddressSecondField';
+import LEAddressStreetField from './fields/LEAddressStreetField';
+import LEAddressZipField from './fields/LEAddressZipField';
 import LEDOBField from './fields/LEDOBField';
 import LEFirstNameField from './fields/LEFirstNameField';
 import LELastNameField from './fields/LELastNameField';
@@ -52,7 +54,7 @@ export default class NewAccountForm extends React.Component {
     saving: boolean;
   } = {
     country: 'US',
-    legalEntity: {type: 'individual'},
+    legalEntity: {type: 'individual', dob: {month: '1'}},
 
     error: null,
     saving: false,
@@ -230,7 +232,7 @@ export default class NewAccountForm extends React.Component {
     } = this;
 
     return (
-      <React.Fragment>
+      <Card style={{maxWidth: 500}} whiteBack>
         <Form onSubmit={this.submit}>
           {error && <Callout type="negative">{error}</Callout>}
           <Label text={gettext('Country')}>
@@ -241,40 +243,49 @@ export default class NewAccountForm extends React.Component {
             />
           </Label>
 
-          <hr />
-
-          <aside>
-            <p>
-              {gettext(
-                'This information should reflect the owner of the podcast. These details will be used for tax purposes, if necessary.',
-              )}
-            </p>
-          </aside>
+          <p>
+            {gettext(
+              'This information should reflect the owner of the podcast. These details will be used for tax purposes, if necessary.',
+            )}
+          </p>
 
           <Label text="Legal name">
-            <LEFirstNameField
-              onChange={this.handleFirstName}
-              value={this.state.legalEntity.first_name || ''}
+            <Group allowWrap spacing={12}>
+              <LEFirstNameField
+                onChange={this.handleFirstName}
+                value={this.state.legalEntity.first_name || ''}
+              />
+              <LELastNameField
+                onChange={this.handleLastName}
+                value={this.state.legalEntity.last_name || ''}
+              />
+            </Group>
+          </Label>
+
+          <Label text="Address">
+            <LEAddressStreetField
+              onChange={this.handleAddressLine1}
+              value={(this.state.legalEntity.address || {}).line1 || ''}
             />
-            <LELastNameField
-              onChange={this.handleLastName}
-              value={this.state.legalEntity.last_name || ''}
+            <LEAddressSecondField
+              onChange={this.handleAddressLine2}
+              value={(this.state.legalEntity.address || {}).line2 || ''}
+            />
+            <LEAddressCityField
+              onChange={this.handleAddressCity}
+              value={(this.state.legalEntity.address || {}).city || ''}
+            />
+            <LEAddressStateField
+              country={country}
+              onChange={this.handleAddressState}
+              value={(this.state.legalEntity.address || {}).state || ''}
+            />
+            <LEAddressZipField
+              country={country}
+              onChange={this.handleAddressPostalCode}
+              value={(this.state.legalEntity.address || {}).postal_code || ''}
             />
           </Label>
-          {/*
-          <LEAddressStreetField onInput={this.handleAddressLine1} />
-          <LEAddressSecondField onInput={this.handleAddressLine2} />
-          <LEAddressCityField onInput={this.handleAddressCity} />
-          <LEAddressStateField
-            onInput={this.handleAddressState}
-            country={country}
-          />
-          <LEAddressZipField
-            onInput={this.handleAddressPostalCode}
-            country={country}
-          />
-*/}
-          <hr />
 
           <LEDOBField
             onChange={this.handleDob}
@@ -287,17 +298,13 @@ export default class NewAccountForm extends React.Component {
             />
           )}
 
-          <hr />
-
           <ExternalAccount country={country} ref={this.handleEARef} />
-
-          <hr />
 
           <Button pending={saving} type="submit">
             {gettext('Create tip jar')}
           </Button>
         </Form>
-      </React.Fragment>
+      </Card>
     );
   }
 }

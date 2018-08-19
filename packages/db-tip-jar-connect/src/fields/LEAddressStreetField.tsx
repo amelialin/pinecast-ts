@@ -1,28 +1,34 @@
 import * as React from 'react';
 
 import {gettext} from '@pinecast/i18n';
+import TextInput from '@pinecast/common/TextInput';
 
-import {FieldComponent} from './FieldComponent';
+import Input, {required} from './Input';
 
-export default class LEAddressStreetField extends FieldComponent {
-  handleInput = e => {
-    this.setEmpty('leaddressstreet-field', e);
-    if (this.props.onInput) {
-      this.props.onInput(e.target.value);
-    }
+export default class LEAddressStreetField extends React.Component {
+  props: {
+    onChange: (value: string) => void;
+    value: string;
   };
   render() {
     return (
-      <label style={{flex: '1 1 100%'}}>
-        <span>{gettext('Address')}</span>
-        <input
-          type="text"
-          className={`leaddressstreet-field is-empty`}
-          ref="field"
-          required={true}
-          onInput={this.handleInput}
-        />
-      </label>
+      <Input
+        onChange={this.props.onChange}
+        validation={required}
+        value={this.props.value}
+      >
+        {({onBlur, onChange, valid, value}) => (
+          <TextInput
+            invalid={!valid}
+            nativeEvents={{onBlur}}
+            onChange={onChange}
+            placeholder={gettext('123 Main St')}
+            required={true}
+            style={{marginBottom: 8, width: 250}}
+            value={value}
+          />
+        )}
+      </Input>
     );
   }
 }

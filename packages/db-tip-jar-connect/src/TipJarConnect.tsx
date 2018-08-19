@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import Button from '@pinecast/common/Button';
 import Callout from '@pinecast/common/Callout';
+import Card from '@pinecast/common/Card';
 import Form from '@pinecast/common/Form';
 import {gettext} from '@pinecast/i18n';
 import Spinner from '@pinecast/common/Spinner';
@@ -161,12 +162,9 @@ export default class TipJarConnect extends React.Component {
     if (!settings.setup) {
       return (
         <React.Fragment>
-          <strong style={{display: 'block', marginBottom: '1em'}}>
-            {gettext('Add tip jar information')}
-          </strong>
           <p>
             {gettext(
-              'Adding a bank account will allow your podcasts to begin accepting tips. All information provided will stored securely by our payment processor and will never pass through Pinecast servers.',
+              'We need some information before we can accept tips on your behalf.',
             )}
           </p>
           <NewAccountForm onAccountCreated={this.refreshSettings} />
@@ -176,45 +174,43 @@ export default class TipJarConnect extends React.Component {
 
     return (
       <React.Fragment>
-        <strong style={{display: 'block', marginBottom: '1em'}}>
-          {gettext('Existing tip jar information')}
-        </strong>
-        <p>
-          {gettext(
-            'A payout account is already linked to your Pinecast account. You are all set to accept tips for your podcast!',
-          )}
-        </p>
         <BankDetails externalAccount={settings.external_account} />
-        <hr />
-        <Form onSubmit={this.handleUpdateExtAcctSubmit}>
-          <strong style={{display: 'block', marginBottom: '1em'}}>
-            {gettext('Update payout account')}
-          </strong>
+        <Card style={{maxWidth: 500}} whiteBack>
+          <Form onSubmit={this.handleUpdateExtAcctSubmit}>
+            <strong style={{display: 'block', marginBottom: '1em'}}>
+              {gettext('Update payout account')}
+            </strong>
 
-          {extAccountSuccess && (
-            <Callout type="positive">
-              {gettext('Your account was updated successfully')}
-            </Callout>
-          )}
-          {updateExtAcctError && (
-            <Callout type="negative">{updateExtAcctError}</Callout>
-          )}
-          {savingExtAcct && this.renderSpinner()}
-          <div
-            style={{
-              display: savingExtAcct || extAccountSuccess ? 'none' : undefined,
-            }}
-          >
-            <ExternalAccount
-              country={settings.country.toLowerCase()}
-              isUpdate
-              ref={this.handleUpdateExtAcctRef}
-            />
-            <Button $isPrimary type="submit">
-              {gettext('Save')}
-            </Button>
-          </div>
-        </Form>
+            <p>
+              {gettext('Account information is stored securely on Stripe.')}
+            </p>
+
+            {extAccountSuccess && (
+              <Callout type="positive">
+                {gettext('Your account was updated successfully')}
+              </Callout>
+            )}
+            {updateExtAcctError && (
+              <Callout type="negative">{updateExtAcctError}</Callout>
+            )}
+            {savingExtAcct && this.renderSpinner()}
+            <div
+              style={{
+                display:
+                  savingExtAcct || extAccountSuccess ? 'none' : undefined,
+              }}
+            >
+              <ExternalAccount
+                country={settings.country.toUpperCase()}
+                isUpdate
+                ref={this.handleUpdateExtAcctRef}
+              />
+              <Button $isPrimary type="submit">
+                {gettext('Save')}
+              </Button>
+            </div>
+          </Form>
+        </Card>
       </React.Fragment>
     );
   }

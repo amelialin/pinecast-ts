@@ -1,30 +1,32 @@
 import * as React from 'react';
 
-import {gettext} from '@pinecast/i18n';
+import TextInput from '@pinecast/common/TextInput';
 
-import {FieldComponent} from './FieldComponent';
+import Input from './Input';
 
-export default class LEAddressSecondField extends FieldComponent {
-  handleInput = e => {
-    this.setEmpty('leaddresssecond-field', e);
-    if (this.props.onInput) {
-      this.props.onInput(e.target.value);
-    }
+export default class LEAddressSecondField extends React.Component {
+  props: {
+    onChange: (value: string) => void;
+    value: string;
   };
   render() {
     return (
-      <label
-        className="leaddresssecond-label is-optional"
-        style={{flex: '1 1 100%'}}
+      <Input
+        onChange={this.props.onChange}
+        validation={() => null}
+        value={this.props.value}
       >
-        <span>{gettext('Apartment/Suite/Unit')}</span>
-        <input
-          type="text"
-          className={`leaddresssecond-field is-empty`}
-          ref="field"
-          onInput={this.handleInput}
-        />
-      </label>
+        {({onBlur, onChange, valid, value}) => (
+          <TextInput
+            invalid={!valid}
+            nativeEvents={{onBlur}}
+            onChange={onChange}
+            required={true}
+            style={{marginBottom: 8, width: 250}}
+            value={value}
+          />
+        )}
+      </Input>
     );
   }
 }

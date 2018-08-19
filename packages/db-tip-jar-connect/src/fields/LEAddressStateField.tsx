@@ -1,18 +1,18 @@
 import * as React from 'react';
 
 import {gettext} from '@pinecast/i18n';
+import TextInput from '@pinecast/common/TextInput';
 
-import {FieldComponent} from './FieldComponent';
+import Input, {compose, minLength, maxLength, required} from './Input';
 
-export default class LEAddressStateField extends FieldComponent {
-  handleInput = e => {
-    this.setEmpty('leaddressstate-field', e);
-    if (this.props.onInput) {
-      this.props.onInput(e.target.value);
-    }
+export default class LEAddressStateField extends React.Component {
+  props: {
+    country: string;
+    onChange: (value: string) => void;
+    value: string;
   };
   getLabel() {
-    switch ((this.props.country || '').toUpperCase()) {
+    switch (this.props.country) {
       case 'AU':
         return gettext('Territory');
       case 'CA':
@@ -24,7 +24,7 @@ export default class LEAddressStateField extends FieldComponent {
     }
   }
   isRequired() {
-    switch ((this.props.country || '').toUpperCase()) {
+    switch (this.props.country) {
       case 'AU':
       case 'CA':
       case 'US':
@@ -34,25 +34,30 @@ export default class LEAddressStateField extends FieldComponent {
     }
   }
   render() {
-    const isRequired = this.isRequired();
     return (
-      <label
-        className={`leaddressstate-label ${!isRequired ? 'is-optional' : ''}`}
-        style={{flex: '1 1 100%'}}
+      <Input
+        onChange={this.props.onChange}
+        validation={compose(
+          this.isRequired() && required,
+          minLength(2),
+          maxLength(3),
+        )}
+        value={this.props.value}
       >
-        <span>{this.getLabel()}</span>
-        <input
-          type="text"
-          className={`leaddressstate-field is-empty`}
-          maxLength={3}
-          minLength={2}
-          onInput={this.handleInput}
-          pattern="[a-zA-Z][a-zA-Z][a-zA-Z]?"
-          ref="field"
-          required={isRequired}
-          style={{flex: '0 0 70px', textAlign: 'center'}}
-        />
-      </label>
+        {({onBlur, onChange, valid, value}) => (
+          <TextInput
+            invalid={!valid}
+            maxLength={3}
+            nativeEvents={{onBlur}}
+            onChange={onChange}
+            pattern="[a-zA-Z][a-zA-Z][a-zA-Z]?"
+            placeholder={this.getLabel()}
+            required={true}
+            style={{marginBottom: 8, width: 250}}
+            value={value}
+          />
+        )}
+      </Input>
     );
   }
 }

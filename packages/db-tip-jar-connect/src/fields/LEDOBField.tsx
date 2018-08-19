@@ -68,7 +68,7 @@ export default class LESSNLastFourField extends React.Component {
                         onChange={day.onChange}
                         pattern="\d{2}"
                         placeholder="DD"
-                        style={{width: 120}}
+                        style={{width: 60}}
                         value={day.value}
                       />
                       <Select
@@ -99,7 +99,7 @@ export default class LESSNLastFourField extends React.Component {
                         onChange={year.onChange}
                         pattern="[12][90]\d\d"
                         placeholder="YYYY"
-                        style={{width: 120}}
+                        style={{width: 80}}
                         value={year.value}
                       />
                     </Group>

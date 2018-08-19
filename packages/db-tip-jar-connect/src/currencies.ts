@@ -12,8 +12,8 @@ export const names: {[currency: string]: string} = {
 };
 
 export const countriesToCurrencies: {[country: string]: Array<string>} = {
-  us: ['usd'],
-  au: ['aud'],
-  ca: ['cad', 'usd'],
-  gb: ['gbp', 'eur'],
+  US: ['usd'],
+  AU: ['aud'],
+  CA: ['cad', 'usd'],
+  GB: ['gbp', 'eur'],
 };

@@ -6,6 +6,7 @@ import Label from '@pinecast/common/Label';
 import * as currencies from '../currencies';
 import Select from '@pinecast/common/Select';
 import stripe from '../stripe';
+import {InputWrapper} from '@pinecast/common/TextInput';
 
 const cardStyle = {
   base: {},
@@ -68,21 +69,22 @@ export default class DebitCard extends React.Component {
     const availableCurrencies =
       currencies.countriesToCurrencies[this.props.country];
     return (
-      <div style={{position: 'relative'}}>
-        <aside style={{top: '-3em'}}>
-          <p>
-            {gettext(
-              'We can send tips as credit to your debit card, arriving faster than bank transfers.',
-            )}
-          </p>
-          <p>
-            {gettext(
-              'Visa and MasterCard debit cards are accepted. Credit cards are not supported.',
-            )}
-          </p>
-        </aside>
+      <React.Fragment>
+        <p>
+          {gettext(
+            'Visa and MasterCard debit cards are accepted. Credit cards are not supported.',
+          )}
+        </p>
         <Label text={gettext('Card details')}>
-          <div ref={this.handleCardRef} />
+          <InputWrapper
+            style={{
+              borderRadius: 4,
+              boxShadow: '0 0 0 1px #c6caca, 0 0 0 0 #c9d9e0',
+              paddingLeft: 8,
+            }}
+          >
+            <div ref={this.handleCardRef} />
+          </InputWrapper>
         </Label>
         {availableCurrencies.length > 1 && (
           <Label text={gettext('Currency')}>
@@ -96,7 +98,7 @@ export default class DebitCard extends React.Component {
             />
           </Label>
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }

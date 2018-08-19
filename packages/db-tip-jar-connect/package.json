@@ -2,5 +2,10 @@
   "name": "@pinecast/db-tip-jar-connect",
   "version": "1.0.0",
   "main": "src/",
-  "ts:main": "src/index.ts"
+  "ts:main": "src/index.ts",
+  "dependencies": {
+    "@pinecast/i18n": "^1.0.0",
+    "@pinecast/styles": "^1.0.0",
+    "@pinecast/xhr": "^1.0.0"
+  }
 }

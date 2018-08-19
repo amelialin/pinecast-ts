@@ -3,18 +3,19 @@ import * as React from 'react';
 import {gettext} from '@pinecast/i18n';
 import TextInput from '@pinecast/common/TextInput';
 
-import Input, {length} from './Input';
+import Input, {required} from './Input';
 
 export default class LESSNLastFourField extends React.Component {
   props: {
     onChange: (value: string) => void;
+    style?: React.CSSProperties;
     value: string;
   };
   render() {
     return (
       <Input
         onChange={this.props.onChange}
-        validation={length(4)}
+        validation={required}
         value={this.props.value}
       >
         {({onBlur, onChange, valid}) => (
@@ -23,7 +24,7 @@ export default class LESSNLastFourField extends React.Component {
             nativeEvents={{onBlur}}
             onChange={onChange}
             placeholder={gettext('Last name')}
-            style={{width: 120}}
+            style={{width: 200, ...this.props.style}}
             value={this.props.value}
           />
         )}

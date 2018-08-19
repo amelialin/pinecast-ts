@@ -138,6 +138,7 @@ export default class BankAccount extends React.Component {
               onFocus: this.handleFocusAcctNum,
             }}
             onChange={this.handleAcctNumChange}
+            placeholder={isEuro ? 'XX000123456789' : '000123456789'}
             value={values.account_number}
           />
         </Label>
@@ -149,6 +150,7 @@ export default class BankAccount extends React.Component {
                 onFocus: this.handleFocusRoutingNum,
               }}
               onChange={this.handleRoutingNumChange}
+              placeholder="110000000"
               value={values.routing_number || ''}
             />
           </Label>
