@@ -19,7 +19,7 @@ export default ({
   onChooseExisting: () => void;
   onChooseNew: () => void;
 }) => (
-  <Card style={{textAlign: 'center'}}>
+  <Card style={{textAlign: 'center'}} whiteBack>
     <ReplaceImage width={46} height={42} style={{margin: '0 auto'}} />
     <b style={{display: 'block', marginBottom: '0.25em'}}>
       {gettext('Replace episode artwork?')}

@@ -30,6 +30,7 @@ export interface MediaTags {
     CHAP?: any;
     CTOC?: any;
     picture?: {
+      data: ArrayBuffer;
       format: string;
     };
   };

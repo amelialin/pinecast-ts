@@ -1,47 +1,14 @@
 import * as React from 'react';
 
+import Button from '@pinecast/common/Button';
 import Card from '@pinecast/common/Card';
 import Collapser from '@pinecast/common/Collapser';
 import {gettext} from '@pinecast/i18n';
 import Progress from '@pinecast/common/Progress';
-import styled from '@pinecast/styles';
 
 import prettyBytes from '../formatSize';
 import StorageFull from '../icons/storage-full';
 import StoragePartial from '../icons/storage-partial';
-
-const ToggleButtonInner = styled(
-  'button',
-  ({$isToggled}: {$isToggled: boolean}) => ({
-    appearance: 'none',
-    MozAppearance: 'none',
-    WebkitAppearance: 'none',
-    backgroundColor: 'transparent',
-    border: 0,
-    cursor: 'pointer',
-    transform: $isToggled ? 'rotate(180deg)' : 'rotate(0deg)',
-    transition: 'transform 0.2s',
-  }),
-  {type: 'button'},
-);
-
-const ToggleButton = ({
-  isToggled,
-  onClick,
-}: {
-  isToggled: boolean;
-  onClick: () => void;
-}) => (
-  <ToggleButtonInner
-    $isToggled={isToggled}
-    onClick={e => {
-      e.preventDefault();
-      onClick();
-    }}
-  >
-    <i className="icon icon-angle-down" />
-  </ToggleButtonInner>
-);
 
 export default class Storage extends React.PureComponent {
   props: {
@@ -78,7 +45,9 @@ export default class Storage extends React.PureComponent {
               prettyBytes(limit + surge),
             )}
           </div>
-          <ToggleButton onClick={this.toggle} isToggled={open} />
+          <Button onClick={this.toggle}>
+            {open ? gettext('Collapse') : gettext('Show more')}
+          </Button>
         </div>
         <Collapser open={open} shave={0}>
           <div style={{paddingLeft: 33}}>

@@ -276,7 +276,11 @@ export default class AudioUploader extends React.Component {
       }
 
       const imgBuffer = await this.decodeImageFromID3(
-        audioFile,
+        Asset.fromArrayBuffer(
+          new Uint8Array(id3Tags.tags.picture.data).buffer as ArrayBuffer,
+          'artwork.jpg',
+          id3Tags.tags.picture.format,
+        ),
         id3Tags.tags.picture.format,
       );
       if (!imgBuffer) {
@@ -289,11 +293,13 @@ export default class AudioUploader extends React.Component {
 
       if (defImageURL) {
         await this.promiseSetState({
+          artworkFile: imgBuffer,
           metadataScratch: getBaseMetadata(),
           phase: 'replace pic',
         });
         return;
       }
+      await this.promiseSetState({artworkFile: imgBuffer});
       this.startUploading([
         this.getUploadOrder('audio', audioFile),
         this.getUploadOrder('image', imgBuffer, getFilenameForImage(imgBuffer)),
@@ -336,6 +342,7 @@ export default class AudioUploader extends React.Component {
 
     await this.promiseSetState({
       artworkSourceURL: defImageURL,
+      artworkFile: imgContent,
       metadataScratch: {
         ...metadataScratch,
         artwork: await imgContent.getAsArrayBuffer(),
@@ -512,18 +519,15 @@ export default class AudioUploader extends React.Component {
             <CardAddArtwork
               existingSource={props.defImageURL && unsign(props.defImageURL)}
               onGotFile={async (asset, isExisting) => {
-                await guardCallback(
-                  this,
-                  this.promiseSetState({
-                    artworkSourceURL: isExisting ? props.defImageURL : null,
-                    artworkFile: !isExisting ? asset : null,
-                    metadataScratch: {
-                      ...metadataScratch,
-                      artwork: await asset.getAsArrayBuffer(),
-                    },
-                    phase: 'waiting',
-                  }),
-                );
+                await this.promiseSetState({
+                  artworkSourceURL: isExisting ? props.defImageURL : null,
+                  artworkFile: !isExisting ? asset : null,
+                  metadataScratch: {
+                    ...metadataScratch,
+                    artwork: await asset.getAsArrayBuffer(),
+                  },
+                  phase: 'waiting',
+                });
                 this.addMetadata(isExisting);
               }}
               onReject={() => {
@@ -547,7 +551,7 @@ export default class AudioUploader extends React.Component {
             {this.renderAudioPreview()}
             <CardReplaceArtwork
               existingSource={unsign(props.defImageURL)}
-              newSource={audioFile!}
+              newSource={artworkFile!}
               onChooseExisting={this.handleUseExistingPic}
               onChooseNew={() => {
                 this.setState({metadataScratch: null}, () => {
