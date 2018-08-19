@@ -30,26 +30,12 @@ const NativeButton = styled(
     ':hover:not(:focus):not(:active)': {
       textShadow: $selected ? undefined : '0 2px 2px rgba(0, 0, 0, 0.15)',
     },
-    // ':active': {
-    //   boxShadow:
-    //     '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px #c6caca, 0 0 0 transparent inset',
-    // },
-
     ':focus': {
       boxShadow: $selected
         ? '0 2px 6px rgba(0, 0, 0, 0.075), 0 3px 12px rgba(0, 0, 0, 0.1), 0 0 0 0.5px #8aa3b1, 0 0 0 3px #d8e9f1'
         : '0 0 0 rgba(0, 0, 0, 0.075), 0 0 0 rgba(0, 0, 0, 0.1), inset 0 0 0 0.5px rgba(0, 0, 0, 0.2), 0 0 0 3px #d8e9f1',
       outline: 'none',
     },
-    // ':hover:focus': {
-    //   boxShadow:
-    //     '0 1px 3px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.1), 0 0 0 0.5px #8aa3b1, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
-    //   outline: 'none',
-    // },
-    // ':active:focus': {
-    //   boxShadow:
-    //     '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px #8aa3b1, rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
-    // },
   }),
   {className: 'Button-nativeButton'},
 );
