@@ -116,11 +116,7 @@ export default class Categories extends React.Component {
         >
           <AllCategories>{allCats.map(this.renderOption)}</AllCategories>
         </Label>
-        <input
-          name={this.props.name}
-          type="hidden"
-          value={selectedCats.join(',')}
-        />
+        <input name="categories" type="hidden" value={selectedCats.join(',')} />
       </Card>
     );
   }
