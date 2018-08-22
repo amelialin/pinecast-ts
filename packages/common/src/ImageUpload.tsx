@@ -7,6 +7,7 @@ import Label from './Label';
 import ImageUploadDropzone from './imageUploadHelpers/ImageUploadDropzone';
 import ImageUploadPreview from './imageUploadHelpers/ImageUploadPreview';
 import ImageUploadProgress from './imageUploadHelpers/ImageUploadProgress';
+import {url} from './helpers';
 
 interface Upload {
   url: string;
@@ -130,11 +131,9 @@ export default class ImageUpload extends React.PureComponent {
     const response = JSON.parse(
       await xhr({
         method: 'GET',
-        url: `/assets/upload_url/${imageType}/${encodeURIComponent(
-          slug,
-        )}?name=${encodeURIComponent(name)}&type=${encodeURIComponent(
-          file.type,
-        )}`,
+        url: url`/assets/upload_url/${imageType}/${slug}?name=${name}&type=${
+          file.type
+        }`,
       }),
     );
     return {
@@ -297,7 +296,10 @@ export default class ImageUpload extends React.PureComponent {
   }
 
   render() {
-    const {props: {value}, state: {uploading}} = this;
+    const {
+      props: {value},
+      state: {uploading},
+    } = this;
 
     if (uploading) {
       return this.renderUploadProgress();

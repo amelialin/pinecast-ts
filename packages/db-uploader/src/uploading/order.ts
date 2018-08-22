@@ -8,6 +8,7 @@ export default class UploadOrder {
   fileName: string;
   type: string;
   asset: Asset;
+  assetEndpoint: string;
 
   manager: AudioUploadManager | ImageUploadManager | null;
 
@@ -17,12 +18,14 @@ export default class UploadOrder {
     fileName: string,
     type: string,
     asset: Asset,
+    assetEndpoint: string,
   ) {
     this.podcast = podcast;
     this.title = title;
     this.fileName = fileName;
     this.type = type;
     this.asset = asset;
+    this.assetEndpoint = assetEndpoint;
 
     this.manager = null;
   }

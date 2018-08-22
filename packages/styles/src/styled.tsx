@@ -5,6 +5,8 @@ import {CSS, Omit, PseudoElementType} from './types';
 
 const isFirefox =
   typeof navigator !== 'undefined' && navigator.userAgent.includes('Gecko/');
+const isEdge =
+  typeof navigator !== 'undefined' && navigator.userAgent.includes('Edge/');
 
 declare function require(
   name: 'styletron-utils',
@@ -82,6 +84,13 @@ function styled<T>(
       if (isFirefox) {
         for (const key in styleResult) {
           if (key.includes('-webkit')) {
+            delete (styleResult as any)[key];
+          }
+        }
+      }
+      if (isEdge) {
+        for (const key in styleResult) {
+          if (key.includes('::placeholder') || key.includes('-webkit')) {
             delete (styleResult as any)[key];
           }
         }

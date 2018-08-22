@@ -48,7 +48,7 @@ export default class Asset {
   }
 
   private constructor(
-    naem: string,
+    name: string,
     type: string,
     arrayBuffer: ArrayBuffer | null,
     blob: Blob | null,

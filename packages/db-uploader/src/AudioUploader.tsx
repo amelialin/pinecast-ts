@@ -69,6 +69,11 @@ export default class AudioUploader extends React.Component {
     podcastName: (e: HTMLElement) => e.getAttribute('data-podcast-name'),
     podcastAuthor: (e: HTMLElement) => e.getAttribute('data-podcast-author'),
 
+    assetEndpointAudio: (e: HTMLElement) =>
+      e.getAttribute('data-asset-endpoint-audio'),
+    assetEndpointArtwork: (e: HTMLElement) =>
+      e.getAttribute('data-asset-endpoint-artwork'),
+
     duration: (e: HTMLElement) =>
       parseFloat(e.getAttribute('data-duration') || '0'),
 
@@ -89,6 +94,10 @@ export default class AudioUploader extends React.Component {
     podcast: string;
     podcastName: string;
     podcastAuthor: string;
+
+    assetEndpointAudio: string;
+    assetEndpointArtwork: string;
+
     duration: number;
     defURL: string;
     defImageURL: string;
@@ -182,6 +191,9 @@ export default class AudioUploader extends React.Component {
       fileName,
       type,
       object,
+      type === 'audio'
+        ? this.props.assetEndpointAudio
+        : this.props.assetEndpointArtwork,
     );
   }
 

@@ -115,7 +115,7 @@ const Label = ({
   const contents = optional ? (
     <Group spacing={8}>
       {text}
-      <Tag>Optional</Tag>
+      <Tag size="small">Optional</Tag>
     </Group>
   ) : (
     text

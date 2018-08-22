@@ -21,9 +21,13 @@ export default class NumberInput extends React.PureComponent {
   };
 
   handleChange = (value: string) => {
+    if (!value) {
+      this.props.onChange(0);
+      return;
+    }
     let v = parseFloat(value);
     if (isNaN(v)) {
-      v = 0;
+      return;
     }
     if (!this.props.canBeNegative && v < 0) {
       v = 0;

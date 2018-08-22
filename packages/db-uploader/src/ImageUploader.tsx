@@ -50,6 +50,7 @@ export default class ImageUploader extends React.PureComponent {
     label: (e: HTMLElement) => e.getAttribute('data-label') || gettext('Image'),
     name: (e: HTMLElement) => e.getAttribute('data-name'),
     podcast: (e: HTMLElement) => e.getAttribute('data-podcast'),
+    assetEndpoint: (e: HTMLElement) => e.getAttribute('data-asset-endpoint'),
 
     noiTunesSizeCheck: (e: HTMLElement) =>
       e.getAttribute('data-no-itunes-size-check') === 'true',
@@ -61,6 +62,7 @@ export default class ImageUploader extends React.PureComponent {
     label: string;
     name: string;
     podcast: string;
+    assetEndpoint: string;
 
     noiTunesSizeCheck: boolean;
     optional: boolean;
@@ -123,6 +125,7 @@ export default class ImageUploader extends React.PureComponent {
       fileName,
       'image',
       object,
+      this.props.assetEndpoint,
     );
     return order;
   }
@@ -219,7 +222,9 @@ export default class ImageUploader extends React.PureComponent {
         this,
         reformatImage(decoded, 0.8, 1400, 3000),
       );
-      reformatted.name = imageFile.name;
+      if (imageFile.name) {
+        reformatted.name = imageFile.name;
+      }
     } catch (e) {
       console.error(e);
       this.startUploading();

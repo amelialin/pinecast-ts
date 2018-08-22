@@ -65,8 +65,10 @@ module.exports = env => {
               new UglifyJSPlugin({
                 uglifyOptions: {
                   mangle: {
+                    reserved: ['Buffer'],
                     safari10: true,
                   },
+                  safari10: true,
                 },
               }),
             ]

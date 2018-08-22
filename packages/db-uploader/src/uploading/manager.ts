@@ -98,9 +98,9 @@ export abstract class UploadManager {
       response = JSON.parse(
         await xhr({
           method: 'GET',
-          url: urlTag`/dashboard/services/getUploadURL/${this.order.podcast}/${
-            this.order.type
-          }?type=${this.getType()}&name=${safeName}`,
+          url:
+            this.order.assetEndpoint +
+            urlTag`?type=${this.getType()}&name=${safeName}`,
           abortPromise,
         }),
       );
