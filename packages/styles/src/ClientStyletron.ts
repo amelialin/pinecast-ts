@@ -1,8 +1,14 @@
 import BaseStyletron from 'styletron-client';
 
-import {unitlessCSSProperties} from './unitlessValues';
+import {compile} from './unitlessValues';
 
 export default class Styletron extends BaseStyletron {
+  exampleMode: boolean;
+  constructor(exampleMode?: boolean) {
+    super();
+    this.exampleMode = exampleMode || false;
+  }
+
   injectRawDeclaration({
     block,
     media,
@@ -12,14 +18,6 @@ export default class Styletron extends BaseStyletron {
     media?: string;
     pseudo?: string;
   }): string | void {
-    const [prop, val] = block.split(':', 2);
-    if (!/^\-?\d+(\.\d+)?$/.exec(val) || unitlessCSSProperties.has(prop)) {
-      return super.injectRawDeclaration({block, media, pseudo});
-    }
-    return super.injectRawDeclaration({
-      block: `${prop}:${val}px`,
-      media,
-      pseudo,
-    });
+    return super.injectRawDeclaration({block: compile(block), media, pseudo});
   }
 }

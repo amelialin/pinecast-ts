@@ -42,7 +42,7 @@ const Select_ = styled(
     fontFamily: DEFAULT_FONT,
     fontSize: 14,
     height: 30,
-    lineHeight: 30,
+    lineHeight: '30px',
     margin: 0,
     padding: '0 25px 0 10px',
     transition: 'box-shadow 0.2s, opacity 0.2s',

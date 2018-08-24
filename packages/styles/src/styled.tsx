@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 
+import {renderExampleMode} from './exampleMode';
 import {CSS, Omit, PseudoElementType} from './types';
 
 const isFirefox =
@@ -125,6 +126,13 @@ function styled<T>(
           }
         });
       }
+      if (onRef) {
+        (ownProps as any).ref = onRef;
+      }
+
+      if (this.context.styletron.exampleMode) {
+        return renderExampleMode(elemType, className, ownProps, styleResult);
+      }
 
       const styletronClassNames: string = su.injectStyle(
         this.context.styletron,
@@ -134,9 +142,6 @@ function styled<T>(
         (ownProps as any).className = `${styletronClassNames} ${className}`;
       } else {
         (ownProps as any).className = styletronClassNames;
-      }
-      if (onRef) {
-        (ownProps as any).ref = onRef;
       }
       return React.createElement(elemType, ownProps);
     }

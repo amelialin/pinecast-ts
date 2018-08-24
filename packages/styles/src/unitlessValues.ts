@@ -54,3 +54,11 @@ export const unitlessCSSProperties = new Set<string>(
 // reason to use a unitless value with line-height, and it's a source of many
 // errors.
 unitlessCSSProperties.delete('line-height');
+
+export function compile(rule: string): string {
+  const [prop, val] = rule.split(':', 2);
+  if (!/^\-?\d+(\.\d+)?$/.exec(val) || unitlessCSSProperties.has(prop)) {
+    return rule;
+  }
+  return `${prop}:${val}px`;
+}
