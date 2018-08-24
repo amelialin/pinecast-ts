@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-import {Check, Cross} from '@pinecast/common/icons';
 import TextInput, {Props as TextInputProps} from './TextInput';
 
 const StatusWrapper = styled('span', ({$type}: {$type?: string}) => ({
@@ -150,17 +149,11 @@ export default class SlugInput extends React.PureComponent {
     switch (this.state.response) {
       case 'available':
         return (
-          <StatusWrapper $type="positive">
-            <Check color="#000" height={20} />
-            Slug is available
-          </StatusWrapper>
+          <StatusWrapper $type="positive">Slug is available</StatusWrapper>
         );
       case 'unavailable':
         return (
-          <StatusWrapper $type="negative">
-            <Cross color="#bf1d1d" height={20} />
-            Slug is not available
-          </StatusWrapper>
+          <StatusWrapper $type="negative">Slug is not available</StatusWrapper>
         );
       case 'failed':
         return <StatusWrapper>Error contacting Pinecast</StatusWrapper>;
