@@ -63,6 +63,7 @@ module.exports = env => {
         env === 'prod'
           ? [
               new UglifyJSPlugin({
+                sourceMap: true,
                 uglifyOptions: {
                   mangle: {
                     reserved: ['Buffer'],

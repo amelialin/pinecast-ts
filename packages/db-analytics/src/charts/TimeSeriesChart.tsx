@@ -58,7 +58,7 @@ export default class TimeSeriesChart extends React.Component {
   }
 
   canHaveAreaChart(data: TimeSeriesData) {
-    return data.datasets.length > 1;
+    return data && data.datasets && data.datasets.length > 1;
   }
 
   handleHover = (key: string | number) => this.setState({hovering: key});
