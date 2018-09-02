@@ -58,7 +58,10 @@ class ElementColorSelector extends React.PureComponent {
                   return value;
                 }
                 return (
-                  <Group spacing={8} wrapperStyle={{alignItems: 'center'}}>
+                  <Group
+                    spacing={8}
+                    wrapperStyle={{alignItems: 'center', marginTop: -2}}
+                  >
                     <TinyChiclet $color={colors[key]} />
                     <span>{value}</span>
                   </Group>
