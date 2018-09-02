@@ -69,5 +69,6 @@ export class CloseableLayer extends Layer {
   }
   componentWillUnmount() {
     window.removeEventListener('keyup', this.escListener);
+    super.componentWillUnmount();
   }
 }

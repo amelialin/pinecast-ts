@@ -58,7 +58,7 @@ export default class FontPreset extends React.PureComponent {
       >
         <Label
           text={preset.name}
-          labelStyle={{marginBottom: 10}}
+          labelStyle={{cursor: 'pointer', marginBottom: 10}}
           style={{marginBottom: 0}}
         >
           <InnerWrapper>

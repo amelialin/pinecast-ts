@@ -25,9 +25,9 @@ type FontObject = {
 };
 
 async function run() {
-  const {apiKey} = await inquirer.prompt([
+  const {apiKey} = (await inquirer.prompt([
     {type: 'input', name: 'apiKey', message: 'Google Fonts API Key?'},
-  ]);
+  ])) as any;
 
   const request = await fetch(
     `https://www.googleapis.com/webfonts/v1/webfonts?fields=items(category%2Cfamily%2Cfiles)&key=${encodeURIComponent(
