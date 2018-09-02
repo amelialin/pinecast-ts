@@ -9,11 +9,11 @@ import {
   renderElement,
   renderLayout,
 } from '@pinecast/sb-components';
+import escapeHTML from '@pinecast/common/helpers/escapeHTML';
 import {PLAYER_HEIGHTS} from '@pinecast/sb-components/src/elements/EmbedPlayer';
 import * as presets from '@pinecast/sb-presets';
 
 import ContextProvider from './ContextProvider';
-import escapeHTML from './escapeHTML';
 import frame from './framing';
 import {route} from './routes';
 

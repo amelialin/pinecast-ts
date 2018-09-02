@@ -20,7 +20,6 @@
     "@types/react-color": "^2.13.4",
     "@types/react-list": "^0.8.3",
     "@types/react-redux": "^5.0.19",
-    "@types/sanitize-html": "^1.14.0",
     "@types/showdown": "^1.7.3",
     "react-color": "^2.14.0",
     "react-list": "^0.8.8",
@@ -29,7 +28,6 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "resize-observer-polyfill": "^1.5.0",
-    "sanitize-html": "^1.18.2",
     "showdown": "^1.8.6"
   }
 }

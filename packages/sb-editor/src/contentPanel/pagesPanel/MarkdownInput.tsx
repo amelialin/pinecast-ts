@@ -9,57 +9,12 @@ import {
   ReactMdeToolbar,
   ReactMdeTypes,
 } from 'react-mde';
-import * as sanitizeHTML from 'sanitize-html';
 
+import sanitizeHTML from '@pinecast/common/helpers/sanitize';
 import * as RichTextIcons from '@pinecast/common/icons/richText';
 
 class SaferPreview extends ReactMdePreview {
   origMakeHTML: ReactMdePreview['converter']['makeHtml'];
-
-  static options = {
-    allowedTags: [
-      'a',
-      'b',
-      'blockquote',
-      'br',
-      'caption',
-      'code',
-      'dd',
-      'div',
-      'dl',
-      'dt',
-      'em',
-      'h1',
-      'h2',
-      'h3',
-      'h4',
-      'h5',
-      'h6',
-      'hr',
-      'i',
-      'li',
-      'nl',
-      'ol',
-      'p',
-      'pre',
-      'span',
-      'strike',
-      'strong',
-      'table',
-      'tbody',
-      'td',
-      'th',
-      'thead',
-      'tr',
-      'ul',
-    ],
-    allowedAttributes: {
-      a: ['href', 'title'],
-      img: ['alt', 'src', 'title'],
-    },
-    allowedSchemes: ['http', 'https'],
-    selfClosing: ['img', 'br', 'hr'],
-  };
 
   constructor(props: MarkdownInput['props']) {
     super(props);
@@ -69,10 +24,7 @@ class SaferPreview extends ReactMdePreview {
 
   makeHTML = (markdown: string): string => {
     const out = this.origMakeHTML(markdown);
-    // NOTE: This is not a security panacea. And this is only on the preview,
-    // not on the value itself. This just makes it less likely that the user
-    // will self-XSS themselves for now.
-    return sanitizeHTML(out, SaferPreview.options);
+    return sanitizeHTML(out);
   };
 }
 
