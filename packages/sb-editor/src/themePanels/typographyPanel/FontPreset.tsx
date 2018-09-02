@@ -1,36 +1,13 @@
 import * as React from 'react';
 
-import styled from '@pinecast/styles';
+import {DEFAULT_FONT} from '@pinecast/common/constants';
+import Label from '@pinecast/common/Label';
+import OptionButton from '@pinecast/common/OptionButton';
+import styled, {CSS} from '@pinecast/styles';
 
 import AsyncFontPreview from './AsyncFontPreview';
-import {DEFAULT_FONT} from '@pinecast/common/constants';
 import fontKeyNames from '../../shared/fontNames';
-import Label from '@pinecast/common/Label';
 
-const Wrapper = styled(
-  'button',
-  {
-    background: '#fff',
-    border: 0,
-    borderRadius: 3,
-    boxShadow:
-      '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), 0 0 0 0.5px rgba(0, 0, 0, .15)',
-    marginBottom: 30,
-    padding: 15,
-    textAlign: 'left',
-    transition: 'box-shadow 0.2s',
-
-    ':hover': {
-      boxShadow:
-        '0 1px 3px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(0, 0, 0, .15)',
-    },
-    ':active': {
-      boxShadow:
-        '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, .15)',
-    },
-  },
-  {type: 'button'},
-);
 const InnerWrapper = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
@@ -43,6 +20,11 @@ const PreviewWrapper = styled('div', {
   width: 250,
 });
 
+const styleOverride: CSS = {
+  marginBottom: 30,
+  width: '100%',
+};
+
 interface Font {
   logo: string;
   headings: string;
@@ -52,6 +34,7 @@ export default class FontPreset extends React.PureComponent {
   props: {
     onClick: (newFont: Font) => void;
     preset: Font & {name: string};
+    selected: boolean;
   };
 
   handleClick = () => {
@@ -64,10 +47,15 @@ export default class FontPreset extends React.PureComponent {
   };
 
   render() {
-    const {preset} = this.props;
+    const {preset, selected} = this.props;
 
     return (
-      <Wrapper onClick={this.handleClick}>
+      <OptionButton
+        bright
+        onClick={this.handleClick}
+        selected={selected}
+        style={styleOverride}
+      >
         <Label
           text={preset.name}
           labelStyle={{marginBottom: 10}}
@@ -88,7 +76,7 @@ export default class FontPreset extends React.PureComponent {
             </PreviewWrapper>
           </InnerWrapper>
         </Label>
-      </Wrapper>
+      </OptionButton>
     );
   }
 }

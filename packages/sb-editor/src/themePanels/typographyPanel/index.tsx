@@ -31,6 +31,10 @@ interface RandomizableSelector {
   randomizeCategory(categories: Array<string>): void;
 }
 
+function fontsMatch(a: FontHashType, b: FontHashType): boolean {
+  return a.logo === b.logo && a.headings === b.headings && a.body === b.body;
+}
+
 class TypographyPanel extends React.Component {
   logoSelector: RandomizableSelector | null;
   headingsSelector: RandomizableSelector | null;
@@ -52,8 +56,12 @@ class TypographyPanel extends React.Component {
         <Tabs>
           <Tab name="Pairings">
             <FontPreset
-              preset={{name: 'Default for preset', ...defaultFonts}}
               onClick={pairing => changeFont(pairing)}
+              preset={{name: 'Default for preset', ...defaultFonts}}
+              selected={
+                (!fonts.logo && !fonts.headings && !fonts.body) ||
+                fontsMatch(fonts, defaultFonts)
+              }
             />
             <PanelDivider />
             <HelpText>
@@ -64,6 +72,7 @@ class TypographyPanel extends React.Component {
                 preset={pairing}
                 key={pairing.name}
                 onClick={pairing => changeFont(pairing)}
+                selected={fontsMatch(fonts, pairing)}
               />
             ))}
           </Tab>
