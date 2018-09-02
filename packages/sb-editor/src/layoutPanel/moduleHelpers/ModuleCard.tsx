@@ -1,11 +1,10 @@
 import * as React from 'react';
 
-import Button from '@pinecast/common/Button';
 import {componentsMetadata} from '@pinecast/sb-presets';
-import {Delete, Down, Up} from '@pinecast/common/icons';
+import {KebabIconMenu} from '@pinecast/common/ContextMenu';
 import {primitives} from '@pinecast/sb-components';
 import StackedSection from '@pinecast/common/StackedSection';
-import styled, {CSS} from '@pinecast/styles';
+import styled from '@pinecast/styles';
 
 import {MetadataType} from './types';
 import ModuleOptions from './ModuleOptions';
@@ -19,12 +18,6 @@ const ComponentDescription = styled('div', {
   fontSize: 14,
   marginTop: 4,
 });
-
-const buttonStyle: CSS = {
-  justifyContent: 'center',
-  padding: 0,
-  width: 32,
-};
 
 export default class ModuleCard extends React.Component {
   props: {
@@ -75,35 +68,28 @@ export default class ModuleCard extends React.Component {
           layout={layout}
           metadata={metadata}
           moreButtons={
-            <React.Fragment>
-              {!isFirst && (
-                <Button
-                  className="ModuleCard--ToolButton"
-                  onClick={this.handleMoveUp}
-                  style={buttonStyle}
-                >
-                  <Up />
-                </Button>
-              )}
-              {!isLast && (
-                <Button
-                  className="ModuleCard--ToolButton"
-                  onClick={this.handleMoveDown}
-                  style={buttonStyle}
-                >
-                  <Down />
-                </Button>
-              )}
-              {canDelete && (
-                <Button
-                  className="ModuleCard--ToolButton"
-                  onClick={this.handleDelete}
-                  style={buttonStyle}
-                >
-                  <Delete style={{transform: 'translateX(-0.5px)'}} />
-                </Button>
-              )}
-            </React.Fragment>
+            (!isFirst || !isLast || canDelete) && (
+              <KebabIconMenu
+                onSelect={option => {
+                  switch (option) {
+                    case 'moveUp':
+                      this.handleMoveUp();
+                      return;
+                    case 'moveDown':
+                      this.handleMoveDown();
+                      return;
+                    case 'delete':
+                      this.handleDelete();
+                      return;
+                  }
+                }}
+                options={[
+                  !isFirst && {name: 'Move up', slug: 'moveUp'},
+                  !isLast && {name: 'Move down', slug: 'moveDown'},
+                  canDelete && {name: 'Delete', slug: 'delete'},
+                ]}
+              />
+            )
           }
           onUpdate={this.handleUpdate}
         />

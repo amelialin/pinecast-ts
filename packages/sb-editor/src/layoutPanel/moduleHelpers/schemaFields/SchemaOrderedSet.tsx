@@ -287,6 +287,7 @@ export default class SchemaOrderedSet extends React.PureComponent {
           </span>
           <IconButton
             Component={DeleteIcon}
+            disabled={!this.props.open}
             onClick={() => {
               this.deleteItem(index);
             }}
@@ -329,7 +330,11 @@ export default class SchemaOrderedSet extends React.PureComponent {
             name: o.label,
           }))}
         >
-          <Button size="small" onClick={this.handleOpenMenu}>
+          <Button
+            disabled={!this.props.open}
+            size="small"
+            onClick={this.handleOpenMenu}
+          >
             Add an item
           </Button>
         </ContextMenu>

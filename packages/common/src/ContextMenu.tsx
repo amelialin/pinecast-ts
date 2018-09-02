@@ -5,7 +5,10 @@ import styled, {CSS} from '@pinecast/styles';
 import {Children} from './types';
 import {CloseableLayer} from './Layer';
 import {DEFAULT_FONT} from './constants';
+import IconButton from './IconButton';
+import * as MenuIcons from './icons/menus';
 import Positioner from './Positioner';
+import Toggler from './Toggler';
 
 const MenuWrapper = styled(
   'menu',
@@ -66,7 +69,7 @@ export type MenuOption = {
 export default class ContextMenu extends React.PureComponent {
   props: {
     children: Children;
-    options: Array<MenuOption>;
+    options: Array<MenuOption | null | false>;
     open: boolean;
     onSelect: (slug: string | number) => void;
     onClose: () => void;
@@ -90,7 +93,7 @@ export default class ContextMenu extends React.PureComponent {
   componentDidUpdate(prevProps: ContextMenu['props']) {
     if (!prevProps.open && this.props.open) {
       const found = this.props.options.findIndex(
-        x => x.slug === this.props.toSelect,
+        x => !!x && x.slug === this.props.toSelect,
       );
       this.setState({
         selectionIndex: found === -1 ? 0 : found,
@@ -130,7 +133,11 @@ export default class ContextMenu extends React.PureComponent {
       });
     } else if (e.keyCode === 13) {
       // enter
-      this.props.onSelect(this.props.options[this.state.selectionIndex].slug);
+      const item = this.props.options[this.state.selectionIndex];
+      if (!item) {
+        return;
+      }
+      this.props.onSelect(item.slug);
       this.props.onClose();
     }
   };
@@ -142,7 +149,11 @@ export default class ContextMenu extends React.PureComponent {
     this.props.onClose();
   };
 
-  renderOption = ({name, slug}: MenuOption, i: number) => {
+  renderOption = (option: MenuOption | false | null, i: number) => {
+    if (!option) {
+      return null;
+    }
+    const {name, slug} = option;
     return (
       <MenuOptionRow
         aria-selected={this.state.selectionIndex === i}
@@ -204,4 +215,47 @@ export default class ContextMenu extends React.PureComponent {
       </Positioner>
     );
   }
+}
+
+abstract class AbstractIconMenu extends React.Component {
+  props: {
+    onSelect: ContextMenu['props']['onSelect'];
+    options: ContextMenu['props']['options'];
+    style?: CSS;
+    toSelect?: ContextMenu['props']['toSelect'];
+  };
+
+  abstract iconComponent: React.ComponentType<any>;
+
+  render() {
+    const Component = this.iconComponent;
+    return (
+      <Toggler>
+        {({toggle, open}) => (
+          <ContextMenu
+            open={open}
+            onClose={() => toggle(false)}
+            onSelect={this.props.onSelect}
+            options={this.props.options}
+            toSelect={this.props.toSelect}
+          >
+            <IconButton
+              Component={Component}
+              onClick={toggle}
+              style={this.props.style}
+            >
+              Toggle menu
+            </IconButton>
+          </ContextMenu>
+        )}
+      </Toggler>
+    );
+  }
+}
+
+export class KebabIconMenu extends AbstractIconMenu {
+  iconComponent = MenuIcons.Kebab;
+}
+export class MeatballIconMenu extends AbstractIconMenu {
+  iconComponent = MenuIcons.Meatball;
 }

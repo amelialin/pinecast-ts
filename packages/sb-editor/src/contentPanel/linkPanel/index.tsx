@@ -1,10 +1,10 @@
 import {connect} from 'react-redux';
 import * as React from 'react';
 
-import DeleteButton from '@pinecast/common/DeleteButton';
 import EmptyState from '@pinecast/common/EmptyState';
 import ErrorState from '@pinecast/common/ErrorState';
 import LoadingState from '@pinecast/common/LoadingState';
+import {MeatballIconMenu} from '@pinecast/common/ContextMenu';
 import {Table, TableBodyCell, TableHeaderCell} from '@pinecast/common/Table';
 import xhr from '@pinecast/xhr';
 
@@ -126,10 +126,21 @@ class LinkPanel extends React.PureComponent {
                     {link.url}
                   </TableBodyCell>
                   <TableBodyCell style={{width: 30}}>
-                    <DeleteButton
-                      onClick={() => {
-                        this.deleteItem(i);
+                    <MeatballIconMenu
+                      onSelect={slug => {
+                        switch (slug) {
+                          case 'delete':
+                            this.deleteItem(i);
+                            return;
+                          case 'visit':
+                            window.open(link.url);
+                            return;
+                        }
                       }}
+                      options={[
+                        {name: 'Visit…', slug: 'visit'},
+                        {name: 'Delete', slug: 'delete'},
+                      ]}
                     />
                   </TableBodyCell>
                 </tr>

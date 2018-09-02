@@ -15,6 +15,7 @@ const NativeButton = styled(
     $size: 'normal' | 'large' | 'small';
     $style?: CSS;
   }) => ({
+    alignItems: 'center',
     backgroundColor: 'transparent',
     border: 0,
     borderRadius: 3,
@@ -22,7 +23,9 @@ const NativeButton = styled(
     cursor: 'pointer',
     display: $isBlock ? 'flex' : 'inline-flex',
     height: $size === 'normal' ? 30 : $size === 'small' ? 24 : 36,
+    justifyContent: 'center',
     margin: $isBlock ? '0 0 20px' : 0,
+    minWidth: 20,
     opacity: disabled ? 0.5 : 1,
     padding: '0 4px',
     pointerEvents: disabled ? 'none' : undefined,

@@ -56,11 +56,13 @@ export default class SchemaFixedWidth extends React.PureComponent {
     return (
       <React.Fragment>
         <ElementColorSelector
+          disabled={!open}
           onChange={this.handleBGChange}
           type="background"
           value={value.bgColor || ''}
         />
         <ElementColorSelector
+          disabled={!open}
           onChange={this.handleFGChange}
           type="foreground"
           value={value.fgColor || ''}

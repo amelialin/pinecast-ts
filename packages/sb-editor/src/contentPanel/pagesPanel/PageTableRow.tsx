@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import Button, {ButtonGroup} from '@pinecast/common/Button';
-import DeleteButton from '@pinecast/common/DeleteButton';
+import {MeatballIconMenu} from '@pinecast/common/ContextMenu';
 import {Page} from './types';
 import {TableBodyCell} from '@pinecast/common/Table';
 
@@ -28,31 +27,26 @@ const PageTableRow = ({
       {page.page_type === 'hosts' && 'Hosts'}
       {page.page_type === 'contact' && 'Contact'}
     </TableBodyCell>
-    <TableBodyCell style={{width: 100}}>
-      <ButtonGroup style={{marginTop: -4, verticalAlign: 'middle'}}>
-        <Button
-          size="small"
-          onClick={() => {
-            onEdit(page.slug);
-          }}
-        >
-          Edit
-        </Button>
-        <Button
-          size="small"
-          onClick={() => {
-            onNavigate(`/${encodeURIComponent(page.slug)}`);
-          }}
-        >
-          Visit
-        </Button>
-      </ButtonGroup>
-    </TableBodyCell>
     <TableBodyCell style={{width: 30}}>
-      <DeleteButton
-        onClick={() => {
-          onDelete(page.slug);
+      <MeatballIconMenu
+        onSelect={slug => {
+          switch (slug) {
+            case 'edit':
+              onEdit(page.slug);
+              return;
+            case 'visit':
+              onNavigate(`/${encodeURIComponent(page.slug)}`);
+              return;
+            case 'delete':
+              onDelete(page.slug);
+              return;
+          }
         }}
+        options={[
+          {name: 'Edit…', slug: 'edit'},
+          {name: 'Visit', slug: 'visit'},
+          {name: 'Delete', slug: 'delete'},
+        ]}
       />
     </TableBodyCell>
   </tr>

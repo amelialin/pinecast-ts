@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import Button, {ButtonGroup} from '@pinecast/common/Button';
+import Button from '@pinecast/common/Button';
 import Collapser from '@pinecast/common/Collapser';
-import {Delete, Down, Up} from '@pinecast/common/icons';
+import {KebabIconMenu} from '@pinecast/common/ContextMenu';
 import Fieldset from '@pinecast/common/Fieldset';
 import Group from '@pinecast/common/Group';
 import {itemLayoutsMetadata} from '@pinecast/sb-presets';
@@ -10,9 +10,9 @@ import Label from '@pinecast/common/Label';
 import {primitives} from '@pinecast/sb-components';
 import Select from '@pinecast/common/Select';
 import StackedSection from '@pinecast/common/StackedSection';
-import styled, {CSS} from '@pinecast/styles';
+import styled from '@pinecast/styles';
 import TextInput from '@pinecast/common/TextInput';
-import TooltipContainer, {HelpIcon} from '@pinecast/common/TooltipContainer';
+import {HelpIcon} from '@pinecast/common/TooltipContainer';
 
 import ElementColorSelector from '../ElementColorSelector';
 import LayoutPicker from './LayoutPicker';
@@ -27,11 +27,6 @@ const alignmentOptions = [
   {key: 'center', label: 'Center'},
   {key: 'right', label: 'Right'},
 ];
-const buttonStyle: CSS = {
-  justifyContent: 'center',
-  padding: 0,
-  width: 32,
-};
 
 const MenuWrapper = styled('div', {
   display: 'flex',
@@ -210,37 +205,26 @@ export default class LayoutChoice extends React.PureComponent {
             {this.state.containerOptionOpen ? 'Hide options' : 'Show options'}
           </Button>
           {(!isFirst || !isLast || canDelete) && (
-            <ButtonGroup>
-              {!isFirst && (
-                <TooltipContainer tooltipContent="Move section up">
-                  <Button
-                    className="ModuleCard--ToolButton"
-                    onClick={this.handleMoveUp}
-                    style={buttonStyle}
-                  >
-                    <Up />
-                  </Button>
-                </TooltipContainer>
-              )}
-              {!isLast && (
-                <TooltipContainer tooltipContent="Move section down">
-                  <Button
-                    className="ModuleCard--ToolButton"
-                    onClick={this.handleMoveDown}
-                    style={buttonStyle}
-                  >
-                    <Down />
-                  </Button>
-                </TooltipContainer>
-              )}
-              {canDelete && (
-                <TooltipContainer tooltipContent="Remove section">
-                  <Button onClick={this.handleDelete} style={buttonStyle}>
-                    <Delete style={{transform: 'translateX(-0.5px)'}} />
-                  </Button>
-                </TooltipContainer>
-              )}
-            </ButtonGroup>
+            <KebabIconMenu
+              onSelect={option => {
+                switch (option) {
+                  case 'moveUp':
+                    this.handleMoveUp();
+                    return;
+                  case 'moveDown':
+                    this.handleMoveDown();
+                    return;
+                  case 'delete':
+                    this.handleDelete();
+                    return;
+                }
+              }}
+              options={[
+                !isFirst && {name: 'Move up', slug: 'moveUp'},
+                !isLast && {name: 'Move down', slug: 'moveDown'},
+                canDelete && {name: 'Delete', slug: 'delete'},
+              ]}
+            />
           )}
         </MenuWrapper>
         <Collapser open={this.state.containerOptionOpen} shave={16}>

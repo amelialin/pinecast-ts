@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export default ({color = '58595B'}: {color?: string}) => (
+export default ({color = '#58595B'}: {color?: string}) => (
   <svg width="5" height="25" xmlns="http://www.w3.org/2000/svg">
     <g
       stroke={color}

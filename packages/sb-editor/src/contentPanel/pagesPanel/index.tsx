@@ -144,7 +144,6 @@ class PagesPanel extends React.PureComponent {
             <TableHeaderCell $wrapAt={100}>Slug</TableHeaderCell>
             <TableHeaderCell $wrapAt={100}>Type</TableHeaderCell>
             <TableHeaderCell />
-            <TableHeaderCell />
           </tr>
         </thead>
         <tbody>

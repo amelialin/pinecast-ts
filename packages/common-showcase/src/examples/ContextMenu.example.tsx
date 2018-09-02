@@ -1,7 +1,11 @@
 import * as React from 'react';
 
 import Button from '@pinecast/common/Button';
-import ContextMenu from '@pinecast/common/ContextMenu';
+import Group from '@pinecast/common/Group';
+import ContextMenu, {
+  KebabIconMenu,
+  MeatballIconMenu,
+} from '@pinecast/common/ContextMenu';
 
 import Toggler from '@pinecast/common/Toggler';
 
@@ -47,6 +51,27 @@ export default {
             </ContextMenu>
           )}
         </Toggler>
+      ),
+    },
+    {
+      title: 'Icon menus',
+      render: () => (
+        <Group spacing={16}>
+          <KebabIconMenu
+            onSelect={() => {}}
+            options={[
+              {name: 'First option', slug: 'first'},
+              {name: 'Second option', slug: 'second'},
+            ]}
+          />
+          <MeatballIconMenu
+            onSelect={() => {}}
+            options={[
+              {name: 'First option', slug: 'first'},
+              {name: 'Second option', slug: 'second'},
+            ]}
+          />
+        </Group>
       ),
     },
   ],
