@@ -1,5 +1,6 @@
 const path = require('path');
 
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 
 const DEV_SERVER_PORT = 8001;
@@ -67,7 +68,21 @@ module.exports = env => {
       ],
     },
     optimization: {
-      minimizer: env === 'prod' ? undefined : [],
+      minimizer:
+        env === 'prod'
+          ? [
+              new UglifyJSPlugin({
+                sourceMap: true,
+                uglifyOptions: {
+                  mangle: {
+                    reserved: ['Buffer'],
+                    safari10: true,
+                  },
+                  safari10: true,
+                },
+              }),
+            ]
+          : [],
       splitChunks: false,
     },
     performance: {
