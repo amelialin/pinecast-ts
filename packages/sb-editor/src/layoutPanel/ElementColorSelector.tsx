@@ -4,12 +4,15 @@ import * as React from 'react';
 import Group from '@pinecast/common/Group';
 import Label from '@pinecast/common/Label';
 import Link from '@pinecast/common/Link';
-import Select from '@pinecast/common/Select';
+import * as presets from '@pinecast/sb-presets';
+import SelectCustom from '@pinecast/common/SelectCustom';
+import styled from '@pinecast/styles';
 
 import colorKeyNames from '../shared/colorNames';
 import * as chromeActions from '../actions/chrome';
+import {ReducerType} from '../reducer';
 
-const colorsOptionalKeys = {...colorKeyNames, '': '-- Theme default'};
+const colorsOptionalKeys = {...colorKeyNames, '': '-- Preset default'};
 
 type Props = {
   disabled?: boolean;
@@ -18,8 +21,18 @@ type Props = {
   value: string | null | undefined;
 };
 
+const TinyChiclet = styled('i', ({$color}: {$color: string}) => ({
+  backgroundColor: $color,
+  borderRadius: 2,
+  boxShadow: '0 0 0.5px rgba(0, 0, 0, 0.2)',
+  display: 'inline-block',
+  height: 8,
+  width: 8,
+}));
+
 class ElementColorSelector extends React.PureComponent {
   props: Props & {
+    colors: {[color: string]: string};
     goToColors: () => void;
   };
 
@@ -28,19 +41,29 @@ class ElementColorSelector extends React.PureComponent {
   };
 
   render() {
-    const {goToColors, type, value} = this.props;
+    const {colors, goToColors, type, value} = this.props;
     return (
       <Label
         $oneLine
         text={type === 'background' ? 'Background color' : 'Foreground color'}
       >
         <Group spacing={8} wrapperStyle={{alignItems: 'center'}}>
-          <Select
+          <SelectCustom
             disabled={this.props.disabled}
             onChange={this.handleChange}
             options={Object.entries(colorsOptionalKeys).map(([key, value]) => ({
               key,
-              label: value,
+              render() {
+                if (!key) {
+                  return value;
+                }
+                return (
+                  <Group spacing={8} wrapperStyle={{alignItems: 'center'}}>
+                    <TinyChiclet $color={colors[key]} />
+                    <span>{value}</span>
+                  </Group>
+                );
+              },
             }))}
             value={value || ''}
           />
@@ -51,7 +74,13 @@ class ElementColorSelector extends React.PureComponent {
   }
 }
 export default connect(
-  (_, ownProps: Props) => ownProps,
+  (state: ReducerType, ownProps: Props) => ({
+    ...ownProps,
+    colors: {
+      ...presets.themes[state.theme.$type].colors,
+      ...state.theme.colors,
+    },
+  }),
   (dispatch: Dispatch<any>) => ({
     goToColors: () => {
       dispatch(chromeActions.changeChromePage('theme'));
