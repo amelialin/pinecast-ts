@@ -51,5 +51,32 @@ export default {
         </Card>
       ),
     },
+    {
+      title: 'Bright',
+      render: () => (
+        <Card whiteBack>
+          <Selection>
+            {({setValue, value}) => (
+              <Group spacing={12}>
+                <OptionButton
+                  bright
+                  onClick={() => setValue('left')}
+                  selected={value === 'left'}
+                >
+                  Left
+                </OptionButton>
+                <OptionButton
+                  bright
+                  onClick={() => setValue('right')}
+                  selected={value === 'right'}
+                >
+                  Right
+                </OptionButton>
+              </Group>
+            )}
+          </Selection>
+        </Card>
+      ),
+    },
   ],
 };

@@ -14,7 +14,7 @@ const NO_BORDER = 'inset 0 0 0 0 rgba(0, 0, 0, 0.2)';
 const SELECTED_SHADOW =
   '0 2px 6px rgba(0, 0, 0, 0.075), 0 3px 12px rgba(0, 0, 0, 0.1)';
 const BRIGHT_SELECTED_SHADOW =
-  '0 2px 6px rgba(141, 82, 209, 0.15), 0 3px 16px rgba(141, 82, 209, 0.2)';
+  '0 2px 6px rgba(141, 82, 209, 0.25), 0 3px 16px rgba(141, 82, 209, 0.3)';
 const UNSELECTED_SHADOW =
   '0 0 0 rgba(0, 0, 0, 0.075), 0 0 0 rgba(0, 0, 0, 0.1)';
 
