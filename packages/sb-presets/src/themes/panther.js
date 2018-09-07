@@ -94,7 +94,7 @@ export default {
       header({
         content: 'text',
         elementOptions: {
-          bgColor: 'accent',
+          fgColor: 'accent',
           innerPadding: '100px 0',
         },
         showSubtitle: true,
