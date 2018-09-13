@@ -63,7 +63,7 @@ module.exports = {
     __dirname,
     'packages/sb-resources/src/index.ts',
   ),
-  '@pinecast/sb-styles$': path.resolve(
+  '@pinecast/styles$': path.resolve(
     __dirname,
     'packages/styles/src/index.ts',
   ),
