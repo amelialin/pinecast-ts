@@ -13,10 +13,12 @@
     "@pinecast/sb-presets": "^1.0.0",
     "@pinecast/styles": "^1.0.0",
     "@types/koa": "^2.0.44",
+    "@types/koa-bodyparser": "^5.0.1",
     "@types/koa-router": "^7.0.27",
     "babel-loader": "^7.1.4",
     "babel-preset-stage-3": "^6.24.1",
     "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0"
   },
   "devDependencies": {

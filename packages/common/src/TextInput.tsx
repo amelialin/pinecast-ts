@@ -43,6 +43,8 @@ const Input = styled(
     background: 'transparent',
     border: 0,
     borderRadius: 4,
+    borderBottomLeftRadius: $hasPrefix ? 0 : undefined,
+    borderTopLeftRadius: $hasPrefix ? 0 : undefined,
     boxShadow: $invalid
       ? '0 0 0 1px #EF6B6B, 0 0 0 0 #c9d9e0'
       : '0 0 0 1px #c6caca, 0 0 0 0 #c9d9e0',
@@ -67,13 +69,9 @@ const Input = styled(
       outline: 'none',
     },
 
-    ':nth-child(2)': {
-      borderBottomLeftRadius: '0',
-      borderTopLeftRadius: '0',
-    },
     ':not(:last-child)': {
-      borderBottomRightRadius: '0',
-      borderTopRightRadius: '0',
+      borderBottomRightRadius: 0,
+      borderTopRightRadius: 0,
     },
 
     ':disabled': {
@@ -171,7 +169,7 @@ export interface Props {
   style?: React.CSSProperties;
   suffix?: JSX.Element | string;
   tabIndex?: number;
-  type?: 'email' | 'text' | 'url';
+  type?: 'email' | 'text' | 'url' | 'password';
   value: string;
 }
 

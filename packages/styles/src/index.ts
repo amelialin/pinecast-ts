@@ -2,6 +2,7 @@ import {StyletronProvider} from 'styletron-react';
 
 import ClientStyletron from './ClientStyletron';
 import {CSS, CSSProperties} from './types';
+import renderPage from './renderPage';
 import ServerStyletron from './ServerStyletron';
 import styled from './styled';
 
@@ -10,6 +11,7 @@ export {
   ClientStyletron,
   CSS,
   CSSProperties,
+  renderPage,
   ServerStyletron,
   StyletronProvider,
   styled,

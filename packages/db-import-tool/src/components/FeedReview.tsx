@@ -123,7 +123,9 @@ export default class FeedReview extends React.Component {
       name: feed.name ? null : fieldRequiredError,
       slug: !feed.slug
         ? fieldRequiredError
-        : !slugValid ? 'You must choose an available slug.' : null,
+        : !slugValid
+          ? 'You must choose an available slug.'
+          : null,
       homepage: feed.homepage ? null : fieldRequiredError,
       description: feed.description ? null : fieldRequiredError,
       language: feed.language ? null : fieldRequiredError,
@@ -149,7 +151,10 @@ export default class FeedReview extends React.Component {
         </P>
         <Form onSubmit={this.handleSubmit}>
           <Wrapper>
-            <CoverImage alt="Your podcast's cover image" src={feed.cover_art} />
+            <CoverImage
+              alt="Your podcast's cover image"
+              src={feed.cover_image}
+            />
             <FormColumn>
               <Label error={errors && errors.name} text="Podcast name">
                 <TextInput

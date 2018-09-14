@@ -11,7 +11,8 @@ export interface ShortcutKey {
 const Wrapper = styled('span', {display: 'inline-block', fontSize: '0.6em'});
 const Spacer = styled('span', {margin: '0 0.25em'});
 
-const userAgent = navigator.userAgent.toLowerCase();
+const userAgent =
+  typeof navigator !== 'undefined' ? navigator.userAgent.toLowerCase() : 'node';
 
 const isMobile = userAgent.includes('mobile') || userAgent.includes('tablet');
 const isMacOS = userAgent.includes('macintosh');

@@ -7,9 +7,11 @@ async function parse(data: string): Promise<JSONObject> {
   return JSON.parse(data) as JSONObject;
 }
 
-export const fetcher: ((theme: Object) => DataAPI) = (theme: Object) => ({
-  getSite(hostname: string): Promise<JSONObject> {
-    return request(url`/sites/site_builder/data/${hostname}`)
+export const fetcher: ((theme: Object) => DataAPI) = (
+  theme: Object,
+): DataAPI => ({
+  getSite(req): Promise<JSONObject> {
+    return request(url`/sites/site_builder/data/${req.siteHostname}`)
       .then(parse)
       .then((siteData: any) => ({
         ...siteData,
@@ -19,14 +21,16 @@ export const fetcher: ((theme: Object) => DataAPI) = (theme: Object) => ({
         },
       }));
   },
-  getEpisodes(hostname: string, offset: number, count: number) {
+  getEpisodes(req, offset, count) {
     return request(
-      url`/sites/site_builder/data/${hostname}/episode?offset=${offset}&count=${count}`,
+      url`/sites/site_builder/data/${
+        req.siteHostname
+      }/episode?offset=${offset}&count=${count}`,
     ).then(parse);
   },
-  getEpisode(hostname: string, id: string) {
-    return request(`/sites/site_builder/data/${hostname}/episode/${id}`).then(
-      parse,
-    );
+  getEpisode(req, id) {
+    return request(
+      `/sites/site_builder/data/${req.siteHostname}/episode/${id}`,
+    ).then(parse);
   },
 });

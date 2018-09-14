@@ -8,7 +8,7 @@ export interface Feed {
   author_name: string;
   subtitle: string;
   is_explicit: boolean;
-  cover_art: string;
+  cover_image: string;
   categories: Array<string>;
 
   episode_release_type: 'serial' | 'episodic' | null;

@@ -174,7 +174,7 @@ class PreviewRenderer extends React.Component {
     route
       .build(
         fetcher(this.props.theme),
-        this.props.slug,
+        {siteHostname: this.props.slug},
         getQuery(this.props.path),
         params,
       )

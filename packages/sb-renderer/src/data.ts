@@ -1,22 +1,45 @@
 import * as http from 'http';
 
+import {
+  AuthRequiredException,
+  NotFoundError,
+  RedirectException,
+} from './errors';
 import {JSONObject} from './jsonType';
-import {NotFoundError, RedirectException} from './errors';
 
-function fetch(siteHostname: string, url: string) {
-  const framedURL = url + (url.includes('?') ? '&' : '?') + 'format=json';
+export interface APIRequest {
+  siteHostname: string;
+  headerPAuth?: string;
+  headerPUID?: string;
+  password?: string;
+}
+
+function fetch(req: APIRequest, url: string) {
   return new Promise((resolve, reject) => {
-    http
-      .get(
+    const xForward = req.siteHostname || 'abts.pinecast.co';
+    const headers = {
+      Host: 'pinecast.co',
+      Authorization: req.password
+        ? `Basic ${Buffer.from(`:${req.password}`).toString('base64')}`
+        : undefined,
+      'X-Pinecast-PAuth': req.headerPAuth,
+      'X-Pinecast-PUID': req.headerPUID,
+      'X-Pinecast-Forward': xForward,
+    };
+    Object.keys(headers).forEach((key: keyof typeof headers) => {
+      if (!headers[key]) {
+        delete headers[key];
+      }
+    });
+    const request = http
+      .request(
         {
           hostname: 'pinecast.co',
-          method: 'GET',
-          path: framedURL,
-          headers: {
-            Host: 'pinecast.co',
-            // 'X-Pinecast-Forward': siteHostname || 'serverboy.net',
-            'X-Pinecast-Forward': siteHostname || 'abtd.pinecast.co',
-          },
+          // hostname: 'localhost',
+          // port: 8000,
+          method: req.password ? 'POST' : 'GET',
+          path: url,
+          headers,
         },
         resp => {
           if (
@@ -27,8 +50,13 @@ function fetch(siteHostname: string, url: string) {
             console.warn(`Redirected to ${resp.headers.location}`);
             reject(new RedirectException(resp.headers.location || ''));
           }
+          if (resp.statusCode === 401) {
+            console.log(`Auth required for ${xForward}`);
+            reject(new AuthRequiredException());
+            return;
+          }
           if (resp.statusCode !== 200) {
-            console.error(`Could not get ${siteHostname}/${framedURL}`);
+            console.error(`Could not get ${xForward}${url}`);
             reject(new NotFoundError());
             return;
           }
@@ -39,6 +67,7 @@ function fetch(siteHostname: string, url: string) {
         },
       )
       .on('error', reject);
+    request.end();
   });
 }
 async function parse(response: string): Promise<JSONObject> {
@@ -54,36 +83,29 @@ async function parse(response: string): Promise<JSONObject> {
   }
 }
 
-export async function getSite(siteHostname: string): Promise<JSONObject> {
-  return fetch(siteHostname, '/').then(parse) as Promise<JSONObject>;
-}
-export async function getEpisodes(
-  siteHostname: string,
+export const getAuth = async (req: APIRequest) =>
+  fetch(req, '/.well-known/pinecast/site-auth').then(parse);
+
+export const getSite = async (req: APIRequest) => fetch(req, '/').then(parse);
+
+export const getEpisodes = async (
+  req: APIRequest,
   offset: number,
   count: number,
-): Promise<JSONObject> {
-  return fetch(siteHostname, `/episode?offset=${offset}&count=${count}`).then(
-    parse,
-  ) as Promise<JSONObject>;
-}
-export async function getEpisode(
-  siteHostname: string,
-  id: string,
-): Promise<JSONObject> {
-  return fetch(siteHostname, `/episode/${encodeURIComponent(id)}`).then(
-    parse,
-  ) as Promise<JSONObject>;
-}
+) => fetch(req, `/episode?offset=${offset}&count=${count}`).then(parse);
 
-export async function awaitAll(promises: {
-  [key: string]: Promise<any>;
-}): Promise<{[key: string]: any}> {
-  const keys = Object.keys(promises);
+export const getEpisode = async (req: APIRequest, id: string) =>
+  fetch(req, `/episode/${encodeURIComponent(id)}`).then(parse);
+
+export async function awaitAll<T = {[key: string]: any}>(
+  promises: {[P in keyof T]: Promise<T[P]>},
+): Promise<T> {
+  const keys = Object.keys(promises) as Array<keyof T>;
   return (await Promise.all(keys.map(key => promises[key]))).reduce(
     (acc, cur, i) => {
       acc[keys[i]] = cur;
       return acc;
     },
-    {},
-  );
+    {} as Partial<T>,
+  ) as T;
 }

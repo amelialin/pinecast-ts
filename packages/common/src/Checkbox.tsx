@@ -11,7 +11,7 @@ const WrapperLabel = styled(
     display: 'flex',
     padding: '0 0 20px',
 
-    ':not(:empty) + .Checkbox--WrapperLabel': {
+    ':not(:empty) ~ .Checkbox--WrapperLabel': {
       marginTop: -12,
     },
   },
@@ -29,7 +29,7 @@ const InvisibleCheckbox = styled(
     padding: 0,
     width: 0,
 
-    ':checked + .checkBox-text::after': {
+    ':checked ~ .checkBox-text::after': {
       opacity: 1,
       transform: 'scale(1)',
     },
@@ -37,7 +37,7 @@ const InvisibleCheckbox = styled(
     ':focus': {
       outline: 'none',
     },
-    ':focus + .checkBox-text::before': {
+    ':focus ~ .checkBox-text::before': {
       boxShadow: '0 0 0 2px #c9d9e0',
     },
   },

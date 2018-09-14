@@ -8,3 +8,5 @@ export class RedirectException extends Error {
     this.toURL = toURL;
   }
 }
+
+export class AuthRequiredException extends Error {}

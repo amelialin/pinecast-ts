@@ -60,6 +60,7 @@ export default getsContext(
             ['Apple Podcasts', ctx.data.site.itunes_url],
             ['Google Play', ctx.data.site.google_play_url],
             ['Stitcher', ctx.data.site.stitcher_url],
+            ['Spotify', ctx.data.site.spotify_url],
             ['RSS Feed', `https://pinecast.com/feed/${ctx.data.podcast.slug}`],
           ]
             .filter(x => x[1])

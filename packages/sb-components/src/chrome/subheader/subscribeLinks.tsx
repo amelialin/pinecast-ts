@@ -54,6 +54,17 @@ export default getsContext(
               Stitcher
             </ButtonRenderer>
           ),
+          ctx.data.site.spotify_url && (
+            <ButtonRenderer
+              href={ctx.data.site.spotify_url}
+              key="spotify"
+              rel="noopener noreferrer"
+              style={marginStyles}
+              target="_blank"
+            >
+              Spotify
+            </ButtonRenderer>
+          ),
           <ButtonRenderer
             href={`https://pinecast.com/feed/${encodeURIComponent(
               ctx.data.podcast.slug,

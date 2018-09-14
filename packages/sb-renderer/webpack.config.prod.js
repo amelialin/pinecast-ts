@@ -8,7 +8,7 @@ module.exports = env => ({
   },
   resolve: {
     alias: require('../../webpack.aliases'),
-    mainFields: ['jsnext:main', 'main'],
+    mainFields: ['main'],
     modules: ['node_modules'],
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
@@ -34,9 +34,17 @@ module.exports = env => ({
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
+      {
+        test: /\.css$/,
+        use: 'null-loader',
+      },
     ],
   },
   target: 'node',
+  optimization: {
+    minimizer: env === 'prod' ? undefined : [],
+    splitChunks: false,
+  },
   node: {
     Buffer: false,
     setImmediate: false,

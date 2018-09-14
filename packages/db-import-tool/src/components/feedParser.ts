@@ -32,7 +32,12 @@ export function parseFeed(rawFeed: string): Feed {
     author_name: firstTagText(rss, 'itunes:author', ''),
     subtitle: firstTagText(rss, 'itunes:subtitle', ''),
     is_explicit: firstTagBool(rss, 'itunes:explicit'),
-    cover_art: firstTagAttr(rss, 'itunes:image', 'href'),
+    cover_image: firstTagAttr(
+      rss,
+      'itunes:image',
+      'href',
+      () => firstTagText(rss, 'url'), // image > url
+    ),
     categories: getCategories(rss),
 
     episode_release_type: firstTagText(rss, 'itunes:type', 'episodic') as any,

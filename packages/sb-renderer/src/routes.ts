@@ -14,7 +14,7 @@ export interface Route {
   match: (url: string) => RequestURLParams | null;
   build: (
     dataProvider: DataAPI,
-    siteHostname: string,
+    req: defaultData.APIRequest,
     query: RequestQueryParams,
     params: RequestURLParams,
   ) => Promise<string>;
@@ -64,8 +64,8 @@ export const routes: {[route: string]: Route} = {
     path: '/',
     format: () => '/',
     match: matcher('/'),
-    build: async (data, siteHostname, query, params): Promise<string> => {
-      const site = await data.getSite(siteHostname);
+    build: async (data, req, query, params): Promise<string> => {
+      const site = await data.getSite(req);
       const page = query.page ? Number(query.page) : 1;
 
       const theme = rendering.getThemeFromSite(site);
@@ -82,7 +82,7 @@ export const routes: {[route: string]: Route} = {
       );
 
       const episodes = await data.getEpisodes(
-        siteHostname,
+        req,
         // offset
         page === 1 ? 0 : firstPageExtraCount + (page - 1) * normalPageCount,
         page === 1 ? firstPageExtraCount + normalPageCount : normalPageCount,
@@ -94,11 +94,11 @@ export const routes: {[route: string]: Route} = {
     path: '/episode/:id',
     format: ({id}) => `/episode/${encodeURIComponent(id)}`,
     match: matcher('/episode/:id'),
-    build: async (data, siteHostname, query, params): Promise<string> =>
+    build: async (data, req, query, params): Promise<string> =>
       rendering.renderEpisode(
         await defaultData.awaitAll({
-          site: data.getSite(siteHostname),
-          episode: data.getEpisode(siteHostname, params.id),
+          site: data.getSite(req),
+          episode: data.getEpisode(req, params.id),
         }),
       ),
   },
@@ -106,9 +106,9 @@ export const routes: {[route: string]: Route} = {
     path: '/:slug',
     format: ({slug}) => `/${encodeURIComponent(slug)}`,
     match: matcher('/:slug'),
-    build: async (data, siteHostname, query, params): Promise<string> => {
+    build: async (data, req, query, params): Promise<string> => {
       const slug = params.slug;
-      const resources = {site: await data.getSite(siteHostname)};
+      const resources = {site: await data.getSite(req)};
 
       if (
         resources.site.pages &&

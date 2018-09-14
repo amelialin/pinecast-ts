@@ -37,6 +37,7 @@ export interface ComponentContext {
       itunes_url: string | null;
       google_play_url: string | null;
       stitcher_url: string | null;
+      spotify_url: string | null;
     };
     podcast: {
       slug: string;

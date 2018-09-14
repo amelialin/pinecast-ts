@@ -19,22 +19,44 @@ const pseudos: Array<RegExp> = [
   /^:disabled\b/i,
   /^:checked\b/i,
   /^:visited\b/i,
-  /^:not(:empty)\b/i,
+  /^:not\(:empty\)/i,
+  /^::placeholder\b/i,
+  /^::-webkit-placeholder\b/i,
+  /^:nth-/i,
+  /^:first-child\b/,
+  /^:not\(:first-child\)/,
+  /^:last-child\b/,
+  /^:not\(:last-child\)/,
 ];
+
+function normalizeValue(
+  key: string,
+  value: string | number | Array<string | number>,
+): string {
+  if (Array.isArray(value)) {
+    return value.map(v => normalizeValue(key, v)).join(';');
+  }
+  if (key === 'lineHeight' && typeof value === 'number') {
+    return normalizeValue(key, `${value}px`);
+  }
+  return compile(`${hyphenateStyleName(key)}:${value}`);
+}
 
 function makeCSS(
   className: string,
   pseudoClassOrSelector: string,
   styles: PseudoElementType,
 ): string {
-  if (!pseudos.some(x => Boolean(x.exec(pseudoClassOrSelector)))) {
+  if (pseudoClassOrSelector.startsWith(':not(:empty) ')) {
+    pseudoClassOrSelector = pseudoClassOrSelector.substr(':not(:empty)'.length);
+  } else if (!pseudos.some(x => Boolean(x.exec(pseudoClassOrSelector)))) {
     console.log(
       `Dropping ${pseudoClassOrSelector} from ${className} example mode`,
     );
     return '';
   }
   const compiledStyles = Object.entries(styles)
-    .map(([key, value]) => compile(`${hyphenateStyleName(key)}:${value}`))
+    .map(([key, value]) => normalizeValue(key, value))
     .join(';');
   return `.${className}${pseudoClassOrSelector}{${compiledStyles}}`;
 }
@@ -50,25 +72,23 @@ export function renderExampleMode(
   const className = ownClassName ? `${c} ${ownClassName}` : c;
 
   let css = '';
+  const remainder: CSS = {};
   for (const [key, value] of entries) {
-    if (typeof value !== 'object') {
+    if (typeof value !== 'object' || Array.isArray(value)) {
+      (remainder as any)[key] = value;
       continue;
     }
     css += makeCSS(c, key, value);
   }
+  if (Object.keys(remainder).length) {
+    const compiledStyles = Object.entries(remainder)
+      .map(([key, value]) => normalizeValue(key, value))
+      .join(';');
+    css += `.${c}{${compiledStyles}}`;
+  }
   const inner = React.createElement(elemType, {
     ...ownProps,
     className: css ? className : ownClassName,
-    style: entries.reduce(
-      (acc, [key, val]) => {
-        if (!/^[\w\-]+/.exec(key)) {
-          return acc;
-        }
-        acc[key] = val;
-        return acc;
-      },
-      {} as {[key: string]: any},
-    ),
   });
   if (!css) {
     return inner;

@@ -20,6 +20,7 @@ type ButtonProps = AnchorProps & {
 
 const styles = {
   color: '#4e7287',
+  transition: 'color 0.2s',
 
   ':hover': {
     color: '#708d9e',

@@ -10,7 +10,7 @@ const WrapperLabel = styled(
     display: 'flex',
     padding: '0 0 20px',
 
-    ':not(:empty) + .Radio--WrapperLabel': {
+    ':not(:empty) ~ .Radio--WrapperLabel': {
       marginTop: -12,
     },
   },
@@ -31,15 +31,15 @@ const InvisibleRadio = styled(
     ':focus': {
       outline: 'none',
     },
-    ':focus + .Radio-text::before': {
+    ':focus ~ .Radio-text::before': {
       boxShadow:
         'inset 0 0 0 1px #b0b5b5, inset 0 0 0 0 #708d9e, 0 0 0 2px #c9d9e0',
     },
-    ':checked + .Radio-text::before': {
+    ':checked ~ .Radio-text::before': {
       boxShadow:
         'inset 0 0 0 0 #b0b5b5, inset 0 0 0 5px #708d9e, 0 0 0 0 #c9d9e0',
     },
-    ':checked:focus + .Radio-text::before': {
+    ':checked:focus ~ .Radio-text::before': {
       boxShadow:
         'inset 0 0 0 0 #b0b5b5, inset 0 0 0 5px #708d9e, 0 0 0 2px #c9d9e0',
     },

@@ -77,6 +77,7 @@ export default {
           <Color color="#c6caca" />
           <Color color="#dee1df" />
           <Color color="#eeefea" />
+          <Color color="#f6f7f5" />
         </Card>
       ),
     },
