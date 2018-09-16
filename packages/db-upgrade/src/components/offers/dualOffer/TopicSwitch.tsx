@@ -8,14 +8,14 @@ import topicData, {Topics} from './topicData';
 const breakpoint = '@media (max-width: 900px)';
 
 const Wrapper = styled('div', {
+  alignItems: 'flex-start',
   display: 'inline-flex',
-  flexDirection: 'row',
+  flexDirection: 'column',
   margin: '0 auto 20px',
   width: 'auto',
 
   [breakpoint]: {
     display: 'flex',
-    flexDirection: 'column',
     maxWidth: 'calc(100% - 20px)',
   },
   textAlign: 'center',
@@ -26,12 +26,11 @@ const Label = styled(
   {
     flex: '0 0',
     fontWeight: 500,
-    marginRight: 12,
+    marginBottom: 12,
     padding: '4px 0',
     whiteSpace: 'nowrap',
 
     [breakpoint]: {
-      marginBottom: 12,
       textAlign: 'left',
       width: '100%',
     },

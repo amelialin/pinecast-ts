@@ -1,0 +1,10 @@
+{
+  "name": "@pinecast/db-ads",
+  "version": "1.0.0",
+  "main": "src/",
+  "ts:main": "src/index.ts",
+  "dependencies": {
+    "@pinecast/db-upgrade": "^1.0.0",
+    "@pinecast/styles": "^1.0.0"
+  }
+}

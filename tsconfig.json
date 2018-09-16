@@ -23,6 +23,7 @@
     "paths": {
       "@pinecast/common": ["../common/src/index.ts"],
       "@pinecast/common/*": ["../common/src/*"],
+      "@pinecast/db-ads": ["../db-ads/src/index.ts"],
       "@pinecast/db-analytics": ["../db-analytics/src/index.ts"],
       "@pinecast/db-categories": ["../db-categories/src/index.ts"],
       "@pinecast/db-import-tool": ["../db-import-tool/src/index.ts"],

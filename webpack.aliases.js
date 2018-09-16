@@ -3,6 +3,7 @@ const path = require('path');
 module.exports = {
   '@pinecast/common': path.resolve(__dirname, 'packages/common/src/'),
 
+  '@pinecast/db-ads$': path.resolve(__dirname, 'packages/db-ads/src/index.ts'),
   '@pinecast/db-analytics$': path.resolve(
     __dirname,
     'packages/db-analytics/src/index.ts',
@@ -63,10 +64,7 @@ module.exports = {
     __dirname,
     'packages/sb-resources/src/index.ts',
   ),
-  '@pinecast/styles$': path.resolve(
-    __dirname,
-    'packages/styles/src/index.ts',
-  ),
+  '@pinecast/styles$': path.resolve(__dirname, 'packages/styles/src/index.ts'),
 
   '@pinecast/xhr$': path.resolve(__dirname, 'packages/xhr/src/index.ts'),
 };

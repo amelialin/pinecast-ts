@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {render} from 'react-dom';
 
+import AdsDashboard from '@pinecast/db-ads';
 import AnalyticsDash from '@pinecast/db-analytics';
 import {AudioUploader, ImageUploader} from '@pinecast/db-uploader';
 import Categories from '@pinecast/db-categories';
@@ -10,7 +11,7 @@ import ImportTool from '@pinecast/db-import-tool';
 import PublishPicker from '@pinecast/db-publish-picker';
 import Spotify from '@pinecast/db-spotify';
 import TipJarConnect from '@pinecast/db-tip-jar-connect';
-import Upgrade from '@pinecast/db-upgrade';
+import Upgrade, {UpgradeAdvertisements} from '@pinecast/db-upgrade';
 
 import './pageScripts';
 
@@ -22,6 +23,7 @@ type Mountable<T> = React.ComponentType<T> & {
 };
 
 const components: Array<Mountable<{[key: string]: any}>> = [
+  AdsDashboard,
   AnalyticsDash,
   AudioUploader,
   Categories,
@@ -31,6 +33,7 @@ const components: Array<Mountable<{[key: string]: any}>> = [
   Spotify,
   TipJarConnect,
   Upgrade,
+  UpgradeAdvertisements,
 ];
 
 components.forEach(component => {
