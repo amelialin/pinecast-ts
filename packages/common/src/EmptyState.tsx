@@ -44,7 +44,14 @@ const EmptyState = ({
     </TitleWrapper>
     {copy && <TextWrapper>{copy}</TextWrapper>}
     {actionLabel &&
-      onAction && <Button onClick={onAction}>{actionLabel}</Button>}
+      onAction && (
+        <Button
+          onClick={onAction}
+          style={{margin: copy ? undefined : '16px 0 0'}}
+        >
+          {actionLabel}
+        </Button>
+      )}
   </Wrapper>
 );
 

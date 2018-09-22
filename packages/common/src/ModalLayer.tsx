@@ -31,7 +31,7 @@ type SharedProps = {
 
 export default class ModalLayer extends React.Component {
   props: {
-    children: JSX.Element | Array<JSX.Element>;
+    children: React.ReactNode;
     open: boolean;
     onClose: () => void;
   } & SharedProps;

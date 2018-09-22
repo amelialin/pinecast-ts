@@ -16,16 +16,16 @@ const ErrorState = ({
   onAction,
   title,
 }: {
-  actionLabel?: JSX.Element | string;
+  actionLabel?: React.ReactNode;
   onAction?: () => void;
-  title: JSX.Element | string;
+  title: React.ReactNode;
 }) => (
   <Wrapper>
     <ErrorIcon size={40} style={{marginBottom: 10}} />
     <TextWrapper>{title}</TextWrapper>
     {actionLabel &&
       onAction && (
-        <Button onClick={onAction} size="small" style={{marginTop: 20}}>
+        <Button onClick={onAction} size="small" style={{margin: '20px 0 0'}}>
           {actionLabel}
         </Button>
       )}
