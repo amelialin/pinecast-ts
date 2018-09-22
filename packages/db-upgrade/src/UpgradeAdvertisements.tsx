@@ -115,6 +115,7 @@ class UpgradeAdvertisements_ extends React.Component {
     this.setState({error: null, pending: false, wasSubscribed: true});
   };
   doUnsubscribe = async () => {
+    this.setState({error: null, pending: true});
     try {
       const req = xhr({
         method: 'POST',

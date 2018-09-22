@@ -1,8 +1,11 @@
 import * as React from 'react';
 
+import Card from '@pinecast/common/Card';
 import styled from '@pinecast/styles';
+import Tabs, {Tab} from '@pinecast/common/Tabs';
 import {UpgradeAdvertisements} from '@pinecast/db-upgrade';
 
+import TagsPanel from './dashboards/TagsPanel';
 import UsageCard from './UsageCard';
 
 const Wrapper = styled('div', {
@@ -43,6 +46,16 @@ export default class AdsDashboard extends React.Component {
             hasSubscription
             stripeKey={this.props.stripeKey}
           />
+        </div>
+        <div>
+          <Card whiteBack>
+            <Tabs>
+              <Tab name="Tags">
+                <TagsPanel />
+              </Tab>
+              <Tab name="Inventory">Inventory</Tab>
+            </Tabs>
+          </Card>
         </div>
       </Wrapper>
     );
