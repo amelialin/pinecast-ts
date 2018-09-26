@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Button from '@pinecast/common/Button';
+import Button, {ButtonGroup} from '@pinecast/common/Button';
 import Dialog from '@pinecast/common/Dialog';
 import Form from '@pinecast/common/Form';
 import Label from '@pinecast/common/Label';
@@ -40,9 +40,12 @@ export default class NewLinkForm extends React.PureComponent {
       <Form action="" onSubmit={this.handleCreateSubmit}>
         <Dialog
           actions={
-            <Button $isPrimary onClick={this.handleCreateSubmit}>
-              Create
-            </Button>
+            <ButtonGroup>
+              <Button onClick={this.props.onCancel}>Cancel</Button>
+              <Button $isPrimary onClick={this.handleCreateSubmit}>
+                Create
+              </Button>
+            </ButtonGroup>
           }
           title="New tag"
         >
