@@ -5,7 +5,6 @@ import styled from '@pinecast/styles';
 
 import {changeChromePage} from './actions/chrome';
 import {DEFAULT_FONT} from '@pinecast/common/constants';
-import {Pinecast} from '@pinecast/common/icons';
 import {ReducerType} from './reducer';
 import ReportProblem from './ReportProblem';
 
@@ -54,6 +53,25 @@ const RHS = styled('div', {
   textAlign: 'right',
 });
 
+const BackChevron = styled('a', {
+  display: 'block',
+  paddingRight: 12,
+
+  '::before': {
+    border: '3px solid #4e7287',
+    borderRight: 0,
+    borderTop: 0,
+    content: '""',
+    display: 'block',
+    height: 12,
+    transform: 'rotate(45deg)',
+    width: 12,
+  },
+  ':hover::before': {
+    borderColor: '#8aa3b1',
+  },
+});
+
 const ToolbarButton = ({
   children,
   id,
@@ -76,26 +94,43 @@ const ToolbarButton = ({
   </ToolbarOption>
 );
 
-const ConnectedToolbarButton = connect(
-  (state: ReducerType) => ({page: state.page}),
-  {changeChromePage},
-)(ToolbarButton) as React.ComponentType<{
-  children: string;
-  id: ReducerType['page'];
-}>;
-
-const Toolbar = () => (
+const Toolbar = ({
+  changeChromePage,
+  page,
+  slug,
+}: {
+  changeChromePage: (page: ReducerType['page']) => any;
+  page: ReducerType['page'];
+  slug: string | null;
+}) => (
   <Toolbar_>
-    <Pinecast color="#616669" height={20} style={{marginRight: 12}} />
-    <ConnectedToolbarButton id="theme">Theme</ConnectedToolbarButton>
-    <ConnectedToolbarButton id="layout">Layout</ConnectedToolbarButton>
-    <ConnectedToolbarButton id="content">Content</ConnectedToolbarButton>
-    <ConnectedToolbarButton id="assets">Assets</ConnectedToolbarButton>
-    <ConnectedToolbarButton id="settings">Settings</ConnectedToolbarButton>
+    <BackChevron href={`/dashboard/podcast/${slug}`} />
+    <ToolbarButton changeChromePage={changeChromePage} id="theme" page={page}>
+      Theme
+    </ToolbarButton>
+    <ToolbarButton changeChromePage={changeChromePage} id="layout" page={page}>
+      Layout
+    </ToolbarButton>
+    <ToolbarButton changeChromePage={changeChromePage} id="content" page={page}>
+      Content
+    </ToolbarButton>
+    <ToolbarButton changeChromePage={changeChromePage} id="assets" page={page}>
+      Assets
+    </ToolbarButton>
+    <ToolbarButton
+      changeChromePage={changeChromePage}
+      id="settings"
+      page={page}
+    >
+      Settings
+    </ToolbarButton>
     <RHS>
       <ReportProblem />
     </RHS>
   </Toolbar_>
 );
 
-export default Toolbar;
+export default connect(
+  (state: ReducerType) => ({page: state.page, slug: state.slug}),
+  {changeChromePage},
+)(Toolbar);

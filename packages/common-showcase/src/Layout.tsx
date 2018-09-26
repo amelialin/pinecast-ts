@@ -40,7 +40,7 @@ const Rendering = styled('section', {
   padding: 20,
 });
 
-const Logo = styled('span', {fontWeight: 500});
+const Logo = styled('span', {fontSize: 18, fontWeight: 500});
 
 export default class Layout extends React.Component {
   state: {component: string | null} = {
