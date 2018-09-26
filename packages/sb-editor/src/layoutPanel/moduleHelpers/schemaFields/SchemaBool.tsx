@@ -1,6 +1,8 @@
 import * as React from 'react';
 
 import Checkbox from '@pinecast/common/Checkbox';
+import Group from '@pinecast/common/Group';
+import {HelpIcon} from '@pinecast/common/TooltipContainer';
 
 import {BoolProps} from './types';
 
@@ -22,7 +24,14 @@ export default class SchemaBool extends React.PureComponent {
         checked={this.props.value}
         onChange={this.handleChange}
         tabIndex={this.props.open ? 0 : -1}
-        text={this.props.name}
+        text={
+          <Group spacing={12}>
+            {this.props.name}
+            {this.props.description ? (
+              <HelpIcon>{this.props.description}</HelpIcon>
+            ) : null}
+          </Group>
+        }
       />
     );
   }
