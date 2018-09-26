@@ -93,6 +93,11 @@ export default {
     forceConsumeCount: 1,
 
     schema: {
+      disableImage: {
+        name: 'Disable background image?',
+        description: "Don't show a background image?",
+        type: 'bool',
+      },
       overlayStyle: {
         name: 'Background overlay style',
         description:
