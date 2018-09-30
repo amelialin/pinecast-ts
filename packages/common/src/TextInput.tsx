@@ -164,6 +164,7 @@ export interface Props {
   pattern?: string;
   placeholder?: string;
   prefix?: JSX.Element | string;
+  readOnly?: boolean;
   required?: boolean;
   size?: Sizes;
   style?: React.CSSProperties;

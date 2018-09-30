@@ -8,48 +8,28 @@ import LoadingState from '@pinecast/common/LoadingState';
 import {MeatballIconMenu} from '@pinecast/common/ContextMenu';
 import {ModalOpener} from '@pinecast/common/ModalLayer';
 import * as Table from '@pinecast/common/Table';
-import xhr from '@pinecast/xhr';
+import xhr, {dataProvider, DataProviderState} from '@pinecast/xhr';
 
 import * as models from '../models';
-import NewTagForm from './tags/NewTagForm';
+import NewAdForm, {AdObject} from './inventory/NewAdForm';
 
-export default class InventoryPAnel extends React.Component {
-  props: {};
+class InventoryPanel extends React.Component {
+  props: {
+    inventory: DataProviderState<Array<models.Advertisement>>;
+  };
   state: {
     createError: React.ReactNode | null;
     deleteError: React.ReactNode | null;
-    loadingError: React.ReactNode | null;
     pending: boolean;
-    tags: Array<models.Tag> | null;
   };
 
-  constructor(props: InventoryPAnel['props']) {
+  constructor(props: InventoryPanel['props']) {
     super(props);
-    this.load();
     this.state = {
       createError: null,
       deleteError: null,
-      loadingError: null,
-      pending: true,
-      tags: null,
+      pending: false,
     };
-  }
-
-  async load() {
-    try {
-      const resp = await xhr({
-        method: 'GET',
-        url: '/advertisements/inventory/',
-      });
-      const tags = JSON.parse(resp);
-      this.setState({loadingError: null, pending: false, tags});
-    } catch (e) {
-      this.setState({
-        loadingError: 'We could not load your tags.',
-        pending: false,
-      });
-      return;
-    }
   }
 
   renderInlineError() {
@@ -70,21 +50,21 @@ export default class InventoryPAnel extends React.Component {
     return null;
   }
 
-  handleReloadTags = () => {
-    this.setState({loadingError: false, pending: true});
-    this.load();
+  handleReloadInventory = () => {
+    this.props.inventory.reload();
   };
-  handleDeleteTag = async (uuid: string) => {
+  handleDeleteAd = async (uuid: string) => {
     this.setState({deleteError: null, pending: true});
     try {
       const body = new FormData();
       body.append('uuid', uuid);
       await xhr({
         method: 'POST',
-        url: '/advertisements/tags/delete',
+        url: '/advertisements/inventory/delete',
         body,
       });
-      return this.load();
+      this.setState({pending: false});
+      return this.props.inventory.reload();
     } catch (e) {
       this.setState({
         deleteError: 'There was an error deleting the tag.',
@@ -93,19 +73,20 @@ export default class InventoryPAnel extends React.Component {
       return;
     }
   };
-  handleNewTag = async (name: string, description: string) => {
+  handleNewAd = async (payload: AdObject) => {
     this.setState({createError: null, pending: true});
     try {
       const body = new FormData();
-      body.append('name', name);
-      body.append('description', description);
-      const resp = await xhr({
+      Object.entries(payload).forEach(([key, value]) => {
+        body.append(key, value as string);
+      });
+      await xhr({
         method: 'POST',
-        url: '/advertisements/tags/create',
+        url: '/advertisements/inventory/create',
         body,
       });
-      const tag = JSON.parse(resp);
-      this.setState({pending: false, tags: [tag, ...this.state.tags!]});
+      this.setState({pending: false});
+      return this.props.inventory.reload();
     } catch (e) {
       this.setState({
         createError: 'There was an error creating the tag.',
@@ -117,27 +98,28 @@ export default class InventoryPAnel extends React.Component {
 
   renderModal = ({handleClose}: {handleClose: () => void}) => {
     return (
-      <NewTagForm
+      <NewAdForm
         onCancel={handleClose}
-        onNewTag={(name, description) => {
+        onNewTag={payload => {
           handleClose();
-          this.handleNewTag(name, description);
+          this.handleNewAd(payload);
         }}
       />
     );
   };
 
   render() {
-    const {loadingError, pending, tags} = this.state;
-    if (pending) {
-      return <LoadingState title="Loading tags…" />;
+    const {pending} = this.state;
+    const {inventory} = this.props;
+    if (pending || inventory.isLoading || inventory.isInitial) {
+      return <LoadingState title="Loading inventory…" />;
     }
-    if (loadingError) {
+    if (inventory.isErrored) {
       return (
         <ErrorState
           actionLabel="Retry"
-          title={loadingError}
-          onAction={this.handleReloadTags}
+          title="We could not load your inventory."
+          onAction={this.handleReloadInventory}
         />
       );
     }
@@ -146,7 +128,7 @@ export default class InventoryPAnel extends React.Component {
         {({handleOpen}) => (
           <React.Fragment>
             {this.renderInlineError()}
-            {tags!.length > 0 ? (
+            {inventory.data.length > 0 ? (
               <React.Fragment>
                 <Button
                   $isBlock
@@ -157,23 +139,21 @@ export default class InventoryPAnel extends React.Component {
                 </Button>
                 <Table.Table style={{marginBottom: 0}}>
                   <thead>
-                    <Table.TableHeaderCell>Name</Table.TableHeaderCell>
-                    <Table.TableHeaderCell>Description</Table.TableHeaderCell>
-                    <Table.TableHeaderCell />
+                    <tr>
+                      <Table.TableHeaderCell>Name</Table.TableHeaderCell>
+                      <Table.TableHeaderCell />
+                    </tr>
                   </thead>
                   <tbody>
-                    {this.state.tags!.map(tag => (
-                      <tr key={tag.uuid}>
+                    {inventory.data.map(ad => (
+                      <tr key={ad.uuid}>
                         <Table.TableBodyCell>
-                          <b>{tag.name}</b>
-                        </Table.TableBodyCell>
-                        <Table.TableBodyCell $wrapAt={200}>
-                          {tag.description}
+                          <b>{ad.name}</b>
                         </Table.TableBodyCell>
                         <Table.TableBodyCell style={{width: 32}}>
                           <MeatballIconMenu
                             onSelect={slug => {
-                              this.handleDeleteTag(tag.uuid);
+                              this.handleDeleteAd(ad.uuid);
                             }}
                             options={[{name: 'Delete', slug: 'delete'}]}
                           />
@@ -185,9 +165,9 @@ export default class InventoryPAnel extends React.Component {
               </React.Fragment>
             ) : (
               <EmptyState
-                actionLabel="Create a tag"
-                copy="Tags let you match advertisements with appropriate ad spots."
-                title="You do not have any tags yet."
+                actionLabel="Upload an advertisement"
+                copy="Your advertisements are your inventory. Upload your first advertisement to start placing ads."
+                title="You do not have any inventory yet."
                 onAction={handleOpen}
               />
             )}
@@ -197,3 +177,16 @@ export default class InventoryPAnel extends React.Component {
     );
   }
 }
+
+export default dataProvider<
+  InventoryPanel['props'],
+  'inventory',
+  Array<models.Advertisement>
+>(
+  'inventory',
+  () => ({
+    method: 'GET',
+    url: '/advertisements/inventory/',
+  }),
+  (resp: string) => JSON.parse(resp),
+)(InventoryPanel);

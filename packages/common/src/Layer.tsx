@@ -19,7 +19,7 @@ export default class Layer extends React.PureComponent {
   constructor(props: Props) {
     super(props);
     const portal = document.createElement('div');
-    portal.style.pointerEvents = props.pointerEvents ? 'auto' : 'none';
+    portal.style.pointerEvents = props.pointerEvents ? 'all' : 'none';
     portal.style.position = 'absolute';
     portal.style.left = props.x ? `${props.x}px` : '0';
     portal.style.top = props.y ? `${props.y}px` : '0';
@@ -29,7 +29,7 @@ export default class Layer extends React.PureComponent {
   }
   componentWillReceiveProps(newProps: Props) {
     const updated = {
-      pointerEvents: newProps.pointerEvents ? 'auto' : 'none',
+      pointerEvents: newProps.pointerEvents ? 'all' : 'none',
       left: newProps.x ? `${newProps.x}px` : '0',
       top: newProps.y ? `${newProps.y}px` : '0',
     };

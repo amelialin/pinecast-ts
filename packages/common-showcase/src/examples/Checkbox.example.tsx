@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Checkbox from '@pinecast/common/Checkbox';
+import Toggler from '@pinecast/common/Toggler';
 
 export default {
   name: 'Checkbox',
@@ -8,7 +9,11 @@ export default {
     {
       title: 'Unchecked',
       render: () => (
-        <Checkbox checked={false} onChange={() => {}} text="Unchecked" />
+        <Toggler>
+          {({open, toggle}) => (
+            <Checkbox checked={open} onChange={toggle} text="Unchecked" />
+          )}
+        </Toggler>
       ),
     },
     {

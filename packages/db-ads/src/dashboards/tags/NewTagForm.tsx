@@ -42,7 +42,7 @@ export default class NewLinkForm extends React.PureComponent {
           actions={
             <ButtonGroup>
               <Button onClick={this.props.onCancel}>Cancel</Button>
-              <Button $isPrimary onClick={this.handleCreateSubmit}>
+              <Button $isPrimary type="submit">
                 Create
               </Button>
             </ButtonGroup>

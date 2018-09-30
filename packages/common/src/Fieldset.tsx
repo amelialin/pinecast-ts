@@ -28,10 +28,10 @@ const Legend = styled('div', {
   left: 12,
   lineHeight: '12px',
   margin: '0 0 8px -4px',
-  padding: '0 4px',
+  padding: '2px 4px',
   position: 'absolute',
   textTransform: 'uppercase',
-  top: '-0.5em',
+  top: 'calc(-0.5em - 2px)',
 });
 
 type Props = {

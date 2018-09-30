@@ -2,24 +2,15 @@ import * as React from 'react';
 
 import Card from '@pinecast/common/Card';
 import Callout from '@pinecast/common/Callout';
-import Checkbox from '@pinecast/common/Checkbox';
-import EmptyState from '@pinecast/common/EmptyState';
 import {gettext} from '@pinecast/i18n';
-import Group from '@pinecast/common/Group';
-import Label from '@pinecast/common/Label';
-import Tag from '@pinecast/common/Tag';
-import styled from '@pinecast/styles';
+import TagPicker from '@pinecast/common/TagPicker';
 
 declare var PODCAST_CATEGORIES: Array<string>;
 const allCats = (
   (typeof PODCAST_CATEGORIES !== 'undefined' && PODCAST_CATEGORIES) ||
   []
 ).sort((a, b) => a.localeCompare(b));
-
-const AllCategories = styled('div', {
-  maxHeight: 300,
-  overflow: 'auto',
-});
+const allCatsAsOptions = allCats.map(x => ({key: x, label: x}));
 
 export default class Categories extends React.Component {
   static selector = '.categories-placeholder';
@@ -43,21 +34,6 @@ export default class Categories extends React.Component {
     this.state = {selectedCats: props.defCats};
   }
 
-  renderOption = (text: string) => (
-    <Checkbox
-      checked={this.state.selectedCats.includes(text)}
-      key={text}
-      onChange={checked => {
-        if (checked) {
-          this.doSelect(text);
-        } else {
-          this.doUnselect(text);
-        }
-      }}
-      text={text}
-    />
-  );
-
   doSelect(s: string) {
     this.setState({selectedCats: [s].concat(this.state.selectedCats).sort()});
   }
@@ -67,20 +43,9 @@ export default class Categories extends React.Component {
     });
   }
 
-  renderSelection = (category: string) => (
-    <Tag
-      color="gray"
-      deleteButton
-      key={category}
-      onDelete={() => {
-        this.doUnselect(category);
-      }}
-      size="large"
-      style={{marginBottom: 8}}
-    >
-      {category}
-    </Tag>
-  );
+  setSelection = (selectedCats: Array<string>) => {
+    this.setState({selectedCats});
+  };
 
   render() {
     const {selectedCats} = this.state;
@@ -93,29 +58,15 @@ export default class Categories extends React.Component {
             )}
           </Callout>
         )}
-        <Label componentType="div" text={gettext('Selected categories')}>
-          {selectedCats.length ? (
-            <Group spacing={8} wrapperStyle={{flexWrap: 'wrap'}}>
-              {selectedCats.map(this.renderSelection)}
-            </Group>
-          ) : (
-            <EmptyState
-              style={{
-                color: '#7f8486',
-                marginBottom: 0,
-                padding: '20px 0',
-              }}
-              title={gettext('No categories selected yet')}
-            />
-          )}
-        </Label>
-        <Label
-          componentType="div"
-          style={{marginBottom: 0}}
-          text={gettext('All categories')}
-        >
-          <AllCategories>{allCats.map(this.renderOption)}</AllCategories>
-        </Label>
+        <TagPicker
+          emptyLabel={gettext('No categories selected yet')}
+          maxHeight={204}
+          onSelectionChange={this.setSelection}
+          options={allCatsAsOptions}
+          optionsLabel={gettext('All categories')}
+          selection={selectedCats}
+          selectionLabel={gettext('Selected categories')}
+        />
         <input name="categories" type="hidden" value={selectedCats.join(',')} />
       </Card>
     );

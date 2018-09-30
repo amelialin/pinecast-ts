@@ -29,7 +29,7 @@ const InvisibleCheckbox = styled(
     padding: 0,
     width: 0,
 
-    ':checked ~ .checkBox-text::after': {
+    ':checked ~ .CheckBox-text::after': {
       opacity: 1,
       transform: 'scale(1)',
     },
@@ -37,7 +37,7 @@ const InvisibleCheckbox = styled(
     ':focus': {
       outline: 'none',
     },
-    ':focus ~ .checkBox-text::before': {
+    ':focus ~ .CheckBox-text::before': {
       boxShadow: '0 0 0 2px #c9d9e0',
     },
   },
@@ -93,7 +93,7 @@ const Text = styled(
       zIndex: 2,
     },
   }),
-  {className: 'checkBox-text'},
+  {className: 'CheckBox-text'},
 );
 
 const Checkbox = ({
@@ -112,13 +112,18 @@ const Checkbox = ({
   text: JSX.Element | string;
 }) => {
   return (
-    <WrapperLabel style={style}>
+    <WrapperLabel
+      onChange={e => {
+        console.log('label onchange', e);
+      }}
+      style={style}
+    >
       <InvisibleCheckbox
         checked={checked || false}
         disabled={disabled || false}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          onChange(e.target.checked)
-        }
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => (
+          console.log('check onchange', e), onChange(e.target.checked)
+        )}
         tabIndex={tabIndex}
       />
       <Text $disabled={disabled || false}>{text}</Text>

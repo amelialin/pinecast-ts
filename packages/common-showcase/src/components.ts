@@ -5,6 +5,8 @@ import Checkbox from './examples/Checkbox.example';
 import Collapser from './examples/Collapser.example';
 import colors from './examples/colors.example';
 import ContextMenu from './examples/ContextMenu.example';
+import DateTimeInput from './examples/DateTimeInput.example';
+import DateTimePicker from './examples/DateTimePicker.example';
 import DeleteButton from './examples/DeleteButton.example';
 import Dialog from './examples/Dialog.example';
 import EmptyState from './examples/EmptyState.example';
@@ -36,6 +38,7 @@ import StickyHeader from './examples/StickyHeader.example';
 import Switch from './examples/Switch.example';
 import Tabs from './examples/Tabs.example';
 import Tag from './examples/Tag.example';
+import TagPicker from './examples/TagPicker.example';
 import Text from './examples/Text.example';
 import TextArea from './examples/TextArea.example';
 import TextInput from './examples/TextInput.example';
@@ -62,6 +65,8 @@ export default {
   Collapser,
   colors,
   ContextMenu,
+  DateTimeInput,
+  DateTimePicker,
   DeleteButton,
   Dialog,
   EmptyState,
@@ -93,6 +98,7 @@ export default {
   Switch,
   Tabs,
   Tag,
+  TagPicker,
   Text,
   TextArea,
   TextInput,

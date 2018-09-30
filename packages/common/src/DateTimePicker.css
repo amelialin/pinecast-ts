@@ -1,0 +1,203 @@
+.DateTimePicker-wrapper {
+  max-width: 300px;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.DateTimePicker-wrapper th,
+.DateTimePicker-wrapper td {
+  text-align: center;
+}
+
+.DateTimePicker-wrapper .rdtPicker .rdtTimeToggle {
+  text-align: center;
+}
+
+.DateTimePicker-wrapper .rdtPicker table {
+  border-collapse: collapse;
+  margin: 0;
+  width: 100%;
+}
+.DateTimePicker-wrapper .rdtPicker td,
+.DateTimePicker-wrapper .rdtPicker th {
+  text-align: center;
+  height: 28px;
+}
+.DateTimePicker-wrapper .rdtPicker th {
+  font-weight: 500;
+}
+.DateTimePicker-wrapper .rdtPicker td {
+  background-color: transparent;
+  border-bottom: 0 !important;
+  border-radius: 3px;
+  color: #000;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+.DateTimePicker-wrapper .rdtPicker td.rdtDay:hover,
+.DateTimePicker-wrapper .rdtPicker td.rdtHour:hover,
+.DateTimePicker-wrapper .rdtPicker td.rdtMinute:hover,
+.DateTimePicker-wrapper .rdtPicker td.rdtSecond:hover,
+.DateTimePicker-wrapper .rdtPicker .rdtTimeToggle:hover {
+  background: #eeefea;
+  cursor: pointer;
+}
+.DateTimePicker-wrapper .rdtPicker td.rdtOld,
+.DateTimePicker-wrapper .rdtPicker td.rdtNew {
+  color: #c6caca;
+}
+.DateTimePicker-wrapper .rdtPicker td.rdtToday {
+  position: relative;
+}
+.DateTimePicker-wrapper .rdtPicker td.rdtToday:before {
+  content: '';
+  display: inline-block;
+  border: 3px solid transparent;
+  border-bottom-right-radius: 1px;
+  border-bottom-color: #428bca;
+  border-right-color: #428bca;
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+}
+.DateTimePicker-wrapper .rdtPicker td.rdtActive,
+.DateTimePicker-wrapper .rdtPicker td.rdtActive:hover {
+  background-color: #708d9e;
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+  color: #fff;
+}
+.DateTimePicker-wrapper .rdtPicker td.rdtActive.rdtToday:before {
+  border-bottom-color: #fff;
+  border-right-color: #fff;
+}
+.DateTimePicker-wrapper .rdtPicker td.rdtDisabled,
+.DateTimePicker-wrapper .rdtPicker td.rdtDisabled:hover {
+  background: none;
+  color: #c6caca;
+  cursor: not-allowed;
+}
+
+.DateTimePicker-wrapper .rdtPicker td span.rdtOld {
+  color: #c6caca;
+}
+.DateTimePicker-wrapper .rdtPicker td span.rdtDisabled,
+.DateTimePicker-wrapper .rdtPicker td span.rdtDisabled:hover {
+  background: none;
+  color: #c6caca;
+  cursor: not-allowed;
+}
+.DateTimePicker-wrapper .rdtPicker .dow {
+  background: #dee1df;
+  width: 14.2857%;
+  border-bottom: none;
+}
+.DateTimePicker-wrapper .rdtPicker .dow:first-child {
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.DateTimePicker-wrapper .rdtPicker .dow:last-child {
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.DateTimePicker-wrapper .rdtPicker th.rdtSwitch {
+  width: 100px;
+}
+.DateTimePicker-wrapper .rdtPicker th.rdtNext,
+.DateTimePicker-wrapper .rdtPicker th.rdtPrev {
+  font-size: 21px;
+  vertical-align: top;
+}
+
+.DateTimePicker-wrapper .rdtPrev span,
+.DateTimePicker-wrapper .rdtNext span {
+  display: block;
+  user-select: none;
+}
+
+.DateTimePicker-wrapper .rdtPicker th.rdtDisabled,
+.DateTimePicker-wrapper .rdtPicker th.rdtDisabled:hover {
+  background: none;
+  color: #c6caca;
+  cursor: not-allowed;
+}
+.DateTimePicker-wrapper .rdtPicker thead tr:first-child th {
+  cursor: pointer;
+}
+.DateTimePicker-wrapper .rdtPicker thead tr:first-child th:hover {
+  background: #eeefea;
+}
+
+.DateTimePicker-wrapper .rdtPicker button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+.DateTimePicker-wrapper .rdtPicker button:hover {
+  background-color: #eeefea;
+}
+
+.DateTimePicker-wrapper .rdtPicker thead button {
+  height: 100%;
+  width: 100%;
+}
+
+.DateTimePicker-wrapper td.rdtMonth,
+.DateTimePicker-wrapper td.rdtYear {
+  cursor: pointer;
+  height: 50px;
+  width: 25%;
+}
+.DateTimePicker-wrapper td.rdtMonth:hover,
+.DateTimePicker-wrapper td.rdtYear:hover {
+  background: #eeefea;
+}
+
+.DateTimePicker-wrapper .rdtCounters {
+  display: flex;
+  justify-content: center;
+}
+
+.DateTimePicker-wrapper .rdtCounters > div {
+  float: left;
+}
+
+.DateTimePicker-wrapper .rdtCounter {
+  height: 100px;
+}
+
+.DateTimePicker-wrapper .rdtCounter {
+  width: 40px;
+}
+
+.DateTimePicker-wrapper .rdtCounterSeparator {
+  line-height: 100px;
+}
+
+.DateTimePicker-wrapper .rdtCounter .rdtBtn {
+  cursor: pointer;
+  display: block;
+  height: 40%;
+  line-height: 40px;
+  user-select: none;
+}
+.DateTimePicker-wrapper .rdtCounter .rdtBtn:hover {
+  background: #eeefea;
+}
+.DateTimePicker-wrapper .rdtCounter .rdtCount {
+  font-size: 1.2em;
+  height: 20%;
+  line-height: 1.2em;
+}
+
+.DateTimePicker-wrapper .rdtMilli {
+  vertical-align: middle;
+  padding-left: 8px;
+  width: 48px;
+}
+
+.DateTimePicker-wrapper .rdtMilli input {
+  width: 100%;
+  font-size: 1.2em;
+  margin-top: 37px;
+}

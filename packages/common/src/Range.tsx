@@ -1,6 +1,19 @@
 import * as React from 'react';
 
+import styled from '@pinecast/styles';
+
 import './Range.css';
+
+const Wrapper = styled('div', ({$hasLabels}: {$hasLabels: boolean}) => ({
+  display: ['flex', 'grid'],
+  gridTemplateColumns: $hasLabels
+    ? 'max-content 1fr max-content'
+    : '1fr max-content',
+  margin: '15px 0 30px',
+  width: '100%',
+}));
+const MaxLabel = styled('span', {marginLeft: 12});
+const MinLabel = styled('span', {marginRight: 12});
 
 function debounce(handler: () => void, timeout: number = 200): (() => void) {
   let timer: any | null = null;
@@ -16,12 +29,21 @@ function debounce(handler: () => void, timeout: number = 200): (() => void) {
 }
 
 export default class Range extends React.Component {
-  props: {
-    max: number;
-    min: number;
-    onChange: (value: number) => void;
-    value: number;
-  };
+  props:
+    | {
+        max: number;
+        min: number;
+        onChange: (value: number) => void;
+        value: number;
+      }
+    | {
+        max: number;
+        maxLabel: string;
+        min: number;
+        minLabel: string;
+        onChange: (value: number) => void;
+        value: number;
+      };
 
   onChangeDebouncer: () => void;
   range: HTMLInputElement | null = null;
@@ -74,18 +96,30 @@ export default class Range extends React.Component {
 
   render() {
     const {max, min} = this.props;
+    let minLabel = null;
+    let maxLabel = null;
+    if ('minLabel' in this.props) {
+      minLabel = this.props.minLabel;
+    }
+    if ('maxLabel' in this.props) {
+      maxLabel = this.props.maxLabel;
+    }
     return (
-      <input
-        className="RangeInput"
-        max={max}
-        min={min}
-        onClick={this.handleInteraction}
-        onKeyDown={this.handleInteraction}
-        onMouseMove={this.handleMouseMove}
-        onChange={this.noop}
-        ref={this.handleRef}
-        type="range"
-      />
+      <Wrapper $hasLabels={Boolean(maxLabel && minLabel)}>
+        {minLabel ? <MinLabel>{minLabel}</MinLabel> : null}
+        <input
+          className="RangeInput"
+          max={max}
+          min={min}
+          onClick={this.handleInteraction}
+          onKeyDown={this.handleInteraction}
+          onMouseMove={this.handleMouseMove}
+          onChange={this.noop}
+          ref={this.handleRef}
+          type="range"
+        />
+        {maxLabel ? <MaxLabel>{maxLabel}</MaxLabel> : null}
+      </Wrapper>
     );
   }
 }

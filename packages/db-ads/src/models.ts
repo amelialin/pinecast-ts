@@ -9,6 +9,9 @@ export interface Advertisement {
   created: Date;
   discontinued: boolean;
 
+  name: string;
+  offer_code: string | null;
+
   duration: number;
   start_date: Date;
   end_date: Date;

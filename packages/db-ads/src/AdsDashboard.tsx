@@ -5,6 +5,7 @@ import styled from '@pinecast/styles';
 import Tabs, {Tab} from '@pinecast/common/Tabs';
 import {UpgradeAdvertisements} from '@pinecast/db-upgrade';
 
+import InventoryPanel from './dashboards/InventoryPanel';
 import TagsPanel from './dashboards/TagsPanel';
 import UsageCard from './UsageCard';
 
@@ -53,7 +54,9 @@ export default class AdsDashboard extends React.Component {
               <Tab name="Tags">
                 <TagsPanel />
               </Tab>
-              <Tab name="Inventory">Inventory</Tab>
+              <Tab name="Inventory">
+                <InventoryPanel />
+              </Tab>
             </Tabs>
           </Card>
         </div>

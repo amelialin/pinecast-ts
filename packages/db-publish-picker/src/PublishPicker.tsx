@@ -1,15 +1,9 @@
-const DateTimePicker = require('react-datetime');
-import {Moment} from 'moment';
-const moment = require('moment');
 import * as React from 'react';
 
 import Card from '@pinecast/common/Card';
+import DateTimePicker from '@pinecast/common/DateTimePicker';
 import Label from '@pinecast/common/Label';
-import {nullThrows} from '@pinecast/common/helpers';
 import Radio from '@pinecast/common/Radio';
-import TextInput from '@pinecast/common/TextInput';
-
-import './dateTimePicker.css';
 
 export default class PublishPicker extends React.Component {
   static selector = '.publish-picker';
@@ -33,7 +27,6 @@ export default class PublishPicker extends React.Component {
   state: {
     option: 'datetime' | 'now';
     selection: Date | null;
-    invalidState: boolean;
   };
 
   constructor(props: PublishPicker['props']) {
@@ -42,39 +35,17 @@ export default class PublishPicker extends React.Component {
     this.state = {
       option: props.defaultValue ? 'datetime' : 'now',
       selection: props.defaultValue ? new Date(props.defaultValue) : null,
-
-      invalidState: false,
     };
   }
 
-  getSelectionTime() {
-    const selection = nullThrows(this.state.selection);
-    return (
-      String('0' + (selection.getHours() % 12 || 12)).substr(-2) +
-      ':' +
-      ('0' + selection.getMinutes()).substr(-2) +
-      ' ' +
-      (selection.getHours() < 12 ? 'AM' : 'PM')
-    );
-  }
-
-  renderInput = ({onChange, onFocus, onKeyDown, value}: any) => {
-    return (
-      <TextInput
-        nativeEvents={{
-          onChange,
-          onFocus,
-          onKeyDown,
-        }}
-        value={value}
-      />
-    );
+  handleSelectionChange = (newSelection: Date) => {
+    this.setState({selection: newSelection});
   };
 
   render() {
     const {
       props: {label, labelDescription, labelNow, labelDateTime},
-      state: {invalidState, option, selection},
+      state: {option, selection},
     } = this;
 
     return (
@@ -109,23 +80,8 @@ export default class PublishPicker extends React.Component {
         {option === 'datetime' && (
           <div className="publish-picker-datetime">
             <DateTimePicker
-              inputProps={{
-                className: 'form-control input',
-                style: {
-                  border: '2px solid #222',
-                  borderColor: invalidState ? '#b00' : null,
-                },
-              }}
-              onChange={(val: string | Moment) => {
-                if (typeof val === 'string') {
-                  this.setState({invalidState: val});
-                  return;
-                }
-                this.setState({invalidState: false, selection: val.toDate()});
-              }}
-              open
-              renderInput={this.renderInput}
-              value={invalidState || moment(selection)}
+              onChange={this.handleSelectionChange}
+              value={selection}
             />
           </div>
         )}

@@ -47,7 +47,6 @@ export default class ModalLayer extends React.Component {
     this.props.onClose();
   };
   eatClick = (e: React.MouseEvent<any>) => {
-    e.preventDefault();
     e.stopPropagation();
   };
   render() {
