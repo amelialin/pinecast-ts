@@ -43,6 +43,7 @@ import Text from './examples/Text.example';
 import TextArea from './examples/TextArea.example';
 import TextInput from './examples/TextInput.example';
 import TooltipContainer from './examples/TooltipContainer.example';
+import UploadProgress from './examples/UploadProgress.example';
 
 export interface Component {
   name: string;
@@ -103,6 +104,7 @@ export default {
   TextArea,
   TextInput,
   TooltipContainer,
+  UploadProgress,
 } as {
   [component: string]: Component;
 };

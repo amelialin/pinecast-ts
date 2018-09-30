@@ -4,14 +4,14 @@ import xhr from '@pinecast/xhr';
 
 import Callout from './Callout';
 import Label from './Label';
-import ImageUploadDropzone from './imageUploadHelpers/ImageUploadDropzone';
-import ImageUploadPreview from './imageUploadHelpers/ImageUploadPreview';
-import ImageUploadProgress from './imageUploadHelpers/ImageUploadProgress';
+import Dropzone from './Dropzone';
+import ImageUploadPreview from './uploadHelpers/ImageUploadPreview';
+import UploadProgress from './uploadHelpers/UploadProgress';
 import {url} from './helpers';
 
 interface Upload {
   url: string;
-  method: string;
+  method: 'POST' | 'PUT';
   fields: {[key: string]: string};
   destinationURL: string;
 }
@@ -232,7 +232,7 @@ export default class ImageUpload extends React.PureComponent {
     data.append('file', file);
 
     const uploadXHR = xhr({
-      method: 'POST', // TODO: use upload.method
+      method: upload.method,
       url: upload.url,
       body: data,
       abortPromise,
@@ -248,7 +248,7 @@ export default class ImageUpload extends React.PureComponent {
     if (this.props.imageType === 'site_favicon') {
       return 'image/png';
     }
-    return undefined;
+    return ['image/png', 'image/jpg', 'image/jpeg'];
   }
 
   renderUploadButton() {
@@ -257,8 +257,9 @@ export default class ImageUpload extends React.PureComponent {
         {this.state.error && (
           <Callout type="negative">{this.state.error}</Callout>
         )}
-        <ImageUploadDropzone
+        <Dropzone
           accept={this.getAccept()}
+          label="Drag an image here"
           onChange={this.handleGotFile}
         />
       </Label>
@@ -287,9 +288,9 @@ export default class ImageUpload extends React.PureComponent {
       (this.ongoingUpload && this.ongoingUpload.abort) || (() => {});
     return (
       <Label componentType="div" text={this.props.labelText}>
-        <ImageUploadProgress
+        <UploadProgress
           onAbort={abort}
-          percent={this.state.uploadProgress}
+          uploads={[{percent: this.state.uploadProgress}]}
         />
       </Label>
     );

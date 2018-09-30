@@ -1,34 +1,9 @@
 import * as React from 'react';
 
-import Button from '@pinecast/common/Button';
-import Card from '@pinecast/common/Card';
-import {gettext, ngettext} from '@pinecast/i18n';
-import Progress from '@pinecast/common/Progress';
-import styled from '@pinecast/styles';
+import UploadProgress from '@pinecast/common/uploadHelpers/UploadProgress';
 
-import TimeRemainingIndicator from '../legacy/TimeRemainingIndicator';
-import UploadIcon from '../icons/upload';
 import {UploadManagerEntry} from './manager';
 import UploadOrder from './order';
-
-const Column = styled('div', {
-  alignItems: 'center',
-  display: 'flex',
-  flexDirection: 'column',
-});
-const Order = styled('div', {
-  padding: '0 10px',
-});
-const OrderTitle = styled('strong', {
-  display: 'block',
-  fontSize: 13,
-  lineHeight: '1.5em',
-});
-const Options = styled('div', {
-  display: 'flex',
-  justifyContent: 'flex-start',
-  padding: '0.5em 10px',
-});
 
 export default class ManagementComponent extends React.PureComponent {
   props: {
@@ -38,8 +13,6 @@ export default class ManagementComponent extends React.PureComponent {
   };
   state: {
     files: Array<UploadManagerEntry>;
-    startTime: number;
-    totalPercent: number;
   };
   aborted: boolean = false;
 
@@ -47,8 +20,6 @@ export default class ManagementComponent extends React.PureComponent {
     super(props);
     this.state = {
       files: props.orders.map(order => order.getManager(this).getEntry()),
-      startTime: Date.now(),
-      totalPercent: 0,
     };
   }
 
@@ -62,13 +33,7 @@ export default class ManagementComponent extends React.PureComponent {
     }
 
     const newFiles = files.map(f => f.inst.getEntry());
-    this.setState({
-      files: newFiles,
-      totalPercent:
-        files.reduce((acc, cur) => acc + cur.completed, 0) /
-        files.reduce((acc, cur) => acc + cur.inst.getSize(), 0) *
-        100,
-    });
+    this.setState({files: newFiles});
 
     if (newFiles.every(x => x.progress === 100 && !x.error)) {
       this.props.onComplete();
@@ -84,37 +49,16 @@ export default class ManagementComponent extends React.PureComponent {
   render() {
     const {
       props: {orders},
-      state: {files, startTime, totalPercent},
+      state: {files},
     } = this;
     return (
-      <Card whiteBack>
-        <Column>
-          <UploadIcon height={46} width={46} />
-          <strong>
-            {ngettext(
-              'Your file is uploading',
-              'Your files are uploading',
-              orders.length,
-            )}
-          </strong>
-        </Column>
-        {files.map((manager, i) => (
-          <Order key={i}>
-            <OrderTitle>{orders[i].title}</OrderTitle>
-            <Progress percent={manager.progress} />
-          </Order>
-        ))}
-        <Options>
-          <Button onClick={this.abort} style={{marginRight: 15}}>
-            {gettext('Cancel')}
-          </Button>
-          <TimeRemainingIndicator
-            progress={totalPercent}
-            renderer={body => <span>{body}</span>}
-            startTime={startTime}
-          />
-        </Options>
-      </Card>
+      <UploadProgress
+        onAbort={this.abort}
+        uploads={files.map((manager, i) => ({
+          name: orders[i].title,
+          percent: manager.progress,
+        }))}
+      />
     );
   }
 }
