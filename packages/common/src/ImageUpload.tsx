@@ -239,6 +239,7 @@ export default class ImageUpload extends React.PureComponent {
       onProgress: uploadProgress => {
         this.setState({uploadProgress});
       },
+      noCSRFToken: true,
     });
 
     return [async () => resolver(), uploadXHR.then(() => {})];

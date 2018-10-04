@@ -1,19 +1,14 @@
 import * as React from 'react';
 
-const Pay = ({
-  color = 'currentColor',
-  height,
-  width,
-}: {
-  color?: string;
-  height?: number;
-  width?: number;
-}) => (
+import {CommonProps} from '../types';
+
+const Pay = ({color = 'currentColor', height, width, ...rest}: CommonProps) => (
   <svg
     width={width}
     height={height}
     viewBox="0 0 48 36"
     xmlns="http://www.w3.org/2000/svg"
+    {...rest}
   >
     <g
       stroke={color}

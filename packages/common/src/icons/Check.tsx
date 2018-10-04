@@ -1,13 +1,13 @@
 import * as React from 'react';
 
+import {CommonProps} from './types';
+
 export default ({
   color = '#58595B',
   height = 24,
   width,
   ...rest
-}: {color?: string; height?: number; width?: number} & React.SVGAttributes<
-  SVGSVGElement
->) => (
+}: CommonProps) => (
   <svg
     height={height}
     viewBox="0 0 21 24"

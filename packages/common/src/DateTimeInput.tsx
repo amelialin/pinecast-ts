@@ -38,9 +38,10 @@ export default class DateTimeInput extends React.Component {
   props: {
     disabled?: boolean;
     invalid?: boolean;
+    isValidDate?: (date: Date) => boolean;
     onChange: (newDate: Date) => void;
     style?: React.CSSProperties;
-    value: Date;
+    value: Date | null;
   };
   state: {open: boolean} = {open: false};
 
@@ -75,6 +76,7 @@ export default class DateTimeInput extends React.Component {
       <Card style={{display: 'inline-block', width: 300}} whiteBack>
         <DateTimePicker
           hasInput={false}
+          isValidDate={this.props.isValidDate}
           onChange={this.props.onChange}
           style={{marginTop: 0, width: 'auto'}}
           value={this.props.value}
@@ -92,14 +94,15 @@ export default class DateTimeInput extends React.Component {
   };
 
   renderInput() {
+    const {disabled, invalid, style, value} = this.props;
     return (
       <TextInput
         nativeEvents={{onClick: this.handleClick, onFocus: this.handleOpen}}
-        disabled={this.props.disabled}
-        invalid={this.props.invalid}
+        disabled={disabled}
+        invalid={invalid}
         readOnly
-        style={{width: 200, ...this.props.style}}
-        value={moment(this.props.value).format('MMM D, YYYY, h:mm A')}
+        style={{width: 200, ...style}}
+        value={value ? moment(value).format('MMM D, YYYY, h:mm A') : ''}
       />
     );
   }

@@ -7,6 +7,7 @@ const Wrapper = styled('section', {
   appearance: 'none',
   MozAppearance: 'none',
   WebkitAppearance: 'none',
+  backgroundColor: 'inherit',
   border: 0,
   borderRadius: 4,
   boxShadow:
@@ -18,7 +19,7 @@ const Wrapper = styled('section', {
   position: 'relative',
 });
 const Legend = styled('div', {
-  backgroundColor: '#fff',
+  backgroundColor: 'inherit',
   border: 0,
   borderRadius: 3,
   color: '#4e7287',

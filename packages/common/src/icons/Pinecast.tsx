@@ -1,22 +1,19 @@
 import * as React from 'react';
 
+import {CommonProps} from './types';
+
 const Pinecast = ({
   color = 'currentColor',
   height,
-  style,
   width,
-}: {
-  color?: string;
-  height?: number;
-  style?: React.CSSProperties;
-  width?: number;
-} = {}) => (
+  ...rest
+}: CommonProps) => (
   <svg
     height={height}
     viewBox="0 0 44 24"
-    style={style}
     width={width}
     xmlns="http://www.w3.org/2000/svg"
+    {...rest}
   >
     <g fillRule="evenodd" fill={color}>
       <path d="M10.2 20.638h23.68c.987-2.737 1.04-5.73.135-8.52-1.06-3.27-3.304-5.924-6.317-7.47-3.01-1.546-6.43-1.8-9.63-.714-6.602 2.24-10.19 9.557-8.002 16.31.043.132.087.263.135.394m31.36 3.27H9.16c-.564 0-1.087-.306-1.374-.802l-.095-.162c-.03-.055-.06-.11-.08-.168-.212-.49-.403-.996-.57-1.5C4.29 12.808 8.79 3.636 17.07.83c4.002-1.36 8.29-1.04 12.07.895 3.77 1.94 6.58 5.264 7.91 9.364 1.01 3.11 1.07 6.43.193 9.54h4.32c.89 0 1.6.73 1.6 1.632s-.71 1.635-1.6 1.635" />

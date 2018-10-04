@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import AudioUpload from '@pinecast/common/AudioUpload';
 import Button, {ButtonGroup} from '@pinecast/common/Button';
 import Checkbox from '@pinecast/common/Checkbox';
 import DateTimeInput from '@pinecast/common/DateTimeInput';
@@ -38,6 +39,8 @@ class NewAdForm extends React.PureComponent {
 
     startDate: Date;
     endDate: Date | null;
+
+    signedAudioURL: string | null;
   } = {
     name: '',
     offerCode: null,
@@ -47,6 +50,8 @@ class NewAdForm extends React.PureComponent {
 
     startDate: new Date(),
     endDate: null,
+
+    signedAudioURL: null,
   };
 
   handleCreateSubmit = () => {
@@ -74,13 +79,26 @@ class NewAdForm extends React.PureComponent {
     this.setState({priority: newPriority / 100});
   };
   handleChangeStartDate = (newDate: Date) => {
-    this.setState({startDate: newDate});
+    let {endDate} = this.state;
+    if (endDate && endDate < new Date()) {
+      endDate = new Date(newDate);
+      endDate.setDate(endDate.getDate() + 1);
+    }
+    this.setState({startDate: newDate, endDate});
   };
   handleChangeHasEndDate = (hasEndDate: boolean) => {
     this.setState({endDate: !hasEndDate ? new Date() : null});
   };
   handleChangeEndDate = (endDate: Date) => {
     this.setState({endDate});
+  };
+
+  handleGotAudio = (signedURL: string) => {
+    this.setState({signedAudioURL: signedURL});
+    return Promise.resolve();
+  };
+  handleClearAudio = () => {
+    this.setState({signedAudioURL: null});
   };
 
   renderInner() {
@@ -103,6 +121,7 @@ class NewAdForm extends React.PureComponent {
       priority,
       startDate,
       endDate,
+      signedAudioURL,
     } = this.state;
     return (
       <React.Fragment>
@@ -115,6 +134,14 @@ class NewAdForm extends React.PureComponent {
             value={name}
           />
         </Label>
+        <AudioUpload
+          audioType="ads_advertisement"
+          labelText="Advertisement audio"
+          maxFileSize={16 * 1024 * 1024}
+          onCleared={this.handleClearAudio}
+          onNewFile={this.handleGotAudio}
+          value={signedAudioURL}
+        />
         <Label
           optional
           subText="If you provide an offer code in your ad, set that here."
@@ -150,9 +177,10 @@ class NewAdForm extends React.PureComponent {
             <Label text="Stop running on">
               <DateTimeInput
                 disabled={endDate === null}
+                isValidDate={date => date > startDate}
                 onChange={this.handleChangeEndDate}
                 style={{marginBottom: 8}}
-                value={endDate || new Date()}
+                value={endDate}
               />
               <Checkbox
                 checked={endDate === null}

@@ -1,14 +1,19 @@
 import * as React from 'react';
 
-import {IconProps} from './types';
+import {CommonProps} from './types';
 
-export default ({color = 'rgba(0, 0, 0, 0.2)', size, style}: IconProps) => (
+export default ({
+  color = 'rgba(0, 0, 0, 0.2)',
+  width,
+  height = 23,
+  ...rest
+}: CommonProps) => (
   <svg
-    width={size}
-    height={size}
-    style={style}
+    width={width}
+    height={height}
     viewBox="0 0 23 23"
     xmlns="http://www.w3.org/2000/svg"
+    {...rest}
   >
     <g
       stroke={color}

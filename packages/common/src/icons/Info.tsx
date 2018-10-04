@@ -1,11 +1,19 @@
 import * as React from 'react';
 
-const Info = ({color = 'currentColor', height = 21, width = 24} = {}) => (
+import {CommonProps} from './types';
+
+const Info = ({
+  color = 'currentColor',
+  height = 21,
+  width = 24,
+  ...rest
+}: CommonProps) => (
   <svg
     width={width}
     height={height}
     viewBox="0 0 21 24"
     xmlns="http://www.w3.org/2000/svg"
+    {...rest}
   >
     <g
       stroke={color}

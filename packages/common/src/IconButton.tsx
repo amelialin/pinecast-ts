@@ -1,6 +1,13 @@
 import * as React from 'react';
 
+import {CommonProps} from '@pinecast/common/icons/types';
 import styled, {CSS} from '@pinecast/styles';
+
+const sizes = {
+  normal: 30,
+  small: 24,
+  large: 36,
+};
 
 const NativeButton = styled(
   'button',
@@ -22,7 +29,7 @@ const NativeButton = styled(
     boxShadow: '0 0 0 transparent inset',
     cursor: 'pointer',
     display: $isBlock ? 'flex' : 'inline-flex',
-    height: $size === 'normal' ? 30 : $size === 'small' ? 24 : 36,
+    height: sizes[$size],
     justifyContent: 'center',
     margin: $isBlock ? '0 0 20px' : 0,
     minWidth: 20,
@@ -51,14 +58,16 @@ const NativeButton = styled(
 const IconButton = ({
   className,
   Component,
+  iconProps,
   onClick,
   size = 'normal',
   style,
   ...rest
 }: {
   className?: string;
-  Component: React.ComponentType<any>;
+  Component: React.ComponentType<CommonProps>;
   disabled?: boolean;
+  iconProps?: Partial<CommonProps>;
   $isBlock?: boolean;
   onClick: () => void;
   size?: 'normal' | 'small' | 'large';
@@ -75,7 +84,7 @@ const IconButton = ({
     type="button"
     {...rest}
   >
-    <Component />
+    <Component {...iconProps} />
   </NativeButton>
 );
 

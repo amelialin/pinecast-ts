@@ -1,7 +1,20 @@
 import * as React from 'react';
 
-export default ({color = '#58595B'}: {color?: string}) => (
-  <svg width="21" height="24" xmlns="http://www.w3.org/2000/svg">
+import {CommonProps} from './types';
+
+export default ({
+  color = '#58595B',
+  height = 24,
+  width,
+  ...rest
+}: CommonProps) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox="0 0 21 24"
+    xmlns="http://www.w3.org/2000/svg"
+    {...rest}
+  >
     <g
       stroke={color}
       fill="none"

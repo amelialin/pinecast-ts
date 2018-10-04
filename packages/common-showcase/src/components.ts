@@ -1,3 +1,5 @@
+import AudioControls from './examples/AudioControls.example';
+import AudioUploadPreview from './examples/AudioUploadPreview.example';
 import Button from './examples/Button.example';
 import Callout from './examples/Callout.example';
 import Card from './examples/Card.example';
@@ -59,6 +61,8 @@ export interface Component {
 }
 
 export default {
+  AudioControls,
+  AudioUploadPreview,
   Button,
   Callout,
   Card,

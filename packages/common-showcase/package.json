@@ -11,6 +11,7 @@
   "ts:main": "src/index.ts",
   "dependencies": {
     "@pinecast/common": "^1.0.0",
-    "@pinecast/styles": "^1.0.0"
+    "@pinecast/styles": "^1.0.0",
+    "buffer-loader": "^0.0.1"
   }
 }

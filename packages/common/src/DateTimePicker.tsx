@@ -9,6 +9,7 @@ import './DateTimePicker.css';
 export default class DateTimePicker extends React.Component {
   props: {
     hasInput?: boolean;
+    isValidDate?: (date: Date) => boolean;
     onChange: (newDate: Date) => void;
     style?: React.CSSProperties;
     value: Date | null;
@@ -47,6 +48,13 @@ export default class DateTimePicker extends React.Component {
     });
   };
 
+  isValidDate = (date: Moment) => {
+    if (this.props.isValidDate) {
+      return this.props.isValidDate(date.toDate());
+    }
+    return true;
+  };
+
   render() {
     const {invalidState} = this.state;
     return (
@@ -60,6 +68,7 @@ export default class DateTimePicker extends React.Component {
               borderColor: invalidState ? '#EF6B6B' : null,
             },
           }}
+          isValidDate={this.isValidDate}
           onChange={this.handleChange}
           open
           renderInput={this.renderInput}
