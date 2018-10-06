@@ -42,33 +42,19 @@
     "webpack-dev-server": "^3.1.5"
   },
   "scripts": {
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "test": "jest"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.ts": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.tsx": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.js": ["prettier --write", "git add"],
+    "*.ts": ["prettier --write", "git add"],
+    "*.tsx": ["prettier --write", "git add"]
   },
   "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
+    "moduleFileExtensions": ["ts", "tsx", "js"],
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/jest.preprocessor.js"
     },
-    "testMatch": [
-      "**/*.test.(ts|tsx|js)"
-    ]
+    "testMatch": ["**/*.test.(ts|tsx|js)"]
   }
 }
