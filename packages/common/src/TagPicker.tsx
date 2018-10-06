@@ -12,19 +12,19 @@ const AllOptions = styled('div', {overflow: 'auto'});
 type Key = string | number;
 type Option = {
   key: Key;
-  label: string;
+  label: React.ReactNode;
 };
 export default class TagPicker extends React.Component {
   props: {
-    emptyLabel: string;
+    emptyLabel: React.ReactNode;
     maxChoices?: number;
     maxHeight?: number;
     onSelectionChange: (options: Array<Key>) => void;
     options: Array<Option>;
-    optionsLabel: string;
+    optionsLabel: React.ReactNode;
     selection: Array<Key>;
-    selectionLabel: string;
-    selectionSubtext?: string;
+    selectionLabel: React.ReactNode;
+    selectionSubtext?: React.ReactNode;
   };
 
   doSelect(key: Key) {

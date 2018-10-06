@@ -32,11 +32,11 @@ const EmptyState = ({
   style,
   title,
 }: {
-  actionLabel?: JSX.Element | string;
-  copy?: JSX.Element | string;
+  actionLabel?: React.ReactNode;
+  copy?: React.ReactNode;
   onAction?: () => void;
   style?: CSS;
-  title: JSX.Element | string;
+  title: React.ReactNode;
 }) => (
   <Wrapper style={style}>
     <TitleWrapper style={copy ? undefined : {fontSize: 14}}>

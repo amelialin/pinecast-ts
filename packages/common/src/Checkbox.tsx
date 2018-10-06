@@ -109,7 +109,7 @@ const Checkbox = ({
   onChange: (checkedValue: boolean) => void;
   style?: React.CSSProperties;
   tabIndex?: number;
-  text: JSX.Element | string;
+  text: React.ReactNode;
 }) => {
   return (
     <WrapperLabel
@@ -121,9 +121,9 @@ const Checkbox = ({
       <InvisibleCheckbox
         checked={checked || false}
         disabled={disabled || false}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => (
-          console.log('check onchange', e), onChange(e.target.checked)
-        )}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange(e.target.checked)
+        }
         tabIndex={tabIndex}
       />
       <Text $disabled={disabled || false}>{text}</Text>

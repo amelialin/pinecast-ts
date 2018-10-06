@@ -16,7 +16,7 @@ const Stub = styled('b', {
 
 interface Props {
   accept?: string | Array<string>;
-  label: string;
+  label: React.ReactNode;
   onChange: (file: File) => void;
 }
 

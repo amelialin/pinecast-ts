@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import Group from '@pinecast/common/Group';
 import styled, {CSS} from '@pinecast/styles';
 import Tag from '@pinecast/common/Tag';
@@ -7,6 +8,14 @@ import Tag from '@pinecast/common/Tag';
 import {Children} from './types';
 import {DEFAULT_FONT} from './constants';
 import {ErrorFlag} from './icons';
+
+const messages = defineMessages({
+  optional: {
+    id: 'common.Label.optional',
+    description: 'Optional tag text for labels',
+    defaultMessage: 'Optional',
+  },
+});
 
 const Text = styled(
   'span',
@@ -96,8 +105,8 @@ const Label = ({
   labelStyle?: React.CSSProperties;
   optional?: boolean;
   style?: React.CSSProperties;
-  subText?: JSX.Element | string;
-  text: JSX.Element | string;
+  subText?: React.ReactNode;
+  text: React.ReactNode;
 }) => {
   if (!nativeLabelMap.has(componentType)) {
     nativeLabelMap.set(
@@ -115,7 +124,9 @@ const Label = ({
   const contents = optional ? (
     <Group spacing={8}>
       {text}
-      <Tag size="small">Optional</Tag>
+      <Tag size="small">
+        <FormattedMessage {...messages.optional} />
+      </Tag>
     </Group>
   ) : (
     text

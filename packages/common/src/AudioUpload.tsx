@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import xhr from '@pinecast/xhr';
 
 import Callout from './Callout';
@@ -8,6 +9,29 @@ import Dropzone from './Dropzone';
 import AudioUploadPreview from './uploadHelpers/AudioUploadPreview';
 import UploadProgress from './uploadHelpers/UploadProgress';
 import {url} from './helpers';
+
+const messages = defineMessages({
+  tooBig: {
+    id: 'common.AudioUpload.errors.tooBig',
+    description: 'Error when trying to upload a file that is too big',
+    defaultMessage: 'That file is too big to upload.',
+  },
+  unableToContact: {
+    id: 'common.AudioUpload.errors.unableToContact',
+    description: 'Error when the uploader cannot contact Pinecast',
+    defaultMessage: 'Unable to contact Pinecast',
+  },
+  failedToUpload: {
+    id: 'common.AudioUpload.errors.failedToUpload',
+    description: 'Error when an upload fails',
+    defaultMessage: 'Failed to upload file',
+  },
+  dropzoneLabel: {
+    id: 'common.AudioUpload.dropzoneLabel',
+    description: 'Label for the drop zone',
+    defaultMessage: 'Drag an MP3 file here.',
+  },
+});
 
 interface Upload {
   url: string;
@@ -32,7 +56,7 @@ export default class AudioUpload extends React.PureComponent {
     maxFileSize: number;
   };
   state: {
-    error: JSX.Element | string | null;
+    error: React.ReactNode | null;
     uploading: boolean;
     uploadProgress: number;
   } = {
@@ -60,7 +84,7 @@ export default class AudioUpload extends React.PureComponent {
     }
 
     if (file.size > this.props.maxFileSize) {
-      this.setState({error: 'That file is too big to upload.'});
+      this.setState({error: <FormattedMessage {...messages.tooBig} />});
       return;
     }
 
@@ -85,7 +109,7 @@ export default class AudioUpload extends React.PureComponent {
         return;
       }
       this.setState({
-        error: 'Unable to contact Pinecast',
+        error: <FormattedMessage {...messages.unableToContact} />,
         uploading: false,
         uploadProgress: 0,
       });
@@ -105,7 +129,7 @@ export default class AudioUpload extends React.PureComponent {
         return;
       }
       this.setState({
-        error: 'Failed to upload file',
+        error: <FormattedMessage {...messages.failedToUpload} />,
         uploading: false,
         uploadProgress: 0,
       });
@@ -189,7 +213,7 @@ export default class AudioUpload extends React.PureComponent {
             'audio/mpeg-3',
             'audio/x-mpeg-3',
           ]}
-          label="Drag an MP3 here"
+          label={<FormattedMessage {...messages.dropzoneLabel} />}
           onChange={this.handleGotFile}
         />
       </Label>
