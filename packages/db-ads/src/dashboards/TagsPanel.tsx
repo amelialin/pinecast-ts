@@ -2,20 +2,21 @@ import * as React from 'react';
 
 import Button from '@pinecast/common/Button';
 import Callout from '@pinecast/common/Callout';
+import {compose} from '@pinecast/common/helpers';
 import EmptyState from '@pinecast/common/EmptyState';
 import ErrorState from '@pinecast/common/ErrorState';
 import LoadingState from '@pinecast/common/LoadingState';
 import {MeatballIconMenu} from '@pinecast/common/ContextMenu';
 import {ModalOpener} from '@pinecast/common/ModalLayer';
 import * as Table from '@pinecast/common/Table';
-import xhr, {dataProvider, DataProviderState} from '@pinecast/xhr';
+import xhr from '@pinecast/xhr';
 
-import * as models from '../models';
+import {listTags, ListTagsState} from '../dataProviders/tags';
 import NewTagForm from './tags/NewTagForm';
 
 class TagsPanel extends React.Component {
   props: {
-    tags: DataProviderState<Array<models.Tag>>;
+    tags: ListTagsState;
   };
   state: {
     createError: React.ReactNode | null;
@@ -181,11 +182,4 @@ class TagsPanel extends React.Component {
   }
 }
 
-export default dataProvider<TagsPanel['props'], 'tags', Array<models.Tag>>(
-  'tags',
-  () => ({
-    method: 'GET',
-    url: '/advertisements/tags/',
-  }),
-  (resp: string) => JSON.parse(resp),
-)(TagsPanel);
+export default compose(listTags<TagsPanel['props'], 'tags'>('tags'))(TagsPanel);

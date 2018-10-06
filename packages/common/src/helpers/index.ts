@@ -1,3 +1,5 @@
+export {default as compose} from './compose';
+
 export function debounce(callback: () => void, timeout: number): (() => void) {
   let timer: null | number = null;
   const firer = () => {
@@ -41,29 +43,25 @@ export function shallowCompare<T = {[key: string]: any}>(
   if (leftKeys.length !== rightKeys.length) {
     return false;
   }
-  for (let key in leftKeys) {
-    if (!(key in rightKeys)) {
+  for (let key of leftKeys) {
+    if (!rightKeys.includes(key)) {
+      return false;
+    }
+    if ((left as any)[key] !== (right as any)[key]) {
       return false;
     }
   }
   return true;
 }
 
-export function suppose<T>(value: T | null | undefined): T {
-  if (value == null) {
-    throw new Error('Value was supposed to never be null.');
-  }
-  return value;
-}
-
 export function url(
   strings: TemplateStringsArray,
-  ...bits: Array<string | number>
+  ...bits: Array<string | number | null>
 ): string {
   return strings
     .map((s, i) => {
       if (i) {
-        return encodeURIComponent(bits[i - 1].toString()) + s;
+        return encodeURIComponent((bits[i - 1] || '').toString()) + s;
       }
       return s;
     })

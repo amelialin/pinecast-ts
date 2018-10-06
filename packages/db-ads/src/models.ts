@@ -4,25 +4,29 @@ export interface Tag {
   description: string | null;
 }
 
-export interface Advertisement {
-  uuid: string;
-  created: Date;
-  discontinued: boolean;
-
+export interface MutableAdvertisement {
   name: string;
   offer_code: string | null;
 
   duration: number;
   start_date: Date;
-  end_date: Date;
+  end_date: Date | null;
 
-  tags: Array<Tag>;
+  tags: Array<string>;
 
   priority: number;
   place_only_once: boolean;
 
   for_podcasts: Array<string>;
 }
+export type Advertisement = MutableAdvertisement & {
+  uuid: string;
+  created: Date;
+  discontinued: boolean;
+
+  tags: Array<Tag>;
+  for_podcasts: Array<Podcast>;
+};
 
 export interface InjectedEpisode {
   uuid: string;
@@ -34,4 +38,9 @@ export interface AdvertisementPlacement {
   ad_uuid: string;
   episode: InjectedEpisode;
   matched_by_tag: Tag;
+}
+
+export interface Podcast {
+  name: string;
+  slug: string;
 }

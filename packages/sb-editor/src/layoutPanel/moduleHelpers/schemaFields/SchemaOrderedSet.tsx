@@ -6,7 +6,7 @@ import IconButton from '@pinecast/common/IconButton';
 import DeleteIcon from '@pinecast/common/icons/Delete';
 import Label from '@pinecast/common/Label';
 import styled from '@pinecast/styles';
-import {suppose} from '@pinecast/common/helpers';
+import {nullThrows} from '@pinecast/common/helpers';
 
 import {OrderedSetProps} from './types';
 
@@ -283,7 +283,7 @@ export default class SchemaOrderedSet extends React.PureComponent {
           }}
         >
           <span>
-            {suppose(this.props.options.find(o => o.key === element)).label}
+            {nullThrows(this.props.options.find(o => o.key === element)).label}
           </span>
           <IconButton
             Component={DeleteIcon}

@@ -72,8 +72,10 @@ const IconButton = ({
   onClick: () => void;
   size?: 'normal' | 'small' | 'large';
   style?: CSS;
+  title?: string;
 }) => (
   <NativeButton
+    aria-label={rest.title}
     className={className}
     $size={size}
     $style={style}

@@ -42,6 +42,7 @@ export default class AudioUploadPreview extends React.Component {
         cursorColor: '#616669',
         height: this.props.height,
         progressColor: '#32586e',
+        responsive: true,
         waveColor: '#708d9e',
       });
       this.ws.loadBlob(this.props.audioBlob);

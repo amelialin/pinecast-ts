@@ -3,6 +3,7 @@ import * as React from 'react';
 import AudioUpload from '@pinecast/common/AudioUpload';
 import Button, {ButtonGroup} from '@pinecast/common/Button';
 import Checkbox from '@pinecast/common/Checkbox';
+import {compose} from '@pinecast/common/helpers';
 import DateTimeInput from '@pinecast/common/DateTimeInput';
 import Dialog from '@pinecast/common/Dialog';
 import ErrorState from '@pinecast/common/ErrorState';
@@ -11,29 +12,31 @@ import Form from '@pinecast/common/Form';
 import Group from '@pinecast/common/Group';
 import Label from '@pinecast/common/Label';
 import LoadingState from '@pinecast/common/LoadingState';
+import {Omit} from '@pinecast/common/types';
 import Range from '@pinecast/common/Range';
 import TagPicker from '@pinecast/common/TagPicker';
 import TextInput from '@pinecast/common/TextInput';
-import {dataProvider, DataProviderState} from '@pinecast/xhr';
 
+import {
+  listEligiblePodcasts,
+  ListEligiblePodcastsState,
+} from '../../dataProviders/podcasts';
+import {listTags, ListTagsState} from '../../dataProviders/tags';
 import * as models from '../../models';
-
-export type AdObject = {
-  name: string;
-  offer_code: string | null;
-};
 
 class NewAdForm extends React.PureComponent {
   props: {
     onCancel: () => void;
-    onNewTag: (payload: AdObject) => void;
-    tags: DataProviderState<Array<models.Tag>>;
+    onNewTag: (payload: models.MutableAdvertisement) => void;
+    podcasts: ListEligiblePodcastsState;
+    tags: ListTagsState;
   };
 
   state: {
     name: string;
     offerCode: string | null;
     tags: Array<string>;
+    podcasts: Array<string>;
     playOncePerEpisode: boolean;
     priority: number;
 
@@ -45,6 +48,7 @@ class NewAdForm extends React.PureComponent {
     name: '',
     offerCode: null,
     tags: [],
+    podcasts: [],
     playOncePerEpisode: false,
     priority: 1,
 
@@ -55,12 +59,31 @@ class NewAdForm extends React.PureComponent {
   };
 
   handleCreateSubmit = () => {
-    const {name, offerCode} = this.state;
+    const {
+      name,
+      offerCode,
+      startDate,
+      endDate,
+      tags,
+      playOncePerEpisode,
+      priority,
+      podcasts,
+    } = this.state;
     if (!name.trim()) {
       return;
     }
 
-    this.props.onNewTag({name: name.trim(), offer_code: offerCode});
+    this.props.onNewTag({
+      name: name.trim(),
+      duration: 0,
+      offer_code: offerCode,
+      start_date: startDate,
+      end_date: endDate,
+      tags,
+      priority,
+      place_only_once: playOncePerEpisode,
+      for_podcasts: podcasts,
+    });
   };
 
   handleNameChange = (value: string) => {
@@ -71,6 +94,9 @@ class NewAdForm extends React.PureComponent {
   };
   handleSetTags = (tags: Array<string>) => {
     this.setState({tags});
+  };
+  handleSetPodcasts = (podcasts: Array<string>) => {
+    this.setState({podcasts});
   };
   handleChangePlayOncePerEpisode = (playOncePerEpisode: boolean) => {
     this.setState({playOncePerEpisode});
@@ -87,7 +113,13 @@ class NewAdForm extends React.PureComponent {
     this.setState({startDate: newDate, endDate});
   };
   handleChangeHasEndDate = (hasEndDate: boolean) => {
-    this.setState({endDate: !hasEndDate ? new Date() : null});
+    const now = new Date();
+    const {startDate} = this.state;
+    const max = now < startDate ? startDate : now;
+    if (max === startDate) {
+      max.setDate(max.getDate() + 1);
+    }
+    this.setState({endDate: !hasEndDate ? max : null});
   };
   handleChangeEndDate = (endDate: Date) => {
     this.setState({endDate});
@@ -102,14 +134,27 @@ class NewAdForm extends React.PureComponent {
   };
 
   renderInner() {
-    const {tags} = this.props;
-    if (tags.isLoading || tags.isInitial) {
+    const {podcasts, tags} = this.props;
+    if (
+      tags.isLoading ||
+      tags.isInitial ||
+      podcasts.isLoading ||
+      podcasts.isInitial
+    ) {
       return <LoadingState title="Loading…" />;
     } else if (tags.isErrored) {
       return (
         <ErrorState
           actionLabel="Retry"
           onAction={tags.reload}
+          title="We encountered an error while loading the form."
+        />
+      );
+    } else if (podcasts.isErrored) {
+      return (
+        <ErrorState
+          actionLabel="Retry"
+          onAction={podcasts.reload}
           title="We encountered an error while loading the form."
         />
       );
@@ -152,6 +197,20 @@ class NewAdForm extends React.PureComponent {
             value={offerCode || ''}
           />
         </Label>
+        <Fieldset label="Run ad on…">
+          <TagPicker
+            emptyLabel="No podcasts selected"
+            onSelectionChange={this.handleSetPodcasts}
+            options={podcasts.data.map(podcast => ({
+              key: podcast.slug,
+              label: podcast.name,
+            }))}
+            optionsLabel="All podcasts"
+            selection={this.state.podcasts}
+            selectionLabel="Selected podcasts"
+            selectionSubtext="The podcasts you choose will be eligible to use this advertisement."
+          />
+        </Fieldset>
         <Fieldset label="Tags">
           <TagPicker
             emptyLabel="No tags selected"
@@ -236,11 +295,7 @@ class NewAdForm extends React.PureComponent {
   }
 }
 
-export default dataProvider<NewAdForm['props'], 'tags', Array<models.Tag>>(
-  'tags',
-  () => ({
-    method: 'GET',
-    url: '/advertisements/tags/',
-  }),
-  (resp: string) => JSON.parse(resp),
+export default compose(
+  listTags<Omit<NewAdForm['props'], 'podcasts'>, 'tags'>('tags'),
+  listEligiblePodcasts<NewAdForm['props'], 'podcasts'>('podcasts'),
 )(NewAdForm);

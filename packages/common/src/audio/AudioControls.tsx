@@ -33,6 +33,7 @@ const AudioControls = ({onPause, onPlay, onReset, playing, style}: Props) => (
         iconProps={iconProps}
         onClick={onReset}
         size="small"
+        title="Reset"
       />
       {playing ? (
         <IconButton
@@ -40,6 +41,7 @@ const AudioControls = ({onPause, onPlay, onReset, playing, style}: Props) => (
           iconProps={iconProps}
           onClick={onPause}
           size="small"
+          title="Pause"
         />
       ) : (
         <IconButton
@@ -47,6 +49,7 @@ const AudioControls = ({onPause, onPlay, onReset, playing, style}: Props) => (
           iconProps={iconProps}
           onClick={onPlay}
           size="small"
+          title="Play"
         />
       )}
     </Group>

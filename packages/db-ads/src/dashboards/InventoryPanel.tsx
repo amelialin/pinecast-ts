@@ -2,20 +2,22 @@ import * as React from 'react';
 
 import Button from '@pinecast/common/Button';
 import Callout from '@pinecast/common/Callout';
+import {compose} from '@pinecast/common/helpers';
 import EmptyState from '@pinecast/common/EmptyState';
 import ErrorState from '@pinecast/common/ErrorState';
 import LoadingState from '@pinecast/common/LoadingState';
 import {MeatballIconMenu} from '@pinecast/common/ContextMenu';
 import {ModalOpener} from '@pinecast/common/ModalLayer';
 import * as Table from '@pinecast/common/Table';
-import xhr, {dataProvider, DataProviderState} from '@pinecast/xhr';
+import xhr from '@pinecast/xhr';
 
+import {listAds, ListAdsState} from '../dataProviders/inventory';
 import * as models from '../models';
-import NewAdForm, {AdObject} from './inventory/NewAdForm';
+import NewAdForm from './inventory/NewAdForm';
 
 class InventoryPanel extends React.Component {
   props: {
-    inventory: DataProviderState<Array<models.Advertisement>>;
+    inventory: ListAdsState;
   };
   state: {
     createError: React.ReactNode | null;
@@ -73,7 +75,7 @@ class InventoryPanel extends React.Component {
       return;
     }
   };
-  handleNewAd = async (payload: AdObject) => {
+  handleNewAd = async (payload: models.MutableAdvertisement) => {
     this.setState({createError: null, pending: true});
     try {
       const body = new FormData();
@@ -178,15 +180,6 @@ class InventoryPanel extends React.Component {
   }
 }
 
-export default dataProvider<
-  InventoryPanel['props'],
-  'inventory',
-  Array<models.Advertisement>
->(
-  'inventory',
-  () => ({
-    method: 'GET',
-    url: '/advertisements/inventory/',
-  }),
-  (resp: string) => JSON.parse(resp),
+export default compose(
+  listAds<InventoryPanel['props'], 'inventory'>('inventory'),
 )(InventoryPanel);

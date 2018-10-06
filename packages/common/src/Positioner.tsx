@@ -50,8 +50,8 @@ export default class Positioner extends React.Component {
     nextProps: Positioner['props'],
     nextState: Positioner['state'],
   ) {
-    // We only update when we're active and
-    if (shallowCompare(this.state, nextState) && nextProps.active) {
+    // We only update when we're active and the states don't match
+    if (!shallowCompare(this.state, nextState) && nextProps.active) {
       return true;
     }
     return this.props.children !== nextProps.children;
@@ -173,7 +173,7 @@ export default class Positioner extends React.Component {
       return;
     }
     this.setState({x, xAlign, y, yAlign});
-  }, 12);
+  }, 8);
 
   handleRef = (el: HTMLDivElement | null) => {
     this.ref = el;
