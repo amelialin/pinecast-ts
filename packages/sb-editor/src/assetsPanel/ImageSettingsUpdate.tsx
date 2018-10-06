@@ -12,7 +12,7 @@ export default class ImageSettingsUpdate extends React.PureComponent {
   };
   state: {
     saving: boolean;
-    error: string | null;
+    error: React.ReactNode | null;
   } = {
     saving: false,
     error: null,

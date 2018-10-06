@@ -2,6 +2,7 @@ import {Provider as ReduxProvider} from 'react-redux';
 import * as React from 'react';
 
 import {ClientStyletron, StyletronProvider, styled} from '@pinecast/styles';
+import {Provider as IntlProvider} from '@pinecast/i18n';
 
 import OptionsPanel from './OptionsPanel';
 import Preview from './preview';
@@ -30,15 +31,17 @@ export default class Editor extends React.PureComponent {
   render() {
     return (
       <StyletronProvider styletron={styletron}>
-        <ReduxProvider store={store}>
-          <HeightWrapper>
-            <Toolbar />
-            <BelowToolbar>
-              <OptionsPanel />
-              <Preview />
-            </BelowToolbar>
-          </HeightWrapper>
-        </ReduxProvider>
+        <IntlProvider locale="en">
+          <ReduxProvider store={store}>
+            <HeightWrapper>
+              <Toolbar />
+              <BelowToolbar>
+                <OptionsPanel />
+                <Preview />
+              </BelowToolbar>
+            </HeightWrapper>
+          </ReduxProvider>
+        </IntlProvider>
       </StyletronProvider>
     );
   }
