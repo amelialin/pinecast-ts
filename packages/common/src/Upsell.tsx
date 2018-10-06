@@ -26,10 +26,10 @@ const Upsell = ({
   onAction,
   title,
 }: {
-  actionLabel?: JSX.Element | string;
-  copy: JSX.Element | string;
+  actionLabel?: React.ReactNode;
+  copy: React.ReactNode;
   onAction?: () => void;
-  title: JSX.Element | string;
+  title: React.ReactNode;
 }) => (
   <Wrapper>
     <TitleWrapper>{title}</TitleWrapper>

@@ -104,7 +104,7 @@ const Radio = ({
   onChange: (checkedValue: boolean) => void;
   style?: CSS;
   tabIndex?: number;
-  text: JSX.Element | string;
+  text: React.ReactNode;
 }) => {
   return (
     <WrapperLabel style={style}>

@@ -57,6 +57,7 @@ const Dropzone = ({accept, label, onChange}: Props) => (
     >
       <BlockB>{label}</BlockB>
       <BlockSpan>
+        {/* TODO(i18n): This needs formatted translation */}
         or <U>click here</U> to browse
       </BlockSpan>
     </DropzoneComponent>

@@ -1,8 +1,32 @@
 import * as React from 'react';
 
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import styled from '@pinecast/styles';
 
 import TextInput, {Props as TextInputProps} from './TextInput';
+
+const messages = defineMessages({
+  available: {
+    id: 'common.SlugInput.state.available',
+    description: 'Message shown when a slug is available',
+    defaultMessage: 'Slug is available',
+  },
+  unavailable: {
+    id: 'common.SlugInput.state.unavailable',
+    description: 'Message shown when a slug is unavailable',
+    defaultMessage: 'Slug is unavailable',
+  },
+  failed: {
+    id: 'common.SlugInput.state.failed',
+    description: 'Message shown when Pinecast could not be contacted',
+    defaultMessage: 'Error contacting Pinecast',
+  },
+  loading: {
+    id: 'common.SlugInput.state.loading',
+    description: 'Message shown while loading slug availability',
+    defaultMessage: 'Checking…',
+  },
+});
 
 const StatusWrapper = styled('span', ({$type}: {$type?: string}) => ({
   alignItems: 'center',
@@ -149,16 +173,28 @@ export default class SlugInput extends React.PureComponent {
     switch (this.state.response) {
       case 'available':
         return (
-          <StatusWrapper $type="positive">Slug is available</StatusWrapper>
+          <StatusWrapper $type="positive">
+            <FormattedMessage {...messages.available} />
+          </StatusWrapper>
         );
       case 'unavailable':
         return (
-          <StatusWrapper $type="negative">Slug is not available</StatusWrapper>
+          <StatusWrapper $type="negative">
+            <FormattedMessage {...messages.unavailable} />
+          </StatusWrapper>
         );
       case 'failed':
-        return <StatusWrapper>Error contacting Pinecast</StatusWrapper>;
+        return (
+          <StatusWrapper>
+            <FormattedMessage {...messages.failed} />
+          </StatusWrapper>
+        );
       case 'loading':
-        return <StatusWrapper>Checking slug…</StatusWrapper>;
+        return (
+          <StatusWrapper>
+            <FormattedMessage {...messages.loading} />
+          </StatusWrapper>
+        );
     }
     return undefined;
   }

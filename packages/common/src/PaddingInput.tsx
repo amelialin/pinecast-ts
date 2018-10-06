@@ -1,10 +1,45 @@
 import * as React from 'react';
 
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import styled from '@pinecast/styles';
 
 import TextInput from './TextInput';
 
 export type Unit = '%' | 'px';
+
+const messages = defineMessages({
+  top: {
+    id: 'common.PaddingInput.side.top',
+    description: 'Label for top of padding input',
+    defaultMessage: 'Top',
+  },
+  right: {
+    id: 'common.PaddingInput.side.right',
+    description: 'Label for right of padding input',
+    defaultMessage: 'Right',
+  },
+  bottom: {
+    id: 'common.PaddingInput.side.bottom',
+    description: 'Label for bottom of padding input',
+    defaultMessage: 'Bottom',
+  },
+  left: {
+    id: 'common.PaddingInput.side.left',
+    description: 'Label for left of padding input',
+    defaultMessage: 'Left',
+  },
+
+  '%': {
+    id: 'common.PaddingInput.unit.%',
+    description: 'Unit for percentages',
+    defaultMessage: '%',
+  },
+  px: {
+    id: 'common.PaddingInput.unit.px',
+    description: 'Unit for pixels',
+    defaultMessage: 'px',
+  },
+});
 
 const Row = styled('div', {
   alignItems: 'center',
@@ -92,6 +127,8 @@ export default class PaddingInput extends React.PureComponent {
       value: {top, right, bottom, left},
     } = this.props;
 
+    const renderedUnit = <FormattedMessage {...messages[unit]} />;
+
     return (
       <Row style={{marginBottom: 16}}>
         <WrapperLabel>
@@ -99,7 +136,7 @@ export default class PaddingInput extends React.PureComponent {
             $disabled={disabled}
             $invalid={invalid === true || (invalid && invalid.left)}
           >
-            Left
+            <FormattedMessage {...messages.left} />
           </WrapperLabelText>
           <TextInput
             disabled={disabled}
@@ -107,7 +144,7 @@ export default class PaddingInput extends React.PureComponent {
             invalid={invalid === true || (invalid && invalid.left)}
             onChange={this.handleLeftChange}
             style={textInputStyles}
-            suffix={unit}
+            suffix={renderedUnit}
             tabIndex={tabIndex}
             value={left.toString()}
           />
@@ -118,7 +155,7 @@ export default class PaddingInput extends React.PureComponent {
               $disabled={disabled}
               $invalid={invalid === true || (invalid && invalid.top)}
             >
-              Top
+              <FormattedMessage {...messages.top} />
             </WrapperLabelText>
             <TextInput
               disabled={disabled}
@@ -126,7 +163,7 @@ export default class PaddingInput extends React.PureComponent {
               invalid={invalid === true || (invalid && invalid.top)}
               onChange={this.handleTopChange}
               style={textInputStyles}
-              suffix={unit}
+              suffix={renderedUnit}
               tabIndex={tabIndex}
               value={top.toString()}
             />
@@ -136,7 +173,7 @@ export default class PaddingInput extends React.PureComponent {
               $disabled={disabled}
               $invalid={invalid === true || (invalid && invalid.bottom)}
             >
-              Bottom
+              <FormattedMessage {...messages.bottom} />
             </WrapperLabelText>
             <TextInput
               disabled={disabled}
@@ -144,7 +181,7 @@ export default class PaddingInput extends React.PureComponent {
               invalid={invalid === true || (invalid && invalid.bottom)}
               onChange={this.handleBottomChange}
               style={textInputStyles}
-              suffix={unit}
+              suffix={renderedUnit}
               tabIndex={tabIndex}
               value={bottom.toString()}
             />
@@ -155,7 +192,7 @@ export default class PaddingInput extends React.PureComponent {
             $disabled={disabled}
             $invalid={invalid === true || (invalid && invalid.right)}
           >
-            Right
+            <FormattedMessage {...messages.right} />
           </WrapperLabelText>
           <TextInput
             disabled={disabled}
@@ -163,7 +200,7 @@ export default class PaddingInput extends React.PureComponent {
             invalid={invalid === true || (invalid && invalid.right)}
             onChange={this.handleRightChange}
             style={textInputStyles}
-            suffix={unit}
+            suffix={renderedUnit}
             tabIndex={tabIndex}
             value={right.toString()}
           />
