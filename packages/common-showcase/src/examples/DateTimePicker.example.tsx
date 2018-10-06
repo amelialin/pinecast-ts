@@ -46,5 +46,19 @@ export default {
         </DateState>
       ),
     },
+    {
+      title: 'Do not include time',
+      render: () => (
+        <DateState>
+          {({date, onChange}) => (
+            <DateTimePicker
+              includeTime={false}
+              onChange={onChange}
+              value={date}
+            />
+          )}
+        </DateState>
+      ),
+    },
   ],
 };

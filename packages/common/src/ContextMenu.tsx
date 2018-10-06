@@ -188,6 +188,7 @@ export default class ContextMenu extends React.PureComponent {
         content={<React.Fragment>{children}</React.Fragment>}
         maxHeight={this.wrapper ? this.wrapper.clientHeight : 0}
         maxWidth={this.wrapper ? this.wrapper.clientWidth : 0}
+        preferY="bottom"
         style={wrapperStyle}
         xOffset={xOffset}
         yOffset={4}

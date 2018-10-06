@@ -254,7 +254,7 @@ export default class AnalyticsDash extends React.Component {
     return (
       dateHelpers.addDays(ctf[0], 365) < day ||
       dateHelpers.addDays(ctf[1], -365) > day ||
-      day > dateHelpers.addDays(dateHelpers.startOfDay(new Date()), 1)
+      day > dateHelpers.endOfDay(new Date())
     );
   };
   handleCustomTimeframeChanged = ({
@@ -282,10 +282,10 @@ export default class AnalyticsDash extends React.Component {
     return (
       timeframe === 'custom' && (
         <DateRangePicker
-          endDate={startDate}
+          endDate={endDate}
           isOutsideRange={this.isOutsideRange}
           onDatesChanged={this.handleCustomTimeframeChanged}
-          startDate={endDate}
+          startDate={startDate}
         />
       )
     );

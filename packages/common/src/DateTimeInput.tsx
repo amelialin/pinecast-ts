@@ -38,12 +38,17 @@ export default class DateTimeInput extends React.Component {
   props: {
     disabled?: boolean;
     invalid?: boolean;
+    includeTime?: boolean;
     isValidDate?: (date: Date) => boolean;
     onChange: (newDate: Date) => void;
     style?: React.CSSProperties;
     value: Date | null;
   };
   state: {open: boolean} = {open: false};
+
+  static defaultProps = {
+    includeTime: true,
+  };
 
   wrapper: HTMLElement | null = null;
 
@@ -64,6 +69,12 @@ export default class DateTimeInput extends React.Component {
     this.setState({open: false});
   };
 
+  handleChange = (date: Date) => {
+    if (!this.props.includeTime) {
+      this.setState({open: false});
+    }
+    this.props.onChange(date);
+  };
   handleRef = (el: HTMLElement | null) => {
     this.wrapper = el;
     if (el) {
@@ -76,8 +87,9 @@ export default class DateTimeInput extends React.Component {
       <Card style={{display: 'inline-block', width: 300}} whiteBack>
         <DateTimePicker
           hasInput={false}
+          includeTime={this.props.includeTime}
           isValidDate={this.props.isValidDate}
-          onChange={this.props.onChange}
+          onChange={this.handleChange}
           style={{marginTop: 0, width: 'auto'}}
           value={this.props.value}
         />
@@ -94,7 +106,7 @@ export default class DateTimeInput extends React.Component {
   };
 
   renderInput() {
-    const {disabled, invalid, style, value} = this.props;
+    const {disabled, includeTime, invalid, style, value} = this.props;
     return (
       <TextInput
         nativeEvents={{onClick: this.handleClick, onFocus: this.handleOpen}}
@@ -102,7 +114,13 @@ export default class DateTimeInput extends React.Component {
         invalid={invalid}
         readOnly
         style={{width: 200, ...style}}
-        value={value ? moment(value).format('MMM D, YYYY, h:mm A') : ''}
+        value={
+          value
+            ? moment(value).format(
+                includeTime ? 'MMM D, YYYY, h:mm A' : 'MMM D, YYYY',
+              )
+            : ''
+        }
       />
     );
   }
@@ -114,7 +132,12 @@ export default class DateTimeInput extends React.Component {
   render() {
     const {open} = this.state;
     return (
-      <Positioner content={this.renderInput()} maxHeight={350} maxWidth={300}>
+      <Positioner
+        content={this.renderInput()}
+        maxHeight={280}
+        maxWidth={300}
+        preferY="bottom"
+      >
         {({x, xAlign, y, yAlign}) => (
           <CloseableLayer
             onClose={this.handleClose}

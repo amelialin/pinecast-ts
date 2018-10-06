@@ -9,6 +9,7 @@ import './DateTimePicker.css';
 export default class DateTimePicker extends React.Component {
   props: {
     hasInput?: boolean;
+    includeTime?: boolean;
     isValidDate?: (date: Date) => boolean;
     onChange: (newDate: Date) => void;
     style?: React.CSSProperties;
@@ -20,6 +21,7 @@ export default class DateTimePicker extends React.Component {
 
   static defaultProps = {
     hasInput: true,
+    includeTime: true,
   };
 
   renderInput = ({onChange, onFocus, onKeyDown, value}: any) => {
@@ -72,6 +74,7 @@ export default class DateTimePicker extends React.Component {
           onChange={this.handleChange}
           open
           renderInput={this.renderInput}
+          timeFormat={this.props.includeTime}
           value={invalidState || moment(this.props.value || new Date())}
         />
       </div>

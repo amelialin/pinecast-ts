@@ -14,7 +14,7 @@ export default class DateRangePicker extends React.Component {
     startDate: Date;
   };
 
-  handleChange = (dateName: 'startDate' | 'endDate', value: Date) => {
+  handleChange(dateName: 'startDate' | 'endDate', value: Date) {
     const endDate = dateHelpers.startOfDay(this.props.endDate);
     if (dateName === 'startDate' && dateHelpers.startOfDay(value) >= endDate) {
       value = dateHelpers.addDays(endDate, -1);
@@ -24,7 +24,7 @@ export default class DateRangePicker extends React.Component {
       endDate: this.props.endDate,
       [dateName]: value,
     });
-  };
+  }
 
   isValidStartDate = (date: Date) =>
     !this.props.isOutsideRange(date) &&
@@ -45,15 +45,19 @@ export default class DateRangePicker extends React.Component {
       <Group allowWrap spacing={16} style={{justifyContent: 'center'}}>
         <Label $oneLine $oneLineCollapse text={gettext('From')}>
           <DateTimeInput
+            includeTime={false}
             isValidDate={this.isValidStartDate}
             onChange={this.handleStartDateChange}
+            style={{width: 150}}
             value={startDate}
           />
         </Label>
         <Label $oneLine $oneLineCollapse text={gettext('To')}>
           <DateTimeInput
+            includeTime={false}
             isValidDate={this.isValidEndDate}
             onChange={this.handleEndDateChange}
+            style={{width: 150}}
             value={endDate}
           />
         </Label>
