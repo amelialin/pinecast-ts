@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {gettext} from '@pinecast/i18n';
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import {nullThrows} from '@pinecast/common/helpers';
 import Spinner from '@pinecast/common/Spinner';
 
@@ -23,9 +23,33 @@ import RequiredPlaceholder from './RequiredPlaceholder';
 import UploadManager from './uploading/ManagementComponent';
 import UploadOrder from './uploading/order';
 
-const typeNames: {[type: string]: string} = {
-  audio: gettext('Audio'),
-  image: gettext('Artwork'),
+const messages = defineMessages({
+  audio: {
+    id: 'db-uploader.AudioUploader.fileType.audio',
+    description: 'Audio file type descriptor',
+    defaultMessage: 'Audio',
+  },
+  artwork: {
+    id: 'db-uploader.AudioUploader.fileType.artwork',
+    description: 'Artwork file type descriptor',
+    defaultMessage: 'Artwork',
+  },
+
+  errorTooLarge: {
+    id: 'db-uploader.AudioUploader.error.tooLarge',
+    description: 'Error shown when trying to upload a file that is too large',
+    defaultMessage: 'The file you chose is too large to upload with your plan.',
+  },
+  errorCannotRead: {
+    id: 'db-uploader.AudioUploader.error.cannotRead',
+    description: 'Error shown when a file could not be read',
+    defaultMessage: 'We could not read that file.',
+  },
+});
+
+const typeNames: {[type: string]: React.ReactNode} = {
+  audio: <FormattedMessage {...messages.audio} />,
+  image: <FormattedMessage {...messages.artwork} />,
 };
 const typeDefaultFilenamesByMIME: {[type: string]: string} = {
   'image/jpeg': 'artwork.jpg',
@@ -223,17 +247,13 @@ export default class AudioUploader extends React.Component {
 
     if (audioFile.size > uploadLimit + uploadSurge) {
       this.clearFile({
-        error: gettext(
-          'The file you chose is too large to upload with your plan.',
-        ),
+        error: <FormattedMessage {...messages.errorTooLarge} />,
       });
       return;
     }
     if (audioFile.size === 0) {
       this.clearFile({
-        error: gettext(
-          'When we tried to read the file you chose, we got back no data.',
-        ),
+        error: <FormattedMessage {...messages.errorCannotRead} />,
       });
       return;
     }

@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import ErrorState from '@pinecast/common/ErrorState';
+import {FormattedMessage} from '@pinecast/i18n';
 import Group from '@pinecast/common/Group';
 import LoadingState from '@pinecast/common/LoadingState';
 import SelectCustom from '@pinecast/common/SelectCustom';
@@ -90,7 +91,7 @@ export default class Menu extends React.Component {
     return (
       <React.Fragment>
         <Group spacing={12} wrapperStyle={{alignItems: 'center'}}>
-          <span>{constants.MENU_LABELS[view]}</span>
+          <FormattedMessage {...constants.MENU_LABELS[view]} />
           <SelectCustom
             onChange={this.handleChange}
             options={data.map(item => ({

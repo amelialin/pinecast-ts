@@ -1,13 +1,46 @@
 import * as React from 'react';
 
 import Label from '@pinecast/common/Label';
-import {gettext} from '@pinecast/i18n';
+import {
+  defineMessages,
+  FormattedMessage,
+  I18n,
+  InjectedIntlProps,
+} from '@pinecast/i18n';
 import Select from '@pinecast/common/Select';
 import TextInput from '@pinecast/common/TextInput';
 
 import CheckImage from './CheckImage';
 import * as currencies from '../currencies';
 import stripe from '../stripe';
+
+const messages = defineMessages({
+  currency: {
+    id: 'db-tip-jar-connect.BankAccount.currency.label',
+    description: 'Label for currency dropdown',
+    defaultMessage: 'Currency',
+  },
+  iban: {
+    id: 'db-tip-jar-connect.BankAccount.iban.label',
+    description: 'Label for IBAN field',
+    defaultMessage: 'IBAN',
+  },
+  accountNumber: {
+    id: 'db-tip-jar-connect.BankAccount.accountNumber.label',
+    description: 'Label for account number field',
+    defaultMessage: 'Account number',
+  },
+  sortCode: {
+    id: 'db-tip-jar-connect.BankAccount.sortCode.label',
+    description: 'Label for sort code field',
+    defaultMessage: 'Sort code',
+  },
+  routingNumber: {
+    id: 'db-tip-jar-connect.BankAccount.routingNumber.label',
+    description: 'Label for routing number field',
+    defaultMessage: 'Routing number',
+  },
+});
 
 export default class BankAccount extends React.Component {
   props: {
@@ -75,9 +108,9 @@ export default class BankAccount extends React.Component {
   getRoutingNumberLabel() {
     switch (this.state.values.currency.toUpperCase()) {
       case 'GBP':
-        return gettext('Sort code');
+        return <FormattedMessage {...messages.sortCode} />;
       default:
-        return gettext('Routing number');
+        return <FormattedMessage {...messages.routingNumber} />;
     }
   }
 
@@ -112,15 +145,19 @@ export default class BankAccount extends React.Component {
     return (
       <React.Fragment>
         {availableCurrencies.length > 1 && (
-          <Label text={gettext('Currency')}>
-            <Select
-              onChange={this.handleChangeCurrency}
-              options={availableCurrencies.map(cur => ({
-                label: currencies.names[cur],
-                key: cur,
-              }))}
-              value={values.currency}
-            />
+          <Label text={<FormattedMessage {...messages.currency} />}>
+            <I18n>
+              {({intl}: InjectedIntlProps) => (
+                <Select
+                  onChange={this.handleChangeCurrency}
+                  options={availableCurrencies.map(cur => ({
+                    label: intl.formatMessage(currencies.names[cur]),
+                    key: cur,
+                  }))}
+                  value={values.currency}
+                />
+              )}
+            </I18n>
           </Label>
         )}
         {values.currency.toUpperCase() === 'USD' && (
@@ -131,7 +168,13 @@ export default class BankAccount extends React.Component {
             />
           </div>
         )}
-        <Label text={isEuro ? gettext('IBAN') : gettext('Account number')}>
+        <Label
+          text={
+            <FormattedMessage
+              {...(isEuro ? messages.iban : messages.accountNumber)}
+            />
+          }
+        >
           <TextInput
             nativeEvents={{
               onBlur: this.handleBlurAcctNum,

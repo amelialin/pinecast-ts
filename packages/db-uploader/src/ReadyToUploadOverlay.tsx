@@ -1,5 +1,15 @@
-import {gettext} from '@pinecast/i18n';
+import * as React from 'react';
+
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import styled from '@pinecast/styles';
+
+const messages = defineMessages({
+  label: {
+    id: 'db-uploader.ReadyToUploadOverlay.label',
+    description: 'Message shown when a file is ready to upload',
+    defaultMessage: 'Ready to upload',
+  },
+});
 
 export default styled(
   'div',
@@ -19,5 +29,5 @@ export default styled(
     top: 0,
     zIndex: 10,
   },
-  {children: gettext('Ready to Upload')},
+  {children: <FormattedMessage {...messages.label} />},
 );

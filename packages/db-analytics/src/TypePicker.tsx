@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import {FormattedMessage} from '@pinecast/i18n';
 import {memoize} from '@pinecast/common/helpers';
 import ProBadge from '@pinecast/common/ProBadge';
 import SelectCustom, {Option} from '@pinecast/common/SelectCustom';
@@ -22,10 +23,10 @@ const options = memoize((type: constants.AnalyticsType) =>
       render: proTag
         ? () => (
             <React.Fragment>
-              <ProBadge /> {constants.TYPES_NAMES[view]}
+              <ProBadge /> <FormattedMessage {...constants.TYPES_NAMES[view]} />
             </React.Fragment>
           )
-        : () => constants.TYPES_NAMES[view],
+        : () => <FormattedMessage {...constants.TYPES_NAMES[view]} />,
     };
   }),
 );

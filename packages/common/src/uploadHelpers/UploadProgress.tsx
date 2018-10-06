@@ -21,7 +21,7 @@ const ProgressWrapper = styled('div', {
 });
 
 type OngoingUpload = {
-  name?: string;
+  name?: React.ReactNode;
   percent: number;
 };
 

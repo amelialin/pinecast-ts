@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import {CSS} from '@pinecast/styles';
+import {injectIntl, InjectedIntlProps} from '@pinecast/i18n';
 import Select from '@pinecast/common/Select';
 
 import * as constants from './constants';
@@ -8,6 +9,7 @@ import {Consumer} from './Config';
 import * as timeframeAndGranularity from './timeframeAndGranularity';
 
 const GranularityPicker = ({
+  intl,
   onChange,
   style,
   timeframe,
@@ -17,12 +19,15 @@ const GranularityPicker = ({
   style?: CSS;
   timeframe: constants.Timeframe;
   value: constants.Granularity;
-}) => (
+} & InjectedIntlProps) => (
   <Consumer>
     {({customTimeframe, view}) => {
       const options = timeframeAndGranularity
         .getGranularities(view, timeframe, customTimeframe)
-        .map(key => ({key, label: constants.GRANULARITY_LABELS[key]}));
+        .map(key => ({
+          key,
+          label: intl.formatMessage(constants.GRANULARITY_LABELS[key]),
+        }));
       if (
         options.length === 1 ||
         !timeframeAndGranularity.hasGranularity(view)
@@ -41,4 +46,4 @@ const GranularityPicker = ({
   </Consumer>
 );
 
-export default GranularityPicker;
+export default injectIntl(GranularityPicker);

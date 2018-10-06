@@ -1,4 +1,4 @@
-import {gettext} from '@pinecast/i18n';
+import {defineMessages, Message} from '@pinecast/i18n';
 
 export const TYPE_LISTENS = 'listen';
 export const TYPE_SUBS = 'subscribers';
@@ -63,20 +63,76 @@ export const TYPES: {[type: string]: Array<AnalyticsView>} = {
   ],
 };
 
-export const TYPES_NAMES: {[type: string]: string} = {
-  [TYPE_LISTENS]: gettext('Total listens'),
-  [TYPE_SUBS]: gettext('Subscribers'),
-  [TYPE_GROWTH]: gettext('Listen growth'),
-  [TYPE_BY_EPISODE]: gettext('Listens by episode (truncated)'),
-  [TYPE_BY_SOURCE]: gettext('Listens by source'),
-  [TYPE_BY_AGENT]: gettext('Listens by agent'),
-  [TYPE_BY_OS]: gettext('Listens by OS'),
-  [TYPE_GEO_SUBS]: gettext('Subscriber locations'),
-  [TYPE_GEO_GRAN_SUBS]: gettext('Subscriber locations by city'),
-  [TYPE_GEO_LISTENS]: gettext('Listener Locations'),
-  [TYPE_GEO_GRAN_LISTENS]: gettext('Listener locations by city'),
-  [TYPE_TOP_EPISODES]: gettext('Top episodes'),
-};
+export const TYPES_NAMES: {[type: string]: Message} = defineMessages({
+  [TYPE_LISTENS]: {
+    id: 'db-analytics.labels.types.listens.totla',
+    description: 'Label for an analytics view showing total listens',
+    defaultMessage: 'Total listens',
+  },
+  [TYPE_SUBS]: {
+    id: 'db-analytics.labels.types.subscribers.total',
+    description: 'Label for an analytics view showing total subscribers',
+    defaultMessage: 'Subscribers',
+  },
+  [TYPE_GROWTH]: {
+    id: 'db-analytics.labels.types.listens.growth',
+    description: 'Label for an analytics view showing growth over time',
+    defaultMessage: 'Listen growth',
+  },
+  [TYPE_BY_EPISODE]: {
+    id: 'db-analytics.labels.types.listens.by-episode',
+    description:
+      'Label for an analytics view showing listens broken down by episode',
+    defaultMessage: 'Listens by episode (truncated)',
+  },
+  [TYPE_BY_SOURCE]: {
+    id: 'db-analytics.labels.types.listens.source',
+    description:
+      'Label for an analytics view showing listens by where they came from',
+    defaultMessage: 'Listens by source',
+  },
+  [TYPE_BY_AGENT]: {
+    id: 'db-analytics.labels.types.listens.agent',
+    description:
+      'Label for an analytics view showing listens by the agent used to make them',
+    defaultMessage: 'Listens by agent',
+  },
+  [TYPE_BY_OS]: {
+    id: 'db-analytics.labels.types.listens.os',
+    description:
+      'Label for an analytics view showing listens by the OS used to make them',
+    defaultMessage: 'Listens by OS',
+  },
+  [TYPE_GEO_SUBS]: {
+    id: 'db-analytics.labels.types.subscribers.location',
+    description:
+      'Label for an analytics view showing the location of subscribers',
+    defaultMessage: 'Subscriber locations',
+  },
+  [TYPE_GEO_GRAN_SUBS]: {
+    id: 'db-analytics.labels.types.subscribers.location.city',
+    description:
+      'Label for an analytics view showing the location of subscribers by city',
+    defaultMessage: 'Subscriber locations by city',
+  },
+  [TYPE_GEO_LISTENS]: {
+    id: 'db-analytics.labels.types.listeners.location',
+    description:
+      'Label for an analytics view showing the location of listeners',
+    defaultMessage: 'Listener Locations',
+  },
+  [TYPE_GEO_GRAN_LISTENS]: {
+    id: 'db-analytics.labels.types.listeners.location.city',
+    description:
+      'Label for an analytics view showing the location of listeners by city',
+    defaultMessage: 'Listener locations by city',
+  },
+  [TYPE_TOP_EPISODES]: {
+    id: 'db-analytics.labels.types.top-episodes',
+    description: 'Label for an analytics view showing the top episodes',
+    defaultMessage: 'Top episodes',
+  },
+});
 
 export const TYPES_ENDPOINTS: {[type: string]: {[view: string]: string}} = {
   episode: {
@@ -195,21 +251,65 @@ export type Timeframe =
   | 'custom';
 export type Granularity = 'monthly' | 'weekly' | 'daily' | 'hourly';
 
-export const GRANULARITY_LABELS = {
-  monthly: gettext('By month'),
-  weekly: gettext('By week'),
-  daily: gettext('By day'),
-  hourly: gettext('By hour'),
-};
+export const GRANULARITY_LABELS = defineMessages({
+  monthly: {
+    id: 'db-analytics.labels.granularity.month',
+    description: 'Label for analytics granularity',
+    defaultMessage: 'By month',
+  },
+  weekly: {
+    id: 'db-analytics.labels.granularity.week',
+    description: 'Label for analytics granularity',
+    defaultMessage: 'By week',
+  },
+  daily: {
+    id: 'db-analytics.labels.granularity.day',
+    description: 'Label for analytics granularity',
+    defaultMessage: 'By day',
+  },
+  hourly: {
+    id: 'db-analytics.labels.granularity.hour',
+    description: 'Label for analytics granularity',
+    defaultMessage: 'By hour',
+  },
+});
 export const TIMEFRAME_LABELS = {
-  all: gettext('All time'),
-  year: gettext('Previous year'),
-  sixmonth: gettext('Previous 6 months'),
-  month: gettext('Previous month'),
-  week: gettext('Previous week'),
-  day: gettext('Previous day'),
+  all: {
+    id: 'db-analytics.labels.timeframe.time',
+    description: 'Label for analytics timeframe',
+    defaultMessage: 'All time',
+  },
+  year: {
+    id: 'db-analytics.labels.timeframe.year',
+    description: 'Label for analytics timeframe',
+    defaultMessage: 'Previous year',
+  },
+  sixmonth: {
+    id: 'db-analytics.labels.timeframe.6',
+    description: 'Label for analytics timeframe',
+    defaultMessage: 'Previous 6 months',
+  },
+  month: {
+    id: 'db-analytics.labels.timeframe.month',
+    description: 'Label for analytics timeframe',
+    defaultMessage: 'Previous month',
+  },
+  week: {
+    id: 'db-analytics.labels.timeframe.week',
+    description: 'Label for analytics timeframe',
+    defaultMessage: 'Previous week',
+  },
+  day: {
+    id: 'db-analytics.labels.timeframe.day',
+    description: 'Label for analytics timeframe',
+    defaultMessage: 'Previous day',
+  },
 
-  custom: gettext('Custom'),
+  custom: {
+    id: 'db-analytics.labels.timeframe.custom',
+    description: 'Label for custom analytics timeframe option',
+    defaultMessage: 'Custom',
+  },
 };
 
 export const DEFAULT_TIMEFRAMES: Array<Timeframe> = [
@@ -253,10 +353,18 @@ export const TYPE_GRANULARITIES: {
   [TYPE_GROWTH]: ['monthly', 'weekly', 'daily'],
 };
 
-export const MENU_LABELS: {[view: string]: string} = {
-  [TYPE_GEO_GRAN_LISTENS]: gettext('Listener country'),
-  [TYPE_GEO_GRAN_SUBS]: gettext('Subscriber country'),
-};
+export const MENU_LABELS: {[view: string]: Message} = defineMessages({
+  [TYPE_GEO_GRAN_LISTENS]: {
+    id: 'db-analaytics.labels.menu.geogran.listens',
+    description: 'Menu label for the breakdown of listens by city',
+    defaultMessage: 'Listener country',
+  },
+  [TYPE_GEO_GRAN_SUBS]: {
+    id: 'db-analaytics.labels.menu.geogran.subscribers',
+    description: 'Menu label for the breakdown of subscribers by city',
+    defaultMessage: 'Subscriber country',
+  },
+});
 
 export const LINE_CHART_DEFAULT_DISPLAY_OVERRIDE: {
   [view: string]: 'line' | 'area';

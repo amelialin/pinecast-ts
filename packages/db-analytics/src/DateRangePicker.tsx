@@ -2,9 +2,22 @@ import * as React from 'react';
 
 import * as dateHelpers from '@pinecast/common/helpers/dates';
 import DateTimeInput from '@pinecast/common/DateTimeInput';
-import {gettext} from '@pinecast/i18n';
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import Group from '@pinecast/common/Group';
 import Label from '@pinecast/common/Label';
+
+const messages = defineMessages({
+  to: {
+    id: 'db-analytics.DateRangePicker.to',
+    description: 'Label for "to" field when selecting a date range',
+    defaultMessage: 'To',
+  },
+  from: {
+    id: 'db-analytics.DateRangePicker.from',
+    description: 'Label for "from" field when selecting a date range',
+    defaultMessage: 'From',
+  },
+});
 
 export default class DateRangePicker extends React.Component {
   props: {
@@ -43,7 +56,11 @@ export default class DateRangePicker extends React.Component {
     const {endDate, startDate} = this.props;
     return (
       <Group allowWrap spacing={16} style={{justifyContent: 'center'}}>
-        <Label $oneLine $oneLineCollapse text={gettext('From')}>
+        <Label
+          $oneLine
+          $oneLineCollapse
+          text={<FormattedMessage {...messages.from} />}
+        >
           <DateTimeInput
             includeTime={false}
             isValidDate={this.isValidStartDate}
@@ -52,7 +69,11 @@ export default class DateRangePicker extends React.Component {
             value={startDate}
           />
         </Label>
-        <Label $oneLine $oneLineCollapse text={gettext('To')}>
+        <Label
+          $oneLine
+          $oneLineCollapse
+          text={<FormattedMessage {...messages.to} />}
+        >
           <DateTimeInput
             includeTime={false}
             isValidDate={this.isValidEndDate}

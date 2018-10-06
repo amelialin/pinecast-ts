@@ -1,6 +1,15 @@
 import * as React from 'react';
 
-import {gettext} from '@pinecast/i18n';
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
+
+const messages = defineMessages({
+  calculating: {
+    id: 'common.TimeRemainingIndicator.calculating',
+    description:
+      'Message shown when calculating the amount of time remaining on a task',
+    defaultMessage: 'Calculating time remaining…',
+  },
+});
 
 export default class TimeRemainingIndicator extends React.PureComponent {
   props: {
@@ -50,8 +59,9 @@ export default class TimeRemainingIndicator extends React.PureComponent {
   };
 
   render() {
-    const body =
-      this.state.timeRemaining || gettext('Calculating time remaining…');
+    const body = this.state.timeRemaining || (
+      <FormattedMessage {...messages.calculating} />
+    );
     if (this.props.renderer) {
       return this.props.renderer(body);
     }

@@ -1,12 +1,36 @@
 import * as React from 'react';
 
-import {gettext} from '@pinecast/i18n';
+import {
+  defineMessages,
+  FormattedMessage,
+  I18n,
+  InjectedIntlProps,
+} from '@pinecast/i18n';
 
 import Label from '@pinecast/common/Label';
 import * as currencies from '../currencies';
 import Select from '@pinecast/common/Select';
 import stripe from '../stripe';
 import {InputWrapper} from '@pinecast/common/TextInput';
+
+const messages = defineMessages({
+  debitCardWarning: {
+    id: 'db-tip-jar-connect.DebitCard.warning',
+    description: 'Warning for debit card use',
+    defaultMessage:
+      'Visa and MasterCard debit cards are accepted. Credit cards are not supported.',
+  },
+  cardDetails: {
+    id: 'db-tip-jar-connect.DebitCard.cardDetails.label',
+    description: 'Label for card details field',
+    defaultMessage: 'Card details',
+  },
+  currency: {
+    id: 'db-tip-jar-connect.DebitCard.currency.label',
+    description: 'Label for currency dropdown',
+    defaultMessage: 'Currency',
+  },
+});
 
 const cardStyle = {
   base: {},
@@ -71,11 +95,9 @@ export default class DebitCard extends React.Component {
     return (
       <React.Fragment>
         <p>
-          {gettext(
-            'Visa and MasterCard debit cards are accepted. Credit cards are not supported.',
-          )}
+          <FormattedMessage {...messages.debitCardWarning} />
         </p>
-        <Label text={gettext('Card details')}>
+        <Label text={<FormattedMessage {...messages.cardDetails} />}>
           <InputWrapper
             style={{
               borderRadius: 4,
@@ -87,15 +109,19 @@ export default class DebitCard extends React.Component {
           </InputWrapper>
         </Label>
         {availableCurrencies.length > 1 && (
-          <Label text={gettext('Currency')}>
-            <Select
-              onChange={this.handleChangeCurrency}
-              options={availableCurrencies.map(cur => ({
-                label: currencies.names[cur],
-                key: cur,
-              }))}
-              value={this.state.currency}
-            />
+          <Label text={<FormattedMessage {...messages.currency} />}>
+            <I18n>
+              {({intl}: InjectedIntlProps) => (
+                <Select
+                  onChange={this.handleChangeCurrency}
+                  options={availableCurrencies.map(cur => ({
+                    label: intl.formatMessage(currencies.names[cur]),
+                    key: cur,
+                  }))}
+                  value={this.state.currency}
+                />
+              )}
+            </I18n>
           </Label>
         )}
       </React.Fragment>

@@ -4,7 +4,7 @@ import ManagementComponent from './ManagementComponent';
 
 export default class UploadOrder {
   podcast: string;
-  title: string;
+  title: React.ReactNode;
   fileName: string;
   type: string;
   asset: Asset;
@@ -14,7 +14,7 @@ export default class UploadOrder {
 
   constructor(
     podcast: string,
-    title: string,
+    title: React.ReactNode,
     fileName: string,
     type: string,
     asset: Asset,
