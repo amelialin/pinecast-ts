@@ -1,67 +1,23 @@
-import {Moment} from 'moment';
-const DateTimePicker = require('react-datetime');
 import * as React from 'react';
 
+import * as dateHelpers from '@pinecast/common/helpers/dates';
+import DateTimeInput from '@pinecast/common/DateTimeInput';
 import {gettext} from '@pinecast/i18n';
-
-import './date-range-picker.css';
-
-class ValidDatePicker extends React.Component {
-  props: {
-    isValidDate: (date: Moment) => boolean;
-    onChange: (newDate: Moment) => void;
-    value: Moment;
-  };
-  state: {invalidState: string | null} = {invalidState: null};
-
-  handleDateChange = (val: string | Moment) => {
-    if (typeof val === 'string') {
-      this.setState({invalidState: val});
-      return;
-    }
-    this.setState({invalidState: null});
-    this.props.onChange(val.startOf('day'));
-  };
-
-  render() {
-    const {
-      props,
-      state: {invalidState},
-    } = this;
-    return (
-      <DateTimePicker
-        {...props}
-        className="drp-vdp"
-        closeOnSelect
-        onChange={this.handleDateChange}
-        timeFormat={false}
-        value={invalidState || props.value}
-      />
-    );
-  }
-}
+import Group from '@pinecast/common/Group';
+import Label from '@pinecast/common/Label';
 
 export default class DateRangePicker extends React.Component {
   props: {
-    endDate: Moment;
-    isOutsideRange: (date: Moment) => boolean;
-    onDatesChanged: (dates: {startDate: Moment; endDate: Moment}) => void;
-    startDate: Moment;
+    endDate: Date;
+    isOutsideRange: (date: Date) => boolean;
+    onDatesChanged: (dates: {startDate: Date; endDate: Date}) => void;
+    startDate: Date;
   };
 
-  _start: ValidDatePicker | null = null;
-  _end: ValidDatePicker | null = null;
-
-  handleChange = (dateName: 'startDate' | 'endDate', value: Moment) => {
-    const endDate = this.props.endDate.clone().startOf('day');
-    if (
-      dateName === 'startDate' &&
-      value
-        .clone()
-        .startOf('day')
-        .isSameOrAfter(endDate)
-    ) {
-      value = endDate.clone().add(-1, 'days');
+  handleChange = (dateName: 'startDate' | 'endDate', value: Date) => {
+    const endDate = dateHelpers.startOfDay(this.props.endDate);
+    if (dateName === 'startDate' && dateHelpers.startOfDay(value) >= endDate) {
+      value = dateHelpers.addDays(endDate, -1);
     }
     this.props.onDatesChanged({
       startDate: this.props.startDate,
@@ -70,48 +26,38 @@ export default class DateRangePicker extends React.Component {
     });
   };
 
-  handleStartDateRef = (el: ValidDatePicker | null) => {
-    this._start = el;
-  };
-  isValidStartDate = (date: Moment) =>
+  isValidStartDate = (date: Date) =>
     !this.props.isOutsideRange(date) &&
-    date.isBefore(this.props.endDate.clone().startOf('day'));
-  handleStartDateChange = (val: Moment) => {
-    this.handleChange('startDate', val.startOf('day'));
+    date < dateHelpers.startOfDay(this.props.endDate);
+  handleStartDateChange = (val: Date) => {
+    this.handleChange('startDate', dateHelpers.startOfDay(val));
   };
 
-  handleEndDateRef = (el: ValidDatePicker | null) => {
-    this._end = el;
-  };
-  isValidEndDate = (date: Moment) =>
-    !this.props.isOutsideRange(date) && date.isAfter(this.props.startDate);
-  handleEndDateChange = (val: Moment) => {
-    this.handleChange('endDate', val.endOf('day'));
+  isValidEndDate = (date: Date) =>
+    !this.props.isOutsideRange(date) && date > this.props.startDate;
+  handleEndDateChange = (val: Date) => {
+    this.handleChange('endDate', dateHelpers.endOfDay(val));
   };
 
   render() {
     const {endDate, startDate} = this.props;
     return (
-      <div className="date-range-picker">
-        <div className="drp-wrapper">
-          <span>{gettext('From')}</span>
-          <ValidDatePicker
+      <Group allowWrap spacing={16} style={{justifyContent: 'center'}}>
+        <Label $oneLine $oneLineCollapse text={gettext('From')}>
+          <DateTimeInput
             isValidDate={this.isValidStartDate}
             onChange={this.handleStartDateChange}
-            ref={this.handleStartDateRef}
             value={startDate}
           />
-        </div>
-        <div className="drp-wrapper">
-          <span>{gettext('To')}</span>
-          <ValidDatePicker
+        </Label>
+        <Label $oneLine $oneLineCollapse text={gettext('To')}>
+          <DateTimeInput
             isValidDate={this.isValidEndDate}
             onChange={this.handleEndDateChange}
-            ref={this.handleEndDateRef}
             value={endDate}
           />
-        </div>
-      </div>
+        </Label>
+      </Group>
     );
   }
 }

@@ -1,8 +1,7 @@
-import {Moment} from 'moment';
-const moment = require('moment');
 import * as React from 'react';
 
 import Card from '@pinecast/common/Card';
+import * as dateHelpers from '@pinecast/common/helpers/dates';
 import ErrorState from '@pinecast/common/ErrorState';
 import Group from '@pinecast/common/Group';
 import LoadingState from '@pinecast/common/LoadingState';
@@ -206,12 +205,7 @@ export default class AnalyticsDash extends React.Component {
   getDefaultCustomTimeframe(): [Date, Date] {
     const {customTimeframe, timeframe} = this.state;
     if (timeframe === 'custom') {
-      return [
-        nullThrows(customTimeframe)[0],
-        moment()
-          .endOf('day')
-          .toDate(),
-      ];
+      return [nullThrows(customTimeframe)[0], dateHelpers.endOfDay(new Date())];
     }
 
     const durations = {
@@ -226,12 +220,8 @@ export default class AnalyticsDash extends React.Component {
     startDate.setDate(startDate.getDate() - durations[timeframe]);
 
     return [
-      moment(startDate)
-        .startOf('day')
-        .toDate(),
-      moment()
-        .endOf('day')
-        .toDate(),
+      dateHelpers.startOfDay(startDate),
+      dateHelpers.endOfDay(new Date()),
     ];
   }
 
@@ -259,29 +249,22 @@ export default class AnalyticsDash extends React.Component {
     );
   }
 
-  isOutsideRange = (day: Moment) =>
-    moment(nullThrows(this.state.customTimeframe)[0])
-      .add(365, 'days')
-      .isBefore(day) ||
-    moment(nullThrows(this.state.customTimeframe)[1])
-      .subtract(365, 'days')
-      .isAfter(day) ||
-    day.isAfter(
-      moment()
-        .startOf('day')
-        .add(1, 'days'),
+  isOutsideRange = (day: Date) => {
+    const ctf = nullThrows(this.state.customTimeframe);
+    return (
+      dateHelpers.addDays(ctf[0], 365) < day ||
+      dateHelpers.addDays(ctf[1], -365) > day ||
+      day > dateHelpers.addDays(dateHelpers.startOfDay(new Date()), 1)
     );
+  };
   handleCustomTimeframeChanged = ({
     endDate,
     startDate,
   }: {
-    endDate: Moment;
-    startDate: Moment;
+    endDate: Date;
+    startDate: Date;
   }) => {
-    const customTimeframe: [Date, Date] = [
-      startDate.toDate(),
-      endDate.toDate(),
-    ];
+    const customTimeframe: [Date, Date] = [startDate, endDate];
     this.setState({
       customTimeframe,
       granularity: timeframeAndGranularity.getDefaultGranularity(
@@ -295,13 +278,14 @@ export default class AnalyticsDash extends React.Component {
 
   renderCustomTimeframe() {
     const {customTimeframe, timeframe} = this.state;
+    const [startDate, endDate] = nullThrows(customTimeframe);
     return (
       timeframe === 'custom' && (
         <DateRangePicker
-          endDate={moment(nullThrows(customTimeframe)[1])}
+          endDate={startDate}
           isOutsideRange={this.isOutsideRange}
           onDatesChanged={this.handleCustomTimeframeChanged}
-          startDate={moment(nullThrows(customTimeframe)[0])}
+          startDate={endDate}
         />
       )
     );
