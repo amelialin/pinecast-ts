@@ -4,6 +4,12 @@ import * as React from 'react';
 import Button from '@pinecast/common/Button';
 import Collapser from '@pinecast/common/Collapser';
 import {DEFAULT_FONT} from '@pinecast/common/constants';
+import {
+  defineMessages,
+  FormattedMessage,
+  injectIntl,
+  InjectedIntlProps,
+} from '@pinecast/i18n';
 import styled from '@pinecast/styles';
 
 import CSVLink from '../CSVLink';
@@ -11,6 +17,35 @@ import {BreakdownData} from '../types';
 import {getTickValues} from './components/ticks';
 import measureText from './components/measureText';
 import SubToolbar from './components/SubToolbar';
+
+const messages = defineMessages({
+  collapse: {
+    id: 'db-analytics.SharesChart.button.collapse',
+    description: 'Button to collapse data',
+    defaultMessage: 'Collapse',
+  },
+  expand: {
+    id: 'db-analytics.SharesChart.button.expand',
+    description: 'Button to expand data',
+    defaultMessage: 'Show more ({count})',
+  },
+
+  typeLabel: {
+    id: 'db-analytics.TimeSeriesChart.csv.type',
+    description: 'Type label for CSVs',
+    defaultMessage: 'Type',
+  },
+  countLabel: {
+    id: 'db-analytics.TimeSeriesChart.csv.count',
+    description: 'Count label for CSVs',
+    defaultMessage: 'Count',
+  },
+  percentageLabel: {
+    id: 'db-analytics.TimeSeriesChart.csv.percentage',
+    description: 'Percentage label for CSVs',
+    defaultMessage: 'Percentage',
+  },
+});
 
 const ITEM_HEIGHT = 28;
 const MAX_ITEMS_IN_TOP = 8;
@@ -28,10 +63,13 @@ const OtherCount = styled('span', {
   fontWeight: 400,
 });
 
-export default class SharesChart extends React.Component {
-  props: {
-    data: BreakdownData;
-  };
+type OwnProps = {
+  data: BreakdownData;
+};
+type Props = OwnProps & InjectedIntlProps;
+
+class SharesChart extends React.Component {
+  props: Props;
   state: {
     expanded: boolean;
     width: number;
@@ -52,10 +90,14 @@ export default class SharesChart extends React.Component {
   };
 
   getCSVData = () => {
-    const {data} = this.props;
+    const {data, intl} = this.props;
     const total = data.reduce((acc, cur) => acc + cur.value, 0);
     return [
-      ['Type', 'Count', 'Percentage'],
+      [
+        intl.formatMessage(messages.typeLabel),
+        intl.formatMessage(messages.countLabel),
+        intl.formatMessage(messages.percentageLabel),
+      ],
       ...data.map(d => [d.label, d.value, d.value / total]),
     ];
   };
@@ -307,9 +349,14 @@ export default class SharesChart extends React.Component {
               size="small"
               style={{alignSelf: 'flex-start', marginTop: 12}}
             >
-              {this.state.expanded
-                ? 'Collapse'
-                : `Show more (${data.length - MAX_ITEMS_IN_TOP})`}
+              {this.state.expanded ? (
+                <FormattedMessage {...messages.collapse} />
+              ) : (
+                <FormattedMessage
+                  {...messages.expand}
+                  values={{count: data.length - MAX_ITEMS_IN_TOP}}
+                />
+              )}
             </Button>
           </React.Fragment>
         )}
@@ -317,3 +364,5 @@ export default class SharesChart extends React.Component {
     );
   }
 }
+
+export default injectIntl(SharesChart) as React.ComponentType<OwnProps>;

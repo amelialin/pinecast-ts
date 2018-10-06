@@ -90,7 +90,7 @@
 .DateTimePicker-wrapper .rdtPicker .dow {
   background: #dee1df;
   width: 14.2857%;
-  border-bottom: none;
+  border-bottom: 4px solid transparent;
 }
 .DateTimePicker-wrapper .rdtPicker .dow:first-child {
   border-bottom-left-radius: 3px;

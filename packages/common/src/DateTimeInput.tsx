@@ -1,3 +1,4 @@
+import {findDOMNode} from 'react-dom';
 import * as React from 'react';
 
 import styled from '@pinecast/styles';
@@ -50,20 +51,32 @@ export default class DateTimeInput extends React.Component {
     includeTime: true,
   };
 
-  wrapper: HTMLElement | null = null;
+  inputRef = React.createRef<TextInput>();
+  wrapperRef = React.createRef<HTMLDivElement>();
 
   componentDidMount() {
-    document.body.addEventListener('click', this.handleOutsideClick);
+    document.body.addEventListener('click', this.handleOutsideEvent);
+    document.body.addEventListener('focus', this.handleOutsideEvent, {
+      capture: true,
+    });
   }
   componentWillUnmount() {
-    document.body.removeEventListener('click', this.handleOutsideClick);
+    document.body.removeEventListener('click', this.handleOutsideEvent);
+    document.body.removeEventListener('focus', this.handleOutsideEvent, {
+      capture: true,
+    });
   }
 
-  handleOutsideClick = (e: MouseEvent) => {
-    if (!this.state.open) {
+  handleOutsideEvent = (e: Event) => {
+    if (!this.state.open || !e.target) {
       return;
     }
-    if (this.wrapper && e.target && this.wrapper.contains(e.target as Node)) {
+    if (
+      (this.wrapperRef.current &&
+        this.wrapperRef.current.contains(e.target as Node)) ||
+      (this.inputRef.current &&
+        findDOMNode(this.inputRef.current!)!.contains(e.target as Node))
+    ) {
       return;
     }
     this.setState({open: false});
@@ -74,12 +87,6 @@ export default class DateTimeInput extends React.Component {
       this.setState({open: false});
     }
     this.props.onChange(date);
-  };
-  handleRef = (el: HTMLElement | null) => {
-    this.wrapper = el;
-    if (el) {
-      this.forceUpdate();
-    }
   };
 
   renderPickerInner() {
@@ -97,10 +104,6 @@ export default class DateTimeInput extends React.Component {
     );
   }
 
-  handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.stopPropagation();
-    this.setState({open: true});
-  };
   handleOpen = () => {
     this.setState({open: true});
   };
@@ -109,10 +112,11 @@ export default class DateTimeInput extends React.Component {
     const {disabled, includeTime, invalid, style, value} = this.props;
     return (
       <TextInput
-        nativeEvents={{onClick: this.handleClick, onFocus: this.handleOpen}}
+        nativeEvents={{onClick: this.handleOpen, onFocus: this.handleOpen}}
         disabled={disabled}
         invalid={invalid}
         readOnly
+        ref={this.inputRef}
         style={{width: 200, ...style}}
         value={
           value
@@ -146,7 +150,7 @@ export default class DateTimeInput extends React.Component {
             y={y}
           >
             <div
-              ref={this.handleRef}
+              ref={this.wrapperRef}
               style={{
                 left: 0,
                 position: 'absolute',

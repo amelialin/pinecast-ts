@@ -1,6 +1,12 @@
 import * as React from 'react';
 
 import Checkbox from '@pinecast/common/Checkbox';
+import {
+  defineMessages,
+  FormattedMessage,
+  injectIntl,
+  InjectedIntlProps,
+} from '@pinecast/i18n';
 import Group from '@pinecast/common/Group';
 import Switch from '@pinecast/common/Switch';
 
@@ -16,12 +22,36 @@ import * as persist from '../persist';
 import SubToolbar from './components/SubToolbar';
 import TimeSeriesTooltips from './components/TimeSeriesTooltips';
 
-export default class TimeSeriesChart extends React.Component {
+const messages = defineMessages({
+  episodeOption: {
+    id: 'db-analytics.TimeSeriesChart.episodeOption',
+    description: 'Checkbox option to show episode markers',
+    defaultMessage: 'Episodes',
+  },
+  lineView: {
+    id: 'db-analytics.TimeSeriesChart.type.line',
+    description: 'Option to show chart as a line chart',
+    defaultMessage: 'Line',
+  },
+  areaView: {
+    id: 'db-analytics.TimeSeriesChart.type.area',
+    description: 'Option to show chart as an area chart',
+    defaultMessage: 'Area',
+  },
+
+  timestampLabel: {
+    id: 'db-analytics.TimeSeriesChart.csv.timestamp',
+    description: 'Timestamp label for CSVs',
+    defaultMessage: 'Timestamp',
+  },
+});
+
+class TimeSeriesChart extends React.Component {
   props: {
     data: TimeSeriesData;
     episodes: Array<Episode> | null;
     view: constants.AnalyticsView;
-  };
+  } & InjectedIntlProps;
   state: {
     activeSeries: Array<string | number>;
     chartType: 'line' | 'area';
@@ -210,7 +240,10 @@ export default class TimeSeriesChart extends React.Component {
   getCSVData = () => {
     const {datasets, labels} = this.props.data;
     return [
-      ['Timestamp', ...datasets.map(ds => ds.label)],
+      [
+        this.props.intl.formatMessage(messages.timestampLabel),
+        ...datasets.map(ds => ds.label),
+      ],
       ...labels.map((label, i) => [
         label,
         ...datasets.map(ds => ds.data[labels.length - ds.data.length + i]),
@@ -230,17 +263,17 @@ export default class TimeSeriesChart extends React.Component {
               checked={showEpisodes}
               onChange={this.handleChangeShowEpisodes}
               style={{paddingBottom: 0}}
-              text="Episodes"
+              text={<FormattedMessage {...messages.episodeOption} />}
             />
           )}
           {this.canHaveAreaChart(data) && (
             <Switch
               activeColor="#708d9e"
               checked={chartType === 'area'}
-              offText="Line"
+              offText={<FormattedMessage {...messages.lineView} />}
               onChange={this.handleChartTypeChange}
               style={{paddingBottom: 0}}
-              text="Area"
+              text={<FormattedMessage {...messages.areaView} />}
             />
           )}
           <CSVLink data={this.getCSVData} />
@@ -267,3 +300,5 @@ export default class TimeSeriesChart extends React.Component {
     );
   }
 }
+
+export default injectIntl(TimeSeriesChart);

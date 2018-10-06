@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import * as constants from '../constants';
 import CSVLink from '../CSVLink';
+import {defineMessages, injectIntl, InjectedIntlProps} from '@pinecast/i18n';
 import Legend from './components/Legend';
 import LineChartAxes from './components/LineChartAxes';
 import LineChartBody from './components/LineChartBody';
@@ -10,12 +11,20 @@ import {Episode, TimeSeriesData} from '../types';
 import SubToolbar from './components/SubToolbar';
 import TimeSeriesTooltips from './components/TimeSeriesTooltips';
 
-export default class GrowthChart extends React.Component {
+const messages = defineMessages({
+  timestampLabel: {
+    id: 'db-analytics.GrowthChart.csv.timestamp',
+    description: 'Timestamp label for CSVs',
+    defaultMessage: 'Timestamp',
+  },
+});
+
+class GrowthChart extends React.Component {
   props: {
     data: TimeSeriesData;
     episodes: Array<Episode> | null;
     view: constants.AnalyticsView;
-  };
+  } & InjectedIntlProps;
   state: {
     activeSeries: Array<string | number>;
     hovering: string | number | null;
@@ -52,7 +61,7 @@ export default class GrowthChart extends React.Component {
         activeSeries={this.state.activeSeries}
         hoveringSeries={this.state.hovering}
         series={this.props.data.datasets.map((ds, i) => ({
-          color: ds.strokeColor || 'red', // TODO: Ehh
+          color: ds.strokeColor || '#bf1d1d',
           key: i,
           label: ds.label,
           total: ds.data.reduce((acc, cur) => acc + cur, 0),
@@ -120,7 +129,10 @@ export default class GrowthChart extends React.Component {
       data: {datasets, labels},
     } = this.props;
     return [
-      ['Timestamp', ...datasets.map(ds => ds.label)],
+      [
+        this.props.intl.formatMessage(messages.timestampLabel),
+        ...datasets.map(ds => ds.label),
+      ],
       ...labels.map((label, i) => [
         label,
         ...datasets.map(ds => ds.data[labels.length - ds.data.length + i]),
@@ -148,3 +160,5 @@ export default class GrowthChart extends React.Component {
     );
   }
 }
+
+export default injectIntl(GrowthChart);

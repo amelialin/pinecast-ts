@@ -24,7 +24,7 @@ export default function render(
   data: Data,
   episodes: Array<Episode> | null,
   chartTypeOverride?: string,
-): JSX.Element {
+): React.ReactNode {
   switch (chartTypeOverride || constants.TYPES_CHART_TYPES[view]) {
     case 'geo':
       return <CountryChart data={data as GeographicData} />;

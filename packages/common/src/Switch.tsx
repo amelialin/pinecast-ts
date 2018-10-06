@@ -120,11 +120,11 @@ const Switch = ({
   activeColor?: string;
   checked: boolean;
   disabled?: boolean;
-  offText?: JSX.Element | string;
+  offText?: React.ReactNode;
   onChange: (checkedValue: boolean) => void;
   style?: React.CSSProperties;
   tabIndex?: number;
-  text: JSX.Element | string;
+  text: React.ReactNode;
 }) => {
   return (
     <WrapperLabel style={style}>

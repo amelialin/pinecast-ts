@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import {ClientStyletron, StyletronProvider} from '@pinecast/styles';
+import {Provider as IntlProvider} from '@pinecast/i18n';
 
 import Layout from './Layout';
 
@@ -10,7 +11,9 @@ export default class App extends React.Component {
   render() {
     return (
       <StyletronProvider styletron={styletron}>
-        <Layout />
+        <IntlProvider locale="en">
+          <Layout />
+        </IntlProvider>
       </StyletronProvider>
     );
   }

@@ -32,8 +32,8 @@ export function defineMessages(messages: {
 
 export function injectIntl<T>(
   component: React.ComponentType<T & InjectedIntlProps>,
-): React.ComponentType<T> {
-  return nativeInjectIntl(component as any) as any;
+) {
+  return (nativeInjectIntl(component as any) as any) as React.ComponentType<T>;
 }
 
 export const I18n = injectIntl(

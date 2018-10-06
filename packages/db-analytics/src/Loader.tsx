@@ -1,11 +1,32 @@
 import * as React from 'react';
 
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import EmptyState from '@pinecast/common/EmptyState';
 import {nullThrows} from '@pinecast/common/helpers';
 import xhr from '@pinecast/xhr';
 
 import * as constants from './constants';
 import {Data, Episode} from './types';
+
+const messages = defineMessages({
+  emptyStateTitle: {
+    id: 'db-analytics.Loader.emptyState',
+    description: 'Title for loading state when no analytics are returned',
+    defaultMessage: 'No analytics data',
+  },
+  emptyStateCopy: {
+    id: 'db-analytics.Loader.emptyState.copy',
+    description: 'Copy for loading state when no analytics are returned',
+    defaultMessage:
+      'There is no analytics data available for the selected tiem range.',
+  },
+
+  error: {
+    id: 'db-analytics.Loader.error',
+    description: 'Error when analytics could not load',
+    defaultMessage: 'Unable to contact Pinecast for analytics',
+  },
+});
 
 type LoadingState = {
   isLoading: true;
@@ -22,9 +43,9 @@ export default class Loader extends React.Component {
     analyticsType: constants.AnalyticsType;
     analyticsView: constants.AnalyticsView;
     loadEpisodes: boolean;
-    children: (p: State) => JSX.Element;
+    children: (p: State) => React.ReactNode;
     endpointOverride?: string;
-    onError: (error: JSX.Element | string) => void;
+    onError: (error: React.ReactNode) => void;
     queryString: string;
   };
   state: {
@@ -102,7 +123,7 @@ export default class Loader extends React.Component {
     } catch (e) {
       // TODO(L10n)
       this.setState({loading: false}, () => {
-        this.props.onError('Unable to contact the server');
+        this.props.onError(<FormattedMessage {...messages.error} />);
       });
       return;
     }
@@ -141,12 +162,11 @@ export default class Loader extends React.Component {
     }
 
     if (this.isEmpty()) {
-      // TODO(L10n)
       return (
         <EmptyState
-          copy="There is no analaytics data available for the selected time range."
+          copy={<FormattedMessage {...messages.emptyStateCopy} />}
           style={{marginBottom: 0}}
-          title="No analytics data"
+          title={<FormattedMessage {...messages.emptyStateTitle} />}
         />
       );
     }

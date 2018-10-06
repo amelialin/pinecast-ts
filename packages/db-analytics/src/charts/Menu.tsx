@@ -1,7 +1,7 @@
 import * as React from 'react';
 
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import ErrorState from '@pinecast/common/ErrorState';
-import {FormattedMessage} from '@pinecast/i18n';
 import Group from '@pinecast/common/Group';
 import LoadingState from '@pinecast/common/LoadingState';
 import SelectCustom from '@pinecast/common/SelectCustom';
@@ -11,6 +11,19 @@ import {Consumer} from '../Config';
 import Loader, {State as LoaderState} from '../Loader';
 import {MenuData} from '../types';
 import render from './index';
+
+const messages = defineMessages({
+  loading: {
+    id: 'db-analytics.Menu.loading',
+    description: 'Title of loading state when loading analytics',
+    defaultMessage: 'Loading analytics…',
+  },
+  retryButton: {
+    id: 'db-analytics.Menu.errorState.retry',
+    description: 'Retry button on error',
+    defaultMessage: 'Retry',
+  },
+});
 
 export default class Menu extends React.Component {
   props: {
@@ -42,7 +55,9 @@ export default class Menu extends React.Component {
 
   renderInner = (state: LoaderState) => {
     if (state.isLoading) {
-      return <LoadingState title="Loading analytics…" />;
+      return (
+        <LoadingState title={<FormattedMessage {...messages.loading} />} />
+      );
     }
 
     return render(
@@ -59,7 +74,7 @@ export default class Menu extends React.Component {
     if (error) {
       return (
         <ErrorState
-          actionLabel="Retry"
+          actionLabel={<FormattedMessage {...messages.retryButton} />}
           onAction={this.handleClearError}
           title={error}
         />

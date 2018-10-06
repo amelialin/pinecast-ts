@@ -2,6 +2,12 @@ const {Chart} = require('react-google-charts');
 import * as numeral from 'numeral';
 import * as React from 'react';
 
+import {
+  defineMessages,
+  FormattedMessage,
+  injectIntl,
+  InjectedIntlProps,
+} from '@pinecast/i18n';
 import Group from '@pinecast/common/Group';
 import Switch from '@pinecast/common/Switch';
 import {Table, TableHeaderCell, TableBodyCell} from '@pinecast/common/Table';
@@ -11,6 +17,31 @@ import {GranularGeographicData} from '../types';
 import * as persist from '../persist';
 import SubToolbar from './components/SubToolbar';
 
+const messages = defineMessages({
+  mapView: {
+    id: 'db-analytics.CityChart.type.map',
+    description: 'Option to view city chart as a map',
+    defaultMessage: 'Map',
+  },
+  tableView: {
+    id: 'db-analytics.CityChart.type.table',
+    description: 'Option to view city chart as a table',
+    defaultMessage: 'Table',
+  },
+
+  city: {
+    id: 'db-analytics.CityChart.header.city',
+    description: 'Heading for city column in a table',
+    defaultMessage: 'City',
+  },
+  count: {
+    id: 'db-analytics.CityChart.header.count',
+    description: 'Heading for count column in a table',
+    defaultMessage: 'Count',
+  },
+});
+
+// These are for Google, not users
 const header = ['Latitude', 'Longitude', 'Name', 'Count'];
 const extractor = (x: {
   lat: string;
@@ -19,10 +50,13 @@ const extractor = (x: {
   count: number;
 }) => [+x.lat, +x.lon, x.label, x.count];
 
-export default class CityChart extends React.Component {
-  props: {
-    data: GranularGeographicData;
-  };
+type OwnProps = {
+  data: GranularGeographicData;
+};
+type Props = OwnProps & InjectedIntlProps;
+
+class CityChart extends React.Component {
+  props: Props;
   state: {showing: 'map' | 'table'} = {
     showing: persist.get('cityChart.chartType', 'map') as 'map' | 'table',
   };
@@ -34,7 +68,11 @@ export default class CityChart extends React.Component {
   };
 
   getCSVData = () => {
-    return [['City', 'Count'], ...this.props.data.map(d => [d.label, d.count])];
+    const {intl} = this.props;
+    return [
+      [intl.formatMessage(messages.city), intl.formatMessage(messages.count)],
+      ...this.props.data.map(d => [d.label, d.count]),
+    ];
   };
 
   render() {
@@ -47,10 +85,10 @@ export default class CityChart extends React.Component {
             <Switch
               activeColor="#708d9e"
               checked={showing === 'table'}
-              offText="Map"
+              offText={<FormattedMessage {...messages.mapView} />}
               onChange={this.handleChartTypeChange}
               style={{paddingBottom: 0}}
-              text="Table"
+              text={<FormattedMessage {...messages.tableView} />}
             />
             <CSVLink data={this.getCSVData} />
           </Group>
@@ -73,9 +111,11 @@ export default class CityChart extends React.Component {
           <Table style={{marginBottom: 0}}>
             <thead>
               <tr>
-                <TableHeaderCell>City</TableHeaderCell>
+                <TableHeaderCell>
+                  <FormattedMessage {...messages.city} />
+                </TableHeaderCell>
                 <TableHeaderCell style={{textAlign: 'right'}}>
-                  Count
+                  <FormattedMessage {...messages.count} />
                 </TableHeaderCell>
               </tr>
             </thead>
@@ -100,3 +140,5 @@ export default class CityChart extends React.Component {
     );
   }
 }
+
+export default injectIntl(CityChart) as React.ComponentType<OwnProps>;

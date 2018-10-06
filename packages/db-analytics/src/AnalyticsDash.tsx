@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import Card from '@pinecast/common/Card';
 import * as dateHelpers from '@pinecast/common/helpers/dates';
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import ErrorState from '@pinecast/common/ErrorState';
 import Group from '@pinecast/common/Group';
 import LoadingState from '@pinecast/common/LoadingState';
@@ -20,6 +21,35 @@ import render from './charts';
 import * as timeframeAndGranularity from './timeframeAndGranularity';
 import TimeframePicker from './TimeframePicker';
 import TypePicker from './TypePicker';
+
+const messages = defineMessages({
+  upsellProTitle: {
+    id: 'db-analytics.AnalyticsDash.upsell.pro.title',
+    description: 'Title of the analytics upsell',
+    defaultMessage: 'See more with Pro analytics',
+  },
+  upsellStarterTitle: {
+    id: 'db-analytics.AnalyticsDash.upsell.starter.title',
+    description: 'Title of the analytics upsell',
+    defaultMessage: 'More analytics with Starter',
+  },
+  ctaUpsellPro: {
+    id: 'db-analytics.AnalyticsDash.upsell.pro.cta',
+    description: 'Button to upgrade to Pro analytics',
+    defaultMessage: 'Upgrade to Pro',
+  },
+  ctaUpsellStarter: {
+    id: 'db-analytics.AnalyticsDash.upsell.starter.cta',
+    description: 'Button to upgrade to Starter analytics',
+    defaultMessage: 'Upgrade to Starter',
+  },
+
+  loading: {
+    id: 'db-analytics.AnalyticsDash.loading',
+    description: 'Title of loading state when loading analytics',
+    defaultMessage: 'Loading analytics…',
+  },
+});
 
 const Toolbar = styled('div', {
   display: 'flex',
@@ -297,7 +327,9 @@ export default class AnalyticsDash extends React.Component {
 
   renderChart = (state: LoaderState) => {
     if (state.isLoading) {
-      return <LoadingState title="Loading analytics…" />;
+      return (
+        <LoadingState title={<FormattedMessage {...messages.loading} />} />
+      );
     }
 
     return render(this.state.view, state.data, state.episodes || null);
@@ -322,7 +354,13 @@ export default class AnalyticsDash extends React.Component {
     ) {
       return (
         <Upsell
-          actionLabel={isOwner ? 'Upgrade to Pro' : undefined}
+          actionLabel={
+            isOwner ? (
+              <FormattedMessage {...messages.ctaUpsellPro} />
+            ) : (
+              undefined
+            )
+          }
           copy={
             isOwner ? (
               <React.Fragment>
@@ -337,7 +375,7 @@ export default class AnalyticsDash extends React.Component {
             )
           }
           onAction={this.handleUpgrade}
-          title="See more with Pro analytics"
+          title={<FormattedMessage {...messages.upsellProTitle} />}
         />
       );
     }
@@ -349,7 +387,13 @@ export default class AnalyticsDash extends React.Component {
     ) {
       return (
         <Upsell
-          actionLabel={isOwner ? 'Upgrade to Starter' : undefined}
+          actionLabel={
+            isOwner ? (
+              <FormattedMessage {...messages.ctaUpsellStarter} />
+            ) : (
+              undefined
+            )
+          }
           copy={
             isOwner ? (
               <React.Fragment>
@@ -362,7 +406,7 @@ export default class AnalyticsDash extends React.Component {
             )
           }
           onAction={this.handleUpgrade}
-          title="More analytics with Starter"
+          title={<FormattedMessage {...messages.upsellStarterTitle} />}
         />
       );
     }
