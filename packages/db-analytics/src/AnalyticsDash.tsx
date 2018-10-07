@@ -98,10 +98,10 @@ export default class AnalyticsDash extends React.Component {
     const type = this.getType();
     const customTFPreviousUnparsed = persist.get(`dash.${type}.ctf`, '');
     const customTFPrevious: AnalyticsDash['state']['customTimeframe'] = customTFPreviousUnparsed
-      ? (customTFPreviousUnparsed.split(',').map(x => new Date(x)) as [
+      ? customTFPreviousUnparsed.split(',').map(x => new Date(x)) as [
           Date,
           Date
-        ])
+        ]
       : null;
 
     this.state = {
@@ -308,16 +308,19 @@ export default class AnalyticsDash extends React.Component {
 
   renderCustomTimeframe() {
     const {customTimeframe, timeframe} = this.state;
-    const [startDate, endDate] = nullThrows(customTimeframe);
+    if (timeframe !== 'custom') {
+      return null;
+    }
+    if (!customTimeframe) {
+      throw new Error('unreachable');
+    }
     return (
-      timeframe === 'custom' && (
-        <DateRangePicker
-          endDate={endDate}
-          isOutsideRange={this.isOutsideRange}
-          onDatesChanged={this.handleCustomTimeframeChanged}
-          startDate={startDate}
-        />
-      )
+      <DateRangePicker
+        endDate={customTimeframe[1]}
+        isOutsideRange={this.isOutsideRange}
+        onDatesChanged={this.handleCustomTimeframeChanged}
+        startDate={customTimeframe[0]}
+      />
     );
   }
 
