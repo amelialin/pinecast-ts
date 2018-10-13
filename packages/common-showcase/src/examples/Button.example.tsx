@@ -36,8 +36,30 @@ export default {
       title: 'Shortcut key',
       render: () => (
         <ButtonGroup>
+          <Button size="large" shortcut={{letter: 'esc'}}>
+            Cancel
+          </Button>
+          <Button
+            $isPrimary
+            size="large"
+            shortcut={{letter: 's', metaKey: true}}
+          >
+            Save
+          </Button>
           <Button shortcut={{letter: 'esc'}}>Cancel</Button>
-          <Button shortcut={{letter: 's', metaKey: true}}>Save</Button>
+          <Button $isPrimary shortcut={{letter: 's', metaKey: true}}>
+            Save
+          </Button>
+          <Button size="small" shortcut={{letter: 'esc'}}>
+            Cancel
+          </Button>
+          <Button
+            $isPrimary
+            size="small"
+            shortcut={{letter: 's', metaKey: true}}
+          >
+            Save
+          </Button>
         </ButtonGroup>
       ),
     },

@@ -1,4 +1,4 @@
-import {defineMessages} from '@pinecast/i18n';
+import {defineMessages, Message} from '@pinecast/i18n';
 
 export const names = defineMessages({
   aud: {
@@ -41,7 +41,7 @@ export const names = defineMessages({
     description: 'Name of currency "usd"',
     defaultMessage: 'USD - US Dollar',
   },
-});
+}) as {[currency: string]: Message};
 
 export const countriesToCurrencies: {[country: string]: Array<string>} = {
   US: ['usd'],

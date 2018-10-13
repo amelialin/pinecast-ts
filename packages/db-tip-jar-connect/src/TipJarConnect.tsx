@@ -3,8 +3,8 @@ import * as React from 'react';
 import Button from '@pinecast/common/Button';
 import Callout from '@pinecast/common/Callout';
 import Card from '@pinecast/common/Card';
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import Form from '@pinecast/common/Form';
-import {gettext} from '@pinecast/i18n';
 import Spinner from '@pinecast/common/Spinner';
 import xhr from '@pinecast/xhr';
 
@@ -13,6 +13,59 @@ import ExternalAccount from './ExternalAccount';
 import NewAccountForm from './NewAccountForm';
 
 declare var Rollbar: any;
+
+const messages = defineMessages({
+  titleUpdate: {
+    id: 'db-tip-jar-connect.TipJarConnect.title.update',
+    description:
+      'Title of the bank account form when a bank account is already present',
+    defaultMessage: 'Update payout account',
+  },
+  copyUpdate: {
+    id: 'db-tip-jar-connect.TipJarConnect.copy.update',
+    description: 'Page description when a bank account is already present',
+    defaultMessage: 'Account information is stored securely on Stripe.',
+  },
+
+  successUpdated: {
+    id: 'db-tip-jar-connect.TipJarConnect.success.updated',
+    description: 'Success message when the bank account details are updated',
+    defaultMessage: 'Your account was updated successfully.',
+  },
+  ctaSave: {
+    id: 'db-tip-jar-connect.TipJarConnect.cta.save',
+    description: 'Save button for bank account details',
+    defaultMessage: 'Save',
+  },
+
+  copyNewAccount: {
+    id: 'db-tip-jar-connect.TipJarConnect.copy.newAccount',
+    description: 'Copy when the user has not set up a tip jar',
+    defaultMessage:
+      'We need some information before we can accept tips on your behalf.',
+  },
+  errorLoadingBankDetails: {
+    id: 'db-tip-jar-connect.TipJarConnect.error.loading',
+    description: 'Error loading bank account details',
+    defaultMessage: 'There was a problem loading your bank information.',
+  },
+  errorSavingPinecast: {
+    id: 'db-tip-jar-connect.TipJarConnect.error.saving.pinecast',
+    description: 'Error when saving bank details to Pinecast',
+    defaultMessage:
+      'There was a problem adding your payout account to Pinecast.',
+  },
+  errorSavingStripe: {
+    id: 'db-tip-jar-connect.TipJarConnect.error.saving.stripe',
+    description: 'Error when saving bank details to Stripe',
+    defaultMessage: 'There was a problem sending your bank details to Stripe.',
+  },
+  errorLoading: {
+    id: 'db-tip-jar-connect.TipJarConnect.error.loading',
+    description: 'Error when loading bank information',
+    defaultMessage: 'There was a problem loading your account status.',
+  },
+});
 
 export default class TipJarConnect extends React.Component {
   static selector = '.tip-jar-connect';
@@ -55,7 +108,7 @@ export default class TipJarConnect extends React.Component {
       this.setState({settings: JSON.parse(response), settingsError: null});
     } catch {
       this.setState({
-        settingsError: gettext('There was a problem submitting the form.'),
+        settingsError: <FormattedMessage {...messages.errorLoading} />,
       });
     }
   };
@@ -81,8 +134,8 @@ export default class TipJarConnect extends React.Component {
     } catch (e) {
       console.error(e);
       this.setState({
-        updateExtAcctError: gettext(
-          'There was a problem sending your account information to Stripe.',
+        updateExtAcctError: (
+          <FormattedMessage {...messages.errorSavingStripe} />
         ),
         savingExtAcct: false,
       });
@@ -100,9 +153,7 @@ export default class TipJarConnect extends React.Component {
     try {
       await req;
     } catch {
-      let error = gettext(
-        'There was a problem adding your payout account to Pinecast.',
-      );
+      let error = <FormattedMessage {...messages.errorSavingPinecast} />;
       if (req.xhr.responseText) {
         try {
           error = JSON.parse(req.xhr.responseText).error;
@@ -148,7 +199,7 @@ export default class TipJarConnect extends React.Component {
       return (
         <React.Fragment>
           <strong>
-            {gettext('There was a problem loading your bank information')}
+            <FormattedMessage {...messages.errorLoadingBankDetails} />
           </strong>
           <p>{settingsError}</p>
         </React.Fragment>
@@ -163,9 +214,7 @@ export default class TipJarConnect extends React.Component {
       return (
         <React.Fragment>
           <p>
-            {gettext(
-              'We need some information before we can accept tips on your behalf.',
-            )}
+            <FormattedMessage {...messages.copyNewAccount} />
           </p>
           <NewAccountForm onAccountCreated={this.refreshSettings} />
         </React.Fragment>
@@ -178,16 +227,16 @@ export default class TipJarConnect extends React.Component {
         <Card style={{maxWidth: 500}} whiteBack>
           <Form onSubmit={this.handleUpdateExtAcctSubmit}>
             <strong style={{display: 'block', marginBottom: '1em'}}>
-              {gettext('Update payout account')}
+              <FormattedMessage {...messages.titleUpdate} />
             </strong>
 
             <p>
-              {gettext('Account information is stored securely on Stripe.')}
+              <FormattedMessage {...messages.copyUpdate} />
             </p>
 
             {extAccountSuccess && (
               <Callout type="positive">
-                {gettext('Your account was updated successfully')}
+                <FormattedMessage {...messages.successUpdated} />
               </Callout>
             )}
             {updateExtAcctError && (
@@ -206,7 +255,7 @@ export default class TipJarConnect extends React.Component {
                 ref={this.handleUpdateExtAcctRef}
               />
               <Button $isPrimary type="submit">
-                {gettext('Save')}
+                <FormattedMessage {...messages.ctaSave} />
               </Button>
             </div>
           </Form>

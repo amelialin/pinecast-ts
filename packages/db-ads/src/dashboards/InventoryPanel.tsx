@@ -12,7 +12,6 @@ import * as Table from '@pinecast/common/Table';
 import xhr from '@pinecast/xhr';
 
 import {listAds, ListAdsState} from '../dataProviders/inventory';
-import * as models from '../models';
 import NewAdForm from './inventory/NewAdForm';
 
 class InventoryPanel extends React.Component {
@@ -20,7 +19,6 @@ class InventoryPanel extends React.Component {
     inventory: ListAdsState;
   };
   state: {
-    createError: React.ReactNode | null;
     deleteError: React.ReactNode | null;
     pending: boolean;
   };
@@ -28,20 +26,12 @@ class InventoryPanel extends React.Component {
   constructor(props: InventoryPanel['props']) {
     super(props);
     this.state = {
-      createError: null,
       deleteError: null,
       pending: false,
     };
   }
 
   renderInlineError() {
-    if (this.state.createError) {
-      return (
-        <Callout style={{marginTop: 0}} type="negative">
-          {this.state.createError}
-        </Callout>
-      );
-    }
     if (this.state.deleteError) {
       return (
         <Callout style={{marginTop: 0}} type="negative">
@@ -75,39 +65,9 @@ class InventoryPanel extends React.Component {
       return;
     }
   };
-  handleNewAd = async (payload: models.MutableAdvertisement) => {
-    this.setState({createError: null, pending: true});
-    try {
-      const body = new FormData();
-      Object.entries(payload).forEach(([key, value]) => {
-        body.append(key, value as string);
-      });
-      await xhr({
-        method: 'POST',
-        url: '/advertisements/inventory/create',
-        body,
-      });
-      this.setState({pending: false});
-      return this.props.inventory.reload();
-    } catch (e) {
-      this.setState({
-        createError: 'There was an error creating the tag.',
-        pending: false,
-      });
-      return;
-    }
-  };
 
   renderModal = ({handleClose}: {handleClose: () => void}) => {
-    return (
-      <NewAdForm
-        onCancel={handleClose}
-        onNewTag={payload => {
-          handleClose();
-          this.handleNewAd(payload);
-        }}
-      />
-    );
+    return <NewAdForm onCancel={handleClose} onNewAd={handleClose} />;
   };
 
   render() {

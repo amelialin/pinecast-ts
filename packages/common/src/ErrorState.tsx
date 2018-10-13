@@ -21,7 +21,7 @@ const ErrorState = ({
   title: React.ReactNode;
 }) => (
   <Wrapper>
-    <ErrorIcon height={40} style={{marginBottom: 10}} />
+    <ErrorIcon color="#000" height={40} style={{marginBottom: 10}} />
     <TextWrapper>{title}</TextWrapper>
     {actionLabel &&
       onAction && (

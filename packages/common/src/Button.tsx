@@ -80,14 +80,6 @@ const NativeButton = styled(
   {className: 'Button-nativeButton'},
 );
 
-const keyboardShortcutStyles: React.CSSProperties = {
-  alignSelf: 'flex-end',
-  fontWeight: 400,
-  marginBottom: 2,
-  marginLeft: 4,
-  opacity: 0.5,
-};
-
 export default class Button extends React.PureComponent {
   props: {
     autoFocus?: boolean;
@@ -166,7 +158,16 @@ export default class Button extends React.PureComponent {
         )}
         {children}
         {shortcut ? (
-          <KeyboardShortcut {...shortcut} style={keyboardShortcutStyles} />
+          <KeyboardShortcut
+            {...shortcut}
+            style={{
+              alignSelf: 'flex-end',
+              fontWeight: 400,
+              marginLeft: 4,
+              opacity: 0.5,
+              marginBottom: size === 'large' ? 2 : 1,
+            }}
+          />
         ) : null}
       </NativeButton>
     );

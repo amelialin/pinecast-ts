@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import {defineMessages, FormattedMessage} from '@pinecast/i18n';
+import getAudioDuration from '@pinecast/common/audio/duration';
 import {nullThrows} from '@pinecast/common/helpers';
 import Spinner from '@pinecast/common/Spinner';
 
@@ -16,7 +17,7 @@ import CardRemoveArtwork from './cards/RemoveArtwork';
 import CardReplaceArtwork from './cards/ReplaceArtwork';
 import CardStorage from './cards/Storage';
 import {decodeImage, reformatImage} from './images';
-import {detectAudioSize, getID3Tags} from './mp3';
+import {getID3Tags} from './mp3';
 import ErrorComponent from './Error';
 import ImageFilePreview from './ImageFilePreview';
 import RequiredPlaceholder from './RequiredPlaceholder';
@@ -259,7 +260,10 @@ export default class AudioUploader extends React.Component {
     }
 
     try {
-      const duration = await guardCallback(this, detectAudioSize(audioFile));
+      const duration = await guardCallback(
+        this,
+        getAudioDuration(audioFile.getAsBlob()),
+      );
       await this.promiseSetState({duration});
     } catch (e) {
       console.error(e);

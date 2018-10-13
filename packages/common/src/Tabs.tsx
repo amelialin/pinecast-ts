@@ -12,7 +12,7 @@ const TabWrapper = styled('div', {
 export class Tab extends React.PureComponent {
   props: {
     children?: Children;
-    name: string;
+    name: React.ReactNode;
   };
 
   render() {

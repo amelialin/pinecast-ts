@@ -3,7 +3,26 @@ import * as React from 'react';
 
 import Card from '@pinecast/common/Card';
 import {DashboardTitle} from '@pinecast/common/Text';
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import styled from '@pinecast/styles';
+
+const messages = defineMessages({
+  title: {
+    id: 'db-ads.UsageCard.title',
+    description: 'Title for usage card',
+    defaultMessage: 'Usage for this billing cycle',
+  },
+  swaps: {
+    id: 'db-ads.UsageCard.swaps',
+    description: 'Unit for number of swaps',
+    defaultMessage: 'swaps',
+  },
+  cost: {
+    id: 'db-ads.UsageCard.cost',
+    description: 'Label for bill amount',
+    defaultMessage: 'cost',
+  },
+});
 
 const Wrapper = styled('div', {
   display: 'flex',
@@ -30,15 +49,21 @@ const UseItemValue = styled('span', {
 
 const UsageCard = ({cost, swaps}: {cost: number; swaps: number}) => (
   <Card whiteBack>
-    <DashboardTitle>Usage for this billing cycle</DashboardTitle>
+    <DashboardTitle>
+      <FormattedMessage {...messages.title} />
+    </DashboardTitle>
     <Wrapper>
       <UseItem>
         <UseItemTitle>{numeral(swaps).format('0,0')}</UseItemTitle>
-        <UseItemValue>swaps</UseItemValue>
+        <UseItemValue>
+          <FormattedMessage {...messages.swaps} />
+        </UseItemValue>
       </UseItem>
       <UseItem>
         <UseItemTitle>{numeral(cost / 100).format('$0,0[.]00')}</UseItemTitle>
-        <UseItemValue>cost</UseItemValue>
+        <UseItemValue>
+          <FormattedMessage {...messages.cost} />
+        </UseItemValue>
       </UseItem>
     </Wrapper>
   </Card>

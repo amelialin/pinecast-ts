@@ -3,6 +3,7 @@ import * as React from 'react';
 import Button from '@pinecast/common/Button';
 import Callout from '@pinecast/common/Callout';
 import {compose} from '@pinecast/common/helpers';
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import EmptyState from '@pinecast/common/EmptyState';
 import ErrorState from '@pinecast/common/ErrorState';
 import LoadingState from '@pinecast/common/LoadingState';
@@ -13,6 +14,73 @@ import xhr from '@pinecast/xhr';
 
 import {listTags, ListTagsState} from '../dataProviders/tags';
 import NewTagForm from './tags/NewTagForm';
+
+const messages = defineMessages({
+  errorDeletingTag: {
+    id: 'db-ads.TagsPanel.error.deletingTag',
+    description: 'Error shown when a tag could not be deleted',
+    defaultMessage: 'There was an error deleting the tag.',
+  },
+  errorCreatingTag: {
+    id: 'db-ads.TagsPanel.error.creatingTag',
+    description: 'Error shown when a tag could not be created',
+    defaultMessage: 'There was an error creating the tag.',
+  },
+  loading: {
+    id: 'db-ads.TagsPanel.loading',
+    description: 'Loading message for the list of tags for advertisements',
+    defaultMessage: 'Loading tags…',
+  },
+  retry: {
+    id: 'db-ads.TagsPanel.button.retry',
+    description: 'Button shown on an error to retry the operation',
+    defaultMessage: 'Retry',
+  },
+  errorLoadingTags: {
+    id: 'db-ads.TagsPanel.error.loading',
+    description: 'Error when loading tags',
+    defaultMessage: 'We could not load your tags.',
+  },
+
+  colName: {
+    id: 'db-ads.TagsPanel.table.column.name',
+    description: 'Column header for tag name',
+    defaultMessage: 'Name',
+  },
+  colDesc: {
+    id: 'db-ads.TagsPanel.table.column.description',
+    description: 'Column header for tag description',
+    defaultMessage: 'Description',
+  },
+  optionDelete: {
+    id: 'db-ads.TagsPanel.option.delete',
+    description: 'Option to delete a tag',
+    defaultMessage: 'Delete',
+  },
+
+  emptyTitle: {
+    id: 'db-ads.TagsPanel.empty.title',
+    description: 'Title of the empty state for tags',
+    defaultMessage: 'You do not have any tags yet.',
+  },
+  emptyCopy: {
+    id: 'db-ads.TagsPanel.empty.copy',
+    description: 'Copy for empty state for tags',
+    defaultMessage:
+      'Tags let you match advertisements with appropriate ad spots.',
+  },
+  emptyCta: {
+    id: 'db-ads.TagsPanel.empty.cta',
+    description: 'Button to create a new tag in the empty state',
+    defaultMessage: 'Create a tag',
+  },
+
+  cta: {
+    id: 'db-ads.TagsPanel.cta',
+    description: 'Button to create a new tag',
+    defaultMessage: 'New tag',
+  },
+});
 
 class TagsPanel extends React.Component {
   props: {
@@ -68,7 +136,7 @@ class TagsPanel extends React.Component {
       return this.props.tags.reload();
     } catch (e) {
       this.setState({
-        deleteError: 'There was an error deleting the tag.',
+        deleteError: <FormattedMessage {...messages.errorDeletingTag} />,
         pending: false,
       });
       return;
@@ -89,7 +157,7 @@ class TagsPanel extends React.Component {
       return this.props.tags.reload();
     } catch (e) {
       this.setState({
-        createError: 'There was an error creating the tag.',
+        createError: <FormattedMessage {...messages.errorCreatingTag} />,
         pending: false,
       });
       return;
@@ -112,13 +180,15 @@ class TagsPanel extends React.Component {
     const {pending} = this.state;
     const {tags} = this.props;
     if (pending || tags.isLoading || tags.isInitial) {
-      return <LoadingState title="Loading tags…" />;
+      return (
+        <LoadingState title={<FormattedMessage {...messages.loading} />} />
+      );
     }
     if (tags.isErrored) {
       return (
         <ErrorState
-          actionLabel="Retry"
-          title="We could not load your tags."
+          actionLabel={<FormattedMessage {...messages.retry} />}
+          title={<FormattedMessage {...messages.errorLoadingTags} />}
           onAction={this.handleReloadTags}
         />
       );
@@ -135,13 +205,17 @@ class TagsPanel extends React.Component {
                   onClick={handleOpen}
                   style={{marginBottom: 24}}
                 >
-                  New tag
+                  <FormattedMessage {...messages.cta} />
                 </Button>
                 <Table.Table style={{marginBottom: 0}}>
                   <thead>
                     <tr>
-                      <Table.TableHeaderCell>Name</Table.TableHeaderCell>
-                      <Table.TableHeaderCell>Description</Table.TableHeaderCell>
+                      <Table.TableHeaderCell>
+                        <FormattedMessage {...messages.colName} />
+                      </Table.TableHeaderCell>
+                      <Table.TableHeaderCell>
+                        <FormattedMessage {...messages.colDesc} />
+                      </Table.TableHeaderCell>
                       <Table.TableHeaderCell />
                     </tr>
                   </thead>
@@ -159,7 +233,16 @@ class TagsPanel extends React.Component {
                             onSelect={slug => {
                               this.handleDeleteTag(tag.uuid);
                             }}
-                            options={[{name: 'Delete', slug: 'delete'}]}
+                            options={[
+                              {
+                                name: (
+                                  <FormattedMessage
+                                    {...messages.optionDelete}
+                                  />
+                                ),
+                                slug: 'delete',
+                              },
+                            ]}
                           />
                         </Table.TableBodyCell>
                       </tr>
@@ -169,9 +252,9 @@ class TagsPanel extends React.Component {
               </React.Fragment>
             ) : (
               <EmptyState
-                actionLabel="Create a tag"
-                copy="Tags let you match advertisements with appropriate ad spots."
-                title="You do not have any tags yet."
+                actionLabel={<FormattedMessage {...messages.emptyCta} />}
+                copy={<FormattedMessage {...messages.emptyCopy} />}
+                title={<FormattedMessage {...messages.emptyTitle} />}
                 onAction={handleOpen}
               />
             )}

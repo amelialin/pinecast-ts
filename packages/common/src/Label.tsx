@@ -7,7 +7,7 @@ import Tag from '@pinecast/common/Tag';
 
 import {Children} from './types';
 import {DEFAULT_FONT} from './constants';
-import {ErrorFlag} from './icons';
+import InlineError from './InlineError';
 
 const messages = defineMessages({
   optional: {
@@ -54,25 +54,6 @@ const OneLineInputWrap = styled('div', {
   flex: '1 1',
   flexDirection: 'column',
 });
-
-const ErrorWrap = styled('div', {
-  alignItems: 'center',
-  color: '#d24242',
-  display: 'flex',
-  padding: '4px 0',
-});
-
-function renderError(error: React.ReactNode): JSX.Element | null {
-  if (!error) {
-    return null;
-  }
-  return (
-    <ErrorWrap>
-      <ErrorFlag color="#d24242" height={20} style={{marginRight: 8}} />
-      {error}
-    </ErrorWrap>
-  );
-}
 
 const nativeLabelStyles: CSS = {
   display: 'block',
@@ -158,12 +139,12 @@ const Label = ({
               margin: 0,
             },
           })}
-          {renderError(error || null)}
+          {Boolean(error) && <InlineError error={error} />}
         </OneLineInputWrap>
       ) : (
         children
       )}
-      {!$oneLine && renderError(error || null)}
+      {!$oneLine && Boolean(error) && <InlineError error={error} />}
     </NativeLabel>
   );
 };

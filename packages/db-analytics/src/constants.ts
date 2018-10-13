@@ -47,6 +47,7 @@ export const TYPES: {[type: string]: Array<AnalyticsView>} = {
     TYPE_GEO_GRAN_LISTENS,
     TYPE_GEO_SUBS,
     TYPE_GEO_GRAN_SUBS,
+    TYPE_TOP_EPISODES,
   ],
   podcast: [
     TYPE_LISTENS,
@@ -60,6 +61,7 @@ export const TYPES: {[type: string]: Array<AnalyticsView>} = {
     TYPE_GEO_GRAN_LISTENS,
     TYPE_GEO_SUBS,
     TYPE_GEO_GRAN_SUBS,
+    TYPE_TOP_EPISODES,
   ],
 };
 
@@ -150,6 +152,7 @@ export const TYPES_ENDPOINTS: {[type: string]: {[view: string]: string}} = {
     [TYPE_GROWTH]: 'network/growth',
     [TYPE_GEO_LISTENS]: 'network/listens/location',
     [TYPE_GEO_GRAN_LISTENS]: 'network/listens/location/options',
+    [TYPE_TOP_EPISODES]: 'network/listens/top-episodes',
     [TYPE_SUBS]: 'network/subscribers',
     [TYPE_GEO_SUBS]: 'network/subscribers/location',
     [TYPE_GEO_GRAN_SUBS]: 'network/subscribers/location/options',

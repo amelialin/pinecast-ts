@@ -54,12 +54,29 @@ export default {
     {
       title: 'With an error',
       render: () => (
-        <Label
-          text="Label with a text input"
-          error="Oh no, you messed up this time."
-        >
-          <TextInput invalid onChange={() => {}} value="" />
-        </Label>
+        <React.Fragment>
+          <Label
+            text="Label with a text input"
+            error="Oh no, you messed up this time."
+          >
+            <TextInput invalid onChange={() => {}} value="" />
+          </Label>
+          <Label
+            $oneLine
+            text="On one line"
+            error="Oh no, you messed up this time."
+          >
+            <TextInput invalid onChange={() => {}} value="" />
+          </Label>
+          <Label
+            $oneLine
+            $oneLineCollapse
+            text="One line, collapsed"
+            error="Oh no, you messed up this time."
+          >
+            <TextInput invalid onChange={() => {}} value="" />
+          </Label>
+        </React.Fragment>
       ),
     },
   ],

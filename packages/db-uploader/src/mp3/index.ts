@@ -19,35 +19,3 @@ export async function getID3Tags(asset: Asset) {
     });
   });
 }
-
-export function detectAudioSize(asset: Asset) {
-  const asBlob = asset.getAsBlob();
-  const u = URL.createObjectURL(asBlob);
-  const audio = new Audio(u);
-  let handled = false;
-  return new Promise<number>((resolve, reject) => {
-    try {
-      const handler = () => {
-        if (handled) {
-          return;
-        }
-        if (audio.duration === Infinity || isNaN(audio.duration)) {
-          return;
-        }
-        handled = true;
-        URL.revokeObjectURL(u);
-        resolve(audio.duration);
-      };
-      audio.addEventListener('loadedmetadata', handler);
-      audio.addEventListener('durationchanged', handler);
-      setTimeout(() => {
-        handler();
-        if (!handled) {
-          reject();
-        }
-      }, 3000);
-    } catch (e) {
-      reject();
-    }
-  });
-}

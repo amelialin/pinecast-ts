@@ -48,7 +48,7 @@ export default class AudioUpload extends React.PureComponent {
     audioType: string;
     labelText: JSX.Element | string;
     onCleared: () => void;
-    onNewFile: (signedURL: string) => Promise<void>;
+    onNewFile: (signedURL: string, file: File) => Promise<void>;
     value: string | null;
 
     slug?: string;
@@ -136,7 +136,7 @@ export default class AudioUpload extends React.PureComponent {
       return;
     }
 
-    await this.props.onNewFile(data.destinationURL);
+    await this.props.onNewFile(data.destinationURL, file);
     if (reqId < this.ongoingRequest) {
       return;
     }

@@ -24,9 +24,10 @@ export type Message = {
   defaultMessage: string;
 };
 
-export function defineMessages(messages: {
-  [id: string]: Message;
-}): {[id: string]: Message} {
+// This weird typing is to preserve autocomplete
+export function defineMessages<T extends Object>(
+  messages: {[id in keyof T]: Message},
+): {[id in keyof T]: Message} {
   return messages;
 }
 
