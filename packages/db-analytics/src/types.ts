@@ -17,7 +17,7 @@ export type TimeSeriesData = {
 };
 
 export type TabularData = Array<
-  [string | {href: string; title: string}, number]
+  Array<string | {href: string; title: string} | number>
 >;
 
 export type GeographicData = Array<[string, string, string | number]>;

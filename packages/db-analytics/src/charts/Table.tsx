@@ -45,7 +45,9 @@ export default class Table extends React.Component {
               {headers.map((header, i) => (
                 <TableHeaderCell
                   key={i}
-                  style={{textAlign: i > 0 ? 'right' : undefined}}
+                  style={{
+                    textAlign: i === headers.length - 1 ? 'right' : undefined,
+                  }}
                 >
                   {header}
                 </TableHeaderCell>
@@ -53,24 +55,30 @@ export default class Table extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {rows.map(([label, body], i) => {
+            {rows.map((content, i) => {
               return (
                 <tr key={i}>
-                  <TableBodyCell>
-                    {typeof label === 'string' ? (
-                      label
-                    ) : (
-                      <Link
-                        href={label.href}
-                        style={{textDecoration: 'underline'}}
-                      >
-                        {label.title}
-                      </Link>
-                    )}
-                  </TableBodyCell>
-                  <TableBodyCell style={{textAlign: 'right'}}>
-                    {body}
-                  </TableBodyCell>
+                  {content.map(
+                    (label, j) =>
+                      typeof label === 'number' ? (
+                        <TableBodyCell key={j} style={{textAlign: 'right'}}>
+                          {label}
+                        </TableBodyCell>
+                      ) : (
+                        <TableBodyCell key={j}>
+                          {typeof label === 'string' ? (
+                            label
+                          ) : (
+                            <Link
+                              href={label.href}
+                              style={{textDecoration: 'underline'}}
+                            >
+                              {label.title}
+                            </Link>
+                          )}
+                        </TableBodyCell>
+                      ),
+                  )}
                 </tr>
               );
             })}

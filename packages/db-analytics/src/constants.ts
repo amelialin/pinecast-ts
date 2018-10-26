@@ -40,6 +40,7 @@ export const TYPES: {[type: string]: Array<AnalyticsView>} = {
   network: [
     TYPE_LISTENS,
     TYPE_SUBS,
+    TYPE_TOP_EPISODES,
     TYPE_GROWTH,
     TYPE_BY_SOURCE,
     TYPE_BY_AGENT,
@@ -47,7 +48,6 @@ export const TYPES: {[type: string]: Array<AnalyticsView>} = {
     TYPE_GEO_GRAN_LISTENS,
     TYPE_GEO_SUBS,
     TYPE_GEO_GRAN_SUBS,
-    TYPE_TOP_EPISODES,
   ],
   podcast: [
     TYPE_LISTENS,
