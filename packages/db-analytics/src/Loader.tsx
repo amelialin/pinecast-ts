@@ -18,7 +18,7 @@ const messages = defineMessages({
     id: 'db-analytics.Loader.emptyState.copy',
     description: 'Copy for loading state when no analytics are returned',
     defaultMessage:
-      'There is no analytics data available for the selected tiem range.',
+      'There is no analytics data available for the selected time range.',
   },
 
   error: {
