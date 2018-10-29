@@ -17,6 +17,7 @@ export default class Positioner extends React.Component {
     preferX?: XAlign;
     preferY?: YAlign;
     style?: React.CSSProperties;
+    stateKey?: any; // Used to force a rerender
     xOffset?: number;
     yOffset?: number;
   };
@@ -51,7 +52,10 @@ export default class Positioner extends React.Component {
     nextState: Positioner['state'],
   ) {
     // We only update when we're active and the states don't match
-    if (!shallowCompare(this.state, nextState) && nextProps.active) {
+    if (
+      (!shallowCompare(this.state, nextState) && nextProps.active) ||
+      this.props.stateKey !== nextProps.stateKey
+    ) {
       return true;
     }
     return this.props.children !== nextProps.children;

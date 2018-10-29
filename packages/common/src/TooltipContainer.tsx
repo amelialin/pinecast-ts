@@ -178,6 +178,7 @@ export default class TooltipContainer extends React.Component {
           maxWidth={maxWidths[this.props.size || 'normal']}
           preferX={preferX}
           preferY={preferY}
+          stateKey={this.state.hovering}
           style={positionerStyle}
           xOffset={xOffset}
         >
