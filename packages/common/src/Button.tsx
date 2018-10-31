@@ -44,6 +44,7 @@ const NativeButton = styled(
     fontSize: $size === 'normal' ? 13 : $size === 'small' ? 12 : 16,
     fontWeight: 500,
     height: $size === 'normal' ? 30 : $size === 'small' ? 24 : 36,
+    lineHeight: $size === 'normal' ? 30 : $size === 'small' ? 24 : 36,
     margin: $isBlock ? '0 0 20px' : 0,
     opacity: $pending || disabled ? 0.5 : 1,
     padding:

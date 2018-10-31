@@ -51,7 +51,7 @@ function getCategories(rss: Element): Array<string> {
   const categoryEls = rss.getElementsByTagName('itunes:category');
   const categories: Array<string> = [];
 
-  for (const el of categoryEls) {
+  for (const el of Array.from(categoryEls)) {
     let cat = el.getAttribute('text');
     if (!cat) {
       continue;
@@ -79,7 +79,7 @@ function getItems(
 
   let ignored = 0;
   const items: Array<FeedItem> = [];
-  for (const node of nodes) {
+  for (const node of Array.from(nodes)) {
     const audioURL = firstTagAttr(node, 'enclosure', 'url', '');
     if (!audioURL) {
       ignored++;
