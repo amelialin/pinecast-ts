@@ -39,7 +39,12 @@ const SourceSelector = ({
       <OptionButton
         onClick={() => onChange('form')}
         selected={source === 'form'}
-        style={{alignItems: 'center', flex: '1 1', marginRight: 12}}
+        style={{
+          alignItems: 'center',
+          flex: '1 1',
+          marginRight: 12,
+          textAlign: 'center',
+        }}
       >
         <Quill color={source === 'form' ? '#4e7287' : '#708d9e'} height={48} />
         <TextWrap>Start from scratch</TextWrap>
@@ -47,7 +52,7 @@ const SourceSelector = ({
       <OptionButton
         onClick={() => onChange('import')}
         selected={source === 'import'}
-        style={{alignItems: 'center', flex: '1 1'}}
+        style={{alignItems: 'center', flex: '1 1', textAlign: 'center'}}
       >
         <MovingTruck
           color={source === 'import' ? '#4e7287' : '#708d9e'}

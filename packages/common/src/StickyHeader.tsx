@@ -42,12 +42,6 @@ export const Header = styled(
   }),
 );
 
-const headerWrapperStyle: React.CSSProperties = {
-  height: '100%',
-  overflowY: 'auto',
-  position: 'relative',
-};
-
 export class Wrapper extends React.Component {
   props: {
     children: any;
@@ -57,39 +51,49 @@ export class Wrapper extends React.Component {
   };
   state: {scrolled: boolean} = {scrolled: false};
 
-  ref_: HTMLDivElement | null = null;
+  ref = React.createRef<HTMLDivElement>();
 
   static defaultProps = {
     headerHeight: 60,
   };
 
   componentWillReceiveProps(nextProps: Wrapper['props']) {
-    if (nextProps.keyScrollOn !== this.props.keyScrollOn && this.ref_) {
-      this.ref_.scrollTop = 0;
-      this.setState({scrolled: 0});
+    if (nextProps.keyScrollOn !== this.props.keyScrollOn && this.ref.current) {
+      this.ref.current.scrollTo(0, 0);
     }
   }
 
-  handleRef = (el: HTMLDivElement) => {
-    this.ref_ = el;
-    if (el) {
-      el.addEventListener('scroll', e => {
-        const scrolled = Boolean(el.scrollTop);
-        if (scrolled === Boolean(this.state.scrolled)) {
-          return;
-        }
-        if (!scrolled) {
-          this.setState({scrolled: false});
-          return;
-        }
-        const rect = el.getBoundingClientRect();
-        this.setState({
-          scrolled: {
-            top: rect.top,
-            left: rect.left,
-            right: document.body.clientWidth - rect.right,
-          },
-        });
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll, {
+      capture: true,
+      passive: true,
+    } as EventListenerOptions);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll, {
+      capture: true,
+      passive: true,
+    } as EventListenerOptions);
+  }
+
+  handleScroll = (e: Event) => {
+    const el = this.ref.current;
+    if (!el) {
+      return;
+    }
+    if (e.target === el || (e.target as HTMLElement).contains(el)) {
+      const scrolled = Boolean(el.scrollTop);
+      if (!scrolled && this.state.scrolled) {
+        this.setState({scrolled: false});
+        return;
+      }
+      const rect = el.getBoundingClientRect();
+      this.setState({
+        scrolled: {
+          top: rect.top,
+          left: rect.left,
+          right: document.body.clientWidth - rect.right,
+        },
       });
     }
   };
@@ -97,10 +101,12 @@ export class Wrapper extends React.Component {
   render() {
     return (
       <div
-        ref={this.handleRef}
+        ref={this.ref}
         style={{
-          ...headerWrapperStyle,
+          height: '100%',
+          overflowY: 'auto',
           paddingTop: (this.props.headerHeight || 0) + 20,
+          position: 'relative',
         }}
       >
         {React.cloneElement(this.props.header, {

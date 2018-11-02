@@ -4,6 +4,24 @@ import {Feed, FeedItem} from '../types';
 
 export class FormatError extends Error {}
 
+const namespaces: {[ns: string]: string} = {
+  itunes: 'http://www.itunes.com/dtds/podcast-1.0.dtd',
+  dc: 'http://purl.org/dc/elements/1.1/',
+};
+function getElementsByTagName(node: Element, tagName: string) {
+  if (!tagName.includes(':')) {
+    return node.getElementsByTagName(tagName);
+  }
+  const [ns, tag] = tagName.split(':');
+  if (ns in namespaces) {
+    const res = node.getElementsByTagNameNS(namespaces[ns], tag);
+    if (res.length) {
+      return res;
+    }
+  }
+  return node.getElementsByTagName(tagName);
+}
+
 export function parseFeed(rawFeed: string): Feed {
   const parser = new DOMParser();
   const parsed = parser.parseFromString(rawFeed, 'text/xml');
@@ -48,7 +66,7 @@ export function parseFeed(rawFeed: string): Feed {
 }
 
 function getCategories(rss: Element): Array<string> {
-  const categoryEls = rss.getElementsByTagName('itunes:category');
+  const categoryEls = getElementsByTagName(rss, 'itunes:category');
   const categories: Array<string> = [];
 
   for (const el of Array.from(categoryEls)) {
@@ -72,7 +90,7 @@ function getCategories(rss: Element): Array<string> {
 function getItems(
   rss: Element,
 ): {items: Array<FeedItem>; __ignored_items: number} {
-  const nodes = rss.getElementsByTagName('item');
+  const nodes = getElementsByTagName(rss, 'item');
   if (!nodes.length) {
     throw new FormatError('No <item> nodes in the feed were found');
   }
@@ -214,7 +232,7 @@ function getFirstTag(
   tag: string,
   def: Defaultable | null = null,
 ): Element | string {
-  const elem = dom.getElementsByTagName(tag)[0];
+  const elem = getElementsByTagName(dom, tag)[0];
   if (!elem && def === null) {
     throw new FormatError(
       `Could not find expected tag <${tag}> in <${dom.nodeName}>`,
