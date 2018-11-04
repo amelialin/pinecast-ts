@@ -5,10 +5,12 @@ import Callout from '@pinecast/common/Callout';
 import {compose} from '@pinecast/common/helpers';
 import EmptyState from '@pinecast/common/EmptyState';
 import ErrorState from '@pinecast/common/ErrorState';
+import Group from '@pinecast/common/Group';
 import LoadingState from '@pinecast/common/LoadingState';
 import {MeatballIconMenu} from '@pinecast/common/ContextMenu';
 import {ModalOpener} from '@pinecast/common/ModalLayer';
 import * as Table from '@pinecast/common/Table';
+import Tag from '@pinecast/common/Tag';
 import xhr from '@pinecast/xhr';
 
 import {listAds, ListAdsState} from '../dataProviders/inventory';
@@ -19,23 +21,23 @@ class InventoryPanel extends React.Component {
     inventory: ListAdsState;
   };
   state: {
-    deleteError: React.ReactNode | null;
+    calloutError: React.ReactNode | null;
     pending: boolean;
   };
 
   constructor(props: InventoryPanel['props']) {
     super(props);
     this.state = {
-      deleteError: null,
+      calloutError: null,
       pending: false,
     };
   }
 
   renderInlineError() {
-    if (this.state.deleteError) {
+    if (this.state.calloutError) {
       return (
         <Callout style={{marginTop: 0}} type="negative">
-          {this.state.deleteError}
+          {this.state.calloutError}
         </Callout>
       );
     }
@@ -46,20 +48,40 @@ class InventoryPanel extends React.Component {
     this.props.inventory.reload();
   };
   handleDeleteAd = async (uuid: string) => {
-    this.setState({deleteError: null, pending: true});
+    this.setState({calloutError: null, pending: true});
     try {
       const body = new FormData();
       body.append('uuid', uuid);
       await xhr({
         method: 'POST',
-        url: '/advertisements/inventory/delete',
+        url: '/advertisements/inventory/discontinue',
         body,
       });
       this.setState({pending: false});
       return this.props.inventory.reload();
     } catch (e) {
       this.setState({
-        deleteError: 'There was an error deleting the tag.',
+        calloutError: 'There was an error discontinuing the ad.',
+        pending: false,
+      });
+      return;
+    }
+  };
+  handleReenableAd = async (uuid: string) => {
+    this.setState({calloutError: null, pending: true});
+    try {
+      const body = new FormData();
+      body.append('uuid', uuid);
+      await xhr({
+        method: 'POST',
+        url: '/advertisements/inventory/reenable',
+        body,
+      });
+      this.setState({pending: false});
+      return this.props.inventory.reload();
+    } catch (e) {
+      this.setState({
+        calloutError: 'There was an error discontinuing the ad.',
         pending: false,
       });
       return;
@@ -67,7 +89,15 @@ class InventoryPanel extends React.Component {
   };
 
   renderModal = ({handleClose}: {handleClose: () => void}) => {
-    return <NewAdForm onCancel={handleClose} onNewAd={handleClose} />;
+    return (
+      <NewAdForm
+        onCancel={handleClose}
+        onNewAd={() => {
+          handleClose();
+          this.props.inventory.reload();
+        }}
+      />
+    );
   };
 
   render() {
@@ -97,7 +127,7 @@ class InventoryPanel extends React.Component {
                   onClick={handleOpen}
                   style={{marginBottom: 24}}
                 >
-                  New tag
+                  New advertisement
                 </Button>
                 <Table.Table style={{marginBottom: 0}}>
                   <thead>
@@ -110,14 +140,32 @@ class InventoryPanel extends React.Component {
                     {inventory.data.map(ad => (
                       <tr key={ad.uuid}>
                         <Table.TableBodyCell>
-                          <b>{ad.name}</b>
+                          <Group spacing={8}>
+                            <b style={{opacity: ad.discontinued ? 0.5 : 1}}>
+                              {ad.name}
+                            </b>
+                            {ad.discontinued && (
+                              <Tag color="gray">Discontinued</Tag>
+                            )}
+                          </Group>
                         </Table.TableBodyCell>
                         <Table.TableBodyCell style={{width: 32}}>
                           <MeatballIconMenu
                             onSelect={slug => {
-                              this.handleDeleteAd(ad.uuid);
+                              switch (slug) {
+                                case 'delete':
+                                  this.handleDeleteAd(ad.uuid);
+                                  break;
+                                case 'reenable':
+                                  this.handleReenableAd(ad.uuid);
+                                  break;
+                              }
                             }}
-                            options={[{name: 'Delete', slug: 'delete'}]}
+                            options={[
+                              !ad.discontinued
+                                ? {name: 'Discontinue', slug: 'delete'}
+                                : {name: 'Re-enable', slug: 'reenable'},
+                            ]}
                           />
                         </Table.TableBodyCell>
                       </tr>

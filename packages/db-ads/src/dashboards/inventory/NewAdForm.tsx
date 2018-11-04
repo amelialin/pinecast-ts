@@ -3,15 +3,15 @@ import * as React from 'react';
 import AudioUpload from '@pinecast/common/AudioUpload';
 import Button, {ButtonGroup} from '@pinecast/common/Button';
 import Checkbox from '@pinecast/common/Checkbox';
-import {compose} from '@pinecast/common/helpers';
-import DateTimeInput from '@pinecast/common/DateTimeInput';
+import {compose, nullThrows} from '@pinecast/common/helpers';
+// import DateTimeInput from '@pinecast/common/DateTimeInput';
 import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import Dialog from '@pinecast/common/Dialog';
 import ErrorState from '@pinecast/common/ErrorState';
 import Fieldset from '@pinecast/common/Fieldset';
 import Form from '@pinecast/common/Form';
 import getAudioDuration from '@pinecast/common/audio/duration';
-import Group from '@pinecast/common/Group';
+// import Group from '@pinecast/common/Group';
 import Label from '@pinecast/common/Label';
 import LoadingState from '@pinecast/common/LoadingState';
 import {Omit} from '@pinecast/common/types';
@@ -203,10 +203,13 @@ class NewAdForm extends React.PureComponent {
     playOncePerEpisode: boolean;
     priority: number;
 
-    startDate: Date;
-    endDate: Date | null;
+    // startDate: Date;
+    // endDate: Date | null;
 
+    duration: number | null;
     signedAudioURL: string | null;
+
+    pending: boolean;
   } = {
     name: '',
     offerCode: null,
@@ -215,26 +218,33 @@ class NewAdForm extends React.PureComponent {
     playOncePerEpisode: false,
     priority: 1,
 
-    startDate: new Date(),
-    endDate: null,
+    // startDate: new Date(),
+    // endDate: null,
 
+    duration: null,
     signedAudioURL: null,
+
+    pending: false,
   };
 
   handleCreateSubmit = async () => {
     const {
       name,
       offerCode,
-      startDate,
-      endDate,
+      duration,
+      // startDate,
+      // endDate,
       tags,
       playOncePerEpisode,
       priority,
       podcasts,
+      signedAudioURL,
     } = this.state;
-    if (!name.trim()) {
+    if (!name.trim() || !signedAudioURL) {
       return;
     }
+
+    this.setState({pending: true});
 
     const fd = new FormData();
     fd.append('name', name);
@@ -242,10 +252,10 @@ class NewAdForm extends React.PureComponent {
       fd.append('offer_code', offerCode);
     }
 
-    fd.append('start_date', startDate.toISOString());
-    if (endDate) {
-      fd.append('end_date', endDate.toISOString());
-    }
+    // fd.append('start_date', startDate.toISOString());
+    // if (endDate) {
+    //   fd.append('end_date', endDate.toISOString());
+    // }
 
     tags.forEach(tag => {
       fd.append('tags', tag);
@@ -259,15 +269,18 @@ class NewAdForm extends React.PureComponent {
     }
     fd.append('priority', priority.toFixed(3));
 
+    fd.append('asset', signedAudioURL);
+    fd.append('duration', nullThrows(duration).toFixed(1));
+
     try {
       await xhr({
         method: 'POST',
-        url: '/advertisements/inventory',
+        url: '/advertisements/inventory/create',
         body: fd,
       });
-    } catch (e) {
-      debugger;
-      return;
+      // TODO: Handle errors
+    } finally {
+      this.setState({pending: false});
     }
 
     this.props.onNewAd();
@@ -291,26 +304,26 @@ class NewAdForm extends React.PureComponent {
   handleChangePriority = (newPriority: number) => {
     this.setState({priority: newPriority / 100});
   };
-  handleChangeStartDate = (newDate: Date) => {
-    let {endDate} = this.state;
-    if (endDate && endDate < new Date()) {
-      endDate = new Date(newDate);
-      endDate.setDate(endDate.getDate() + 1);
-    }
-    this.setState({startDate: newDate, endDate});
-  };
-  handleChangeHasEndDate = (hasEndDate: boolean) => {
-    const now = new Date();
-    const {startDate} = this.state;
-    const max = now < startDate ? startDate : now;
-    if (max === startDate) {
-      max.setDate(max.getDate() + 1);
-    }
-    this.setState({endDate: !hasEndDate ? max : null});
-  };
-  handleChangeEndDate = (endDate: Date) => {
-    this.setState({endDate});
-  };
+  // handleChangeStartDate = (newDate: Date) => {
+  //   let {endDate} = this.state;
+  //   if (endDate && endDate < new Date()) {
+  //     endDate = new Date(newDate);
+  //     endDate.setDate(endDate.getDate() + 1);
+  //   }
+  //   this.setState({startDate: newDate, endDate});
+  // };
+  // handleChangeHasEndDate = (hasEndDate: boolean) => {
+  //   const now = new Date();
+  //   const {startDate} = this.state;
+  //   const max = now < startDate ? startDate : now;
+  //   if (max === startDate) {
+  //     max.setDate(max.getDate() + 1);
+  //   }
+  //   this.setState({endDate: !hasEndDate ? max : null});
+  // };
+  // handleChangeEndDate = (endDate: Date) => {
+  //   this.setState({endDate});
+  // };
 
   handleGotAudio = async (signedURL: string, blob: File) => {
     this.setState({
@@ -325,6 +338,7 @@ class NewAdForm extends React.PureComponent {
   renderInner() {
     const {podcasts, tags} = this.props;
     if (
+      this.state.pending ||
       tags.isLoading ||
       tags.isInitial ||
       podcasts.isLoading ||
@@ -348,8 +362,8 @@ class NewAdForm extends React.PureComponent {
       offerCode,
       playOncePerEpisode,
       priority,
-      startDate,
-      endDate,
+      // startDate,
+      // endDate,
       signedAudioURL,
     } = this.state;
     return (
@@ -419,6 +433,7 @@ class NewAdForm extends React.PureComponent {
             }
           />
         </Fieldset>
+        {/*
         <Fieldset label={<FormattedMessage {...messages.fieldsetTiming} />}>
           <Group spacing={12}>
             <Label text={<FormattedMessage {...messages.labelStartDate} />}>
@@ -444,6 +459,7 @@ class NewAdForm extends React.PureComponent {
             </Label>
           </Group>
         </Fieldset>
+        */}
         <Fieldset label={<FormattedMessage {...messages.fieldsetPlacement} />}>
           <Label
             subText={<FormattedMessage {...messages.subtextPriority} />}

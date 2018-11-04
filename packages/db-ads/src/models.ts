@@ -9,8 +9,8 @@ export interface MutableAdvertisement {
   offer_code: string | null;
 
   duration: number;
-  start_date: Date;
-  end_date: Date | null;
+  // start_date: Date;
+  // end_date: Date | null;
 
   tags: Array<string>;
 
@@ -18,6 +18,7 @@ export interface MutableAdvertisement {
   place_only_once: boolean;
 
   for_podcasts: Array<string>;
+  discontinued: boolean;
 }
 export type Advertisement = MutableAdvertisement & {
   uuid: string;
