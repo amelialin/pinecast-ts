@@ -234,6 +234,6 @@ class InventoryPanel extends React.Component {
   }
 }
 
-export default compose(listAds<InventoryPanel['props']>('inventory'))(
-  InventoryPanel,
-);
+export default compose(
+  listAds<InventoryPanel['props'], 'inventory'>('inventory'),
+)(InventoryPanel);

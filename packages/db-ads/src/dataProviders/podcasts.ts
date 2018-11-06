@@ -13,7 +13,7 @@ export const listEligiblePodcasts = <
 >(
   prop: PropName,
 ) =>
-  dataProvider<Array<models.Podcast>>(
+  dataProvider<InboundProps, PropName, Array<models.Podcast>>(
     prop,
     () => ({
       method: 'GET',
@@ -45,7 +45,7 @@ export const getPodcastPlan = <
 >(
   prop: PropName,
 ) =>
-  dataProvider<PlanResult>(
+  dataProvider<InboundProps, PropName, PlanResult>(
     prop,
     ({slug}) => ({
       method: 'GET',
