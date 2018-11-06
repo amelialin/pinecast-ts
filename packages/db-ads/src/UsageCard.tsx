@@ -1,7 +1,6 @@
 import * as numeral from 'numeral';
 import * as React from 'react';
 
-import Card from '@pinecast/common/Card';
 import {DashboardTitle} from '@pinecast/common/Text';
 import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import styled from '@pinecast/styles';
@@ -26,13 +25,11 @@ const messages = defineMessages({
 
 const Wrapper = styled('div', {
   display: 'flex',
-  justifyContent: 'stretch',
+  justifyContent: 'flex-start',
 });
 const UseItem = styled('div', {
-  flex: '1 1',
-
   ':not(:first-child)': {
-    marginLeft: 12,
+    marginLeft: 20,
   },
 });
 const UseItemTitle = styled('strong', {
@@ -48,7 +45,7 @@ const UseItemValue = styled('span', {
 });
 
 const UsageCard = ({cost, swaps}: {cost: number; swaps: number}) => (
-  <Card whiteBack>
+  <React.Fragment>
     <DashboardTitle>
       <FormattedMessage {...messages.title} />
     </DashboardTitle>
@@ -66,6 +63,6 @@ const UsageCard = ({cost, swaps}: {cost: number; swaps: number}) => (
         </UseItemValue>
       </UseItem>
     </Wrapper>
-  </Card>
+  </React.Fragment>
 );
 export default UsageCard;

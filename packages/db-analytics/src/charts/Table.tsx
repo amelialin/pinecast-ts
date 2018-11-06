@@ -21,7 +21,7 @@ export default class Table extends React.Component {
     return [
       headers as Array<string>,
       ...rows.map(([label, ...cols]): Array<string | number> => {
-        if (typeof label === 'string') {
+        if (typeof label === 'string' || typeof label === 'number') {
           return [label, ...(cols as Array<string | number>)];
         }
         return [

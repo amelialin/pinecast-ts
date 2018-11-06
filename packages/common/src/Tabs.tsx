@@ -6,7 +6,7 @@ import {Children} from './types';
 import {DEFAULT_FONT} from './constants';
 
 const TabWrapper = styled('div', {
-  padding: '30px 0',
+  padding: '20px 0',
 });
 
 export class Tab extends React.PureComponent {

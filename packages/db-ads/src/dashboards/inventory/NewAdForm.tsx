@@ -215,7 +215,7 @@ class NewAdForm extends React.PureComponent {
     offerCode: null,
     tags: [],
     podcasts: [],
-    playOncePerEpisode: false,
+    playOncePerEpisode: true,
     priority: 1,
 
     // startDate: new Date(),
@@ -508,6 +508,6 @@ class NewAdForm extends React.PureComponent {
 }
 
 export default compose(
-  listTags<Omit<NewAdForm['props'], 'podcasts'>, 'tags'>('tags'),
-  listEligiblePodcasts<NewAdForm['props'], 'podcasts'>('podcasts'),
+  listTags<Omit<NewAdForm['props'], 'podcasts'>>('tags'),
+  listEligiblePodcasts<NewAdForm['props']>('podcasts'),
 )(NewAdForm);

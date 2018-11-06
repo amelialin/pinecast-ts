@@ -2,19 +2,39 @@ import * as React from 'react';
 
 import Button from '@pinecast/common/Button';
 import Callout from '@pinecast/common/Callout';
+import Card from '@pinecast/common/Card';
 import {compose} from '@pinecast/common/helpers';
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import EmptyState from '@pinecast/common/EmptyState';
 import ErrorState from '@pinecast/common/ErrorState';
 import Group from '@pinecast/common/Group';
 import LoadingState from '@pinecast/common/LoadingState';
 import {MeatballIconMenu} from '@pinecast/common/ContextMenu';
 import {ModalOpener} from '@pinecast/common/ModalLayer';
-import * as Table from '@pinecast/common/Table';
+import styled from '@pinecast/styles';
 import Tag from '@pinecast/common/Tag';
+import TooltipContainer from '@pinecast/common/TooltipContainer';
+import * as Text from '@pinecast/common/Text';
+import Well from '@pinecast/common/Well';
 import xhr from '@pinecast/xhr';
 
 import {listAds, ListAdsState} from '../dataProviders/inventory';
 import NewAdForm from './inventory/NewAdForm';
+
+const messages = defineMessages({
+  placementCount: {
+    id: 'db-ads.InventoryPanel.ad.placement_count',
+    description: 'Describes how many places and ad has been placed',
+    defaultMessage:
+      '{count} {count, plural, one {active placement} other {active placements}}',
+  },
+});
+
+const MeatballWrapper = styled('div', {
+  alignItems: 'flex-start',
+  display: 'flex',
+  justifyContent: 'space-between',
+});
 
 class InventoryPanel extends React.Component {
   props: {
@@ -123,55 +143,81 @@ class InventoryPanel extends React.Component {
             {inventory.data.length > 0 ? (
               <React.Fragment>
                 <Button
+                  // TODO: Disable this when there are no tags
                   $isBlock
                   onClick={handleOpen}
                   style={{marginBottom: 24}}
                 >
                   New advertisement
                 </Button>
-                <Table.Table style={{marginBottom: 0}}>
-                  <thead>
-                    <tr>
-                      <Table.TableHeaderCell>Name</Table.TableHeaderCell>
-                      <Table.TableHeaderCell />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {inventory.data.map(ad => (
-                      <tr key={ad.uuid}>
-                        <Table.TableBodyCell>
+
+                <Well>
+                  {inventory.data.map(ad => (
+                    <Card
+                      key={ad.uuid}
+                      style={{opacity: ad.discontinued ? 0.5 : 1}}
+                      whiteBack
+                    >
+                      <MeatballWrapper>
+                        <Text.DashboardTitle>
                           <Group spacing={8}>
-                            <b style={{opacity: ad.discontinued ? 0.5 : 1}}>
+                            <span style={{opacity: ad.discontinued ? 0.5 : 1}}>
                               {ad.name}
-                            </b>
+                            </span>
                             {ad.discontinued && (
                               <Tag color="gray">Discontinued</Tag>
                             )}
                           </Group>
-                        </Table.TableBodyCell>
-                        <Table.TableBodyCell style={{width: 32}}>
-                          <MeatballIconMenu
-                            onSelect={slug => {
-                              switch (slug) {
-                                case 'delete':
-                                  this.handleDeleteAd(ad.uuid);
-                                  break;
-                                case 'reenable':
-                                  this.handleReenableAd(ad.uuid);
-                                  break;
-                              }
-                            }}
-                            options={[
-                              !ad.discontinued
-                                ? {name: 'Discontinue', slug: 'delete'}
-                                : {name: 'Re-enable', slug: 'reenable'},
-                            ]}
-                          />
-                        </Table.TableBodyCell>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table.Table>
+                        </Text.DashboardTitle>
+                        <MeatballIconMenu
+                          onSelect={slug => {
+                            switch (slug) {
+                              case 'delete':
+                                this.handleDeleteAd(ad.uuid);
+                                break;
+                              case 'reenable':
+                                this.handleReenableAd(ad.uuid);
+                                break;
+                            }
+                          }}
+                          options={[
+                            !ad.discontinued
+                              ? {name: 'Discontinue', slug: 'delete'}
+                              : {name: 'Re-enable', slug: 'reenable'},
+                          ]}
+                          style={{height: 16}}
+                        />
+                      </MeatballWrapper>
+                      <Text.P>
+                        <FormattedMessage
+                          {...messages.placementCount}
+                          values={{count: ad.placements}}
+                        />
+                        {Boolean(ad.offer_code) && (
+                          <React.Fragment>
+                            {' · Offer code '}
+                            <Tag color="green">{ad.offer_code}</Tag>
+                          </React.Fragment>
+                        )}
+                      </Text.P>
+                      <Group spacing={8}>
+                        {ad.tags.map(
+                          tag =>
+                            tag.description ? (
+                              <TooltipContainer
+                                key={tag.uuid}
+                                tooltipContent={tag.description}
+                              >
+                                <Tag color="blue">{tag.name}</Tag>
+                              </TooltipContainer>
+                            ) : (
+                              <Tag color="blue">{tag.name}</Tag>
+                            ),
+                        )}
+                      </Group>
+                    </Card>
+                  ))}
+                </Well>
               </React.Fragment>
             ) : (
               <EmptyState
@@ -188,6 +234,6 @@ class InventoryPanel extends React.Component {
   }
 }
 
-export default compose(
-  listAds<InventoryPanel['props'], 'inventory'>('inventory'),
-)(InventoryPanel);
+export default compose(listAds<InventoryPanel['props']>('inventory'))(
+  InventoryPanel,
+);

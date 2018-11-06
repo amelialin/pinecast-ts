@@ -206,7 +206,7 @@ class UpgradeAdvertisements_ extends React.Component {
       );
     } else {
       content = (
-        <Card whiteBack>
+        <React.Fragment>
           <DashboardTitle>No longer need Advertisements?</DashboardTitle>
           <P style={{paddingRight: 0}}>
             Canceling your Advertisements subscription will not cancel your
@@ -219,7 +219,7 @@ class UpgradeAdvertisements_ extends React.Component {
           >
             Cancel subscription
           </Button>
-        </Card>
+        </React.Fragment>
       );
     }
 
