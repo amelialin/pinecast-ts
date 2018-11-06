@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/styles';
 
-import {Children} from './types';
-
 const StackedSection = styled(
   'div',
   {
@@ -27,7 +25,7 @@ const StackedSection = styled(
 );
 
 export default StackedSection as React.ComponentType<{
-  children: Children;
+  children: React.ReactNode;
   className?: string;
   style?: CSS;
 }>;
