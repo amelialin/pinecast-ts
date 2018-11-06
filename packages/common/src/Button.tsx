@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/styles';
 
-import {Children} from './types';
 import {DEFAULT_FONT} from './constants';
 import Group from './Group';
 import KeyboardShortcut, {ShortcutKey} from './KeyboardShortcut';
@@ -84,7 +83,7 @@ const NativeButton = styled(
 export default class Button extends React.PureComponent {
   props: {
     autoFocus?: boolean;
-    children: Children;
+    children: React.ReactNode;
     className?: string;
     disabled?: boolean;
     href?: string;
@@ -180,7 +179,7 @@ export const ButtonGroup = ({
   style,
   wrapperStyle,
 }: {
-  children: Children;
+  children: React.ReactNode;
   style?: CSS;
   wrapperStyle?: CSS;
 }) => (

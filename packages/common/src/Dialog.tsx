@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import styled from '@pinecast/styles';
 
-import {Children} from './types';
 import {DEFAULT_FONT} from './constants';
 
 const Wrapper = styled(
@@ -53,8 +52,8 @@ const Footer = styled('footer', {
 
 export default class Dialog extends React.PureComponent {
   props: {
-    actions?: Children;
-    children: Children;
+    actions?: React.ReactNode;
+    children: React.ReactNode;
     size?: 'small' | 'medium' | 'large';
     title: JSX.Element | string;
   };

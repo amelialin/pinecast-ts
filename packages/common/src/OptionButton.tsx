@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/styles';
 
-import {Children} from './types';
 import {DEFAULT_FONT} from './constants';
 
 const DULL_FOCUS_COLOR = '#d8e9f1';
@@ -61,7 +60,7 @@ const NativeButton = styled(
 export default class OptionButton extends React.PureComponent {
   props: {
     bright?: boolean;
-    children: Children;
+    children: React.ReactNode;
     className?: string;
     onClick: () => void;
     selected: boolean;

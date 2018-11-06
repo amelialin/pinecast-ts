@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import {Children, Omit} from './types';
+import {Omit} from './types';
 
 interface Props extends Omit<React.HTMLProps<HTMLFormElement>, 'onSubmit'> {
-  children: Children;
+  children: React.ReactNode;
   onSubmit: (isValid: boolean) => void;
 }
 

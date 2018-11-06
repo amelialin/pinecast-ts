@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import {Children} from '@pinecast/common/types';
 import styled, {CSS} from '@pinecast/styles';
 
 export type CalloutType = 'info' | 'negative' | 'positive';
@@ -36,7 +35,7 @@ const Callout = ({
   type,
 }: {
   action?: React.ReactNode;
-  children: Children;
+  children: React.ReactNode;
   style?: CSS;
   type: CalloutType;
 }) => (

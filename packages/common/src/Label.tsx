@@ -5,7 +5,6 @@ import Group from '@pinecast/common/Group';
 import styled, {CSS} from '@pinecast/styles';
 import Tag from '@pinecast/common/Tag';
 
-import {Children} from './types';
 import {DEFAULT_FONT} from './constants';
 import InlineError from './InlineError';
 
@@ -80,7 +79,7 @@ const Label = ({
 }: {
   $oneLine?: boolean;
   $oneLineCollapse?: boolean;
-  children: Children;
+  children: React.ReactNode;
   componentType?: string;
   error?: React.ReactNode;
   labelStyle?: React.CSSProperties;

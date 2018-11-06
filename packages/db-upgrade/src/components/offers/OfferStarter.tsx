@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import {Children} from '@pinecast/common/types';
 import styled from '@pinecast/styles';
 
 import OfferBase from './OfferBase';
@@ -14,7 +13,7 @@ const DetailsWrapper = styled('div', {
   padding: '16px 0 36px',
 });
 
-const OfferStarter = ({children}: {children: Children}) => (
+const OfferStarter = ({children}: {children: React.ReactNode}) => (
   <OfferBase period="month" planName="Starter plan" price={500}>
     <React.Fragment>
       <DetailsWrapper>

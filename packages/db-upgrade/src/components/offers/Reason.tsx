@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import {Children} from '@pinecast/common/types';
 import styled from '@pinecast/styles';
 
 const Wrap = styled('div', {
@@ -8,6 +7,8 @@ const Wrap = styled('div', {
   lineHeight: 32,
 });
 
-const Reason = ({children}: {children: Children}) => <Wrap>{children}</Wrap>;
+const Reason = ({children}: {children: React.ReactNode}) => (
+  <Wrap>{children}</Wrap>
+);
 
 export default Reason;

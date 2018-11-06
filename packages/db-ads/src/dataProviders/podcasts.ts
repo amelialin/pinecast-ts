@@ -1,6 +1,5 @@
 import {dataProvider, DataProviderState} from '@pinecast/xhr';
-// import {Omit} from '@pinecast/common/types';
-import {url} from '@pinecast/common/helpers';
+// import {url} from '@pinecast/common/helpers';
 
 import * as models from '../models';
 
@@ -33,23 +32,19 @@ export type PlanResult = {
   [episodeId: string]: EpisodePlanResult;
 };
 
-export type GetPodcastPlanState = DataProviderState<PlanResult>;
+// export type GetPodcastPlanState = DataProviderState<PlanResult>;
 
-interface PropsWithSlug extends Object {
-  slug: string;
-}
-
-export const getPodcastPlan = <
-  InboundProps extends PropsWithSlug,
-  PropName extends keyof InboundProps
->(
-  prop: PropName,
-) =>
-  dataProvider<InboundProps, PropName, PlanResult>(
-    prop,
-    ({slug}) => ({
-      method: 'GET',
-      url: url`/advertisements/podcasts/plan/${slug}`,
-    }),
-    (resp: string) => JSON.parse(resp),
-  );
+// export const getPodcastPlan = <
+//   InboundProps extends {slug: string},
+//   PropName extends string
+// >(
+//   prop: PropName,
+// ) =>
+//   dataProvider<InboundProps, PropName, PlanResult>(
+//     prop,
+//     ({slug}) => ({
+//       method: 'GET',
+//       url: url`/advertisements/podcasts/plan/${slug}`,
+//     }),
+//     (resp: string) => JSON.parse(resp),
+//   );

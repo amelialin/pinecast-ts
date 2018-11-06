@@ -4,7 +4,6 @@ import ResizeObserver from 'resize-observer-polyfill';
 import styled from '@pinecast/styles';
 
 import Card from './Card';
-import {Children} from './types';
 import {Info} from './icons';
 import Layer from './Layer';
 import Positioner, {XAlign, YAlign} from './Positioner';
@@ -63,13 +62,13 @@ const TooltipWrapper = styled(
 export default class TooltipContainer extends React.Component {
   props: {
     active?: boolean;
-    children?: Children;
+    children?: React.ReactNode;
     positionerStyle?: React.CSSProperties;
     preferX?: XAlign;
     preferY?: YAlign;
     size?: Size;
     style?: React.CSSProperties;
-    tooltipContent: Children;
+    tooltipContent: React.ReactNode;
     xOffset?: number;
   };
   state: {height: number; hovering: boolean} = {height: 0, hovering: false};
@@ -190,7 +189,7 @@ export default class TooltipContainer extends React.Component {
 }
 
 export const HelpIcon = (props: {
-  children: Children;
+  children: React.ReactNode;
   size?: Size;
   style?: React.CSSProperties;
 }): JSX.Element => (

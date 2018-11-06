@@ -3,7 +3,6 @@ import * as React from 'react';
 import styled from '@pinecast/styles';
 
 import Card from '@pinecast/common/Card';
-import {Children} from '@pinecast/common/types';
 
 import Price from './Price';
 
@@ -26,7 +25,7 @@ const OfferBase = ({
   period = 'month',
   price,
 }: {
-  children: Children;
+  children: React.ReactNode;
   planName: string;
   period?: 'month' | 'year';
   price: number;

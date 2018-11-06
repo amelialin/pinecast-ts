@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import {Children} from '@pinecast/common/types';
 import DeleteButton from '@pinecast/common/DeleteButton';
 import styled, {CSS} from '@pinecast/styles';
 
@@ -45,7 +44,7 @@ const DBLabel = styled('span', {
 });
 
 type ExternalProps = {
-  children: Children;
+  children: React.ReactNode;
   color?: Props['$color'];
   deleteButton?: boolean;
   onDelete?: () => void;

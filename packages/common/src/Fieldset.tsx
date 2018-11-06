@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import {Children} from '@pinecast/common/types';
 import styled, {CSS} from '@pinecast/styles';
 
 const Wrapper = styled('section', {
@@ -36,7 +35,7 @@ const Legend = styled('div', {
 });
 
 type Props = {
-  children: Children;
+  children: React.ReactNode;
   label: string | React.ReactNode;
   style?: CSS;
 };

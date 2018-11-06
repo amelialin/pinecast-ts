@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/styles';
 
-import {Children} from './types';
-
 const Wrapper = styled('div', {
   alignItems: 'inherit',
   display: 'inline-flex',
@@ -52,7 +50,7 @@ const Group = ({
   wrapperStyle,
 }: {
   allowWrap?: boolean;
-  children: Children;
+  children: React.ReactNode;
   spacing: number;
   style?: CSS;
   wrapperStyle?: CSS;

@@ -1,7 +1,6 @@
 import * as numeral from 'numeral';
 import * as React from 'react';
 
-import {Children} from '@pinecast/common/types';
 import {DEFAULT_FONT} from '@pinecast/common/constants';
 import {nullThrows} from '@pinecast/common/helpers';
 import styled from '@pinecast/styles';
@@ -54,7 +53,7 @@ export default class LineChartAxes extends React.Component {
         xRange: (n: number) => number;
         yRange: (n: number) => number;
       },
-    ) => Children;
+    ) => React.ReactNode;
     labels: Array<string>;
     range: [number, number];
   };

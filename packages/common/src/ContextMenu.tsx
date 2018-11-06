@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/styles';
 
-import {Children} from './types';
 import {CloseableLayer} from './Layer';
 import {DEFAULT_FONT} from './constants';
 import IconButton from './IconButton';
@@ -68,7 +67,7 @@ export type MenuOption = {
 
 export default class ContextMenu extends React.PureComponent {
   props: {
-    children: Children;
+    children: React.ReactNode;
     options: Array<MenuOption | null | false>;
     open: boolean;
     onSelect: (slug: string | number) => void;

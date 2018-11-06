@@ -1,10 +1,9 @@
 import {Elements as StripeElements} from 'react-stripe-elements';
 import * as React from 'react';
 
-import {Children} from '@pinecast/common/types';
 import {DEFAULT_FONT} from '@pinecast/common/constants';
 
-const Elements = ({children}: {children: Children}) => (
+const Elements = ({children}: {children: React.ReactNode}) => (
   <StripeElements
     fonts={[
       {

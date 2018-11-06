@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/styles';
-import {Children} from '@pinecast/common/types';
 
 const Wrapper = styled('div', {
   display: 'flex',
@@ -27,7 +26,7 @@ const Step = ({
   name,
   outerStyle,
 }: {
-  children: Children;
+  children: React.ReactNode;
   innerStyle?: CSS;
   name: string;
   outerStyle?: CSS;
