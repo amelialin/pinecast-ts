@@ -179,7 +179,7 @@ export const ButtonGroup = ({
   style,
   wrapperStyle,
 }: {
-  children: React.ReactNode;
+  children: Array<JSX.Element | boolean | null>;
   style?: CSS;
   wrapperStyle?: CSS;
 }) => (

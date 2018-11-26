@@ -4,10 +4,18 @@ import * as WaveSurfer from 'wavesurfer.js';
 import AudioControls from '../audio/AudioControls';
 import Card from '../Card';
 import DeleteButton from '../DeleteButton';
+import TimeCodeInput from './TimeCodeInput';
 
-const cardStyle = {
+const previewCardStyles = {
   padding: 4,
   position: 'relative',
+
+  ':not(:empty) .AudioControls': {
+    opacity: 0.4,
+  },
+  ':hover .AudioControls': {
+    opacity: 1,
+  },
 };
 const innerStyle = {
   backgroundColor: '#f6f7f5',
@@ -22,13 +30,16 @@ const deleteStyle = {
 export default class AudioUploadPreview extends React.Component {
   props: {
     audioBlob: Blob;
+    collectTimeCodes?: boolean;
     height: number;
     onClear: () => void;
   };
   state: {
+    cursorAt: number;
     loaded: boolean;
     playing: boolean;
   } = {
+    cursorAt: 0,
     loaded: false,
     playing: false,
   };
@@ -55,10 +66,26 @@ export default class AudioUploadPreview extends React.Component {
       this.ws.on('pause', () => {
         this.setState({playing: false});
       });
+      if (this.props.collectTimeCodes) {
+        this.ws.on('audioprocess', () => {
+          this.setState({cursorAt: this.ws!.getCurrentTime() * 1000});
+        });
+      }
     } else {
       this.ws!.destroy();
     }
   };
+
+  renderTimecodePicker() {
+    if (!this.props.collectTimeCodes || !this.state.loaded) {
+      return null;
+    }
+    return (
+      <Card style={{marginTop: -4}} whiteBack>
+        <TimeCodeInput timecode={this.state.cursorAt / 1000} />
+      </Card>
+    );
+  }
 
   handlePause = () => {
     this.ws!.pause();
@@ -73,23 +100,26 @@ export default class AudioUploadPreview extends React.Component {
 
   render() {
     return (
-      <Card style={cardStyle} whiteBack>
-        <div ref={this.ref} style={innerStyle} />
-        {this.state.loaded && (
-          <AudioControls
-            playing={this.state.playing}
-            onPause={this.handlePause}
-            onPlay={this.handlePlay}
-            onReset={this.handleReset}
-            style={{
-              bottom: 8,
-              left: 8,
-              position: 'absolute',
-            }}
-          />
-        )}
-        <DeleteButton onClick={this.props.onClear} style={deleteStyle} />
-      </Card>
+      <React.Fragment>
+        <Card style={previewCardStyles} whiteBack>
+          <div ref={this.ref} style={innerStyle} />
+          {this.state.loaded && (
+            <AudioControls
+              playing={this.state.playing}
+              onPause={this.handlePause}
+              onPlay={this.handlePlay}
+              onReset={this.handleReset}
+              style={{
+                bottom: 8,
+                left: 8,
+                position: 'absolute',
+              }}
+            />
+          )}
+          <DeleteButton onClick={this.props.onClear} style={deleteStyle} />
+        </Card>
+        {this.renderTimecodePicker()}
+      </React.Fragment>
     );
   }
 }

@@ -26,7 +26,7 @@ export default class SchemaBool extends React.PureComponent {
         tabIndex={this.props.open ? 0 : -1}
         text={
           <Group spacing={12}>
-            {this.props.name}
+            <span>{this.props.name}</span>
             {this.props.description ? (
               <HelpIcon>{this.props.description}</HelpIcon>
             ) : null}

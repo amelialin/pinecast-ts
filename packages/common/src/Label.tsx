@@ -103,7 +103,7 @@ const Label = ({
   }
   const contents = optional ? (
     <Group spacing={8}>
-      {text}
+      {React.isValidElement(text) ? text : <span>{text}</span>}
       <Tag size="small">
         <FormattedMessage {...messages.optional} />
       </Tag>

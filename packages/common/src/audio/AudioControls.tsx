@@ -25,12 +25,17 @@ const messages = defineMessages({
   },
 });
 
-const Wrapper = styled('div', {
-  background: 'rgba(255, 255, 255, 0.8)',
-  borderRadius: 2,
-  boxShadow: 'rgba(0, 0, 0, 0.05) 0px 0px 1px',
-  padding: 4,
-});
+const Wrapper = styled(
+  'div',
+  {
+    background: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: 2,
+    boxShadow: 'rgba(0, 0, 0, 0.05) 0px 0px 1px',
+    padding: 4,
+    transition: 'opacity 0.2s',
+  },
+  {className: 'AudioControls'},
+);
 
 type Props = {
   onPause: () => void;

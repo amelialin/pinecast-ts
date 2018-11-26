@@ -8,7 +8,8 @@ export default class NumberInput extends React.PureComponent {
     canBeNegative?: boolean;
     max?: number;
     min?: number;
-    onChange: (value: number) => void;
+    onChange?: (value: number) => void;
+    trimZeroes?: boolean;
     upToPrecision?: number;
     value: number;
   };
@@ -17,10 +18,14 @@ export default class NumberInput extends React.PureComponent {
     canBeNegative: true,
     max: Infinity,
     min: -Infinity,
+    trimZeroes: true,
     upToPrecision: 0,
   };
 
   handleChange = (value: string) => {
+    if (!this.props.onChange) {
+      return;
+    }
     if (!value) {
       this.props.onChange(0);
       return;
@@ -45,6 +50,9 @@ export default class NumberInput extends React.PureComponent {
     if (!s[1]) {
       return s[0];
     }
+    if (!this.props.trimZeroes) {
+      return val;
+    }
     if (Array.from(s[1]).every(x => x === '0')) {
       return s[0];
     }
@@ -52,7 +60,13 @@ export default class NumberInput extends React.PureComponent {
   }
 
   render() {
-    const {canBeNegative, onChange, upToPrecision, ...rest} = this.props;
+    const {
+      canBeNegative,
+      onChange,
+      trimZeroes,
+      upToPrecision,
+      ...rest
+    } = this.props;
     return (
       <TextInput
         {...rest}

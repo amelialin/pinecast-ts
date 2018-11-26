@@ -50,7 +50,7 @@ const Group = ({
   wrapperStyle,
 }: {
   allowWrap?: boolean;
-  children: React.ReactNode;
+  children: JSX.Element | Array<JSX.Element | boolean | null | undefined>;
   spacing: number;
   style?: CSS;
   wrapperStyle?: CSS;

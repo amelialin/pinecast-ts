@@ -15,5 +15,16 @@ export default {
         <AudioUploadPreview audioBlob={audio} height={96} onClear={() => {}} />
       ),
     },
+    {
+      title: 'Collecting time codes',
+      render: () => (
+        <AudioUploadPreview
+          audioBlob={audio}
+          collectTimeCodes
+          height={96}
+          onClear={() => {}}
+        />
+      ),
+    },
   ],
 };

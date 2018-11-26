@@ -3,8 +3,9 @@ import * as React from 'react';
 import styled, {CSS} from '@pinecast/styles';
 import Toggler from '@pinecast/common/Toggler';
 
-import Button, {ButtonGroup} from '@pinecast/common/Button';
+import Button from '@pinecast/common/Button';
 import Collapser from '@pinecast/common/Collapser';
+import Group from '@pinecast/common/Group';
 import {MetadataType} from './types';
 import {primitives} from '@pinecast/sb-components';
 import SchemaField from './schemaFields';
@@ -45,7 +46,11 @@ export default class ModuleOptions extends React.PureComponent {
   };
 
   render() {
-    const {layout, metadata: {schema}, moreButtons} = this.props;
+    const {
+      layout,
+      metadata: {schema},
+      moreButtons,
+    } = this.props;
     if (!schema) {
       return null;
     }
@@ -56,7 +61,7 @@ export default class ModuleOptions extends React.PureComponent {
       <Toggler>
         {({open, toggle}) => (
           <Wrapper>
-            <ButtonGroup wrapperStyle={buttonWrapperStyle}>
+            <Group spacing={8} wrapperStyle={buttonWrapperStyle}>
               {Boolean(keys.length) && (
                 <ShowOptionsWrap>
                   <Button onClick={toggle}>
@@ -64,8 +69,8 @@ export default class ModuleOptions extends React.PureComponent {
                   </Button>
                 </ShowOptionsWrap>
               )}
-              {moreButtons}
-            </ButtonGroup>
+              {moreButtons as any}
+            </Group>
             <Collapser open={open}>
               {keys
                 .sort((a, b) => {
