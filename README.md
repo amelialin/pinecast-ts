@@ -14,7 +14,7 @@
 - **Dashboard uploader** `db-uploader`: The upload widget used for uploading images and audio
 - **Externals** `externals`: Node module overrides
 - **Internationalization** `i18n`: Tooling for L10n and i18n
-- **Site builder components** `sb-components`: Elements used to create Piencast websites
+- **Site builder components** `sb-components`: Elements used to create Pinecast websites
 - **Site builder editor** `sb-editor`: Web application to modify site description JSON and save back to the API
 - **Site builder presets** `sb-presets`: Library of preset data for the site builder
 - **Site builder renderer** `sb-renderer`: Server daemon that renders Pinecast websites
