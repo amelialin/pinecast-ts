@@ -32,7 +32,10 @@ type Props = {
 
 const TimeCodeInput = ({timecode}: Props) => (
   <Group spacing={8}>
-    <Label text={<FormattedMessage {...messages.timecodeLabel} />}>
+    <Label
+      style={{marginBottom: 0}}
+      text={<FormattedMessage {...messages.timecodeLabel} />}
+    >
       <Group spacing={4}>
         <NumberInput
           canBeNegative={false}
