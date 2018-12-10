@@ -337,7 +337,7 @@ const ALL_TIMEFRAMES_WITHOUT_CUSTOM: Array<Timeframe> = ALL_TIMEFRAMES.filter(
   x => x !== 'custom',
 );
 export const TYPE_TIMEFRAMES: {[view: string]: Array<Timeframe>} = {
-  [TYPE_SUBS]: ['sixmonth', 'month'] as Array<Timeframe>,
+  [TYPE_SUBS]: [/*'sixmonth', */ 'month'] as Array<Timeframe>,
   [TYPE_LISTENS]: ALL_TIMEFRAMES,
   [TYPE_BY_EPISODE]: ALL_TIMEFRAMES,
   [TYPE_BY_SOURCE]: ALL_TIMEFRAMES,
