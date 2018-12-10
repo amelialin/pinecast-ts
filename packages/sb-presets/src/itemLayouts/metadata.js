@@ -63,6 +63,18 @@ export default {
     type: 'stacked',
     func: noImageStackedItem,
     schema: {
+      ordering: {
+        name: 'Elements',
+        description: 'What information about each episode is displayed?',
+        type: 'orderedSet',
+        options: [
+          {key: 'publish', label: 'Publish date'},
+          {key: 'title', label: 'Title'},
+          {key: 'subtitle', label: 'Subtitle'},
+          {key: 'summary', label: 'Summary (excerpt of description)'},
+          {key: 'readMore', label: 'Read more link'},
+        ],
+      },
       padding: {
         name: 'Inner episode padding',
         description:

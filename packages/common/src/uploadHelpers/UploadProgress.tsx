@@ -1,11 +1,25 @@
 import * as React from 'react';
 
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import styled from '@pinecast/styles';
 
 import Button from '../Button';
 import Card from '../Card';
 import Progress from '../Progress';
 import TimeRemainingIndicator from './TimeRemainingIndicator';
+
+const messages = defineMessages({
+  complete: {
+    id: 'common.UploadProgress.complete',
+    description: 'Status of completed upload',
+    defaultMessage: 'Complete',
+  },
+  cancel: {
+    id: 'common.UploadProgress.cancel',
+    description: 'CTA to cancel an upload',
+    defaultMessage: 'Cancel',
+  },
+});
 
 const TaskDescription = styled('span', {
   display: 'block',
@@ -18,6 +32,10 @@ const ProgressWrapper = styled('div', {
   alignItems: 'center',
   display: 'flex',
   marginBottom: 16,
+});
+const UploadName = styled('div', {
+  display: 'block',
+  fontSize: 13,
 });
 
 type OngoingUpload = {
@@ -39,14 +57,14 @@ export default class UploadProgress extends React.Component {
         <TaskDescription>Uploading to Pinecast…</TaskDescription>
         {uploads.map(({name, percent}, i) => (
           <React.Fragment key={i}>
-            {name ? <div>{name}</div> : null}
+            {name ? <UploadName>{name}</UploadName> : null}
             <ProgressWrapper>
               <Progress
                 percent={percent}
                 style={{flex: '1 1', marginRight: 12}}
               />
               {percent === 100 ? (
-                'Complete'
+                <FormattedMessage {...messages.complete} />
               ) : (
                 <TimeRemainingIndicator
                   progress={percent}
@@ -61,7 +79,7 @@ export default class UploadProgress extends React.Component {
           size="small"
           style={{alignSelf: 'flex-start'}}
         >
-          Cancel
+          <FormattedMessage {...messages.cancel} />
         </Button>
       </Card>
     );

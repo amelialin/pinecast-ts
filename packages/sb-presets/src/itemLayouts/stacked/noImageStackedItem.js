@@ -2,9 +2,10 @@ export default ({
   maxLinesOfSummary = 10,
   padding = '30px 0 50px',
   readMoreText = 'Read more…',
-} = {}) => ({
-  elements: [
-    {
+  ordering = ['publish', 'title', 'subtitle', 'summary', 'readMore'],
+} = {}) => {
+  const results = {
+    publish: {
       type: 'block.text',
       elementOptions: {
         transform: 'date.fromNow',
@@ -17,7 +18,7 @@ export default ({
         padding: '0 0 10px',
       },
     },
-    {
+    title: {
       type: 'block.link',
       props: {
         href: {name: 'episode', params: {id: ['id']}},
@@ -37,7 +38,7 @@ export default ({
 
       extendsStyles: ['textStyles', 'itemHeading'],
     },
-    {
+    subtitle: {
       type: 'block.text',
       tagName: 'h2',
 
@@ -48,7 +49,7 @@ export default ({
         margin: '10px 0 0',
       },
     },
-    {
+    summary: {
       type: 'block.text',
       tagName: 'div',
 
@@ -68,7 +69,7 @@ export default ({
         margin: 0,
       },
     },
-    {
+    readMore: {
       type: 'block.link',
       children: [
         {
@@ -94,16 +95,20 @@ export default ({
         },
       },
     },
-  ],
-  tagName: 'article',
-  styles: {
-    padding,
-  },
+  };
+  return {
+    elements: ordering.map(x => results[x]),
+    tagName: 'article',
+    styles: {
+      padding,
+    },
 
-  tag: 'stacked.noImage',
-  tagOptions: {
-    maxLinesOfSummary,
-    padding,
-    readMoreText,
-  },
-});
+    tag: 'stacked.noImage',
+    tagOptions: {
+      ordering,
+      maxLinesOfSummary,
+      padding,
+      readMoreText,
+    },
+  };
+};

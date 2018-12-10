@@ -1,9 +1,18 @@
 import * as React from 'react';
 
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import styled, {CSS} from '@pinecast/styles';
 
 import Button from '../Button';
 import Card from '../Card';
+
+const messages = defineMessages({
+  clear: {
+    id: 'common.ImageUploadPreview.clear',
+    description: 'CTA to clear an uploaded file',
+    defaultMessage: 'Clear',
+  },
+});
 
 const Wrapper = styled('div', {
   alignItems: 'center',
@@ -36,7 +45,7 @@ const ImageUploadPreview = ({
   <Card>
     <Wrapper style={{maxHeight, maxWidth}}>
       <Button onClick={onClear} style={buttonStyle}>
-        Clear
+        <FormattedMessage {...messages.clear} />
       </Button>
       <Image src={src} style={{maxHeight, maxWidth}} />
     </Wrapper>
