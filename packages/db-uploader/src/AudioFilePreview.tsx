@@ -2,11 +2,19 @@ import * as React from 'react';
 
 import Card from '@pinecast/common/Card';
 import DeleteButton from '@pinecast/common/DeleteButton';
-import {gettext} from '@pinecast/i18n';
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 
 import Cassette from './icons/cassette';
 import prettyBytes from './formatSize';
 import ReadyToUploadOverlay from './ReadyToUploadOverlay';
+
+const messages = defineMessages({
+  download: {
+    id: 'db-uploader.AudioFilePreview.download',
+    description: 'Download button text',
+    defaultMessage: 'Download',
+  },
+});
 
 function lpad(str: string | number, length: number, pad: string): string {
   str = String(str);
@@ -65,7 +73,7 @@ export default ({
           {Boolean((duration || size) && url) && ' • '}
           {url && (
             <a href={url} download>
-              {gettext('Download')}
+              <FormattedMessage {...messages.download} />
             </a>
           )}
         </div>

@@ -4,7 +4,7 @@ import {gettext} from '@pinecast/i18n';
 import {nullThrows} from '@pinecast/common/helpers';
 import Spinner from '@pinecast/common/Spinner';
 
-import {guardCallback, getInstance} from './legacy/util';
+import {guardCallback, getInstance} from './util';
 
 import Asset from './assets';
 import CardFixImageProblems from './cards/FixImageProblems';

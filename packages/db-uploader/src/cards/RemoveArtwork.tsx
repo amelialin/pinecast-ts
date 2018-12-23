@@ -13,23 +13,25 @@ export default ({
   onAccept: () => void;
   onCancel: () => void;
 }) => (
-  <Card whiteBack style={{textAlign: 'center'}}>
-    <Trash width={44} height={46} style={{margin: '0 auto'}} />
-    <b style={{display: 'block', marginBottom: '0.25em'}}>
-      {gettext('Remove episode artwork?')}
-    </b>
-    <span style={{display: 'block', marginBottom: '0.75em'}}>
-      {gettext(
-        'Removing artwork will revert to the podcast cover art on your feed podcast website. To change artwork in podcast apps, you must upload a new audio file.',
-      )}
-    </span>
-    <ButtonGroup>
-      <Button onClick={onAccept} $isPrimary>
-        {gettext('Remove artwork')}
-      </Button>
-      <Button onClick={onCancel} style={{marginRight: 0}}>
-        {gettext('Cancel')}
-      </Button>
-    </ButtonGroup>
+  <Card whiteBack style={{flexDirection: 'row'}}>
+    <Trash width={44} height={46} style={{margin: '0 15px 0 0'}} />
+    <div style={{flex: '1 1'}}>
+      <b style={{display: 'block', marginBottom: '0.25em'}}>
+        {gettext('Remove episode artwork?')}
+      </b>
+      <span style={{display: 'block', marginBottom: '0.75em'}}>
+        {gettext(
+          'Removing artwork will revert to the podcast cover art on your feed podcast website. To change artwork in podcast apps, you must upload a new audio file.',
+        )}
+      </span>
+      <ButtonGroup>
+        <Button onClick={onAccept} $isPrimary>
+          {gettext('Remove artwork')}
+        </Button>
+        <Button onClick={onCancel} style={{marginRight: 0}}>
+          {gettext('Cancel')}
+        </Button>
+      </ButtonGroup>
+    </div>
   </Card>
 );

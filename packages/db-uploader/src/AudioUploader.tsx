@@ -5,13 +5,14 @@ import getAudioDuration from '@pinecast/common/audio/duration';
 import {nullThrows} from '@pinecast/common/helpers';
 import Spinner from '@pinecast/common/Spinner';
 
-import {guardCallback, getInstance} from './legacy/util';
+import {guardCallback, getInstance} from './util';
 
 import addMetadata, {MetadataObj} from './mp3/addMetadata';
 import Asset from './assets';
 import AudioFilePicker from './AudioFilePicker';
 import AudioFilePreview from './AudioFilePreview';
 import CardAddMetadata from './cards/AddMetadata';
+import CardAddArtworkTeaser from './cards/AddArtworkTeaser';
 import CardAddArtwork from './cards/AddArtwork';
 import CardRemoveArtwork from './cards/RemoveArtwork';
 import CardReplaceArtwork from './cards/ReplaceArtwork';
@@ -434,12 +435,17 @@ export default class AudioUploader extends React.Component {
 
   renderAudioPreview() {
     const {
-      state: {audioFile, duration, audioSourceURL, phase, uploadOrders},
+      state: {audioFile, audioSourceURL, duration, phase, uploadOrders},
     } = this;
 
     let url: string | null;
     if (uploadOrders) {
-      url = uploadOrders.find(x => x.type === 'audio')!.getURL();
+      const audioOrder = uploadOrders.find(x => x.type === 'audio');
+      if (audioOrder) {
+        url = audioOrder.getURL();
+      } else {
+        url = audioSourceURL;
+      }
     } else {
       url = audioSourceURL;
     }
@@ -461,14 +467,21 @@ export default class AudioUploader extends React.Component {
       state: {audioFile, artworkFile, artworkSourceURL},
     } = this;
     if (!(artworkFile || artworkSourceURL)) {
-      return null;
+      return (
+        <CardAddArtworkTeaser
+          onClearAudio={this.clearFile}
+          onAddArtwork={() => {
+            this.setState({phase: 'missing pic'});
+          }}
+        />
+      );
     }
     const source = nullThrows(
       artworkFile || (artworkSourceURL && unsign(artworkSourceURL)),
     );
     return (
       <ImageFilePreview
-        name="Episode Artwork"
+        name="Episode artwork"
         onRemove={() => this.setState({phase: 'confirm remove artwork'})}
         size={
           artworkSourceURL
@@ -517,7 +530,7 @@ export default class AudioUploader extends React.Component {
     switch (phase) {
       case 'ready':
         return (
-          <div>
+          <React.Fragment>
             <AudioFilePicker
               onGetFile={file =>
                 this.setState(
@@ -531,7 +544,7 @@ export default class AudioUploader extends React.Component {
               plan={props.plan}
               surge={props.uploadSurge}
             />
-          </div>
+          </React.Fragment>
         );
 
       case 'waiting':
@@ -539,22 +552,40 @@ export default class AudioUploader extends React.Component {
 
       case 'missing id3':
         return (
-          <div>
+          <React.Fragment>
             {this.renderAudioPreview()}
             <CardAddMetadata
               onAccept={this.handleSetMetadata}
               onReject={this.handleSkipMetadata}
             />
-          </div>
+          </React.Fragment>
         );
 
-      case 'missing pic':
+      case 'missing pic': {
+        const audioNotLocal =
+          this.state.audioFile == null || (this.state.audioFile as any).isDummy;
         return (
-          <div>
+          <React.Fragment>
             {this.renderAudioPreview()}
             <CardAddArtwork
               existingSource={props.defImageURL && unsign(props.defImageURL)}
+              notUpdatingAudio={audioNotLocal}
               onGotFile={async (asset, isExisting) => {
+                if (audioNotLocal) {
+                  if (isExisting) {
+                    this.setState({
+                      artworkSourceURL: props.defImageURL,
+                      phase: 'uploaded',
+                    });
+                    return;
+                  }
+                  await this.promiseSetState({
+                    artworkFile: asset,
+                    phase: 'waiting',
+                  });
+                  this.startUploading([this.getUploadOrder('image', asset)]);
+                  return;
+                }
                 await this.promiseSetState({
                   artworkSourceURL: isExisting ? props.defImageURL : null,
                   artworkFile: !isExisting ? asset : null,
@@ -567,6 +598,10 @@ export default class AudioUploader extends React.Component {
                 this.addMetadata(isExisting);
               }}
               onReject={() => {
+                if (audioNotLocal) {
+                  this.setState({phase: 'uploaded'});
+                  return;
+                }
                 if (metadataScratch) {
                   this.setState({phase: 'waiting'}, this.handleAddMetadata);
                   return;
@@ -578,12 +613,12 @@ export default class AudioUploader extends React.Component {
                 props.uploadLimit + props.uploadSurge - audioFile!.size
               }
             />
-          </div>
+          </React.Fragment>
         );
-
+      }
       case 'replace pic':
         return (
-          <div>
+          <React.Fragment>
             {this.renderAudioPreview()}
             <CardReplaceArtwork
               existingSource={unsign(props.defImageURL)}
@@ -602,7 +637,7 @@ export default class AudioUploader extends React.Component {
                 });
               }}
             />
-          </div>
+          </React.Fragment>
         );
 
       case 'uploading':
@@ -616,14 +651,14 @@ export default class AudioUploader extends React.Component {
 
       case 'uploaded':
         return (
-          <div>
+          <React.Fragment>
             {this.renderAudioPreview()}
             {this.renderImagePreview()}
-          </div>
+          </React.Fragment>
         );
       case 'confirm remove artwork':
         return (
-          <div>
+          <React.Fragment>
             {this.renderAudioPreview()}
             <CardRemoveArtwork
               onAccept={() => {
@@ -636,7 +671,7 @@ export default class AudioUploader extends React.Component {
               }}
               onCancel={() => this.setState({phase: 'uploaded'})}
             />
-          </div>
+          </React.Fragment>
         );
     }
   }
