@@ -27,6 +27,10 @@ function show(elem: HTMLElement) {
   );
 }
 
+function getWindowHashes() {
+  return window.location.hash.substr(1).split(',');
+}
+
 function buildTabs(tabBar: HTMLElement) {
   const allTabs = Array.from(tabBar.querySelectorAll('li a[data-tab]'));
 
@@ -48,12 +52,15 @@ function buildTabs(tabBar: HTMLElement) {
     if (tabBar.getAttribute('data-no-history') !== null || initial) {
       return;
     }
-    const hash = window.location.hash.substr(1).split(',');
+    const hash = getWindowHashes();
     const hashPos = parseInt(tabBar.getAttribute('data-hash-pos') || '0', 10);
+    if (hash[hashPos] === tabName.substr(5)) {
+      return;
+    }
     hash[hashPos] = tabName.substr(5);
     window.history.replaceState(
       null,
-      undefined,
+      document.title,
       '#' + hash.slice(0, hashPos + 1).join(','),
     );
   }
@@ -96,7 +103,7 @@ function buildTabs(tabBar: HTMLElement) {
   select(selected, true);
 
   window.addEventListener('hashchange', () => {
-    const hash = window.location.hash.substr(1).split(',')[hashPos];
+    const hash = getWindowHashes()[hashPos];
     const selected =
       tabBar.querySelector(`a[data-tab=".tab-${hash}"]`) ||
       tabBar.querySelector(`a[data-tab=".${hash}"]`);
