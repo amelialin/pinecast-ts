@@ -7,10 +7,13 @@ import {
   I18n,
   InjectedIntlProps,
 } from '@pinecast/i18n';
+import Group from '@pinecast/common/Group';
+import {nullThrows} from '@pinecast/common/helpers';
 import Select from '@pinecast/common/Select';
 import TextInput from '@pinecast/common/TextInput';
 
 import CheckImage from './CheckImage';
+import * as constants from '../constants';
 import * as currencies from '../currencies';
 import stripe from '../stripe';
 
@@ -19,6 +22,11 @@ const messages = defineMessages({
     id: 'db-tip-jar-connect.BankAccount.currency.label',
     description: 'Label for currency dropdown',
     defaultMessage: 'Currency',
+  },
+  bankCountry: {
+    id: 'db-tip-jar-connect.BankAccount.bankCountry.label',
+    description: 'Label for bank account country dropdown',
+    defaultMessage: 'Bank country',
   },
   iban: {
     id: 'db-tip-jar-connect.BankAccount.iban.label',
@@ -42,6 +50,31 @@ const messages = defineMessages({
   },
 });
 
+function getDefaultCountryAndCurrency(
+  country: string,
+  currency: string | null = null,
+): [string, string] {
+  const c = currencies.countriesToCurrencies[country];
+  if (currency && c[currency]) {
+    if (c[currency].includes(country)) {
+      return [country, currency];
+    } else {
+      return [c[currency][0], currency];
+    }
+  }
+  const defCurrency = currencies.defaultCurrency[country];
+  if (defCurrency && c[defCurrency]) {
+    if (c[defCurrency].includes(country)) {
+      return [country, defCurrency];
+    } else {
+      return [c[defCurrency][0], defCurrency];
+    }
+  }
+
+  const fallbackCurrency = Object.keys(c)[0];
+  return [c[fallbackCurrency][0], fallbackCurrency];
+}
+
 export default class BankAccount extends React.Component {
   props: {
     country: string;
@@ -51,29 +84,37 @@ export default class BankAccount extends React.Component {
     selected: 'acct' | 'routing' | null;
     values: {
       currency: string;
+      country: string;
       account_number: string;
-      routing_number: string;
+      routing_number?: string;
     };
   };
   constructor(props: BankAccount['props']) {
     super(props);
+
+    const [country, currency] = getDefaultCountryAndCurrency(props.country);
+
     this.state = {
       complete: false,
       selected: null,
       values: {
-        currency: currencies.countriesToCurrencies[props.country][0],
+        currency,
+        country,
         account_number: '',
-        routing_number: '',
       },
     };
   }
 
   componentWillReceiveProps(newProps: BankAccount['props']) {
     if (newProps.country !== this.props.country) {
+      const [country, currency] = getDefaultCountryAndCurrency(
+        newProps.country,
+      );
       this.setState({
         values: {
           ...this.state.values,
-          currency: currencies.countriesToCurrencies[newProps.country][0],
+          currency,
+          country,
         },
       });
     }
@@ -81,16 +122,19 @@ export default class BankAccount extends React.Component {
 
   isReady() {
     const {
-      values: {account_number, currency, routing_number},
+      values: {account_number, country, currency, routing_number},
     } = this.state;
-    return Boolean(account_number && currency && routing_number);
+    return Boolean(
+      account_number &&
+        country &&
+        currency &&
+        (currency === 'eur' || routing_number),
+    );
   }
 
   getToken() {
-    const {country} = this.props;
     return stripe.createToken('bank_account', {
       ...this.state.values,
-      country,
       account_holder_type: 'individual',
     });
   }
@@ -100,8 +144,13 @@ export default class BankAccount extends React.Component {
     if (key === 'currency' && value && value.toUpperCase() === 'EUR') {
       delete updatedValues.routing_number;
     }
-    this.setState({
-      values: updatedValues,
+    return new Promise(resolve => {
+      this.setState(
+        {
+          values: updatedValues,
+        },
+        resolve,
+      );
     });
   }
 
@@ -114,7 +163,17 @@ export default class BankAccount extends React.Component {
     }
   }
 
-  handleChangeCurrency = (value: string) => this.updateValue('currency', value);
+  handleChangeCurrency = async (value: string) => {
+    const [bankCountry, currency] = getDefaultCountryAndCurrency(
+      this.props.country,
+      value,
+    );
+    await this.updateValue('currency', currency);
+    this.updateValue('country', bankCountry);
+  };
+  handleChangeBankCountry = (value: string) => {
+    this.updateValue('country', value);
+  };
 
   handleFocusAcctNum = () => {
     this.setState({selected: 'acct'});
@@ -135,6 +194,46 @@ export default class BankAccount extends React.Component {
   handleRoutingNumChange = (value: string) =>
     this.updateValue('routing_number', value);
 
+  renderCurrencies(
+    availableCurrencies: {[currency: string]: Array<string>},
+    values: BankAccount['state']['values'],
+  ) {
+    const currencyList = Object.keys(availableCurrencies);
+    return (
+      <Group spacing={12}>
+        <Label text={<FormattedMessage {...messages.currency} />}>
+          <I18n>
+            {({intl}: InjectedIntlProps) => (
+              <Select
+                disabled={currencyList.length < 2}
+                onChange={this.handleChangeCurrency}
+                options={currencyList.map(cur => ({
+                  label: intl.formatMessage(currencies.names[cur]),
+                  key: cur,
+                }))}
+                value={values.currency}
+              />
+            )}
+          </I18n>
+        </Label>
+        {availableCurrencies[values.currency].length > 1 && (
+          <Label text={<FormattedMessage {...messages.bankCountry} />}>
+            <Select
+              disabled={currencyList.length < 2}
+              onChange={this.handleChangeBankCountry}
+              options={availableCurrencies[values.currency].map(country =>
+                nullThrows(
+                  constants.countryOptions.find(x => x.key === country),
+                ),
+              )}
+              value={values.country}
+            />
+          </Label>
+        )}
+      </Group>
+    );
+  }
+
   render() {
     const {
       props: {country},
@@ -142,24 +241,14 @@ export default class BankAccount extends React.Component {
     } = this;
     const availableCurrencies = currencies.countriesToCurrencies[country];
     const isEuro = values.currency.toUpperCase() === 'EUR';
+    const usesIBAN =
+      isEuro ||
+      ['EUR', 'DKK', 'CHF', 'NOK', 'SEK'].includes(
+        values.currency.toUpperCase(),
+      );
     return (
       <React.Fragment>
-        {availableCurrencies.length > 1 && (
-          <Label text={<FormattedMessage {...messages.currency} />}>
-            <I18n>
-              {({intl}: InjectedIntlProps) => (
-                <Select
-                  onChange={this.handleChangeCurrency}
-                  options={availableCurrencies.map(cur => ({
-                    label: intl.formatMessage(currencies.names[cur]),
-                    key: cur,
-                  }))}
-                  value={values.currency}
-                />
-              )}
-            </I18n>
-          </Label>
-        )}
+        {this.renderCurrencies(availableCurrencies, values)}
         {values.currency.toUpperCase() === 'USD' && (
           <div>
             <CheckImage
@@ -171,7 +260,7 @@ export default class BankAccount extends React.Component {
         <Label
           text={
             <FormattedMessage
-              {...(isEuro ? messages.iban : messages.accountNumber)}
+              {...(usesIBAN ? messages.iban : messages.accountNumber)}
             />
           }
         >
@@ -181,7 +270,7 @@ export default class BankAccount extends React.Component {
               onFocus: this.handleFocusAcctNum,
             }}
             onChange={this.handleAcctNumChange}
-            placeholder={isEuro ? 'XX000123456789' : '000123456789'}
+            placeholder={usesIBAN ? 'XX000123456789' : '000123456789'}
             value={values.account_number}
           />
         </Label>

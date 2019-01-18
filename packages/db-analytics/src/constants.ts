@@ -1,6 +1,7 @@
 import {defineMessages, Message} from '@pinecast/i18n';
 
 export const TYPE_LISTENS = 'listen';
+export const TYPE_LISTENS_SPOTIFY = 'listen_spotify';
 export const TYPE_SUBS = 'subscribers';
 export const TYPE_BY_EPISODE = 'listen_by_episode';
 export const TYPE_BY_SOURCE = 'listen_by_source';
@@ -16,6 +17,7 @@ export const TYPE_GROWTH = 'network_growth';
 export type AnalyticsType = 'episode' | 'network' | 'podcast';
 export type AnalyticsView =
   | typeof TYPE_LISTENS
+  | typeof TYPE_LISTENS_SPOTIFY
   | typeof TYPE_SUBS
   | typeof TYPE_BY_EPISODE
   | typeof TYPE_BY_SOURCE
@@ -51,6 +53,7 @@ export const TYPES: {[type: string]: Array<AnalyticsView>} = {
   ],
   podcast: [
     TYPE_LISTENS,
+    TYPE_LISTENS_SPOTIFY,
     TYPE_SUBS,
     TYPE_BY_EPISODE,
     TYPE_BY_SOURCE,
@@ -67,9 +70,14 @@ export const TYPES: {[type: string]: Array<AnalyticsView>} = {
 
 export const TYPES_NAMES: {[type: string]: Message} = defineMessages({
   [TYPE_LISTENS]: {
-    id: 'db-analytics.labels.types.listens.totla',
+    id: 'db-analytics.labels.types.listens.total',
     description: 'Label for an analytics view showing total listens',
     defaultMessage: 'Total listens',
+  },
+  [TYPE_LISTENS_SPOTIFY]: {
+    id: 'db-analytics.labels.types.listens.total.spotify',
+    description: 'Label for an analytics view showing total listens on Spotify',
+    defaultMessage: 'Total listens on Spotify',
   },
   [TYPE_SUBS]: {
     id: 'db-analytics.labels.types.subscribers.total',
@@ -139,6 +147,7 @@ export const TYPES_NAMES: {[type: string]: Message} = defineMessages({
 export const TYPES_ENDPOINTS: {[type: string]: {[view: string]: string}} = {
   episode: {
     [TYPE_LISTENS]: 'episode/listens',
+    [TYPE_LISTENS_SPOTIFY]: 'episode/listens/spotify',
     [TYPE_BY_SOURCE]: 'episode/listens/breakdown',
     [TYPE_BY_AGENT]: 'episode/listens/agent',
     [TYPE_GROWTH]: 'episode/growth',
@@ -147,6 +156,7 @@ export const TYPES_ENDPOINTS: {[type: string]: {[view: string]: string}} = {
   },
   network: {
     [TYPE_LISTENS]: 'network/listens',
+    [TYPE_LISTENS_SPOTIFY]: 'network/listens/spotify',
     [TYPE_BY_SOURCE]: 'network/listens/breakdown',
     [TYPE_BY_AGENT]: 'network/listens/agent',
     [TYPE_GROWTH]: 'network/growth',
@@ -159,6 +169,7 @@ export const TYPES_ENDPOINTS: {[type: string]: {[view: string]: string}} = {
   },
   podcast: {
     [TYPE_LISTENS]: 'podcast/listens',
+    [TYPE_LISTENS_SPOTIFY]: 'podcast/listens/spotify',
     [TYPE_GROWTH]: 'podcast/growth',
     [TYPE_BY_EPISODE]: 'podcast/listens/episode',
     [TYPE_BY_SOURCE]: 'podcast/listens/breakdown',
@@ -204,6 +215,7 @@ export type ChartType =
 
 export const TYPES_CHART_TYPES: {[view: string]: ChartType} = {
   [TYPE_LISTENS]: 'timeseries',
+  [TYPE_LISTENS_SPOTIFY]: 'timeseries',
   [TYPE_SUBS]: 'timeseries',
   [TYPE_BY_EPISODE]: 'timeseries',
   [TYPE_BY_SOURCE]: 'timeseries',
@@ -225,6 +237,7 @@ export const TYPES_CHART_REQUIRES: {
   [view: string]: null | 'starter' | 'pro';
 } = {
   [TYPE_LISTENS]: null,
+  [TYPE_LISTENS_SPOTIFY]: null,
   [TYPE_SUBS]: null,
   [TYPE_BY_EPISODE]: 'starter',
   [TYPE_BY_SOURCE]: null,
@@ -240,6 +253,7 @@ export const TYPES_CHART_REQUIRES: {
 
 export const TYPES_SHOW_TOTAL: {[view: string]: true} = {
   [TYPE_LISTENS]: true,
+  [TYPE_LISTENS_SPOTIFY]: true,
   [TYPE_BY_EPISODE]: true,
   [TYPE_BY_SOURCE]: true,
 };
@@ -339,6 +353,7 @@ const ALL_TIMEFRAMES_WITHOUT_CUSTOM: Array<Timeframe> = ALL_TIMEFRAMES.filter(
 export const TYPE_TIMEFRAMES: {[view: string]: Array<Timeframe>} = {
   [TYPE_SUBS]: [/*'sixmonth', */ 'month'] as Array<Timeframe>,
   [TYPE_LISTENS]: ALL_TIMEFRAMES,
+  [TYPE_LISTENS_SPOTIFY]: ALL_TIMEFRAMES,
   [TYPE_BY_EPISODE]: ALL_TIMEFRAMES,
   [TYPE_BY_SOURCE]: ALL_TIMEFRAMES,
   [TYPE_GEO_LISTENS]: ALL_TIMEFRAMES,
@@ -350,6 +365,7 @@ export const TYPE_GRANULARITIES: {
   [view: string]: Array<Granularity>;
 } = {
   [TYPE_LISTENS]: DEFAULT_GRANULARITIES,
+  [TYPE_LISTENS_SPOTIFY]: DEFAULT_GRANULARITIES,
   [TYPE_SUBS]: ['daily'],
   [TYPE_BY_EPISODE]: DEFAULT_GRANULARITIES,
   [TYPE_BY_SOURCE]: DEFAULT_GRANULARITIES,

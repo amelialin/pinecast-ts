@@ -57,6 +57,7 @@ export default class ManagementComponent extends React.PureComponent {
         uploads={files.map((manager, i) => ({
           name: orders[i].title,
           percent: manager.progress,
+          error: manager.error,
         }))}
       />
     );

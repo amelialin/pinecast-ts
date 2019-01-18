@@ -25,15 +25,26 @@ export interface CSS extends CSSProperties {
   ':focus'?: CSSProperties;
   ':hover'?: CSSProperties;
   ':visited'?: CSSProperties;
+  ':not(:active)'?: CSSProperties;
+  ':not(:focus)'?: CSSProperties;
+  ':not(:hover)'?: CSSProperties;
+  ':not(:visited)'?: CSSProperties;
 
   ':disabled'?: CSSProperties;
   ':invalid'?: CSSProperties;
   ':checked'?: CSSProperties;
+  ':not(:disabled)'?: CSSProperties;
+  ':not(:invalid)'?: CSSProperties;
+  ':not(:checked)'?: CSSProperties;
 
   ':first-child'?: CSSProperties;
   ':first-of-type'?: CSSProperties;
   ':last-child'?: CSSProperties;
   ':last-of-type'?: CSSProperties;
+  ':not(:first-child)'?: CSSProperties;
+  ':not(:first-of-type)'?: CSSProperties;
+  ':not(:last-child)'?: CSSProperties;
+  ':not(:last-of-type)'?: CSSProperties;
 
   ':after'?: PseudoElementType;
   ':before'?: PseudoElementType;

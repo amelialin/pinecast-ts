@@ -5,10 +5,16 @@ import styled from '@pinecast/styles';
 
 import Button from '../Button';
 import Card from '../Card';
+import Callout from '../Callout';
 import Progress from '../Progress';
 import TimeRemainingIndicator from './TimeRemainingIndicator';
 
 const messages = defineMessages({
+  heading: {
+    id: 'common.UploadProgress.heading',
+    description: 'Heading for upload progress',
+    defaultMessage: 'Uploading to Pinecast…',
+  },
   complete: {
     id: 'common.UploadProgress.complete',
     description: 'Status of completed upload',
@@ -39,6 +45,7 @@ const UploadName = styled('div', {
 });
 
 type OngoingUpload = {
+  error?: React.ReactNode;
   name?: React.ReactNode;
   percent: number;
 };
@@ -54,24 +61,30 @@ export default class UploadProgress extends React.Component {
     const {onAbort, uploads} = this.props;
     return (
       <Card whiteBack>
-        <TaskDescription>Uploading to Pinecast…</TaskDescription>
-        {uploads.map(({name, percent}, i) => (
+        <TaskDescription>
+          <FormattedMessage {...messages.heading} />
+        </TaskDescription>
+        {uploads.map(({error, name, percent}, i) => (
           <React.Fragment key={i}>
             {name ? <UploadName>{name}</UploadName> : null}
-            <ProgressWrapper>
-              <Progress
-                percent={percent}
-                style={{flex: '1 1', marginRight: 12}}
-              />
-              {percent === 100 ? (
-                <FormattedMessage {...messages.complete} />
-              ) : (
-                <TimeRemainingIndicator
-                  progress={percent}
-                  startTime={this.state.started}
+            {error ? (
+              <Callout type="negative">{error}</Callout>
+            ) : (
+              <ProgressWrapper>
+                <Progress
+                  percent={percent}
+                  style={{flex: '1 1', marginRight: 12}}
                 />
-              )}
-            </ProgressWrapper>
+                {percent === 100 ? (
+                  <FormattedMessage {...messages.complete} />
+                ) : (
+                  <TimeRemainingIndicator
+                    progress={percent}
+                    startTime={this.state.started}
+                  />
+                )}
+              </ProgressWrapper>
+            )}
           </React.Fragment>
         ))}
         <Button

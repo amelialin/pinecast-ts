@@ -21,6 +21,7 @@ import render from './charts';
 import * as timeframeAndGranularity from './timeframeAndGranularity';
 import TimeframePicker from './TimeframePicker';
 import TypePicker from './TypePicker';
+import ViewNotes from './ViewNotes';
 
 const messages = defineMessages({
   upsellProTitle: {
@@ -98,10 +99,10 @@ export default class AnalyticsDash extends React.Component {
     const type = this.getType();
     const customTFPreviousUnparsed = persist.get(`dash.${type}.ctf`, '');
     const customTFPrevious: AnalyticsDash['state']['customTimeframe'] = customTFPreviousUnparsed
-      ? customTFPreviousUnparsed.split(',').map(x => new Date(x)) as [
+      ? (customTFPreviousUnparsed.split(',').map(x => new Date(x)) as [
           Date,
           Date
-        ]
+        ])
       : null;
 
     this.state = {
@@ -446,6 +447,7 @@ export default class AnalyticsDash extends React.Component {
         <Card style={{padding: '12px 12px 12px'}} whiteBack>
           {this.renderBody()}
         </Card>
+        <ViewNotes view={this.state.view} />
       </Provider>
     );
   }

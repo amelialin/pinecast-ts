@@ -4,8 +4,9 @@ import Card from '@pinecast/common/Card';
 import {gettext} from '@pinecast/i18n';
 import styled from '@pinecast/styles';
 
-const Fill = styled('div', {flex: '2 2'});
-const Divide = styled('div', {flex: '1 1', paddingLeft: 12});
+const Fill = styled('div', {flex: '2 2', paddingRight: 12});
+const Divide = styled('div', {flex: '1 1', paddingRight: 12});
+const Heading = styled('b', {display: 'block', whiteSpace: 'nowrap'});
 
 const BankDetails = ({
   externalAccount: {bank_name, country, last4},
@@ -21,19 +22,16 @@ const BankDetails = ({
     }}
     whiteBack
   >
-    <Fill>
-      <b>{gettext('Account number')}</b>
-      <br />
+    <Divide>
+      <Heading>{gettext('Account number')}</Heading>
       {`···· ${last4}`}
+    </Divide>
+    <Fill>
+      <Heading>{gettext('Bank')}</Heading>
+      {bank_name}
     </Fill>
     <Divide>
-      <b>{gettext('Bank')}</b>
-      <br />
-      {bank_name}
-    </Divide>
-    <Divide>
-      <b>{gettext('Country')}</b>
-      <br />
+      <Heading>{gettext('Country')}</Heading>
       {country}
     </Divide>
   </Card>

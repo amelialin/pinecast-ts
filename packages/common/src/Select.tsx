@@ -4,7 +4,7 @@ import styled, {CSS} from '@pinecast/styles';
 
 import {DEFAULT_FONT} from './constants';
 
-const Wrapper = styled('div', {
+const Wrapper = styled('div', ({$disabled}: {$disabled: boolean}) => ({
   alignItems: 'center',
   background: '#fff',
   borderRadius: 3,
@@ -22,15 +22,16 @@ const Wrapper = styled('div', {
     content: '""',
     display: 'block',
     height: 6,
+    opacity: $disabled ? 0.5 : 1,
     position: 'absolute',
     right: 10,
     transform: 'translateY(-2px) rotate(45deg)',
     width: 6,
   },
-});
+}));
 const Select_ = styled(
   'select',
-  ({$invalid}: {$invalid: boolean}) => ({
+  ({$invalid, disabled}: {$invalid: boolean; disabled: boolean}) => ({
     appearance: 'none',
     MozAppearance: 'none',
     WebkitAppearance: 'none',
@@ -48,10 +49,12 @@ const Select_ = styled(
     transition: 'box-shadow 0.2s, opacity 0.2s',
     width: '100%',
 
-    ':hover': {
-      boxShadow:
-        '0 1px 3px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.1), inset 0 0 0 0.5px #c6caca, rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
-    },
+    ':hover': !disabled
+      ? {
+          boxShadow:
+            '0 1px 3px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.1), inset 0 0 0 0.5px #c6caca, rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
+        }
+      : undefined,
     ':active': {
       boxShadow:
         '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px #c6caca, rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
@@ -65,10 +68,12 @@ const Select_ = styled(
         '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), inset 0 0 0 0.5px #8aa3b1, rgba(167, 210, 243, 0.75) 0 0 0 3px inset',
       outline: 'none',
     },
-    ':focus:hover': {
-      boxShadow:
-        '0 1px 3px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.1), inset 0 0 0 0.5px #8aa3b1, rgba(167, 210, 243, 0.75) 0 0 0 3px inset',
-    },
+    ':focus:hover': !disabled
+      ? {
+          boxShadow:
+            '0 1px 3px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.1), inset 0 0 0 0.5px #8aa3b1, rgba(167, 210, 243, 0.75) 0 0 0 3px inset',
+        }
+      : undefined,
     ':focus:active': {
       boxShadow:
         '0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px #8aa3b1, rgba(167, 210, 243, 0.75) 0 0 0 3px inset',
@@ -111,10 +116,10 @@ const Select = ({
   tabIndex?: number;
   value: string | number;
 }) => (
-  <Wrapper style={style}>
+  <Wrapper style={style} $disabled={disabled || false}>
     <Select_
       autoFocus={autoFocus}
-      disabled={disabled}
+      disabled={disabled || false}
       $invalid={invalid || false}
       onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
         onChange(e.target.value)

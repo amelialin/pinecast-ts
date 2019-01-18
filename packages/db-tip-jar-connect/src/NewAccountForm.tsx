@@ -5,23 +5,12 @@ import Callout from '@pinecast/common/Callout';
 import Card from '@pinecast/common/Card';
 import Form from '@pinecast/common/Form';
 import {gettext} from '@pinecast/i18n';
-import Group from '@pinecast/common/Group';
 import Label from '@pinecast/common/Label';
 import Select from '@pinecast/common/Select';
 import xhr from '@pinecast/xhr';
 
 import {countryOptions} from './constants';
 import ExternalAccount from './ExternalAccount';
-import LEAddressCityField from './fields/LEAddressCityField';
-import LEAddressStateField from './fields/LEAddressStateField';
-import LEAddressSecondField from './fields/LEAddressSecondField';
-import LEAddressStreetField from './fields/LEAddressStreetField';
-import LEAddressZipField from './fields/LEAddressZipField';
-import LEDOBField from './fields/LEDOBField';
-import LEFirstNameField from './fields/LEFirstNameField';
-import LELastNameField from './fields/LELastNameField';
-import LESSNLastFourField from './fields/LESSNLastFourField';
-import stripe from './stripe';
 
 declare var Rollbar: any;
 
@@ -31,30 +20,11 @@ export default class NewAccountForm extends React.Component {
   };
   state: {
     country: string;
-    legalEntity: {
-      type: 'individual';
-      first_name?: string;
-      last_name?: string;
-      address?: {
-        line1?: string;
-        line2?: string;
-        city?: string;
-        state?: string;
-        postal_code?: string;
-      };
-      dob?: {
-        month?: string;
-        day?: string;
-        year?: string;
-      };
-      ssn_last_4?: string;
-    };
 
     error: React.ReactNode | null;
     saving: boolean;
   } = {
     country: 'US',
-    legalEntity: {type: 'individual', dob: {month: '1'}},
 
     error: null,
     saving: false,
@@ -76,16 +46,10 @@ export default class NewAccountForm extends React.Component {
 
     this.setState({saving: true, error: null});
 
-    const [
-      {error: acctError, token: acctToken},
-      {error: bankError, token: bankToken},
-    ] = await Promise.all([
-      stripe.createToken('account', {
-        legal_entity: this.state.legalEntity,
-        tos_shown_and_accepted: true,
-      }),
-      this.externalAccount.getToken(),
-    ]);
+    const {
+      error: bankError,
+      token: bankToken,
+    } = await this.externalAccount.getToken();
 
     if (bankError) {
       this.setState({saving: false});
@@ -102,22 +66,8 @@ export default class NewAccountForm extends React.Component {
       return;
     }
 
-    if (acctError) {
-      Rollbar.warning('Error during tip jar signup', acctError);
-      this.setState({
-        saving: false,
-        error:
-          acctError.message ||
-          gettext(
-            'Your identity information could not be submitted. Please contact Pinecast support.',
-          ),
-      });
-      return;
-    }
-
     const body = new FormData();
     body.append('country', this.state.country);
-    body.append('account_token', acctToken.id);
     body.append('bank_token', bankToken.id);
     const req = xhr({
       method: 'POST',
@@ -153,75 +103,6 @@ export default class NewAccountForm extends React.Component {
     this.setState({country});
   };
 
-  updateLegalEntityValue(
-    key: keyof NewAccountForm['state']['legalEntity'],
-    value: string,
-  ) {
-    this.setState({
-      legalEntity: {
-        ...this.state.legalEntity,
-        [key]: value || undefined,
-      },
-    });
-  }
-  updateLegalEntitySubkeyValue(
-    key: 'address',
-    subkey: 'line1' | 'line2' | 'city' | 'state' | 'postal_code',
-    value: string,
-  ): void;
-  updateLegalEntitySubkeyValue(
-    key: 'dob',
-    subkey: 'month' | 'day' | 'year',
-    value: string,
-  ): void;
-  updateLegalEntitySubkeyValue(
-    key: 'address' | 'dob',
-    subkey: string,
-    value: string,
-  ): void {
-    const parentkeyValue = this.state.legalEntity[key];
-    if (!parentkeyValue && !value) {
-      return;
-    }
-    const newParent = {
-      ...parentkeyValue,
-      [subkey]: value || undefined,
-    };
-    this.setState({
-      legalEntity: {
-        ...this.state.legalEntity,
-        [key]: newParent,
-      },
-    });
-  }
-  handleFirstName = (value: string) =>
-    this.updateLegalEntityValue('first_name', value);
-  handleLastName = (value: string) =>
-    this.updateLegalEntityValue('last_name', value);
-
-  handleAddressLine1 = (value: string) =>
-    this.updateLegalEntitySubkeyValue('address', 'line1', value);
-  handleAddressLine2 = (value: string) =>
-    this.updateLegalEntitySubkeyValue('address', 'line2', value);
-  handleAddressCity = (value: string) =>
-    this.updateLegalEntitySubkeyValue('address', 'city', value);
-  handleAddressState = (value: string) =>
-    this.updateLegalEntitySubkeyValue('address', 'state', value);
-  handleAddressPostalCode = (value: string) =>
-    this.updateLegalEntitySubkeyValue('address', 'postal_code', value);
-
-  handleDob = (value: {month: string; day: string; year: string}) => {
-    this.setState({
-      legalEntity: {
-        ...this.state.legalEntity,
-        dob: value,
-      },
-    });
-  };
-
-  handleSSNLast4 = (value: string) =>
-    this.updateLegalEntityValue('ssn_last_4', value);
-
   handleEARef = (ref: ExternalAccount | null) => {
     this.externalAccount = ref;
   };
@@ -235,7 +116,7 @@ export default class NewAccountForm extends React.Component {
       <Card style={{maxWidth: 500}} whiteBack>
         <Form onSubmit={this.submit}>
           {error && <Callout type="negative">{error}</Callout>}
-          <Label text={gettext('Country')}>
+          <Label text={gettext('Where do you live?')}>
             <Select
               onChange={this.handleChangeCountry}
               options={countryOptions}
@@ -243,65 +124,10 @@ export default class NewAccountForm extends React.Component {
             />
           </Label>
 
-          <p>
-            {gettext(
-              'This information should reflect the owner of the podcast. These details will be used for tax purposes, if necessary.',
-            )}
-          </p>
-
-          <Label text="Legal name">
-            <Group allowWrap spacing={12}>
-              <LEFirstNameField
-                onChange={this.handleFirstName}
-                value={this.state.legalEntity.first_name || ''}
-              />
-              <LELastNameField
-                onChange={this.handleLastName}
-                value={this.state.legalEntity.last_name || ''}
-              />
-            </Group>
-          </Label>
-
-          <Label text="Address">
-            <LEAddressStreetField
-              onChange={this.handleAddressLine1}
-              value={(this.state.legalEntity.address || {}).line1 || ''}
-            />
-            <LEAddressSecondField
-              onChange={this.handleAddressLine2}
-              value={(this.state.legalEntity.address || {}).line2 || ''}
-            />
-            <LEAddressCityField
-              onChange={this.handleAddressCity}
-              value={(this.state.legalEntity.address || {}).city || ''}
-            />
-            <LEAddressStateField
-              country={country}
-              onChange={this.handleAddressState}
-              value={(this.state.legalEntity.address || {}).state || ''}
-            />
-            <LEAddressZipField
-              country={country}
-              onChange={this.handleAddressPostalCode}
-              value={(this.state.legalEntity.address || {}).postal_code || ''}
-            />
-          </Label>
-
-          <LEDOBField
-            onChange={this.handleDob}
-            value={this.state.legalEntity.dob || {}}
-          />
-          {country.toUpperCase() === 'US' && (
-            <LESSNLastFourField
-              onChange={this.handleSSNLast4}
-              value={this.state.legalEntity.ssn_last_4 || ''}
-            />
-          )}
-
           <ExternalAccount country={country} ref={this.handleEARef} />
 
           <Button pending={saving} type="submit">
-            {gettext('Create tip jar')}
+            {gettext('Continue setup')}
           </Button>
         </Form>
       </Card>

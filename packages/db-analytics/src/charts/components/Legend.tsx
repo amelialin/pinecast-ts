@@ -21,54 +21,63 @@ export type Series = {
 
 const itemWrapperBase: CSS = {
   alignItems: 'center',
+  border: 0,
   borderRadius: 3,
   color: '#44484d',
   display: 'inline-block',
+  fontSize: 14,
   fontWeight: 500,
   height: 28,
   lineHeight: 28,
   overflow: 'hidden',
   padding: '0 8px',
+  textAlign: 'left',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 };
 const ItemWrapperDecoy = styled('span', itemWrapperBase);
-const ItemWrapper = styled('a', ({$enabled}: {$enabled: boolean}) => ({
-  ...itemWrapperBase,
-  boxShadow: 'rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
-  cursor: 'pointer',
-  opacity: $enabled ? 1 : 0.5,
-  transition: 'opacity 0.05s',
-  ':hover': {
-    backgroundColor: $enabled ? '#dee1df' : '#eeefea',
-    textDecoration: 'none',
+const ItemWrapper = styled(
+  'button',
+  ({$enabled}: {$enabled: boolean}) => ({
+    ...itemWrapperBase,
+    boxShadow: 'rgba(167, 210, 243, 0.0) 0 0 0 0 inset',
+    cursor: 'pointer',
+    opacity: $enabled ? 1 : 0.5,
+    transition: 'box-shadow 0.1s, opacity 0.075s',
+    ':hover': {
+      backgroundColor: $enabled ? '#dee1df' : '#eeefea',
+      textDecoration: 'none',
+    },
+    ':hover .Chip': {
+      boxShadow: $enabled ? '0 0 0 1.5px rgba(255, 255, 255, 1) inset' : 'none',
+    },
+    ':focus': {
+      boxShadow: 'rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
+      outline: 'none',
+    },
+    ':active': {
+      backgroundColor: $enabled ? '#c6caca' : undefined,
+      opacity: !$enabled ? 0.75 : undefined,
+    },
+  }),
+  {
+    tabIndex: 1,
+    type: 'button',
   },
-  ':hover .Chip': {
-    boxShadow: $enabled
-      ? '0 1px 3px 0.5px rgba(0, 0, 0, 0.2), 0 0.5px 2px rgba(0, 0, 0, 0.1)'
-      : 'none',
-  },
-  ':focus': {
-    boxShadow: 'rgba(167, 210, 243, 0.75) 0 0 0 2px inset',
-  },
-  ':active': {
-    backgroundColor: $enabled ? '#c6caca' : undefined,
-    opacity: !$enabled ? 0.75 : undefined,
-  },
-}));
+);
 const Chip = styled(
   'b',
   ({$color}: {$color: string}) => ({
     backgroundColor: $color,
-    borderRadius: 2,
-    boxShadow: '0 0 0 rgba(0, 0, 0, 0.2), 0 0 0 rgba(0, 0, 0, 0.1)',
+    borderRadius: 4,
+    boxShadow: '0 0 0 rgba(255, 255, 255, 0) inset',
     display: 'inline-block',
-    height: 12,
+    height: 16,
     marginRight: 8,
     marginTop: -2,
     transition: 'box-shadow 0.15s',
     verticalAlign: 'middle',
-    width: 12,
+    width: 16,
   }),
   {className: 'Chip'},
 );

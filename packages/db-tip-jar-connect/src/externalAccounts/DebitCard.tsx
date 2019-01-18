@@ -1,15 +1,8 @@
 import * as React from 'react';
 
-import {
-  defineMessages,
-  FormattedMessage,
-  I18n,
-  InjectedIntlProps,
-} from '@pinecast/i18n';
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 
 import Label from '@pinecast/common/Label';
-import * as currencies from '../currencies';
-import Select from '@pinecast/common/Select';
 import stripe from '../stripe';
 import {InputWrapper} from '@pinecast/common/TextInput';
 
@@ -25,11 +18,6 @@ const messages = defineMessages({
     description: 'Label for card details field',
     defaultMessage: 'Card details',
   },
-  currency: {
-    id: 'db-tip-jar-connect.DebitCard.currency.label',
-    description: 'Label for currency dropdown',
-    defaultMessage: 'Currency',
-  },
 });
 
 const cardStyle = {
@@ -42,7 +30,6 @@ export default class DebitCard extends React.Component {
   };
   state: {
     complete: boolean;
-    currency: string;
   };
 
   // TODO: Type these
@@ -55,7 +42,6 @@ export default class DebitCard extends React.Component {
     super(props);
     this.state = {
       complete: false,
-      currency: currencies.countriesToCurrencies[props.country][0],
     };
 
     this.elements = stripe.elements();
@@ -79,7 +65,7 @@ export default class DebitCard extends React.Component {
   }
 
   getToken() {
-    return stripe.createToken(this.card, {currency: this.state.currency});
+    return stripe.createToken(this.card, {currency: 'usd'});
   }
 
   handleCardRef = (ref: HTMLDivElement | null) => {
@@ -90,8 +76,6 @@ export default class DebitCard extends React.Component {
   };
 
   render() {
-    const availableCurrencies =
-      currencies.countriesToCurrencies[this.props.country];
     return (
       <React.Fragment>
         <p>
@@ -108,22 +92,6 @@ export default class DebitCard extends React.Component {
             <div ref={this.handleCardRef} />
           </InputWrapper>
         </Label>
-        {availableCurrencies.length > 1 && (
-          <Label text={<FormattedMessage {...messages.currency} />}>
-            <I18n>
-              {({intl}: InjectedIntlProps) => (
-                <Select
-                  onChange={this.handleChangeCurrency}
-                  options={availableCurrencies.map(cur => ({
-                    label: intl.formatMessage(currencies.names[cur]),
-                    key: cur,
-                  }))}
-                  value={this.state.currency}
-                />
-              )}
-            </I18n>
-          </Label>
-        )}
       </React.Fragment>
     );
   }

@@ -224,17 +224,20 @@ export default class AudioUploader extends React.Component {
   }
 
   async decodeImageFromID3(asset: Asset, type: string): Promise<Asset | null> {
-    if (asset.size < 1024 * 1024) {
+    if (asset.size < 2 * 1024 * 1024) {
       return asset;
     }
 
     // Resize the image to save space
     const decodedImage = await guardCallback(this, decodeImage(asset));
-    asset = await guardCallback(this, reformatImage(decodedImage));
-    if (asset.size > 2 * 1024 * 1024) {
+    const newAsset = await guardCallback(this, reformatImage(decodedImage));
+    if (newAsset.size > asset.size) {
+      return asset;
+    }
+    if (newAsset.size > 2 * 1024 * 1024) {
       return null;
     }
-    return asset;
+    return newAsset;
   }
 
   async gotFileToUpload() {
