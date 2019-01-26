@@ -78,13 +78,12 @@ class InventoryPanel extends React.Component {
         body,
       });
       this.setState({pending: false});
-      return this.props.inventory.reload();
+      this.props.inventory.reload();
     } catch (e) {
       this.setState({
         calloutError: 'There was an error discontinuing the ad.',
         pending: false,
       });
-      return;
     }
   };
   handleReenableAd = async (uuid: string) => {
@@ -98,13 +97,12 @@ class InventoryPanel extends React.Component {
         body,
       });
       this.setState({pending: false});
-      return this.props.inventory.reload();
+      this.props.inventory.reload();
     } catch (e) {
       this.setState({
         calloutError: 'There was an error discontinuing the ad.',
         pending: false,
       });
-      return;
     }
   };
 

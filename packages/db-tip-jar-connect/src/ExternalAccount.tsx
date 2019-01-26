@@ -1,13 +1,42 @@
 import * as React from 'react';
 
 import Callout from '@pinecast/common/Callout';
-import {gettext} from '@pinecast/i18n';
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import {nullThrows} from '@pinecast/common/helpers';
 import Label from '@pinecast/common/Label';
 import Radio from '@pinecast/common/Radio';
 
 import BankAccount from './externalAccounts/BankAccount';
 import DebitCard from './externalAccounts/DebitCard';
+
+const messages = defineMessages({
+  bankDetails: {
+    id: 'db-tip-jar-connect.ExternalAccount.bankDetails',
+    description: 'Heading for bank details',
+    defaultMessage: 'Bank details',
+  },
+  accountType: {
+    id: 'db-tip-jar-connect.ExternalAccount.accountType',
+    description: 'Question of where user wants their payouts sent',
+    defaultMessage:
+      'What type of account would you like to send tip payouts to?',
+  },
+  destination: {
+    id: 'db-tip-jar-connect.ExternalAccount.destination',
+    description: 'Question of where user wants their payouts sent to',
+    defaultMessage: 'Where should we send your tips?',
+  },
+  typeDebit: {
+    id: 'db-tip-jar-connect.ExternalAccount.type.debitCard',
+    description: 'Label for debit card option',
+    defaultMessage: 'Debit card',
+  },
+  typeBank: {
+    id: 'db-tip-jar-connect.ExternalAccount.type.bank',
+    description: 'Label for bank account option',
+    defaultMessage: 'Bank account',
+  },
+});
 
 export default class ExternalAccount extends React.Component {
   props: {
@@ -80,7 +109,10 @@ export default class ExternalAccount extends React.Component {
 
     if (country.toUpperCase() !== 'US') {
       return (
-        <Label componentType="div" text={gettext('Bank details')}>
+        <Label
+          componentType="div"
+          text={<FormattedMessage {...messages.bankDetails} />}
+        >
           {error && <Callout type="negative">{error}</Callout>}
           <BankAccount country={country} ref={this.handleRefBank} />
         </Label>
@@ -91,23 +123,23 @@ export default class ExternalAccount extends React.Component {
       <Label
         componentType="div"
         text={
-          isUpdate
-            ? gettext(
-                'What type of account would you like to send tip payouts to?',
-              )
-            : gettext('Where should we send your tips?')
+          isUpdate ? (
+            <FormattedMessage {...messages.accountType} />
+          ) : (
+            <FormattedMessage {...messages.destination} />
+          )
         }
       >
         {error && <Callout type="negative">{error}</Callout>}
         <Radio
           checked={type === 'debit_card'}
           onChange={this.handleSetDebit}
-          text={gettext('Debit card')}
+          text={<FormattedMessage {...messages.typeDebit} />}
         />
         <Radio
           checked={type === 'bank_account'}
           onChange={this.handleSetBank}
-          text={gettext('Bank account')}
+          text={<FormattedMessage {...messages.typeBank} />}
         />
         {type === 'debit_card' && (
           <DebitCard country={country} ref={this.handleRefDebit} />

@@ -8,6 +8,10 @@ module.exports = {
     __dirname,
     'packages/db-analytics/src/index.ts',
   ),
+  '@pinecast/db-apps$': path.resolve(
+    __dirname,
+    'packages/db-apps/src/index.ts',
+  ),
   '@pinecast/db-categories$': path.resolve(
     __dirname,
     'packages/db-categories/src/index.ts',
@@ -19,10 +23,6 @@ module.exports = {
   '@pinecast/db-publish-picker$': path.resolve(
     __dirname,
     'packages/db-publish-picker/src/index.ts',
-  ),
-  '@pinecast/db-spotify$': path.resolve(
-    __dirname,
-    'packages/db-spotify/src/index.ts',
   ),
   '@pinecast/db-tip-jar-connect$': path.resolve(
     __dirname,
@@ -42,7 +42,7 @@ module.exports = {
     'packages/externals/src/node/',
   ),
 
-  '@pinecast/i18n$': path.resolve(__dirname, 'packages/i18n/src/index.ts'),
+  '@pinecast/i18n$': path.resolve(__dirname, 'packages/i18n/src/index.tsx'),
 
   '@pinecast/pt-query$': path.resolve(
     __dirname,

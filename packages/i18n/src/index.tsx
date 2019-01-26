@@ -1,13 +1,22 @@
 import {
-  FormattedMessage,
+  FormattedMessage as OrigFormattedMessage,
   injectIntl as nativeInjectIntl,
   InjectedIntlProps,
   IntlProvider,
 } from 'react-intl';
 import * as React from 'react';
 
-export {FormattedMessage, InjectedIntlProps};
+export {InjectedIntlProps};
 export const Provider = IntlProvider;
+
+export const FormattedMessage = ({
+  style,
+  ...rest
+}: OrigFormattedMessage['props'] & {style?: React.CSSProperties}) => (
+  <OrigFormattedMessage {...rest}>
+    {content => <span style={style}>{content}</span>}
+  </OrigFormattedMessage>
+);
 
 let warned = false;
 export function gettext(inp: string): string {

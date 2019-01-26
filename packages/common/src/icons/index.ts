@@ -6,5 +6,4 @@ export {default as ErrorFlag} from './ErrorFlag';
 export {default as ErrorIcon} from './ErrorIcon';
 export {default as Info} from './Info';
 export {default as Pinecast} from './Pinecast';
-export {default as Spotify} from './Spotify';
 export {default as Up} from './Up';

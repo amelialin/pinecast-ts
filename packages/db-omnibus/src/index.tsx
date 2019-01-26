@@ -3,13 +3,13 @@ import {render} from 'react-dom';
 
 import AdsDashboard from '@pinecast/db-ads';
 import AnalyticsDash from '@pinecast/db-analytics';
+import AppsDashboard from '@pinecast/db-apps';
 import {AudioUploader, ImageUploader} from '@pinecast/db-uploader';
 import Categories from '@pinecast/db-categories';
 import {ClientStyletron, StyletronProvider} from '@pinecast/styles';
 import {Provider as I18nProvider} from '@pinecast/i18n';
 import ImportTool from '@pinecast/db-import-tool';
 import PublishPicker from '@pinecast/db-publish-picker';
-import Spotify from '@pinecast/db-spotify';
 import TipJarConnect from '@pinecast/db-tip-jar-connect';
 import Upgrade, {UpgradeAdvertisements} from '@pinecast/db-upgrade';
 
@@ -25,12 +25,12 @@ type Mountable<T> = React.ComponentType<T> & {
 const components: Array<Mountable<{[key: string]: any}>> = [
   AdsDashboard,
   AnalyticsDash,
+  AppsDashboard,
   AudioUploader,
   Categories,
   ImageUploader,
   ImportTool,
   PublishPicker,
-  Spotify,
   TipJarConnect,
   Upgrade,
   UpgradeAdvertisements,

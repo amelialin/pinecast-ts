@@ -1,5 +1,5 @@
 {
-  "name": "@pinecast/db-spotify",
+  "name": "@pinecast/db-apps",
   "version": "1.0.0",
   "main": "src/",
   "ts:main": "src/index.ts",

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {gettext} from '@pinecast/i18n';
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import {nullThrows} from '@pinecast/common/helpers';
 import Spinner from '@pinecast/common/Spinner';
 
@@ -16,6 +16,25 @@ import {ImageProblem} from './images';
 import RequiredPlaceholder from './RequiredPlaceholder';
 import UploadManager from './uploading/ManagementComponent';
 import UploadOrder from './uploading/order';
+
+const messages = defineMessages({
+  labelImage: {
+    id: 'db-uploader.ImageUploader.labelImage',
+    description: 'Default label for images',
+    defaultMessage: 'Image',
+  },
+  errorTooLarge: {
+    id: 'db-uploader.ImageUploader.errorTooLarge',
+    description: 'Error when an image is too large to upload',
+    defaultMessage: 'That image is too large. Images may be up to 2MB.',
+  },
+  errorNoData: {
+    id: 'db-uploader.ImageUploader.errorNoData',
+    description: 'Error when an image could not be read from disk',
+    defaultMessage:
+      'When we tried to read the file you chose, we got back no data.',
+  },
+});
 
 const typeDefaultFilenamesByMIME: {[type: string]: string} = {
   'image/jpeg': 'artwork.jpg',
@@ -47,7 +66,10 @@ export default class ImageUploader extends React.PureComponent {
 
   static propExtraction = {
     defURL: (e: HTMLElement) => e.getAttribute('data-default-url'),
-    label: (e: HTMLElement) => e.getAttribute('data-label') || gettext('Image'),
+    label: (e: HTMLElement) =>
+      e.getAttribute('data-label') || (
+        <FormattedMessage {...messages.labelImage} />
+      ),
     name: (e: HTMLElement) => e.getAttribute('data-name'),
     podcast: (e: HTMLElement) => e.getAttribute('data-podcast'),
     assetEndpoint: (e: HTMLElement) => e.getAttribute('data-asset-endpoint'),
@@ -69,7 +91,7 @@ export default class ImageUploader extends React.PureComponent {
   };
   state: {
     instance: string;
-    error: string | null;
+    error: React.ReactNode | null;
 
     phase: Phase;
     imageFile: Asset | null;
@@ -142,15 +164,13 @@ export default class ImageUploader extends React.PureComponent {
 
     if (imageFile.size > 1024 * 1024 * 2) {
       this.clearFile({
-        error: gettext('That image is too large. Images may be up to 2MB.'),
+        error: <FormattedMessage {...messages.errorTooLarge} />,
       });
       return;
     }
     if (imageFile.size === 0) {
       this.clearFile({
-        error: gettext(
-          'When we tried to read the file you chose, we got back no data.',
-        ),
+        error: <FormattedMessage {...messages.errorNoData} />,
       });
       return;
     }

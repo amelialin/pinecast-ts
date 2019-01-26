@@ -2,12 +2,12 @@ import * as React from 'react';
 
 import Button from '@pinecast/common/Button';
 import Card from '@pinecast/common/Card';
-import {defineMessages, FormattedMessage, gettext} from '@pinecast/i18n';
+import Dropzone from '@pinecast/common/Dropzone';
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 
 import Asset from '../assets';
 import ErrorComponent from '../Error';
 import {decodeImage, reformatImage} from '../images';
-import Dropzone from '../Dropzone';
 import ImageViewer from '../ImageViewer';
 import MusicInfo from '../icons/music-info';
 
@@ -45,6 +45,28 @@ const messages = defineMessages({
     id: 'db-uploader.AddArtwork.dropzone',
     description: 'Text shown in the area where artwork can be dropped',
     defaultMessage: 'Drop a PNG or JPG file here',
+  },
+
+  subtitleUseExisting: {
+    id: 'db-uploader.AddArtwork.subtitleUseExisting',
+    description: 'Option to use existing artwork for a new audio file',
+    defaultMessage: '…or use the artwork we have on file.',
+  },
+  ctaUseExisting: {
+    id: 'db-uploader.AddArtwork.ctaUseExisting',
+    description: 'Button to use existing artwork for a new audio file.',
+    defaultMessage: 'Use existing',
+  },
+
+  ctaCancel: {
+    id: 'db-uploader.AddArtwork.ctaCancel',
+    description: 'Button to cancel adding new audio file',
+    defaultMessage: 'Cancel',
+  },
+  ctaSkip: {
+    id: 'db-uploader.AddArtwork.ctaSkip',
+    description: 'Button to skip adding artwork',
+    defaultMessage: 'Skip artwork',
   },
 });
 
@@ -98,7 +120,10 @@ export default class AddArtwork extends React.PureComponent {
 
     // TODO: this could probably use guards
     const decoded = await decodeImage(asset);
-    const reformatted = await reformatImage(decoded);
+    let reformatted = await reformatImage(decoded);
+    if (asset.size < reformatted.size) {
+      reformatted = asset;
+    }
 
     if (reformatted.size > sizeLimit) {
       this.setState({
@@ -159,12 +184,14 @@ export default class AddArtwork extends React.PureComponent {
             </React.Fragment>
           )}
           {error && <ErrorComponent>{error}</ErrorComponent>}
-          <Dropzone
-            accept="image/jpg, image/jpeg, image/png"
-            label={<FormattedMessage {...messages.dropzone} />}
-            onDrop={this.handleFileDropped}
-            style={{marginBottom: 10}}
-          />
+          <label style={{display: 'block'}}>
+            <Dropzone
+              accept="image/jpg, image/jpeg, image/png"
+              label={<FormattedMessage {...messages.dropzone} />}
+              onChange={this.handleFileDropped}
+              style={{marginBottom: 10}}
+            />
+          </label>
           {existingSource && (
             <div
               style={{
@@ -187,21 +214,25 @@ export default class AddArtwork extends React.PureComponent {
                     marginBottom: '0.25em',
                   }}
                 >
-                  {gettext('...or use the artwork we have on file.')}
+                  <FormattedMessage {...messages.subtitleUseExisting} />
                 </b>
                 <Button
                   onClick={this.handleClickUseExisting}
                   $isPrimary
                   size="small"
                 >
-                  {gettext('Use existing')}
+                  <FormattedMessage {...messages.ctaUseExisting} />
                 </Button>
               </div>
             </div>
           )}
           <div>
             <Button onClick={onReject}>
-              {notUpdatingAudio ? gettext('Cancel') : gettext('Skip artwork')}
+              {notUpdatingAudio ? (
+                <FormattedMessage {...messages.ctaCancel} />
+              ) : (
+                <FormattedMessage {...messages.ctaSkip} />
+              )}
             </Button>
           </div>
         </div>

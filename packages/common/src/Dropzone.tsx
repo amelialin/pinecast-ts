@@ -18,6 +18,7 @@ interface Props {
   accept?: string | Array<string>;
   label: React.ReactNode;
   onChange: (file: File) => void;
+  style?: React.CSSProperties;
 }
 
 const baseStyle: React.CSSProperties = {
@@ -34,7 +35,7 @@ const baseStyle: React.CSSProperties = {
   transition: 'border-color 0.2s, box-shadow 0.2s',
 };
 
-const Dropzone = ({accept, label, onChange}: Props) => (
+const Dropzone = ({accept, label, onChange, style}: Props) => (
   <React.Fragment>
     <Stub />
     <DropzoneComponent
@@ -51,6 +52,7 @@ const Dropzone = ({accept, label, onChange}: Props) => (
       onDrop={(files: Array<File>) => files.length && onChange(files[0])}
       style={{
         ...baseStyle,
+        ...style,
         boxShadow:
           '0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.025), 0 0 0 transparent inset',
       }}

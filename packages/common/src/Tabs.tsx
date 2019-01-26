@@ -1,9 +1,10 @@
 import * as React from 'react';
 
-import styled from '@pinecast/styles';
+import styled, {CSS} from '@pinecast/styles';
 
 import {DEFAULT_FONT} from './constants';
 
+const Section = styled('section');
 const TabWrapper = styled('div', {
   padding: '20px 0',
 });
@@ -27,7 +28,7 @@ const TabButton = styled(
   'button',
   ({$isActive}: {$isActive: boolean}) => ({
     appearance: 'none',
-    background: '#fff',
+    background: 'transparent',
     border: 0,
     color: $isActive ? '#8d52d1' : '#666',
     display: 'block',
@@ -46,15 +47,9 @@ const TabButton = styled(
 export default class Tabs extends React.Component {
   props: {
     children: Array<JSX.Element>;
+    style?: CSS;
   };
-  state: {
-    selectedTab: number;
-  };
-
-  constructor(props: Tabs['props']) {
-    super(props);
-    this.state = {selectedTab: 0};
-  }
+  state: {selectedTab: number} = {selectedTab: 0};
 
   handleClick = (idx: number) => () => {
     this.setState({selectedTab: idx});
@@ -62,7 +57,7 @@ export default class Tabs extends React.Component {
 
   render() {
     return (
-      <section>
+      <Section style={this.props.style}>
         <TabButtonWrapper>
           {React.Children.map(this.props.children, (child: any, idx) => (
             <TabButton
@@ -78,7 +73,7 @@ export default class Tabs extends React.Component {
           this.props.children,
           (child, idx) => (idx === this.state.selectedTab ? child : null),
         )}
-      </section>
+      </Section>
     );
   }
 }

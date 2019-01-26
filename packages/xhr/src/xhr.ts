@@ -20,7 +20,7 @@ export interface Options {
   onProgress?: (percent: number, bytesLoaded: number) => void;
 }
 
-type Result<T> = Promise<T> & {xhr: XMLHttpRequest};
+export type Result<T> = Promise<T> & {xhr: XMLHttpRequest};
 
 // Overloading options
 function xhr(args: Options | string): Result<string>;

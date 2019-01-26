@@ -133,13 +133,12 @@ class TagsPanel extends React.Component {
         body,
       });
       this.setState({pending: false});
-      return this.props.tags.reload();
+      this.props.tags.reload();
     } catch (e) {
       this.setState({
         deleteError: <FormattedMessage {...messages.errorDeletingTag} />,
         pending: false,
       });
-      return;
     }
   };
   handleNewTag = async (name: string, description: string) => {
@@ -154,13 +153,12 @@ class TagsPanel extends React.Component {
         body,
       });
       this.setState({pending: false});
-      return this.props.tags.reload();
+      this.props.tags.reload();
     } catch (e) {
       this.setState({
         createError: <FormattedMessage {...messages.errorCreatingTag} />,
         pending: false,
       });
-      return;
     }
   };
 

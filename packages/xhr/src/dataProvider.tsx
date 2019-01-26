@@ -4,28 +4,31 @@ import {Omit} from '@pinecast/common/types';
 
 import xhr, {Options} from './xhr';
 
-type InitialState<T> = {
+type InitialState = {
   isInitial: true;
   isLoading: false;
   isErrored: false;
   isCompleted: false;
-  reload: () => Promise<DataProviderState<T>>;
+  data: null;
+  reload: () => void;
 };
-type LoadingState<T> = {
+type LoadingState = {
   isInitial: false;
   isLoading: true;
   isErrored: false;
   isCompleted: false;
-  reload: () => Promise<DataProviderState<T>>;
+  data: null;
+  reload: () => void;
 };
-type ErrorState<T> = {
+type ErrorState = {
   isInitial: false;
   isLoading: false;
   isErrored: true;
   isCompleted: false;
+  data: null;
   responseText: string;
   error: any;
-  reload: () => Promise<DataProviderState<T>>;
+  reload: () => void;
 };
 type CompletedState<T> = {
   isInitial: false;
@@ -33,14 +36,14 @@ type CompletedState<T> = {
   isErrored: false;
   isCompleted: true;
   data: T;
-  reload: () => Promise<DataProviderState<T>>;
+  reload: () => void;
 };
 export type DataProviderState<T> =
-  | InitialState<T>
-  | LoadingState<T>
-  | ErrorState<T>
+  | InitialState
+  | LoadingState
+  | ErrorState
   | CompletedState<T>;
-type StateString = 'initial' | 'loading' | 'errored' | 'completed';
+export type StateString = 'initial' | 'loading' | 'errored' | 'completed';
 
 export default function dataProvider<
   OutboundProps extends Object,
@@ -73,6 +76,7 @@ export default function dataProvider<
             isLoading: false,
             isErrored: false,
             isCompleted: false,
+            data: null,
             reload: this.triggerLoad,
           },
           req: null,
@@ -120,13 +124,14 @@ export default function dataProvider<
               isCompleted: false,
               responseText: xhrReq.xhr.responseText,
               error,
+              data: null,
               reload: this.triggerLoad,
-            } as ErrorState<TransformedResponse>;
+            } as ErrorState;
             this.setState({
               state: 'errored',
               dpState,
               req: null,
-            } as DPState);
+            });
             return dpState;
           });
       };

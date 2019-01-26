@@ -4,7 +4,7 @@ import Button from '@pinecast/common/Button';
 import Callout from '@pinecast/common/Callout';
 import Card from '@pinecast/common/Card';
 import Form from '@pinecast/common/Form';
-import {gettext} from '@pinecast/i18n';
+import {defineMessages, FormattedMessage} from '@pinecast/i18n';
 import Label from '@pinecast/common/Label';
 import Select from '@pinecast/common/Select';
 import xhr from '@pinecast/xhr';
@@ -13,6 +13,36 @@ import {countryOptions} from './constants';
 import ExternalAccount from './ExternalAccount';
 
 declare var Rollbar: any;
+
+const messages = defineMessages({
+  errorFields: {
+    id: 'db-tip-jar-connect.NewAccountForm.errorFields',
+    description: 'Error that all fields must be filled out',
+    defaultMessage: 'You must fill out all fields completely.',
+  },
+  errorPayoutDetails: {
+    id: 'db-tip-jar-connect.NewAccountForm.errorPayoutDetails',
+    description: 'Error that payout details were not saved',
+    defaultMessage:
+      'There was a problem submitting your payout account details.',
+  },
+  errorPayoutSave: {
+    id: 'db-tip-jar-connect.NewAccountForm.errorPayoutSave',
+    description: 'Error that payout details were not saved to Pinecast',
+    defaultMessage:
+      'There was a problem adding your payout account to Pinecast.',
+  },
+  labelCountry: {
+    id: 'db-tip-jar-connect.NewAccountForm.labelCountry',
+    description: 'Label for the country field',
+    defaultMessage: 'Where do you live?',
+  },
+  ctaContinue: {
+    id: 'db-tip-jar-connect.NewAccountForm.ctaContinue',
+    description: 'Button to create payout account',
+    defaultMessage: 'Continue setup',
+  },
+});
 
 export default class NewAccountForm extends React.Component {
   props: {
@@ -39,7 +69,7 @@ export default class NewAccountForm extends React.Component {
 
     if (!this.externalAccount.isReady()) {
       this.externalAccount.setError(
-        gettext('You must fill out all fields completely.'),
+        <FormattedMessage {...messages.errorFields} />,
       );
       return;
     }
@@ -58,10 +88,9 @@ export default class NewAccountForm extends React.Component {
         Rollbar.warning('Error during tip jar signup', bankError);
       }
       this.externalAccount.setError(
-        bankError.message ||
-          gettext(
-            'There was a problem submitting your payout account details.',
-          ),
+        bankError.message || (
+          <FormattedMessage {...messages.errorPayoutDetails} />
+        ),
       );
       return;
     }
@@ -77,9 +106,7 @@ export default class NewAccountForm extends React.Component {
     try {
       await req;
     } catch {
-      let error = gettext(
-        'There was a problem adding your payout account to Pinecast.',
-      );
+      let error = <FormattedMessage {...messages.errorPayoutSave} />;
       if (req.xhr.responseText) {
         try {
           const parsed = JSON.parse(req.xhr.responseText);
@@ -116,7 +143,7 @@ export default class NewAccountForm extends React.Component {
       <Card style={{maxWidth: 500}} whiteBack>
         <Form onSubmit={this.submit}>
           {error && <Callout type="negative">{error}</Callout>}
-          <Label text={gettext('Where do you live?')}>
+          <Label text={<FormattedMessage {...messages.labelCountry} />}>
             <Select
               onChange={this.handleChangeCountry}
               options={countryOptions}
@@ -127,7 +154,7 @@ export default class NewAccountForm extends React.Component {
           <ExternalAccount country={country} ref={this.handleEARef} />
 
           <Button pending={saving} type="submit">
-            {gettext('Continue setup')}
+            <FormattedMessage {...messages.ctaContinue} />
           </Button>
         </Form>
       </Card>

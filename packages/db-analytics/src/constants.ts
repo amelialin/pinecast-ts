@@ -33,6 +33,7 @@ export type AnalyticsView =
 export const TYPES: {[type: string]: Array<AnalyticsView>} = {
   episode: [
     TYPE_LISTENS,
+    TYPE_LISTENS_SPOTIFY,
     TYPE_BY_SOURCE,
     TYPE_BY_AGENT,
     TYPE_GROWTH,
@@ -41,6 +42,7 @@ export const TYPES: {[type: string]: Array<AnalyticsView>} = {
   ],
   network: [
     TYPE_LISTENS,
+    TYPE_LISTENS_SPOTIFY,
     TYPE_SUBS,
     TYPE_TOP_EPISODES,
     TYPE_GROWTH,

@@ -87,6 +87,9 @@ export class Wrapper extends React.Component {
         this.setState({scrolled: false});
         return;
       }
+      if (!scrolled && !this.state.scrolled) {
+        return;
+      }
       const rect = el.getBoundingClientRect();
       this.setState({
         scrolled: {

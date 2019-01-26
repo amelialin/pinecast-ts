@@ -612,9 +612,10 @@ export default class AudioUploader extends React.Component {
                 this.startUploading();
               }}
               onRequestWaiting={() => this.promiseSetState({phase: 'waiting'})}
-              sizeLimit={
-                props.uploadLimit + props.uploadSurge - audioFile!.size
-              }
+              sizeLimit={Math.max(
+                props.uploadLimit + props.uploadSurge - audioFile!.size,
+                2 * 1024 * 1024,
+              )}
             />
           </React.Fragment>
         );

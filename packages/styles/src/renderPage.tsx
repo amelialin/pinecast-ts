@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/server';
 import {StyletronProvider} from 'styletron-react';
 
-import {DEFAULT_FONT_CSS_IMPORT} from '@pinecast/common/constants';
+import {DEFAULT_FONT_CSS_IMPORT} from '../../common/src/constants';
 
 import ServerStyletron from './ServerStyletron';
 
