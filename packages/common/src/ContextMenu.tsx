@@ -45,7 +45,7 @@ const MenuOptionRow = styled(
   'button',
   ({'aria-selected': selected}: {'aria-selected': boolean}): CSS => ({
     WebkitAppearance: 'none',
-    background: selected ? '#eeefea' : 'none',
+    background: selected ? '#d8e9f1' : 'none',
     border: 0,
     borderRadius: 2,
     cursor: 'pointer',
