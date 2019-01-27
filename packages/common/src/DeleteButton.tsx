@@ -1,6 +1,15 @@
 import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/styles';
+import {defineMessages, I18n, Message} from '@pinecast/i18n';
+
+const messages = defineMessages({
+  delete: {
+    id: 'common.DeleteButton.delete',
+    description: 'Delete button label',
+    defaultMessage: 'Delete',
+  },
+});
 
 const DeleteButton_ = styled(
   'button',
@@ -54,26 +63,34 @@ const DeleteButton_ = styled(
       backgroundColor: '#bf1d1d',
     },
   }),
-  {'aria-label': 'Delete', title: 'Delete', type: 'button'},
+  {type: 'button'},
 );
 
 const DeleteButton = ({
   idleColor,
+  label,
   onClick,
   style,
 }: {
   idleColor?: string;
+  label?: Message;
   onClick: () => void;
   style?: CSS;
 }) => (
-  <DeleteButton_
-    $idleColor={idleColor}
-    onClick={e => {
-      e.preventDefault();
-      onClick();
-    }}
-    style={style}
-  />
+  <I18n>
+    {({intl}) => (
+      <DeleteButton_
+        $idleColor={idleColor}
+        aria-label={intl.formatMessage(label || messages.delete)}
+        onClick={e => {
+          e.preventDefault();
+          onClick();
+        }}
+        style={style}
+        title={intl.formatMessage(label || messages.delete)}
+      />
+    )}
+  </I18n>
 );
 
 export default DeleteButton;

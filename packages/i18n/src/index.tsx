@@ -40,18 +40,17 @@ export function defineMessages<T extends Object>(
   return messages;
 }
 
-export function injectIntl<T>(
-  component: React.ComponentType<T & InjectedIntlProps>,
+export function injectIntl<T extends Object>(
+  component: React.ComponentType<T & {intl: InjectedIntlProps['intl']}>,
 ) {
   return (nativeInjectIntl(component as any) as any) as React.ComponentType<T>;
 }
 
+type RenderProp = {
+  children: (props: InjectedIntlProps) => React.ReactNode;
+};
 export const I18n = injectIntl(
-  class I18n extends React.Component {
-    props: {
-      children: (props: InjectedIntlProps) => React.ReactNode;
-    } & InjectedIntlProps;
-
+  class I18n extends React.Component<RenderProp & InjectedIntlProps> {
     render() {
       return this.props.children({intl: this.props.intl});
     }
