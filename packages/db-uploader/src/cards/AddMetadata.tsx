@@ -110,7 +110,11 @@ export default class AddMetadata extends React.PureComponent {
           </span>
           {this.renderTitleMonitor()}
           <ButtonGroup>
-            <Button onClick={onAccept} $isPrimary>
+            <Button
+              disabled={!this.state.isValid}
+              onClick={onAccept}
+              $isPrimary
+            >
               <FormattedMessage {...messages.ctaAdd} />
             </Button>
             <Button onClick={onReject}>
