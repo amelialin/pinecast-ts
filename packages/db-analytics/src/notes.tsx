@@ -24,6 +24,12 @@ const messages = defineMessages({
     defaultMessage:
       'Spotify has not made data available that would contribute to this view.',
   },
+  spotifySeparate: {
+    id: 'db-analytics.notes.spotifySeparate',
+    description:
+      'Message shown when an analytics view has Spotify data broken out separately.',
+    defaultMessage: 'Data from Spotify is excluded from this view.',
+  },
   noSpotify: {
     id: 'db-analytics.notes.noSpotify',
     description:
@@ -46,7 +52,7 @@ const messages = defineMessages({
 });
 
 export default {
-  [TYPE_LISTENS]: [],
+  [TYPE_LISTENS]: [messages.spotifySeparate],
   [TYPE_LISTENS_SPOTIFY]: [messages.noTZ],
   [TYPE_SUBS]: [messages.spotifyUnavailable, messages.noTZ],
   [TYPE_BY_EPISODE]: [messages.noSpotify],
@@ -54,7 +60,7 @@ export default {
   [TYPE_BY_AGENT]: [],
   [TYPE_BY_OS]: [messages.noSpotify],
   [TYPE_GEO_SUBS]: [messages.spotifyUnavailable, messages.noTZ],
-  [TYPE_GEO_LISTENS]: [messages.noSpotifyYet],
+  [TYPE_GEO_LISTENS]: [],
   [TYPE_GEO_GRAN_SUBS]: [messages.spotifyUnavailable, messages.noTZ],
   [TYPE_GEO_GRAN_LISTENS]: [messages.spotifyUnavailable],
   [TYPE_TOP_EPISODES]: [],
