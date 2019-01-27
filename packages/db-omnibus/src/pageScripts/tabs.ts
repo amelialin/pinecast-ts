@@ -63,6 +63,7 @@ function buildTabs(tabBar: HTMLElement) {
       document.title,
       '#' + hash.slice(0, hashPos + 1).join(','),
     );
+    window.scrollTo(0, 0);
   }
 
   tabBar.addEventListener('click', e => {
