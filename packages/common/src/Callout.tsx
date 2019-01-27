@@ -20,7 +20,7 @@ const Callout_ = styled(
     display: 'flex',
     fontWeight: 500,
     justifyContent: $hasAction ? 'space-between' : undefined,
-    margin: '12px 0',
+    margin: '0 0 12px',
     padding: 12,
   }),
   {role: 'alert'},

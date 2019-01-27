@@ -2,6 +2,8 @@ import * as React from 'react';
 
 import Button from '@pinecast/common/Button';
 import Callout from '@pinecast/common/Callout';
+import Label from '@pinecast/common/Label';
+import TextInput from '@pinecast/common/TextInput';
 
 export default {
   name: 'Callout',
@@ -41,6 +43,15 @@ export default {
             Positive callout
           </Callout>
         </React.Fragment>
+      ),
+    },
+    {
+      title: 'In a label',
+      render: () => (
+        <Label text="A field">
+          <Callout type="negative">This field might explode</Callout>
+          <TextInput onChange={() => {}} value="" />
+        </Label>
       ),
     },
   ],
