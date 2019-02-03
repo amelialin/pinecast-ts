@@ -4,4 +4,4 @@ export default {
   podcasty: {name: 'Podcasty'},
   smooth: {name: 'Smooth'},
   zen: {name: 'Zen'},
-};
+} as {[theme: string]: {name: string}};

@@ -15,7 +15,7 @@ const EmbedWidgetPanel = ({
   changeEmbedWidget,
   embedTheme,
 }: {
-  changeEmbedWidget: ((theme: string) => void);
+  changeEmbedWidget: (theme: string) => void;
   embedTheme: string;
 }) => {
   return (
@@ -56,7 +56,7 @@ export default connect(
     return {
       embedTheme:
         (theme.options && theme.options.embedTheme) ||
-        (presetTheme.options && presetTheme.embedTheme),
+        (presetTheme.options && presetTheme.options.embedTheme),
     };
   },
   {

@@ -54,7 +54,7 @@ module.exports = {
   ),
   '@pinecast/sb-presets$': path.resolve(
     __dirname,
-    'packages/sb-presets/src/index.js',
+    'packages/sb-presets/src/index.ts',
   ),
   '@pinecast/sb-renderer$': path.resolve(
     __dirname,

@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import styled, {CSS} from '@pinecast/styles';
+import {defineMessages, I18n} from '@pinecast/i18n';
 
 import {CloseableLayer} from './Layer';
 import {DEFAULT_FONT} from './constants';
@@ -8,6 +9,14 @@ import IconButton from './IconButton';
 import * as MenuIcons from './icons/menus';
 import Positioner from './Positioner';
 import Toggler from './Toggler';
+
+const messages = defineMessages({
+  toggle: {
+    id: 'common.ContextMenu.toggle',
+    description: 'Label for toggling a menu button',
+    defaultMessage: 'Toggle menu',
+  },
+});
 
 const MenuWrapper = styled(
   'menu',
@@ -239,13 +248,16 @@ abstract class AbstractIconMenu extends React.Component {
             options={this.props.options}
             toSelect={this.props.toSelect}
           >
-            <IconButton
-              Component={Component}
-              onClick={toggle}
-              style={this.props.style}
-            >
-              Toggle menu
-            </IconButton>
+            <I18n>
+              {({intl}) => (
+                <IconButton
+                  Component={Component}
+                  onClick={toggle}
+                  style={this.props.style}
+                  title={intl.formatMessage(messages.toggle)}
+                />
+              )}
+            </I18n>
           </ContextMenu>
         )}
       </Toggler>

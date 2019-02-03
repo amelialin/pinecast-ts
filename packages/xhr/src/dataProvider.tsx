@@ -146,8 +146,10 @@ export default function dataProvider<
       }
 
       render() {
-        const propObj = {[prop]: this.state.dpState};
-        return <Component {...this.props} {...propObj} />;
+        return React.createElement(Component, ({
+          ...this.props,
+          [prop]: this.state.dpState,
+        } as unknown) as OutboundProps);
       }
     };
 }

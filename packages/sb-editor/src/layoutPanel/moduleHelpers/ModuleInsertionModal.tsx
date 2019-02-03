@@ -6,8 +6,6 @@ import Dialog from '@pinecast/common/Dialog';
 import Label from '@pinecast/common/Label';
 import Select from '@pinecast/common/Select';
 
-import {MetadataType} from './types';
-
 export default class ModuleInsertionModal extends React.Component {
   props: {
     index: number;
@@ -45,9 +43,10 @@ export default class ModuleInsertionModal extends React.Component {
           <Select
             autoFocus
             onChange={this.handleChangeType}
-            options={Object.entries(componentsMetadata as {
-              [key: string]: MetadataType;
-            }).map(([key, value]) => ({key, label: value.name}))}
+            options={Object.entries(componentsMetadata).map(([key, value]) => ({
+              key,
+              label: value.name,
+            }))}
             value={this.state.selectedTag}
           />
         </Label>

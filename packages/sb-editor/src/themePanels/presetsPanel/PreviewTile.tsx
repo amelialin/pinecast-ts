@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import OptionButton from '@pinecast/common/OptionButton';
 import * as presets from '@pinecast/sb-presets';
-import {CSS} from '@pinecast/styles';
+import styled, {CSS} from '@pinecast/styles';
 
 import {ReducerType} from '../../reducer';
 
@@ -16,6 +16,8 @@ const styleOverride: CSS = {
   padding: 10,
   width: '100%',
 };
+
+const P = styled('p');
 
 type Props = {
   onSelect: (val: string) => void;
@@ -52,7 +54,7 @@ const PreviewTile = ({isActive, onSelect, type}: Props & StateProps) => {
           width: '100%',
         }}
       >
-        <p
+        <P
           style={{
             color: theme.colors.text,
             fontSize: theme.styling.page.fontSize,
@@ -60,7 +62,7 @@ const PreviewTile = ({isActive, onSelect, type}: Props & StateProps) => {
           }}
         >
           The quick brown fox jumps over the lazy dog
-        </p>
+        </P>
       </div>
     </OptionButton>
   );

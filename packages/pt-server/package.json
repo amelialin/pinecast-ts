@@ -13,8 +13,6 @@
     "@types/koa": "^2.0.44",
     "@types/koa-router": "^7.0.27",
     "@types/koa-websocket": "^2.1.2",
-    "babel-loader": "^7.1.4",
-    "babel-preset-stage-3": "^6.24.1",
     "koa": "^2.5.0",
     "koa-router": "^7.4.0",
     "koa-websocket": "^4.1.0"

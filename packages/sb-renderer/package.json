@@ -4,7 +4,7 @@
   "scripts": {
     "build_prod": "../../node_modules/.bin/webpack --config=webpack.config.prod.js --progress",
     "dev": "../../node_modules/.bin/webpack --config=webpack.config.js --progress --watch --colors",
-    "start": "nodemon build/index.js"
+    "start": "../../node_modules/.bin/nodemon build/index.js"
   },
   "main": "src/",
   "ts:main": "src/index.ts",
@@ -15,13 +15,8 @@
     "@types/koa": "^2.0.44",
     "@types/koa-bodyparser": "^5.0.1",
     "@types/koa-router": "^7.0.27",
-    "babel-loader": "^7.1.4",
-    "babel-preset-stage-3": "^6.24.1",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0"
-  },
-  "devDependencies": {
-    "nodemon": "^1.17.0"
   }
 }

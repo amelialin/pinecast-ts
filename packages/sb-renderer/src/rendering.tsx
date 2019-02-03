@@ -58,7 +58,9 @@ function buildTheme(
   if (!presets.themes.hasOwnProperty(themeObj.$type || themeName)) {
     return themeObj;
   }
-  const preset = presets.themes[themeObj.$type || themeName];
+  const preset = (presets.themes as {[theme: string]: unknown})[
+    themeObj.$type || themeName
+  ];
 
   const out = presets.merge(
     {

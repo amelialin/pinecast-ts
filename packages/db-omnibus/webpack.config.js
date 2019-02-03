@@ -1,6 +1,6 @@
 const path = require('path');
 
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = env => {
@@ -62,14 +62,13 @@ module.exports = env => {
       minimizer:
         env === 'prod'
           ? [
-              new UglifyJSPlugin({
+              new TerserPlugin({
                 sourceMap: true,
-                uglifyOptions: {
+                terserOptions: {
                   mangle: {
                     reserved: ['Buffer'],
                     safari10: true,
                   },
-                  safari10: true,
                 },
               }),
             ]

@@ -6,19 +6,17 @@ import TextInput from '@pinecast/common/TextInput';
 
 class SlugHost extends React.Component {
   props: {
-    children: (
-      props: {
-        onChange: (value: string) => void;
-        provider: ProviderType;
-        sourceValue: string;
-        value: string;
-      },
-    ) => JSX.Element;
+    children: (props: {
+      onChange: (value: string) => void;
+      provider: ProviderType;
+      sourceValue: string;
+      value: string;
+    }) => JSX.Element;
   };
   state: {sourceValue: string; value: string} = {sourceValue: '', value: ''};
 
   provider = (slug: string) => {
-    let resolve;
+    let resolve: (status: 'available' | 'unavailable') => void = () => {};
     const promise = new Promise<'available' | 'unavailable'>(innerResolve => {
       resolve = innerResolve;
     });

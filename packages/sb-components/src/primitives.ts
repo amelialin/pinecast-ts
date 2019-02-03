@@ -4,8 +4,8 @@ export type Alignment = 'left' | 'center' | 'right';
 
 export interface ComponentLayout {
   type: string;
-  layout: any;
-  template?: ElementLayout;
+  layout?: any;
+  template?: BaseElementLayout;
   tag: string;
   tagOptions: {[optionName: string]: any};
 }
@@ -136,11 +136,12 @@ export interface Element extends StyleableElement {
 export interface InlineElement extends StyleableElement {
   type: 'button' | 'icon' | 'span';
 }
-export interface ElementLayout {
+export interface BaseElementLayout {
   tagName?: string;
   elements: Array<Element>;
   styles?: CSS;
-
+}
+export interface ElementLayout extends BaseElementLayout {
   // For use by the editor to store extra information about trees of elements
   tag: string;
   tagOptions: any;

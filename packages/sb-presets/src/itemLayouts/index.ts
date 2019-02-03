@@ -1,26 +1,10 @@
+import {primitives} from '@pinecast/sb-components';
+
 import fullWidthImageCenterStackedItem from './stacked/fullWidthImageCenterStackedItem';
 import fullWidthImageLeftStackedItem from './stacked/fullWidthImageLeftStackedItem';
 import heroFullWidthStackedItem from './stacked/heroFullWidthStackedItem';
 import minimalGrid from './grid/minimalGridItem';
 import noImageStackedItem from './stacked/noImageStackedItem';
-
-const fixedWidthTemplate = {
-  elementOptions: {
-    name: 'Fixed-width module options',
-    type: 'rootComponents.fixedWidth',
-  },
-};
-const textAlignTemplate = {
-  textAlign: {
-    name: 'Text alignment',
-    type: 'enum',
-    options: [
-      {name: 'Left', value: 'left'},
-      {name: 'Center', value: 'center'},
-      {name: 'Right', value: 'right'},
-    ],
-  },
-};
 
 const artworkSizeOptions = [
   {key: 300, label: '300px'},
@@ -33,6 +17,19 @@ const artworkStyleOptions = [
   {key: 'rectangle', label: 'Rectangular'},
   {key: 'square', label: 'Square'},
 ];
+
+type ItemLayoutHash = {
+  [layoutName: string]: {
+    name: string;
+    description: string;
+    type: 'grid' | 'stacked';
+    func: (options?: Object) => primitives.ElementLayout;
+    forceConsumeCount?: number;
+    schema: {
+      [field: string]: any;
+    };
+  };
+};
 
 export default {
   'grid.minimal': {
@@ -227,12 +224,6 @@ export default {
         suffix: 'lines',
         type: 'number',
       },
-      imageSize: {
-        name: 'Episode artwork width',
-        description: 'The width of each episode artwork image',
-        type: 'enum',
-        options: artworkSizeOptions,
-      },
       padding: {
         name: 'Inner episode padding',
         description:
@@ -241,4 +232,4 @@ export default {
       },
     },
   },
-};
+} as ItemLayoutHash;

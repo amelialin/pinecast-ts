@@ -1,3 +1,5 @@
+import {primitives} from '@pinecast/sb-components';
+
 import footerColumnsFixed from './footer-columnsFixed';
 import headerCenteredFixed from './header-centeredFixed';
 import headerPageLinkList from './header-pageLinkList';
@@ -22,6 +24,21 @@ const textAlignTemplate = {
       {label: 'Right', key: 'right'},
     ],
   },
+};
+
+type MetadataHash = {
+  [component: string]: {
+    name: string;
+    description: string;
+    type:
+      | 'header'
+      | 'footer'
+      | 'links'
+      | 'subscribeLinks'
+      | 'pagination'
+      | 'generic';
+    func: () => primitives.ComponentLayout;
+  };
 };
 
 export default {
@@ -193,4 +210,4 @@ export default {
       ...fixedWidthTemplate,
     },
   },
-};
+} as MetadataHash;

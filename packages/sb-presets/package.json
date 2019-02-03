@@ -1,5 +1,5 @@
 {
   "name": "@pinecast/sb-presets",
   "version": "1.0.0",
-  "main": "src/index.js"
+  "ts:main": "src/index.ts"
 }

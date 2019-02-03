@@ -117,6 +117,7 @@ class SpotifyDashboard extends React.Component {
       body,
     }).then(
       () => {
+        this.props.reload();
         this.setState({saved: true, saving: false, isSubmitted: newValue});
       },
       () => {
@@ -149,7 +150,7 @@ class SpotifyDashboard extends React.Component {
         <Group spacing={16}>
           <Switch
             checked={isSubmitted}
-            disabled={saving}
+            disabled={saving || saved || isSubmitted}
             onChange={this.handleToggle}
             style={{
               transition: 'padding 0.2s',
