@@ -45,15 +45,13 @@ function renderYAxisLabel(tickValue: number): string {
 
 export default class LineChartAxes extends React.Component {
   props: {
-    children: (
-      p: {
-        height: number;
-        marginLeft: number;
-        width: number;
-        xRange: (n: number) => number;
-        yRange: (n: number) => number;
-      },
-    ) => React.ReactNode;
+    children: (p: {
+      height: number;
+      marginLeft: number;
+      width: number;
+      xRange: (n: number) => number;
+      yRange: (n: number) => number;
+    }) => React.ReactNode;
     labels: Array<string>;
     range: [number, number];
   };
@@ -115,7 +113,12 @@ export default class LineChartAxes extends React.Component {
   handleRef = (el: SVGElement | null) => {
     this.el = el;
     if (el) {
-      this.setState({width: el.getClientRects()[0].width});
+      setTimeout(() => {
+        if (!this.el) {
+          return;
+        }
+        this.setState({width: this.el.getClientRects()[0].width});
+      }, 4);
     }
   };
 
@@ -129,7 +132,8 @@ export default class LineChartAxes extends React.Component {
       yRange,
       yTicks,
     } = this.state;
-    if (!marginLeft || !width || !xRange || !xTicks || !yTicks || !yRange) {
+
+    if (!xRange || !xTicks || !yTicks || !yRange) {
       throw new Error('unreachable');
     }
 
@@ -139,8 +143,8 @@ export default class LineChartAxes extends React.Component {
           <g className="gridlines-x">
             <line
               style={gridlineStyle}
-              x1={marginLeft}
-              x2={width}
+              x1={nullThrows(marginLeft)}
+              x2={nullThrows(width)}
               y1={marginTop}
               y2={marginTop}
             />
@@ -150,8 +154,8 @@ export default class LineChartAxes extends React.Component {
                 <line
                   key={y}
                   style={gridlineStyle}
-                  x1={marginLeft}
-                  x2={width}
+                  x1={nullThrows(marginLeft)}
+                  x2={nullThrows(width)}
                   y1={y}
                   y2={y}
                 />
@@ -161,8 +165,8 @@ export default class LineChartAxes extends React.Component {
           <g className="gridlines-y">
             <line
               style={gridlineStyle}
-              x1={width}
-              x2={width}
+              x1={nullThrows(width)}
+              x2={nullThrows(width)}
               y1={yRangeBottom}
               y2={yRangeTop}
             />
@@ -258,8 +262,8 @@ export default class LineChartAxes extends React.Component {
         <g style={{transform: 'translateY(-1px)'}}>
           {this.props.children({
             height: HEIGHT - X_AXIS_HEIGHT - marginTop,
-            marginLeft,
-            width: width - marginLeft,
+            marginLeft: nullThrows(marginLeft),
+            width: nullThrows(width) - nullThrows(marginLeft),
             xRange,
             yRange,
           })}
