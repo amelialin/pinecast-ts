@@ -1,10 +1,21 @@
 export default (data = {}) => {
   const {
-    elementOptions: {imageElementOptions, imageStyles, ...elementOptions} = {},
+    elementOptions: {imageElementOptions, ...elementOptions} = {},
+    logoMode = 'logo',
+    logoSize = 300,
     showSubtitle = false,
     style = {},
     textAlign = 'center',
   } = data;
+
+  const logoMode_ = {
+    maxWidth: logoSize,
+    maxHeight: logoSize,
+  };
+  const bannerMode = {
+    maxHeight: logoSize,
+    maxWidth: '100%',
+  };
 
   return {
     type: 'abstract',
@@ -28,11 +39,11 @@ export default (data = {}) => {
                   type: 'block.logo',
                   elementOptions: {
                     imageElementOptions: {
-                      alignX: textAlign,
                       ...imageElementOptions,
+                      alignX: textAlign,
                     },
                     imageStyles: {
-                      ...imageStyles,
+                      ...(logoMode === 'banner' ? bannerMode : logoMode_),
                     },
                   },
                 },
@@ -59,6 +70,8 @@ export default (data = {}) => {
     tag: 'header.centeredFixed',
     tagOptions: {
       elementOptions,
+      logoMode,
+      logoSize,
       showSubtitle,
       textAlign,
       style,

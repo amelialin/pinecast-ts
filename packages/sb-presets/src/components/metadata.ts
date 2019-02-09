@@ -100,7 +100,32 @@ export default {
         name: 'Show subtitle?',
         type: 'bool',
       },
-      ...textAlignTemplate,
+      textAlign: {
+        name: 'Inner alignment',
+        type: 'enum',
+        options: [
+          {label: 'Left', key: 'left'},
+          {label: 'Center', key: 'center'},
+          {label: 'Right', key: 'right'},
+        ],
+      },
+      logoMode: {
+        name: 'When using a logo, make it behave like',
+        type: 'enum',
+        options: [
+          {label: 'A fixed square', key: 'logo'},
+          {label: 'A banner', key: 'banner'},
+        ],
+      },
+      logoSize: {
+        name: 'When using a logo, cap its height at',
+        type: 'enum',
+        options: [
+          {label: '500 pixels tall', key: 500},
+          {label: '300 pixels tall', key: 300},
+          {label: '150 pixels tall', key: 150},
+        ],
+      },
       ...fixedWidthTemplate,
     },
   },

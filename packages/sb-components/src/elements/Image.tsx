@@ -2,6 +2,7 @@ import * as md5 from 'md5';
 import * as React from 'react';
 
 import {CSS} from '@pinecast/styles';
+import {url} from '@pinecast/common/helpers';
 
 import atom from './atom';
 import {Element} from '../primitives';
@@ -90,11 +91,7 @@ export default ({
       }
       height *= 2;
       width *= 2;
-      props.src = `https://thumb.service.pinecast.com/resize?h=${encodeURIComponent(
-        String(height),
-      )}&w=${encodeURIComponent(String(width))}&key=${encodeURIComponent(
-        key as string,
-      )}&format=jpeg`;
+      props.src = url`https://thumb.service.pinecast.com/resize?h=${height}&w=${width}&key=${key}&format=jpeg`;
     }
   }
   if (eo && eo.round) {

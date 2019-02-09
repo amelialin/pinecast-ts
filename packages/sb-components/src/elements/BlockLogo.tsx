@@ -17,6 +17,7 @@ export default getsContext(
         elementOptions:
           element.elementOptions && element.elementOptions.imageElementOptions,
         propPaths: {
+          alt: ['podcast', 'name'],
           src: ['site', 'logo_url'],
         },
         styles: {
