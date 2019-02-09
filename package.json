@@ -49,7 +49,7 @@
   },
   "scripts": {
     "precommit": "lint-staged",
-    "test": "jest"
+    "test": "npx jest"
   },
   "lint-staged": {
     "*.js": [
