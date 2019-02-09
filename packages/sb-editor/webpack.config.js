@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 
 const TerserPlugin = require('terser-webpack-plugin');
@@ -51,15 +52,19 @@ module.exports = env => {
         {
           test: /\.tsx?$/,
           exclude: /node_modules/,
-          loader: 'ts-loader',
-          options: {
-            transpileOnly: env === 'prod',
-          },
+          use: [
+            {
+              loader: 'babel-loader',
+              options: JSON.parse(fs.readFileSync('../../.babelrc')),
+            },
+            {loader: 'ts-loader', options: {transpileOnly: env === 'prod'}},
+          ],
         },
         {
           test: /\.js$/,
           exclude: env === 'prod' ? undefined : /node_modules/,
           loader: 'babel-loader',
+          options: JSON.parse(fs.readFileSync('../../.babelrc')),
         },
         {
           test: /\.css$/,

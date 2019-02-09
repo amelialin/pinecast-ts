@@ -111,6 +111,11 @@ const Label = ({
   ) : (
     text
   );
+  if ($oneLine && !React.isValidElement(children)) {
+    throw new Error(
+      'Passed invalid children to Label set to $oneLine. Must be React element',
+    );
+  }
   return (
     <NativeLabel
       className="Label--NativeLabel"
@@ -133,7 +138,7 @@ const Label = ({
       {subText && <SubText style={labelStyle}>{subText}</SubText>}
       {$oneLine ? (
         <OneLineInputWrap>
-          {React.cloneElement(React.Children.only(children), {
+          {React.cloneElement(React.Children.only(children as any), {
             style: {
               margin: 0,
             },

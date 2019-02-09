@@ -110,9 +110,11 @@ export default async function frame(
               )}">`
             : ''
         }
-        <link rel="alternate" type="application/rss+xml" title="Podcast Feed" href="https://pinecast.com/feed/${escapeHTML(
-          encodeURIComponent(siteData.podcast.slug),
-        )}">
+        <link rel="alternate" type="application/rss+xml" title="${escapeHTML(
+          siteData.podcast.name,
+        )}" href="https://pinecast.com/feed/${escapeHTML(
+    encodeURIComponent(siteData.podcast.slug),
+  )}">
       </head>
       ${markup}
       ${gaInclude}

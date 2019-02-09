@@ -53,6 +53,7 @@
       "exif": ["../../typings/exif/index.d.ts"]
     },
     "sourceMap": true,
+    "strictBindCallApply": true,
     "strictNullChecks": true,
     "target": "es6",
     "jsx": "react"
