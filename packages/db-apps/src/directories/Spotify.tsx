@@ -111,18 +111,19 @@ class SpotifyDashboard extends React.Component {
     const body = new FormData();
     body.append('slug', this.props.slug);
 
-    xhr({
+    const req = xhr({
       method: 'POST',
       url: `/dashboard/services/spotify/${newValue ? 'submit' : 'unsubmit'}`,
       body,
-    }).then(
+    });
+    req.then(
       () => {
         this.props.reload();
         this.setState({saved: true, saving: false, isSubmitted: newValue});
       },
       () => {
         this.setState({
-          error: (
+          error: req.xhr.responseText || (
             <FormattedMessage
               {...(newValue
                 ? messages.errorSubmitting
