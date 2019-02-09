@@ -2,7 +2,7 @@ export type TimeSeriesData = {
   // X-axis labels
   labels: Array<string>;
   // Series
-  datasets: Array<{
+  datasets?: Array<{
     // Series label
     label: string;
     // Values in series

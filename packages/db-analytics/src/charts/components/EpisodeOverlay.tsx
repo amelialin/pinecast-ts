@@ -103,7 +103,7 @@ export default class EpisodeOverlay extends React.PureComponent {
   render() {
     const {baseline, data, episodes, xOffset, width} = this.props;
     const colors: {[slug: string]: string} = {};
-    data.datasets.forEach(ds => {
+    data.datasets!.forEach(ds => {
       if (ds.slug && ds.pointColor) {
         colors[ds.slug] = ds.pointColor;
       } else if (ds.id && ds.pointColor) {

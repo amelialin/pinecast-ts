@@ -33,7 +33,7 @@ class GrowthChart extends React.Component {
   constructor(props: GrowthChart['props']) {
     super(props);
     this.state = {
-      activeSeries: props.data.datasets.map((_, i) => i),
+      activeSeries: props.data.datasets!.map((_, i) => i),
       hovering: null,
     };
   }
@@ -60,7 +60,7 @@ class GrowthChart extends React.Component {
       <Legend
         activeSeries={this.state.activeSeries}
         hoveringSeries={this.state.hovering}
-        series={this.props.data.datasets.map((ds, i) => ({
+        series={this.props.data.datasets!.map((ds, i) => ({
           color: ds.strokeColor || '#bf1d1d',
           key: i,
           label: ds.label,
@@ -113,8 +113,8 @@ class GrowthChart extends React.Component {
       0,
       Math.max(
         0,
-        ...data.datasets.map(
-          (ds, i) => (activeSeries.includes(i) ? Math.max(0, ...ds.data) : 0),
+        ...data.datasets!.map((ds, i) =>
+          activeSeries.includes(i) ? Math.max(0, ...ds.data) : 0,
         ),
       ),
     ];
@@ -126,7 +126,7 @@ class GrowthChart extends React.Component {
 
   getCSVData = () => {
     const {
-      data: {datasets, labels},
+      data: {datasets = [], labels},
     } = this.props;
     return [
       [

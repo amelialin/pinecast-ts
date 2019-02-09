@@ -21,7 +21,7 @@ const AreaChartBody = ({
 }) => {
   const totals = labels.map(() => 0);
 
-  const taggedDatasets = datasets.map((d, i) => [d, i] as [typeof d, number]);
+  const taggedDatasets = datasets!.map((d, i) => [d, i] as [typeof d, number]);
   const filteredDatasets = taggedDatasets.filter(x =>
     activeSeries.includes(x[1]),
   );

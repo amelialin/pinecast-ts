@@ -148,6 +148,9 @@ export default class Loader extends React.Component {
       }
       return false;
     } else if (typeof data === 'object') {
+      if (!data.datasets) {
+        return true;
+      }
       return !data.datasets.some(
         ds => ds.data.length > 0 || ds.data.some(x => x > 0),
       );

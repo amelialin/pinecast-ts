@@ -8,12 +8,12 @@ describe('lexer', () => {
       TOKENS,
       'FROM listens SELECT COUNT as c WHERE x == TRUE',
     );
-    const out: Array<Token> = [];
+    const out: Array<Token | 'EOF'> = [];
     while (lex.peek() !== 'EOF') {
       out.push(lex.next());
     }
 
-    expect(out.map(x => x.type)).toEqual([
+    expect(out.map(x => (x === 'EOF' ? x : x.type))).toEqual([
       'from',
       'identifier',
       'select',

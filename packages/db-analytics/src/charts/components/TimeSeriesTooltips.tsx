@@ -79,7 +79,7 @@ export default class TimeSeriesTooltips extends React.PureComponent {
 
   renderTooltip(idx: number) {
     const {
-      data: {datasets, labels},
+      data: {datasets = [], labels},
     } = this.props;
 
     const label = labels[idx];

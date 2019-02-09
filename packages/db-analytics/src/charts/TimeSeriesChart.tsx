@@ -113,7 +113,7 @@ class TimeSeriesChart extends React.Component {
       <Legend
         activeSeries={this.state.activeSeries}
         hoveringSeries={this.state.hovering}
-        series={this.props.data.datasets.map((ds, i) => ({
+        series={this.props.data.datasets!.map((ds, i) => ({
           color: ds.strokeColor || 'red', // TODO: Ehh
           key: i,
           label: ds.label,
@@ -198,14 +198,14 @@ class TimeSeriesChart extends React.Component {
       return [
         Math.min(
           0,
-          ...data.datasets.map(
-            (ds, i) => (activeSeries.includes(i) ? Math.min(0, ...ds.data) : 0),
+          ...data.datasets!.map((ds, i) =>
+            activeSeries.includes(i) ? Math.min(0, ...ds.data) : 0,
           ),
         ),
         Math.max(
           0,
-          ...data.datasets.map(
-            (ds, i) => (activeSeries.includes(i) ? Math.max(0, ...ds.data) : 0),
+          ...data.datasets!.map((ds, i) =>
+            activeSeries.includes(i) ? Math.max(0, ...ds.data) : 0,
           ),
         ),
       ];
@@ -215,8 +215,8 @@ class TimeSeriesChart extends React.Component {
         Math.max(
           0,
           ...data.labels.map((_, i) =>
-            data.datasets
-              .filter((_, i) => activeSeries.includes(i))
+            data
+              .datasets!.filter((_, i) => activeSeries.includes(i))
               .reduce(
                 (acc, cur) =>
                   acc + cur.data[i - (data.labels.length - cur.data.length)] ||
@@ -238,7 +238,7 @@ class TimeSeriesChart extends React.Component {
   };
 
   getCSVData = () => {
-    const {datasets, labels} = this.props.data;
+    const {datasets = [], labels} = this.props.data;
     return [
       [
         this.props.intl.formatMessage(messages.timestampLabel),

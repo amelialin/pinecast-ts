@@ -4,7 +4,7 @@ import {TimeSeriesData} from '../../types';
 
 const LineChartBody = ({
   activeSeries,
-  data: {datasets, labels},
+  data: {datasets = [], labels},
   hovering,
   xRange,
   yRange,
