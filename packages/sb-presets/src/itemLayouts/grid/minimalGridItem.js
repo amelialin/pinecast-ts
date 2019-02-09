@@ -51,9 +51,7 @@ export default ({size = 300, style = {}, showSubtitle = false} = {}) => ({
           },
         },
       ],
-      props: {
-        href: {name: 'episode', params: {id: ['id']}},
-      },
+      propPaths: {href: ['site_url']},
     },
   ],
   tagName: 'article',

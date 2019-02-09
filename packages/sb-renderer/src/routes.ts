@@ -1,7 +1,7 @@
 import {primitives} from '@pinecast/sb-components';
 
 import * as defaultData from './data';
-import {NotFoundError} from './errors';
+import {NotFoundError, RedirectException} from './errors';
 import * as rendering from './rendering';
 import {DataAPI} from './index';
 
@@ -90,17 +90,32 @@ export const routes: {[route: string]: Route} = {
       return rendering.renderHome({site, episodes}, page);
     },
   },
-  episode: {
+  episodeLegacy: {
     path: '/episode/:id',
     format: ({id}) => `/episode/${encodeURIComponent(id)}`,
     match: matcher('/episode/:id'),
-    build: async (data, req, query, params): Promise<string> =>
-      rendering.renderEpisode(
-        await defaultData.awaitAll({
-          site: data.getSite(req),
-          episode: data.getEpisode(req, params.id),
-        }),
-      ),
+    build: async (data, req, query, params): Promise<string> => {
+      const ep = await data.getEpisode(req, params.id);
+      throw new RedirectException((ep as {site_url: string}).site_url, 301);
+    },
+  },
+  episode: {
+    path: '/episode/:siteId/:titleSlug',
+    // TODO: Can this be made more direct?
+    format: ({id}) => `/episode/${encodeURIComponent(id)}`,
+    match: matcher('/episode/:siteId/:titleSlug'),
+    build: async (data, req, query, params): Promise<string> => {
+      const d = await defaultData.awaitAll({
+        site: data.getSite(req),
+        episode: data.getEpisode(req, params.siteId),
+      });
+      if (
+        d.episode.site_url != `/episode/${params.siteId}/${params.titleSlug}`
+      ) {
+        throw new RedirectException((d.episode as any).site_url, 301);
+      }
+      return rendering.renderEpisode(d);
+    },
   },
   page: {
     path: '/:slug',

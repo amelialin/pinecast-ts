@@ -20,9 +20,7 @@ export default ({
     },
     title: {
       type: 'block.link',
-      props: {
-        href: {name: 'episode', params: {id: ['id']}},
-      },
+      propPaths: {href: ['site_url']},
 
       children: [
         {
@@ -83,9 +81,7 @@ export default ({
           },
         },
       ],
-      props: {
-        href: {name: 'episode', params: {id: ['id']}},
-      },
+      propPaths: {href: ['site_url']},
       styles: {
         color: 'secondaryAccent',
         marginTop: 15,

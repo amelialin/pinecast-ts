@@ -26,9 +26,7 @@ export default ({
           },
         },
       ],
-      props: {
-        href: {name: 'episode', params: {id: ['id']}},
-      },
+      propPaths: {href: ['site_url']},
     },
     subtitle: {
       type: 'block.text',

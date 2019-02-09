@@ -35,9 +35,7 @@ export default ({
               },
             },
           ],
-          props: {
-            href: {name: 'episode', params: {id: ['id']}},
-          },
+          propPaths: {href: ['site_url']},
           extendsStyles: ['textStyles', `${textStyleType}Heading`],
           styles: {
             ':hover': {
@@ -57,8 +55,8 @@ export default ({
         bgColor: disableImage
           ? undefined
           : overlayStyle === 'dark'
-            ? 'rgba(0, 0, 0, 0.5)'
-            : 'rgba(255, 255, 255, 0.5)',
+          ? 'rgba(0, 0, 0, 0.5)'
+          : 'rgba(255, 255, 255, 0.5)',
         innerPadding: padding,
         outerPadding: '0 15px',
       },

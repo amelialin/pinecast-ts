@@ -140,7 +140,7 @@ app.use(async (ctx, next) => {
       ctx.body = 'Not Found';
       return;
     } else if (e instanceof RedirectException) {
-      ctx.status = 302;
+      ctx.status = e.code;
       ctx.set('Location', e.toURL);
       return;
     } else if (e instanceof AuthRequiredException) {
@@ -159,6 +159,7 @@ app.use(async (ctx, next) => {
 router.get('/favicon.ico', proxy);
 
 mountRoute('home');
+mountRoute('episodeLegacy');
 mountRoute('episode');
 mountRoute('page');
 

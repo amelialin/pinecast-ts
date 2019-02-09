@@ -34,9 +34,7 @@ export default ({
           },
         },
       ],
-      props: {
-        href: {name: 'episode', params: {id: ['id']}},
-      },
+      propPaths: {href: ['site_url']},
       styles: {
         color: 'text',
         ':hover': {
@@ -105,9 +103,7 @@ export default ({
           },
         },
       ],
-      props: {
-        href: {name: 'episode', params: {id: ['id']}},
-      },
+      propPaths: {href: ['site_url']},
       styles: {
         color: 'secondaryAccent',
         marginTop: 15,

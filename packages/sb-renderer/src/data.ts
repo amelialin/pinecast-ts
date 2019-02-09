@@ -34,9 +34,9 @@ function fetch(req: APIRequest, url: string) {
     const request = http
       .request(
         {
-          hostname: 'pinecast.co',
-          // hostname: 'localhost',
-          // port: 8000,
+          // hostname: 'pinecast.co',
+          hostname: 'localhost',
+          port: 8000,
           method: req.password ? 'POST' : 'GET',
           path: url,
           headers,

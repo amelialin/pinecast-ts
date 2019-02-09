@@ -61,9 +61,7 @@ export default {
               },
             },
           ],
-          props: {
-            href: {name: 'episode', params: {id: ['id']}},
-          },
+          propPaths: {href: ['site_url']},
           styles: {
             color: 'text',
             ':hover': {
