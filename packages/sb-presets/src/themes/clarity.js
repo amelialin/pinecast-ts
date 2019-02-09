@@ -108,9 +108,6 @@ export default {
         content: 'text',
         showSubtitle: true,
         elementOptions: {
-          imageElementOptions: {
-            alignX: 'left',
-          },
           outerPadding: '0 0 50px',
         },
         textAlign: 'left',

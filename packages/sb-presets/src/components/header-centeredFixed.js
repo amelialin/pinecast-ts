@@ -28,7 +28,7 @@ export default (data = {}) => {
                   type: 'block.logo',
                   elementOptions: {
                     imageElementOptions: {
-                      alignX: 'center',
+                      alignX: textAlign,
                       ...imageElementOptions,
                     },
                     imageStyles: {

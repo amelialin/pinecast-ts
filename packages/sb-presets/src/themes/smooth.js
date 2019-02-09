@@ -112,11 +112,6 @@ export default {
       header({
         content: 'text',
         showSubtitle: true,
-        elementOptions: {
-          imageElementOptions: {
-            alignX: 'left',
-          },
-        },
         textAlign: 'left',
       }),
       headerPageLinkList({
